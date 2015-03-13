@@ -8,92 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    
-    
-    
-    
-    <script>
-
-            /* 
-             * To change this license header, choose License Headers in Project Properties.
-             * To change this template file, choose Tools | Templates
-             * and open the template in the editor.
-             */
-
-            var x;
-            x = $(document);
-            x.ready(inicio);
-            
-            function inicio()
-            {
-                alert("holaaaaa");
-                var x;
-                x = $("#guardarp");
-                x.click(insertarpersona);
-                
-            }
-
-
-            function insertarpersona()
-            {
-                var pnombre= $("#identidad").val();
-                alert(pnombre);
-                
-                data={
-                    identidad:$('#identidad').val(),
-                    primerNombre:$('#primerNombre').val(),
-                    segundoNombre:$('#segundoNombre').val(),
-                    primerApellido:$('#primerApellido').val(),
-                    segundoApellido:$('#segundoApellido').val(),
-                    sexo:$('#sexoMas').val(),
-                    direccion:$('#direccion').val(),
-                    email:$('#email').val(),
-                    estCivil:$('#estCivil').val()
-                };
-                
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
-                    success: llegadaInsertarPersona,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
-            
-           
-            
-
-
-            function inicioEnvio()
-            {
-                var x = $("#contenedor");
-                x.html('Cargando...');
-            }
-
-            function llegadaInsertarPersona()
-            {
-                $("#contenedor").load('pages/empleados/cv/nuevo/personaAgregar',data);
-                //$("#contenedor").load('../cargarPOAs.php');
-            }
-            
-
-            function problemas()
-            {
-                $("#contenedor").text('Problemas en el servidor.');
-            }
-
-
-
-        </script>
-    
-    
-    
-    
-    
 
     <title>Módulo Curricular</title>
     <!-- CSS -->
@@ -143,7 +57,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <strong>Fecha de Nacimiento</strong>
-                                                            <input type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd"><br>
+                                                            <input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd"><br>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Sexo</label>
@@ -212,6 +126,74 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
+    <script>
+
+        /*
+         * To change this license header, choose License Headers in Project Properties.
+         * To change this template file, choose Tools | Templates
+         * and open the template in the editor.
+         */
+
+        var x;
+        x = $(document);
+        x.ready(inicio);
+
+        function inicio()
+        {
+            var x;
+            x = $("#guardarp");
+            x.click(insertarpersona);
+        }
+
+
+        function insertarpersona()
+        {
+            data={
+                identidad:$('#identidad').val(),
+                primerNombre:$('#primerNombre').val(),
+                segundoNombre:$('#segundoNombre').val(),
+                primerApellido:$('#primerApellido').val(),
+                segundoApellido:$('#segundoApellido').val(),
+                sexo:$('#sexoMas').val(),
+                direccion:$('#direccion').val(),
+                email:$('#email').val(),
+                estCivil:$('#estCivil').val()
+            };
+
+            $.ajax({
+                async: true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                beforeSend: inicioEnvio,
+                success: llegadaInsertarPersona,
+                timeout: 4000,
+                error: problemas
+            });
+            return false;
+        }
+
+        function inicioEnvio()
+        {
+            var x = $("#contenedor");
+            x.html('Cargando...');
+        }
+
+        function llegadaInsertarPersona()
+        {
+            $("#contenedor").load('pages/recursos_humanos/cv/nuevo/personaAgregar.php',data);
+        }
+
+        function problemas()
+        {
+            $("#contenedor").text('Problemas en el servidor.');
+        }
+
+
+
+    </script>
+
 </body>
 
 </html>

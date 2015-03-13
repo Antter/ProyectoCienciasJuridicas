@@ -1,12 +1,11 @@
 <?php
 session_start();
-include_once "../../../pages/Conexion.php";
+include "../../../../Datos/conexion.php";
 
         //Información Personal
-	  	if(!empty($_POST['id'])){
-            //Borrar persona y teléfono(s) asociado(s).
-            for($i=0; $i<count($_POST['id']); $i++){
-                $identi = $_POST['id'][$i];
+	  	if(isset($_POST['id'])){
+            //Borrar persona
+                $identi = $_POST['id'];
                 mysql_query("DELETE FROM telefono WHERE N_identidad = '$identi'");
                 mysql_query("DELETE FROM empleado WHERE N_identidad = '$identi'");
                 mysql_query("DELETE FROM estudios_academico WHERE N_identidad = '$identi'");
@@ -14,34 +13,28 @@ include_once "../../../pages/Conexion.php";
                 mysql_query("DELETE FROM experiencia_academica WHERE N_identidad = '$identi'");
                 mysql_query("DELETE FROM telefono WHERE N_identidad = '$identi'");
                 mysql_query("DELETE FROM persona WHERE N_identidad = '$identi'");
-            }
+                echo "La persona se ha eliminado correctamente!";
         }
 
         //Formación Académica
-        if(!empty($_POST['idfAc'])){
-            //Borrar persona y teléfono(s) asociado(s).
-            for($i=0; $i<count($_POST['idfAc']); $i++){
-                $identi = $_POST['idfAc'][$i];
+        if(isset($_POST['idformAc'])){
+                $identi = $_POST['idformAc'];
                 mysql_query("DELETE FROM estudios_academico WHERE N_identidad = '$identi'");
-            }
+                echo "La formación académica se ha eliminado correctamente!";
         }
 
         //Experiencia laboral
-        if(!empty($_POST['ideLab'])){
-            //Borrar persona y teléfono(s) asociado(s).
-            for($i=0; $i<count($_POST['ideLab']); $i++){
-                $identi = $_POST['ideLab'][$i];
+        if(isset($_POST['idLab'])){
+                $identi = $_POST['idLab'];
                 mysql_query("DELETE FROM experiencia_laboral WHERE N_identidad = '$identi'");
-            }
+                echo "La experiencia laboral se ha eliminado correctamente!";
         }
 
         //Experiencia Académica
-        if(!empty($_POST['idAcad'])){
-            //Borrar persona y teléfono(s) asociado(s).
-            for($i=0; $i<count($_POST['idAcad']); $i++){
-                $identi = $_POST['idAcad'][$i];
+        if(isset($_POST['idAcad'])){
+                $identi = $_POST['idAcad'];
                 mysql_query("DELETE FROM experiencia_academica WHERE N_identidad = '$identi'");
-            }
+                echo "La experiencia académica se ha eliminado correctamente!";
         }
 ?>
 

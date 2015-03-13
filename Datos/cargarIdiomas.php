@@ -1,74 +1,205 @@
 <?php
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
+
+
+//include '../../Datos/conexion.php';
+
+ $pame = mysql_query("SELECT * FROM idioma");
+
+
 ?>
+<html lang="es">
 
-<table class="table table-bordered">
-                <tr class="well">
-                    <td><strong><center>Codigo</center></strong></td>
-                    <td><strong><center>Nombre Idioma</strong></td>
-                    <td><strong><center>Eliminar</strong></center></td>
-                    <td><strong><center>Actualizar</strong></center></td>
+<head>
 
-                </tr>
-                <?php
-                if (isset($_POST['ID_Idioma'])) {
-                    $id = $_POST['ID_Idioma'];
-                    mysql_query("DELETE FROM idioma
-						WHERE ID_Idioma='$id'");
-                    echo mensajes('Idioma"' . $id . '" Eliminado con Exito', 'verde');
-                }
-                ?>
+    
+    
+       <script>
+
+            /* 
+             * To change this license header, choose License Headers in Project Properties.
+             * To change this template file, choose Tools | Templates
+             * and open the template in the editor.
+             */
 
 
+             $(document).ready(function(){
+                fn_dar_eliminar();               
+            });
 
-                <?php
-                $pame = mysql_query("SELECT * FROM idioma");
-                while ($row = mysql_fetch_array($pame)) {
-                    ?>
-
-                    <tr>
-                        <td><?php echo $row['ID_Idioma']; ?></td>
-                        <td><?php echo $row['Idioma']; ?></td>
-
-
-
-
-                        <td>
-                    <center>
-
-
-
-
-                        <form action="" method='POST' >
-
-                            <button type="submit" class="btn btn-danger" name="ID_Idioma" value= <?php echo $row['ID_Idioma']; ?>  </button>
-                            <i class="icon-cancel">X</i>
-
-                        </form>
-
-                    </center>
-                    </td> 
-
-                    <td>
-                    <center>
-                        <a class="btn btn-info" href="modi_idioma.php?codigo=<?php echo $row['ID_Idioma']; ?>" title="Editar">
-                            <i class="icon-edit">Editar</i>
-                        </a>
-                    </center>
-
-                    </td>
-
-
-                    </tr>
-
+            var x;
+            x = $(document);
+            x.ready(inicio);
+            
+            
+        
+            function inicio()
+            {
+              
+                 var x;
+                x = $(".editarb");
+                x.click(editarIdioma);
+            };
+            
+            
+            
+            function fn_dar_eliminar(){
+          
+                $(".elimina").click(function(){
+                    id1 = $(this).parents("tr").find("td").eq(0).html();
+                    eliminarIdioma();
                   
+                });
+            };
+            
+            
+   function eliminarIdioma(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ ID_Idioma:id1};
+    
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        url:"Datos/eliminarPOA.php",     
+        beforeSend:inicioEnvio,
+        success:llegadaEliminarIdioma,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+        }
+} 
+            
+            
+                  
+            
+
+                function editarIdioma()
+            {
+                var pid=$(this).parents("tr").find("td").eq(0).html();
+               
+              
+                
+                
+                 data ={pid:pid}; 
+                
+                
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: llegadaEditarIdioma,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            }
+            
 
 
-            </div>
+            function inicioEnvio()
+            {
+                var x = $("#contenedor2");
+                x.html('Cargando...');
+            }
+            
+             function llegadaEditarIdioma()
+            {
+                $("#contenedor2").load('pages/recursos_humanos/modi_Idiomas.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function llegadaEliminarIdioma()
+            {
+                $("#contenedor2").load('Datos/eliminarIdiomas.php',data1);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
 
-<?php } ?>
+            function problemas()
+            {
+                $("#contenedor2").text('Problemas en el servidor.');
+            }
+
+
+
+        </script>
+    
+    
+    
+
+    
+</head>
+
+<body>
+    
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h1 class="page-header">Lista de Idiomas</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+   
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+        <tr>
+            <th><strong>ID Idioma</strong></th>
+            <th><strong>Nombre del Idioma</strong></th>
+            <th><strong>Eliminar</strong></th>
+            <th><strong>Modificar</strong></th>
+
+        </tr>
+            </thead>
+      <tbody>
+          
+        <?php
+        while ($row = mysql_fetch_array($pame)) {
+            $id = $row['ID_Idioma'];
+         ?>
+            
+          <tr>
+                  <td id="id4"><?php echo $id ?></td>
+                  <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Idioma'] ?></div></td>
+
+
+                  <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+
+          </center>
+            </td> 
+
+            <td>
+
+            <center>
+
+                <button   type="button"  id="editar" href="#" class="editarb btn btn-primary glyphicon glyphicon-edit" >
+                  
+                </button>
+            </center>
+
+            </td>
+
+
+    </tr>
+
+    <!-- aqui Omar -->
+
+
+
+   <?php } ?>
+ </tbody>
     </table>
-</td>
-</tr>
-</table>
+
+    </div>
+
+
+</body>
+
+</html>

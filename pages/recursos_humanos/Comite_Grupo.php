@@ -1,3 +1,9 @@
+<?php
+ include ('../../Datos/conexion.php');
+
+?>
+
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -59,7 +65,7 @@ and open the template in the editor.
         <div id="contenedor2" >
             <?php
             $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-            include "$root\ProyectoIS\ModuloCurricular\Datos\cargarComite.php";
+            include "$root\SistemaCienciasJuridicas\Datos\cargarComite.php";
             ?>
 
 

@@ -1,7 +1,7 @@
 <?php
 
 $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
+include "$root\sistemaCienciasJuridicas\Datos\Conexion.php";
 
 if (isset($_POST['nombreIdioma'])) {
     $Language = $_POST['nombreIdioma'];
@@ -11,5 +11,5 @@ if (isset($_POST['nombreIdioma'])) {
     mysql_query($query);
 }
 
-include "$root\ProyectoIS\ModuloCurricular\Datos\cargarIdiomas.php";
+include "$root\sistemaCienciasJuridicas\Datos\cargarIdiomas.php";
 ?>

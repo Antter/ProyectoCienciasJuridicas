@@ -11,33 +11,7 @@
 
     <title>Módulo Curricular</title>
     <!-- CSS -->
-    <link href="../../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <link href="../../../dist/css/timeline.css" rel="stylesheet">
-    <link href="../../../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="../../../css/datepicker.css" rel="stylesheet" media="screen">
-
-    <!-- javascript -->
-    <link href="../../../bower_components/morrisjs/morris.css" rel="stylesheet">
-    <link href="../../../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="../../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="../../../bower_components/raphael/raphael-min.js"></script>
-    <script src="../../../bower_components/morrisjs/morris.min.js"></script>
-    <script src="../../../js/morris-data.js"></script>
-    <script src="../../../dist/js/sb-admin-2.js"></script>
-    <script type="text/javascript" src="../../../js/jquery-1.11.1.min.js" ></script>
-    <script type="text/javascript" src="../../../js/datepicker.js"></script>
-    <script type="text/javascript" src="../../../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="../../../js/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="../../../js/insertarPOA.js" ></script>
-
-
-    <?php include_once "personaAgregar.php"; ?>
-
-
+    <?php include "../../../../Datos/conexion.php";?>
 </head>
 
 <body>
@@ -63,7 +37,7 @@
                                     <div class="col-lg-8">
                                         <div class="form-group">
                                             <label>Número de identidad</label>
-                                            <select name="ideLab" class="form-control">
+                                            <select id="ideLab" name="ideLab" class="form-control">
                                                 <?php
                                                 $pa=mysql_query("SELECT N_identidad FROM persona");
                                                 while($row=mysql_fetch_array($pa)){
@@ -71,53 +45,33 @@
                                                 }
                                                 ?>
                                             </select>
-                                            <div class="multi-field-wrapper-eLab">
-                                                <div class="multi-fields-eLab">
-                                                    <div class="multi-field-eLab">
-                                                        <div class="form-group">
-                                                            </br><label><h3>Nueva experiencia laboral</h3></label></br>
-                                                            </br><label>Nombre de la empresa</label>
-                                                            <input class="form-control" name="nombreEmpresa[]" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Tiempo (número de meses)</label>
-                                                            <input class="form-control" name="tiempoLab[]" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Cargo</label>
-                                                            <select name="cargo[]" class="form-control">
-                                                                <?php
-                                                                $pa=mysql_query("SELECT Cargo FROM cargo");
-                                                                while($row=mysql_fetch_array($pa)){
-                                                                    echo '<option value="'.$row['Cargo'].'">'.$row['Cargo'].'</option>';
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
-                                                        <button type="button" class="btn btn-default remove-field-eLab">Borrar</button>
-                                                    </div>
-                                                </div>
-                                                </br><button type="button" class="btn btn-primary add-field-eLab">Añadir</button>
+                                            <div class="form-group">
+                                                </br><label><h3>Nueva experiencia laboral</h3></label></br>
+                                                </br><label>Nombre de la empresa</label>
+                                                <input id="nombreEmpresa" class="form-control" name="nombreEmpresa" required>
                                             </div>
-                                            <script type="text/javascript">
-                                                $('.multi-field-wrapper-eLab').each(function() {
-                                                    var $wrapper = $('.multi-fields-eLab', this);
-                                                    $(".add-field-eLab", $(this)).click(function(e) {
-                                                        $('.multi-field-eLab:first-child', $wrapper).clone(true).appendTo($wrapper).find('div').val('').focus();
-                                                    });
-                                                    $('.multi-field-eLab .remove-field-eLab', $wrapper).click(function() {
-                                                        if ($('.multi-field-eLab', $wrapper).length > 1)
-                                                            $(this).parent('.multi-field-eLab').remove();
-                                                    });
-                                                });
-                                            </script>
+                                            <div class="form-group">
+                                                <label>Tiempo (número de meses)</label>
+                                                <input id="tiempoLab" class="form-control" name="tiempoLab" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cargo</label>
+                                                <select id="cargo" name="cargo" class="form-control">
+                                                    <?php
+                                                    $pa=mysql_query("SELECT Cargo FROM cargo");
+                                                    while($row=mysql_fetch_array($pa)){
+                                                        echo '<option value="'.$row['Cargo'].'">'.$row['Cargo'].'</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Guardar Información</button>
+                    <button type="submit" class="btn btn-primary" id="explab">Guardar Información</button>
                 </form>
             </div>
             <!-- .panel-body -->
@@ -126,6 +80,66 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+<script>
+
+    /*
+     * To change this license header, choose License Headers in Project Properties.
+     * To change this template file, choose Tools | Templates
+     * and open the template in the editor.
+     */
+
+    var x;
+    x = $(document);
+    x.ready(inicio);
+
+    function inicio()
+    {
+        var x;
+        x = $("#explab");
+        x.click(agregarexplab);
+    }
+
+
+    function agregarexplab()
+    {
+        data={
+            ideLab:$('#ideLab').val(),
+            nombreEmpresa:$('#nombreEmpresa').val(),
+            tiempoLab:$('#tiempoLab').val()
+        };
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded",
+            beforeSend: inicioEnvio,
+            success: llegadaExpLab,
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+
+    function inicioEnvio()
+    {
+        var x = $("#contenedor");
+        x.html('Cargando...');
+    }
+
+    function llegadaExpLab()
+    {
+        $("#contenedor").load('pages/recursos_humanos/cv/nuevo/personaAgregar.php',data);
+    }
+
+    function problemas()
+    {
+        $("#contenedor").text('Problemas en el servidor.');
+    }
+
+
+
+</script>
 </body>
 
 </html>

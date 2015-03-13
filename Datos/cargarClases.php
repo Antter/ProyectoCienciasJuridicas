@@ -1,99 +1,79 @@
 <?php
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
-//echo 'cargar la tabla'
+$pame = mysql_query("SELECT * FROM clases");
 ?>
+<html lang="es">
 
-<table class="table table-bordered">
-    <tr class="well">
-        <td><strong><center>ID Clase</center></strong></td>
-        <td><strong><center>Nombre Clase</strong></td>
-        <td><strong><center>Eliminar</strong></center></td>
-        <td><strong><center>Actualizar</strong></center></td>
-
-    </tr>
-
-    <?php
-    $pame = mysql_query("SELECT * FROM clases");
-    while ($row = mysql_fetch_array($pame)) {
-        ?>
-
-        <tr>
-            <td ><?php echo $row['ID_Clases']; ?></td>
-            <td><?php echo $row['Clase']; ?></td>
+    <head>
+        <script>
 
 
+            $(document).ready(function() {
+                fn_eliminar();
+            });
 
-
-            <td>
-        <center>
-
-
-
-
-            <form action="" method='POST' >
-
-                <button type="submit" class="btn btn-danger" id="eliminarClase" value= <?php echo $row['ID_Clases'];?></button>
-                <i class="icon-cancel">X</i>
-
-            </form>
-
-        </center>
-    </td> 
-
-    <td>
-    <center>
-        <a class="btn btn-info" href="modi_clase.php?codigo=<?php echo $row['ID_Clases']; ?>" title="Editar">
-            <i class="icon-edit">Editar</i>
-        </a>
-    </center>
-
-    </td>
-    </tr>
-
-    </div>
-    <div id="contenedor2">
-        
-    </div>
-
-        
-    
-
-<?php } ?>
-</table>
-</td>
-</tr>
-</table>
-
-<script>
             var x;
             x = $(document);
-            x.ready(eliminar);
-            function eliminar()
+            x.ready(inicio);
+
+            function inicio()
             {
                 var x;
-                x = $("#eliminarClase");
-                x.click(eliminarClase);
-             
+                x = $(".editar");
+                x.click(editarClase);
+            }
+            ;
+
+
+
+            function  fn_eliminar() {
+                $(".elimina").click(function() {
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    eliminarClase();
+
+                });
+            }
+            ;
+
+
+            function eliminarClase() {
+                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta) {
+                    data = {IdClase: id};
+
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "Datos/eliminarPOA.php",
+                        beforeSend: inicioEnvio,
+                        success: llegadaEliminarClase,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
             }
 
-            function eliminarClase()
+            function editarClase()
             {
-                data={
-                    nombre:$('#nombre').val()
-                }
+                var id = $(this).parents("tr").find("td").eq(0).html();
+                data = {idClase: id};
+
+
                 $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
                     contentType: "application/x-www-form-urlencoded",
                     beforeSend: inicioEnvio,
-                    success: llegadaEliminarClase,
+                    success: llegadaEditarClase,
                     timeout: 4000,
                     error: problemas
                 });
                 return false;
             }
+
 
 
             function inicioEnvio()
@@ -102,9 +82,15 @@ include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
                 x.html('Cargando...');
             }
 
+            function llegadaEditarClase()
+            {
+                $("#contenedor2").load('pages/recursos_humanos/modi_clases.php', data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+
             function llegadaEliminarClase()
             {
-                $("#contenedor2").load('Datos/elimianrClase.php',data);
+                $("#contenedor2").load('Datos/eliminarClase.php', data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
@@ -116,3 +102,76 @@ include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
 
 
         </script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#tablaClases').dataTable(); // example es el id de la tabla
+            });
+        </script>
+
+       <body>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h1 class="page-header">Lista de Clases</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+
+    <div class="table-responsive">
+        <table id="tablaClases" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+
+                    <td><strong><center>ID Clase</center></strong></td>
+                    <td><strong><center>Nombre Clase</strong></td>
+                    <td><strong><center>Eliminar</strong></center></td>
+                    <td><strong><center>Actualizar</strong></center></td>
+
+                </tr>
+
+            </thead>
+            <tbody>
+
+                <?php
+                while ($row = mysql_fetch_array($pame)) {
+                    $id = $row['ID_Clases'];
+                    ?>
+
+                    <tr>
+                        <td id="id"><?php echo $id ?></td>
+                        <td><div class="text" id="nombre-<?php echo $id ?>"><?php echo $row['Clase'] ?>
+                            </div></td>
+
+
+                        <td>
+                <center>
+                    <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+
+                </center>
+                </td> 
+
+                <td>
+
+                <center>
+
+                    <button   type="button"  id="editar" href="#" class="editar btn btn-primary glyphicon glyphicon-edit" >
+
+                    </button>
+                </center>
+
+                </td>
+
+
+                </tr>
+
+<?php } ?>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>
+

@@ -1,67 +1,206 @@
 <?php
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
-//echo 'cargar la tabla'
+
+
+//include '../../Datos/conexion.php';
+
+ $pame = mysql_query("SELECT * FROM grupo_o_comite");
+
+
 ?>
+<html lang="es">
 
-<table class="table table-bordered">
-    <tr class="well">
-        <td><strong><center>ID Grupo o Comité</center></strong></td>
-        <td><strong><center>Nombre Grupo o Comité</strong></td>
-        <td><strong><center>Eliminar</strong></center></td>
-        <td><strong><center>Actualizar</strong></center></td>
+<head>
 
-    </tr>
+    
+    
+       <script>
 
-    <?php
-    $pame = mysql_query("SELECT * FROM grupo_o_comite");
-    while ($row = mysql_fetch_array($pame)) {
-        ?>
-
-        <tr>
-            <td ><?php echo $row['ID_Grupo_o_comite']; ?></td>
-            <td><?php echo $row['Nombre_Grupo_o_comite']; ?></td>
+            /* 
+             * To change this license header, choose License Headers in Project Properties.
+             * To change this template file, choose Tools | Templates
+             * and open the template in the editor.
+             */
 
 
+             $(document).ready(function(){
+                fn_dar_eliminar();               
+            });
 
-
-            <td>
-        <center>
-
-
-
-
-            <form action="" method='POST' >
-
-                <button type="submit" class="btn btn-danger" id="eliminarClase" value= <?php echo $row['ID_Grupo_o_comite'];?></button>
-                <i class="icon-cancel">X</i>
-
-            </form>
-
-        </center>
-    </td> 
-
-    <td>
-    <center>
-        <a class="btn btn-info" href="modi_clase.php?codigo=<?php echo $row['ID_Grupo_o_comite']; ?>" title="Editar">
-            <i class="icon-edit">Editar</i>
-        </a>
-    </center>
-
-    </td>
-    </tr>
-
-    </div>
-    <div id="contenedor2">
+            var x;
+            x = $(document);
+            x.ready(inicio);
+            
+            
         
-    </div>
+            function inicio()
+            {
+              
+                 var x;
+                x = $(".editarb");
+                x.click(editarGrupoComite);
+            };
+            
+            
+            
+            function fn_dar_eliminar(){
+          
+                $(".elimina").click(function(){
+                    id1 = $(this).parents("tr").find("td").eq(0).html();
+                    eliminarGrupoComite();
+                  
+                });
+            };
+            
+            
+   function eliminarGrupoComite(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ grupoComite:id1};
+    
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        url:"Datos/eliminarPOA.php",     
+        beforeSend:inicioEnvio,
+        success:llegadaEliminarGrupoComite,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+        }
+} 
+            
+            
+                  
+            
 
-        
+                function editarGrupoComite()
+            {
+                var grupoComite=$(this).parents("tr").find("td").eq(0).html();
+               
+              
+                
+                
+                 data ={grupoComite:grupoComite}; 
+                
+                
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: llegadaEditarGrupoComite,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            }
+            
+
+
+            function inicioEnvio()
+            {
+                var x = $("#contenedor2");
+                x.html('Cargando...');
+            }
+            
+             function llegadaEditarGrupoComite()
+            {
+                $("#contenedor2").load('pages/recursos_humanos/modi_GrupoComite.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function llegadaEliminarGrupoComite()
+            {
+                $("#contenedor2").load('Datos/eliminarGrupoComite.php',data1);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+
+            function problemas()
+            {
+                $("#contenedor2").text('Problemas en el servidor.');
+            }
+
+
+
+        </script>
+    
+    
     
 
-<?php } ?>
-</table>
-</td>
-</tr>
-</table>
+    
+</head>
+
+<body>
+    
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h1 class="page-header">Lista de Grupos o Comites</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+   
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+        <tr>
+            <th><strong>ID Grupo o Comite</strong></th>
+            <th><strong>Nombre del Grupo o Comite</strong></th>
+            <th><strong>Eliminar</strong></th>
+            <th><strong>Modificar</strong></th>
+
+        </tr>
+            </thead>
+      <tbody>
+          
+        <?php
+        while ($row = mysql_fetch_array($pame)) {
+            $id = $row['ID_Grupo_o_comite'];
+         ?>
+            
+          <tr>
+                  <td id="id4"><?php echo $id ?></td>
+                  <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Nombre_Grupo_o_comite'] ?></div></td>
+
+
+                  <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+
+          </center>
+            </td> 
+
+            <td>
+
+            <center>
+
+                <button   type="button"  id="editar" href="#" class="editarb btn btn-primary glyphicon glyphicon-edit" >
+                  
+                </button>
+            </center>
+
+            </td>
+
+
+    </tr>
+
+    <!-- aqui Omar -->
+
+
+
+   <?php } ?>
+ </tbody>
+    </table>
+
+    </div>
+
+
+</body>
+
+</html>
 

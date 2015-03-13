@@ -1,10 +1,9 @@
 <?php
 
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
 
-include "$root\curriculo\Datos\conexion.php";
+ //include '../../Datos/conexion.php';
 
- $pame = mysql_query("SELECT * FROM pais ");
+ $pame = mysql_query("SELECT * FROM pais");
 
 
 ?>
@@ -22,24 +21,66 @@ include "$root\curriculo\Datos\conexion.php";
              * and open the template in the editor.
              */
 
+
+             $(document).ready(function(){
+                fn_dar_eliminar();               
+            });
+
             var x;
             x = $(document);
             x.ready(inicio);
             
+            
+        
             function inicio()
             {
               
                  var x;
                 x = $(".editarb");
                 x.click(editarPais);
-            }
+            };
+            
+            
+            
+            function fn_dar_eliminar(){
+          
+                $(".elimina").click(function(){
+                    id1 = $(this).parents("tr").find("td").eq(0).html();
+                    eliminarPais();
+                  
+                });
+            };
+            
+            
+   function eliminarPais(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ Id_Pais:id1};
+    
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        url:"Datos/eliminarPOA.php",     
+        beforeSend:inicioEnvio,
+        success:llegadaEliminarPais,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+        }
+} 
+            
+            
+                  
+            
 
                 function editarPais()
             {
                 var pid=$(this).parents("tr").find("td").eq(0).html();
-                alert(pid);
-                      //
-                alert(pid);
+               
+              
                 
                 
                  data ={pid:pid}; 
@@ -68,7 +109,13 @@ include "$root\curriculo\Datos\conexion.php";
             
              function llegadaEditarPais()
             {
-                $("#contenedor").load('Datos/modi_pais.php',data);
+                $("#contenedor2").load('pages/recursos_humanos/modi_pais.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function llegadaEliminarPais()
+            {
+                $("#contenedor2").load('Datos/eliminarPais.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
@@ -88,10 +135,18 @@ include "$root\curriculo\Datos\conexion.php";
 </head>
 
 <body>
+    
+    <div class="row">
+        <div class="col-lg-12">
 
-    <form role="form" action="#" method='POST'>
+            <h1 class="page-header">Lista de paises</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+   
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-bordered table-hover table-striped">
             <thead>
         <tr>
             <th><strong>ID pais</strong></th>
@@ -101,37 +156,35 @@ include "$root\curriculo\Datos\conexion.php";
 
         </tr>
             </thead>
-
-
       <tbody>
+          
         <?php
         while ($row = mysql_fetch_array($pame)) {
             $id = $row['Id_pais'];
          ?>
             
-            <tr>
-                <td id="id4">   <?php echo $id ?> </td>
-                <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Nombre_pais'] ?></div></td>
+          <tr>
+                  <td id="id4"><?php echo $id ?></td>
+                  <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Nombre_pais'] ?></div></td>
 
 
-                <td>
-                   <center>
-                   <button type="button" class="btn btn-danger" </button>
-                   <i class="icon-cancel">X</i>
+                  <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
-                   </center>
-                </td> 
+          </center>
+            </td> 
 
-        <td>
+            <td>
 
-        <center>
+            <center>
 
-            <button   type="button"  id="editar" href="#" class="editarb btn btn-primary" >
-                <i class="icon-edit">Editar</i>
-            </button>
-        </center>
+                <button   type="button"  id="editar" href="#" class="editarb btn btn-primary glyphicon glyphicon-edit" >
+                  
+                </button>
+            </center>
 
-        </td>
+            </td>
 
 
     </tr>
@@ -145,7 +198,6 @@ include "$root\curriculo\Datos\conexion.php";
     </table>
 
     </div>
-</form>
 
 
 </body>

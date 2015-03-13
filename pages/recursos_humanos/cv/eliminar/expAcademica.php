@@ -11,31 +11,7 @@
 
     <title>Módulo Curricular</title>
     <!-- CSS -->
-    <link href="../../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <link href="../../../dist/css/timeline.css" rel="stylesheet">
-    <link href="../../../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="../../../css/datepicker.css" rel="stylesheet" media="screen">
-
-    <!-- javascript -->
-    <link href="../../../bower_components/morrisjs/morris.css" rel="stylesheet">
-    <link href="../../../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="../../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="../../../bower_components/raphael/raphael-min.js"></script>
-    <script src="../../../bower_components/morrisjs/morris.min.js"></script>
-    <script src="../../../js/morris-data.js"></script>
-    <script src="../../../dist/js/sb-admin-2.js"></script>
-    <script type="text/javascript" src="../../../js/jquery-1.11.1.min.js" ></script>
-    <script type="text/javascript" src="../../../js/datepicker.js"></script>
-    <script type="text/javascript" src="../../../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="../../../js/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
-
-    <?php include_once "personaEliminar.php"; ?>
-
-
+    <?php include "../../../../Datos/conexion.php";?>
 </head>
 
 <body>
@@ -44,7 +20,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Agregar Persona
+                Persona
             </div>
             <!-- .panel-heading -->
             <div class="panel-body">
@@ -66,39 +42,25 @@
                                                         <div class="form-group">
                                                             </br><label><h3>Eliminar Experiencia Académica</h3></label></br></br>
                                                             <label>Número de identidad</label>
-                                                            <select name="idAcad[]" class="form-control">
+                                                            <select id="idAcad" name="idAcad" class="form-control">
                                                                 <?php
-                                                                $pa=mysql_query("SELECT N_identidad FROM persona");
+                                                                $pa=mysql_query("SELECT T1.N_identidad FROM persona T1 INNER JOIN experiencia_academica T2 ON T1.N_identidad = T2.N_identidad");
                                                                 while($row=mysql_fetch_array($pa)){
                                                                     echo '<option value="'.$row['N_identidad'].'">'.$row['N_identidad'].'</option>';
                                                                 }
                                                                 ?>
                                                             </select>
                                                         </div>
-                                                        <button type="button" class="btn btn-default remove-field-fAc">Borrar</button>
                                                     </div>
                                                 </div>
-                                                </br><button type="button" class="btn btn-primary add-field-fAc">Añadir</button>
                                             </div>
-                                            <script type="text/javascript">
-                                                $('.multi-field-wrapper-fAc').each(function() {
-                                                    var $wrapper = $('.multi-fields-fAc', this);
-                                                    $(".add-field-fAc", $(this)).click(function(e) {
-                                                        $('.multi-field-fAc:first-child', $wrapper).clone(true).appendTo($wrapper).find('div').val('').focus();
-                                                    });
-                                                    $('.multi-field-fAc .remove-field-fAc', $wrapper).click(function() {
-                                                        if ($('.multi-field-fAc', $wrapper).length > 1)
-                                                            $(this).parent('.multi-field-fAc').remove();
-                                                    });
-                                                });
-                                            </script>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Eliminar Información</button>
+                    <button type="submit" class="btn btn-primary" id="elexpAcad">Eliminar Información</button>
                 </form>
             </div>
             <!-- .panel-body -->
@@ -107,6 +69,64 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+<script>
+
+    /*
+     * To change this license header, choose License Headers in Project Properties.
+     * To change this template file, choose Tools | Templates
+     * and open the template in the editor.
+     */
+
+    var x;
+    x = $(document);
+    x.ready(inicio);
+
+    function inicio()
+    {
+        var x;
+        x = $("#elexpAcad");
+        x.click(eliminarexpAcad);
+    }
+
+
+    function eliminarexpAcad()
+    {
+        data={
+            idAcad:$('#idAcad').val()
+        };
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded",
+            beforeSend: inicioEnvio,
+            success: llegadaEliminarExpAcad,
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+
+    function inicioEnvio()
+    {
+        var x = $("#contenedor");
+        x.html('Cargando...');
+    }
+
+    function llegadaEliminarExpAcad()
+    {
+        $("#contenedor").load('pages/recursos_humanos/cv/eliminar/personaEliminar.php',data);
+    }
+
+    function problemas()
+    {
+        $("#contenedor").text('Problemas en el servidor.');
+    }
+
+
+
+</script>
 </body>
 
 </html>

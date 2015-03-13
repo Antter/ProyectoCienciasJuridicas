@@ -1,66 +1,206 @@
 <?php
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
- //echo 'cargar la tabla'
+
+
+//include '../../Datos/conexion.php';
+
+ $pame = mysql_query("SELECT * FROM tipo_estudio");
+
+
 ?>
+<html lang="es">
 
-<table class="table table-bordered">
-                <tr class="well">
-                    <td><strong><center>ID Tipo Estudio</center></strong></td>
-                    <td><strong><center>Nombre Tipo Estudio</strong></td>
-                    <td><strong><center>Eliminar</strong></center></td>
-                    <td><strong><center>Actualizar</strong></center></td>
+<head>
 
-                </tr>
+    
+    
+       <script>
 
-                <?php
-                $pame = mysql_query("SELECT * FROM tipo_estudio");
-                while ($row = mysql_fetch_array($pame)) {
-                    ?>
-
-                    <tr>
-                        <td><?php echo $row['ID_Tipo_estudio']; ?></td>
-                        <td><?php echo $row['Tipo_estudio']; ?></td>
+            /* 
+             * To change this license header, choose License Headers in Project Properties.
+             * To change this template file, choose Tools | Templates
+             * and open the template in the editor.
+             */
 
 
+             $(document).ready(function(){
+                fn_dar_eliminar();               
+            });
 
-
-                        <td>
-                    <center>
-
-
-
-
-                        <form action="" method='POST' >
-
-                            <button type="submit" class="btn btn-danger" name="ID_Tipo_estudio" value= <?php echo $row['ID_Tipo_estudio']; ?>  </button>
-                            <i class="icon-cancel">X</i>
-
-                        </form>
-
-                    </center>
-                    </td> 
-
-                    <td>
-                    <center>
-                        <a class="btn btn-info" href="modi_clase.php?codigo=<?php echo $row['ID_Tipo_estudio']; ?>" title="Editar">
-                            <i class="icon-edit">Editar</i>
-                        </a>
-                    </center>
-
-                    </td>
-
-
-                    </tr>
-
+            var x;
+            x = $(document);
+            x.ready(inicio);
+            
+            
+        
+            function inicio()
+            {
+              
+                 var x;
+                x = $(".editarb");
+                x.click(editarTipoEstudio);
+            };
+            
+            
+            
+            function fn_dar_eliminar(){
+          
+                $(".elimina").click(function(){
+                    id1 = $(this).parents("tr").find("td").eq(0).html();
+                    eliminarTipoEstudio();
                   
+                });
+            };
+            
+            
+   function eliminarTipoEstudio(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ TipoEstudio:id1};
+    
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        url:"Datos/eliminarPOA.php",     
+        beforeSend:inicioEnvio,
+        success:llegadaEliminarTipoEstudio,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+        }
+} 
+            
+            
+                  
+            
+
+                function editarTipoEstudio()
+            {
+                var TipoEstudio=$(this).parents("tr").find("td").eq(0).html();
+               
+              
+                
+                
+                 data ={TipoEstudio:TipoEstudio}; 
+                
+                
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: llegadaEditarTipoEstudio,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            }
+            
 
 
-            </div>
+            function inicioEnvio()
+            {
+                var x = $("#contenedor2");
+                x.html('Cargando...');
+            }
+            
+             function llegadaEditarTipoEstudio()
+            {
+                $("#contenedor2").load('pages/recursos_humanos/modi_TipoEstudio.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function llegadaEliminarTipoEstudio()
+            {
+                $("#contenedor2").load('Datos/eliminarTipoEstudio.php',data1);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
 
-<?php } ?>
+            function problemas()
+            {
+                $("#contenedor2").text('Problemas en el servidor.');
+            }
+
+
+
+        </script>
+    
+    
+    
+
+    
+</head>
+
+<body>
+    
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h1 class="page-header">Lista de Tipos de Estudio</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+   
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+        <tr>
+            <th><strong>ID Tipo Estudio</strong></th>
+            <th><strong>Nombre del Tipo de Estudio</strong></th>
+            <th><strong>Eliminar</strong></th>
+            <th><strong>Modificar</strong></th>
+
+        </tr>
+            </thead>
+      <tbody>
+          
+        <?php
+        while ($row = mysql_fetch_array($pame)) {
+            $id = $row['ID_Tipo_estudio'];
+         ?>
+            
+          <tr>
+                  <td id="id4"><?php echo $id ?></td>
+                  <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Tipo_estudio'] ?></div></td>
+
+
+                  <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+
+          </center>
+            </td> 
+
+            <td>
+
+            <center>
+
+                <button   type="button"  id="editar" href="#" class="editarb btn btn-primary glyphicon glyphicon-edit" >
+                  
+                </button>
+            </center>
+
+            </td>
+
+
+    </tr>
+
+    <!-- aqui Omar -->
+
+
+
+   <?php } ?>
+ </tbody>
     </table>
-</td>
-</tr>
-</table>
+
+    </div>
+
+
+</body>
+
+</html>
 

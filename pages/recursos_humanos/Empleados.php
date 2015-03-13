@@ -1,12 +1,10 @@
 <?php
 
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-
-include "$root\curriculo\Datos\conexion.php";
 
 
-mysql_connect("localhost","root",""); 
-mysql_select_db("sistema_ciencias_juridicas");
+include '../../Datos/conexion.php';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -30,11 +28,11 @@ mysql_select_db("sistema_ciencias_juridicas");
 
             var x;
             x = $(document);
-            x.ready(guardarPais);
+            x.ready(buscarPersona);
             
-            function guardarPais()
+            function buscarPersona()
             {
-                alert("holaaaaaaaaaaaaaaaa");
+               
                 var x;
                 x = $("#persona");
                 x.click(buscar);
@@ -44,8 +42,8 @@ mysql_select_db("sistema_ciencias_juridicas");
 
             function buscar()
             {
-                var pnombre= $("#id_persona").val();
-                alert(pnombre);
+               
+               
                 
                 data={
                     idpersona:$('#id_persona').val()
@@ -111,13 +109,13 @@ mysql_select_db("sistema_ciencias_juridicas");
             <div class="col-lg-12">
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            Busqueda por numero de identidad
+                            Busqueda de persona por numero de identidad
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">       
 
-                                    <form role="form" action="#" method='POST'>
+                                    <form role="form">
 
 
                                         <!--<div class="form-group">-->
@@ -168,15 +166,22 @@ mysql_select_db("sistema_ciencias_juridicas");
             
             
  <div id="contenedor2" class="panel-body">
-    
+      <?php
+        
+       
+
+        include "../../Datos/BuscarPersona.php";
+         
+     
+        ?>
  </div>           
 
 <div id="contenedor3" class="panel-body">
         <?php
         
-        $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
+       
 
-        include "$root\curriculo\Datos\cargarEmpleados.php";
+        include "../../Datos/cargarEmpleados.php";
          
      
         ?>

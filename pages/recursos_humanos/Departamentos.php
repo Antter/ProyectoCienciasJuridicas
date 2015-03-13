@@ -1,68 +1,16 @@
+<?php
+include ('../../Datos/conexion.php');
+?>
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html lang="es">
+
     <head>
         <meta charset="UTF-8">
         <title></title>
-    </head>
-    <body>
-       
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Ingreso de Departamento</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Llene los campos a continuación solicitados
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-
-                                    <form role="form" action="#" method='POST'>
-                                        <div class="form-group">
-                                            <label>Nombre del Departamento</label>
-                                            <input id="nombre" class="form-control" >
-
-                                        </div>
-
-                                        <button id="guardarDepartamento" type="submit" class="btn btn-default">Agregar</button>
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
 
 
-                                    </form>
-                                </div>
-                                <!-- /.col-lg-6 (nested) -->
-                            </div>
-                            <!-- /.row (nested) -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-
-
-            <div id="contenedor2" >
-                <?php
-                $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-                include "$root\ProyectoIS\ModuloCurricular\Datos\cargarDepartamentos.php";
-                ?>
-
-
-            </div>
-
- <script>
+        <script>
 
             /* 
              * To change this license header, choose License Headers in Project Properties.
@@ -73,19 +21,25 @@ and open the template in the editor.
             var x;
             x = $(document);
             x.ready(guardarDepartamento);
+
             function guardarDepartamento()
             {
                 var x;
                 x = $("#guardarDepartamento");
                 x.click(insertarDepartamento);
-             
+
             }
+
 
             function insertarDepartamento()
             {
-                data={
-                    nombre:$('#nombre').val()
-                }
+
+
+
+                data = {
+                    departamento: $('#nombreDepartamento').val()
+                };
+
                 $.ajax({
                     async: true,
                     type: "POST",
@@ -100,6 +54,9 @@ and open the template in the editor.
             }
 
 
+
+
+
             function inicioEnvio()
             {
                 var x = $("#contenedor2");
@@ -108,9 +65,10 @@ and open the template in the editor.
 
             function llegadaInsertarDepartamento()
             {
-                $("#contenedor2").load('Datos/insertarDepartamento.php',data);
+                $("#contenedor2").load('Datos/insertarDepartamento.php', data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
+
 
             function problemas()
             {
@@ -122,6 +80,53 @@ and open the template in the editor.
         </script>
 
 
+    </head>
+    <body>
 
-</body>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Ingreso de Datos del Departamento</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Llene los campos a continuación solicitados
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form role="form" action="#" method="POST">
+                                    <div class="form-group">
+                                        <label>Nombre Departamento</label>
+                                        <input type="text" class="form-control" id="nombreDepartamento">
+                                    </div>
+
+                                    <button type="button"  id="guardarDepartamento" class="btn btn-primary">Agregar</button>
+                                    <button type="reset" class="btn btn-default">Cancelar</button>
+                                </form>
+                            </div>
+
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <div id="contenedor2" class="panel-body">
+            <?php
+            include '../../Datos/cargarDepartamentos.php';
+            ?>
+        </div>
+
+    </body>
+
 </html>

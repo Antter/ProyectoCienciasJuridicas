@@ -11,30 +11,7 @@
 
     <title>Módulo Curricular</title>
     <!-- CSS -->
-    <link href="../../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <link href="../../../dist/css/timeline.css" rel="stylesheet">
-    <link href="../../../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="../../../css/datepicker.css" rel="stylesheet" media="screen">
-
-    <!-- javascript -->
-    <link href="../../../bower_components/morrisjs/morris.css" rel="stylesheet">
-    <link href="../../../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="../../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="../../../bower_components/raphael/raphael-min.js"></script>
-    <script src="../../../bower_components/morrisjs/morris.min.js"></script>
-    <script src="../../../js/morris-data.js"></script>
-    <script src="../../../dist/js/sb-admin-2.js"></script>
-    <script type="text/javascript" src="../../../js/jquery-1.11.1.min.js" ></script>
-    <script type="text/javascript" src="../../../js/datepicker.js"></script>
-    <script type="text/javascript" src="../../../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="../../../js/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
-
-    <?php include_once "personaEliminar.php"; ?>
-
+    <?php include "../../../../Datos/conexion.php";?>
 
 </head>
 
@@ -67,7 +44,7 @@
                                                             </br><label><h3>Eliminar Información Personal</h3></label>
                                                             <label><h4>(Elimina toda la información asociada a la persona)</h4></label></br></br>
                                                             <label>Número de identidad</label>
-                                                            <select name="id[]" class="form-control">
+                                                            <select id="id" name="id" class="form-control">
                                                                 <?php
                                                                 $pa=mysql_query("SELECT N_identidad FROM persona");
                                                                 while($row=mysql_fetch_array($pa)){
@@ -76,30 +53,16 @@
                                                                 ?>
                                                             </select>
                                                         </div>
-                                                        <button type="button" class="btn btn-default remove-field-fAc">Borrar</button>
                                                     </div>
                                                 </div>
-                                                </br><button type="button" class="btn btn-primary add-field-fAc">Añadir</button>
                                             </div>
-                                            <script type="text/javascript">
-                                                $('.multi-field-wrapper-fAc').each(function() {
-                                                    var $wrapper = $('.multi-fields-fAc', this);
-                                                    $(".add-field-fAc", $(this)).click(function(e) {
-                                                        $('.multi-field-fAc:first-child', $wrapper).clone(true).appendTo($wrapper).find('div').val('').focus();
-                                                    });
-                                                    $('.multi-field-fAc .remove-field-fAc', $wrapper).click(function() {
-                                                        if ($('.multi-field-fAc', $wrapper).length > 1)
-                                                            $(this).parent('.multi-field-fAc').remove();
-                                                    });
-                                                });
-                                            </script>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Eliminar Información</button>
+                    <button id="elimPer" type="submit" class="btn btn-primary">Eliminar Información</button>
                 </form>
             </div>
             <!-- .panel-body -->
@@ -108,6 +71,65 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
+<script>
+
+    /*
+     * To change this license header, choose License Headers in Project Properties.
+     * To change this template file, choose Tools | Templates
+     * and open the template in the editor.
+     */
+
+    var x;
+    x = $(document);
+    x.ready(inicio);
+
+    function inicio()
+    {
+        var x;
+        x = $("#elimPer");
+        x.click(eliminarpersona);
+    }
+
+
+    function eliminarpersona()
+    {
+        data={
+            id:$('#id').val()
+        };
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded",
+            beforeSend: inicioEnvio,
+            success: llegadaEliminarPersona,
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+
+    function inicioEnvio()
+    {
+        var x = $("#contenedor");
+        x.html('Cargando...');
+    }
+
+    function llegadaEliminarPersona()
+    {
+        $("#contenedor").load('pages/recursos_humanos/cv/eliminar/personaEliminar.php',data);
+    }
+
+    function problemas()
+    {
+        $("#contenedor").text('Problemas en el servidor.');
+    }
+
+
+
+</script>
 </body>
 
 </html>

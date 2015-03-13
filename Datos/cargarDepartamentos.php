@@ -1,76 +1,178 @@
 <?php
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
- //echo 'cargar la tabla'
+ $pame = mysql_query("SELECT * FROM departamento_laboral");
 ?>
+<html lang="es">
 
-<table class="table table-bordered">
-                <tr class="well">
-                    <td><strong><center>ID Departamento</center></strong></td>
-                    <td><strong><center>Nombre Departamento</strong></td>
-                    <td><strong><center>Eliminar</strong></center></td>
-                    <td><strong><center>Actualizar</strong></center></td>
-
-                </tr>
-                <?php
-                if (isset($_POST['ID_Clases'])) {
-                    $id = $_POST['ID_Clases'];
-                    mysql_query("DELETE FROM clases
-						WHERE ID_Clases='$id'");
-                    echo mensajes('clase"' . $id . '" Eliminado con Exito', 'verde');
-                }
-                ?>
+<head>
+       <script>
 
 
+             $(document).ready(function(){
+                fn_eliminar();               
+            });
 
-                <?php
-                $pame = mysql_query("SELECT * FROM departamento_laboral");
-                while ($row = mysql_fetch_array($pame)) {
-                    ?>
-
-                    <tr>
-                        <td><?php echo $row['Id_departamento_laboral']; ?></td>
-                        <td><?php echo $row['nombre_departamento']; ?></td>
-
-
-
-
-                        <td>
-                    <center>
-
-
-
-
-                        <form action="" method='POST' >
-
-                            <button type="submit" class="btn btn-danger" name="ID_Clases" value= <?php echo $row['Id_departamento_laboral']; ?>  </button>
-                            <i class="icon-cancel">X</i>
-
-                        </form>
-
-                    </center>
-                    </td> 
-
-                    <td>
-                    <center>
-                        <a class="btn btn-info" href="modi_clase.php?codigo=<?php echo $row['Id_departamento_laboral']; ?>" title="Editar">
-                            <i class="icon-edit">Editar</i>
-                        </a>
-                    </center>
-
-                    </td>
-
-
-                    </tr>
-
+            var x;
+            x = $(document);
+            x.ready(inicio);
+            
+            
+        
+            function inicio()
+            {
+                var x;
+                x = $(".editar");
+                x.click(editarDepartamento);
+            };
+            
+            
+            
+            function  fn_eliminar(){
+                    $(".elimina").click(function(){
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    eliminarDepartamento();
                   
+                });
+            };
+            
+            
+   function eliminarDepartamento(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data ={ IdDepartamento:id};
+    
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        url:"Datos/eliminarPOA.php",     
+        beforeSend:inicioEnvio,
+        success:llegadaEliminarDepartamento,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+        }
+} 
+
+                function editarDepartamento()
+            {
+                var id=$(this).parents("tr").find("td").eq(0).html();
+                 data ={idDepartamento:id}; 
+                
+                
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: llegadaEditarDepartamento,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            }
+            
 
 
-            </div>
+            function inicioEnvio()
+            {
+                var x = $("#contenedor2");
+                x.html('Cargando...');
+            }
+            
+             function llegadaEditarDepartamento()
+            {
+                $("#contenedor2").load('pages/recursos_humanos/modi_departamento.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function llegadaEliminarDepartamento()
+            {
+                $("#contenedor2").load('Datos/eliminarDepartamento.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
 
-<?php } ?>
+            function problemas()
+            {
+                $("#contenedor2").text('Problemas en el servidor.');
+            }
+
+
+
+        </script>
+ <script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+$('#tablaDepartamento').dataTable(); // example es el id de la tabla
+} );
+</script>
+
+ 
+</head>
+
+<body>
+    
+    <div class="row">
+        <div class="col-lg-12">
+
+            <h1 class="page-header">Lista de Departamento</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+   
+    <div class="table-responsive">
+        <table id="tablaDepartamento" class="table table-bordered table-hover table-striped">
+            <thead>
+        <tr>
+            <th><strong><center>ID Departamento</center></strong></th>
+            <th><strong><center>Nombre del Departamento</center></strong></th>
+            <th><strong><center>Eliminar</center></strong></th>
+            <th><strong><center>Modificar</center></strong></th>
+
+        </tr>
+            </thead>
+      <tbody>
+          
+        <?php
+        while ($row = mysql_fetch_array($pame)) {
+            $id = $row['Id_departamento_laboral'];
+         ?>
+            
+          <tr>
+                  <td id="id"><?php echo $id ?></td>
+                  <td><div class="text" id="nombre-<?php echo $id ?>"><?php echo $row['nombre_departamento'] ?>
+                      </div></td>
+
+
+                  <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+
+          </center>
+            </td> 
+
+            <td>
+
+            <center>
+
+                <button   type="button"  id="editar" href="#" class="editar btn btn-primary glyphicon glyphicon-edit" >
+                  
+                </button>
+            </center>
+
+            </td>
+
+
+    </tr>
+
+   <?php } ?>
+ </tbody>
     </table>
-</td>
-</tr>
-</table>
+
+    </div>
+</body>
+
+</html>
 

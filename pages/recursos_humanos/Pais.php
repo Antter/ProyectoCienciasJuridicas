@@ -1,4 +1,7 @@
+<?php
+ include ('../../Datos/conexion.php');
 
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -31,12 +34,12 @@
 
             function insertarpais()
             {
-                var pnombre= $("#nombrepais").val();
-                alert(pnombre);
+                
+                
                 
                 data={
                     Pais:$('#nombrepais').val()
-                }
+                };
                 
                 $.ajax({
                     async: true,
@@ -105,7 +108,7 @@
                                     <p class="help-block">Ejemplo: Honduras, Mexico, Estados Unidos</p>
                                 </div>
 
-                                <button type="button"  id="guardarpais" class="btn btn-default">Agregar</button>
+                                <button type="button"  id="guardarpais" class="btn btn-primary">Agregar</button>
                                 <button type="reset" class="btn btn-default">Cancelar</button>
                             </form>
                         </div>
@@ -138,21 +141,15 @@
     <!-- /#page-wrapper -->
 
 
-    <div class="row">
-        <div class="col-lg-12">
-
-            <h1 class="page-header">Lista de paises</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
+    
   
     
     <div id="contenedor2" class="panel-body">
         <?php
         
-        $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
+        
 
-        include "$root\curriculo\Datos\cargaPais.php";
+        include '../../Datos/cargaPais.php';
       
         
      

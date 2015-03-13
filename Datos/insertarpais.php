@@ -1,21 +1,32 @@
 <?php
 
-  $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-
-   include "$root\curriculo\Datos\conexion.php";	
+ 
+include '../Datos/conexion.php';
+require_once 'funciones.php';
+  	
 
     if (isset($_POST['Pais'])) 
     {
         $Pais = $_POST['Pais']; 
         
-        $query = "INSERT INTO pais(Nombre_pais) VALUES('$Pais')";
         
-        mysql_query($query); 
-
+        
+       $query =mysql_query("INSERT INTO pais(Nombre_pais) VALUES('$Pais')"); 
+       
+       
+       if($query){
+           
+           
+           echo mensajes('Agregado con Exito','verde');
+       }else{
+        
+           echo mensajes('no se puedo ingresar registro','rojo');
+       }
+        
+       
     }   
-    
-    
-    
-    include "$root\curriculo\Datos\cargaPais.php";
+   
+   
+    include '../Datos/cargaPais.php';
     
 ?>

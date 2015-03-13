@@ -1,7 +1,7 @@
 <?php
 
 $root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\ProyectoIS\ModuloCurricular\Datos\Conexion.php";
+include "$root\sistemaCienciasJuridicas\Datos\Conexion.php";
 
 
 
@@ -13,5 +13,5 @@ if (isset($_POST['nombre'])) {
 
     mysql_query($query);
 }
-include "$root\ProyectoIS\ModuloCurricular\Datos\cargarClases.php";
+include "$root\sistemaCienciasJuridicas\Datos\cargarClases.php";
 ?>
