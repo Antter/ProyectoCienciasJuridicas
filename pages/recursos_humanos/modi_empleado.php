@@ -2,6 +2,11 @@
 
 include '../../Datos/conexion.php';
 
+$existe=FALSE;
+
+
+
+
 
 if(isset($_POST["tipoProcedimiento"])){
     $tipoProcedimiento = $_POST["tipoProcedimiento"];
@@ -11,17 +16,20 @@ if(isset($_POST["tipoProcedimiento"])){
     if($tipoProcedimiento == "AltaCargo"){
     require_once("../../Datos/actualizarCargoXEmpleado.php");
     }
+     if($tipoProcedimiento == "Actualizar"){
+    require_once("../../Datos/actualizarEmpleado.php");
+    }
 }
-
-
 
 $enlace = mysql_connect('localhost', 'root', '');
 mysql_select_db("sistema_ciencias_juridicas", $enlace);
 
-if(isset($_POST['codigo'])){
 
+if(isset($_POST['codigo']) and $existe==FALSE ){
  
  $codigoE = $_POST['codigo'];
+ 
+  echo($codigoE);
 
  $resultado=mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1' and No_Empleado='".$codigoE."'");
  $resultado2=mysql_query("SELECT * FROM empleado_has_cargo inner join cargo on cargo.ID_cargo=empleado_has_cargo.ID_cargo where No_Empleado='".$codigoE."'");
@@ -40,7 +48,31 @@ if(isset($_POST['codigo'])){
          
  }
  
- 
+    }else if(isset($_POST['codigo2']) and $existe==TRUE){
+        
+         $codigoE = $_POST['codigo2'];
+
+         echo($codigoE);
+         
+ $resultado=mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1' and No_Empleado='".$codigoE."'");
+ $resultado2=mysql_query("SELECT * FROM empleado_has_cargo inner join cargo on cargo.ID_cargo=empleado_has_cargo.ID_cargo where No_Empleado='".$codigoE."'");
+ if($row=mysql_fetch_array($resultado)){
+     
+     
+      $nombreE=$row['Primer_nombre'];
+      $apellidoE=$row['Primer_apellido'];
+      $depE=$row['nombre_departamento'];
+      $depID=$row['Id_departamento_laboral'];
+      $obsE=$row['Observacion'];
+      $noE=$row['N_identidad'];
+      $fechaE=$row['Fecha_ingreso'];
+    
+          
+   
+        
+        
+        
+    }
  
 }
 
@@ -95,9 +127,12 @@ if(isset($_POST['codigo'])){
             {
                
                 var id = "<?php echo $noE; ?>" ;
+                alert(id);
+                 var codT = "<?php echo $codigoE; ?>" ;
          
                 data={
                     codigo:$('#cod').val(),
+                    codigo2:codT,
                     nidentidadE:id,
                     departE:$('#dep').val(),
                     fechaE:$('#fecha').val(),
@@ -199,7 +234,7 @@ if(isset($_POST['codigo'])){
 
             function ActualizarEmple()
             {
-                $("#contenedor").load('pages/recursos_humanos/Empleados.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_empleado.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             

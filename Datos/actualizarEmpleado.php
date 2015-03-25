@@ -12,41 +12,43 @@
 		 $id_departamento=$_POST['departE'];
                  $fechaIngreso=$_POST['fechaE'];
                  $obs=$_POST['obsE'];
+                 
+               
 		
+        $rec2=mysql_query("SELECT * FROM empleado WHERE No_Empleado='".$codigo."'");        
                  
-                 
-   if(mysql_query("SELECT * FROM empleado WHERE No_Empleado='".$codigo."'")){
+   if($codigo==$rec2['codigo']){
+     
      
        $mensaje = 'Numero de empleado invalido o ya existente';
       $codMensaje = 0;
+      $existe=TRUE;
      
      
  }else{      
               
+     $enlace = mysql_connect('localhost', 'root', '');
+mysql_select_db("sistema_ciencias_juridicas", $enlace);
 		 
-	$query= mysql_query("UPDATE empleado SET 
-	No_Empleado='$codigo',
-        Id_departamento='$id_departamento',
-	Fecha_ingreso='$fechaIngreso',
-        Observacion='$obs'
-        WHERE N_identidad='".$n_identidad."'");
+	$queryAE= mysql_query("UPDATE `empleado` SET `No_Empleado`='$codigo',`Id_departamento`='$id_departamento',`Fecha_ingreso`='$fechaIngreso',`Observacion`='$obs'  WHERE N_identidad ='".$n_identidad."'");
         
        // $query2=mysql_query("UPDATE empleado_has_cargo SET ID_cargo='$id_cargo' WHERE No_empleado ='".$codigo."'");
 	
+       var_dump($queryAE);
 	
-	
-	if($query ){
+	if($queryAE){
 	
 		//echo '<META HTTP-EQUIV="REFRESH" CONTENT="2">' ;
-		  $mensaje = 'Empleado actualizado con Exito';
+            $mensaje = 'Empleado actualizado con Exito';
             $codMensaje = 1;
-	
+	    $existe=FALSE;
 	
 	
 	}else{
             
              $mensaje = 'error al actualizar el empleado';
              $codMensaje = 0;
+             $existe=TRUE;
             
         }
  }

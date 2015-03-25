@@ -1,7 +1,7 @@
 <?php
 
  // require_once('../../Datos/conexion.php');
- $query = mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1'");
+ $queryCE = mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1'");
 
 ?>
 
@@ -212,13 +212,13 @@
                                         <tbody>
 HTML;
 
-            while ($row = mysql_fetch_array($query))  {
+            while ($rowCE = mysql_fetch_array($queryCE))  {
 
-             $Noempleado = $row['No_Empleado'];
-            $Noidentidad = $row['N_identidad'];
-            $nombre = $row['Primer_nombre'];
-            $apellido=$row['Primer_apellido'];
-            $departamento=$row['nombre_departamento'];
+             $Noempleado = $rowCE['No_Empleado'];
+            $Noidentidad = $rowCE['N_identidad'];
+            $nombre = $rowCE['Primer_nombre'];
+            $apellido=$rowCE['Primer_apellido'];
+            $departamento=$rowCE['nombre_departamento'];
             
                 echo "<tr data-id='".$Noempleado."'>";
                 echo <<<HTML

@@ -16,9 +16,7 @@ if(isset($_POST["tipoProcedimiento"])){
     require_once("../../Datos/eliminarEmpleadoXGrupo.php");
     }
       
-     if($tipoProcedimiento == "Actualizar"){
-    require_once("../../Datos/actualizarEmpleado.php");
-    }
+    
 }
 
 
@@ -161,7 +159,7 @@ if(isset($_POST["tipoProcedimiento"])){
         
        
 
-        include "../../Datos/cargarEmpleados.php";
+      require_once("../../Datos/cargarEmpleados.php");
          
      
         ?>
