@@ -1,17 +1,7 @@
-var id;
-var data;
-var x;
-    x=$(document);
-    x.ready(inicio);
- 
-    function inicio(){
-        var x;
-        x=$("#submit");
-        x.click(consulta);
-       
-    }
-                
-        function consulta() {
+$( document ).ready(function() {
+
+    $("form").submit(function(e) {
+	    e.preventDefault();
             data ={ 
                 NroFolio:$("#NroFolio").val(),
                 fechaCreacion:$("#dp1").val(),
@@ -22,6 +12,8 @@ var x;
                 tipoFolio:$("#TipoFolio option:selected").val(),
                 ubicacionFisica:$("#ubicacionFisica option:selected").val(),
                 prioridad:$("#Prioridad option:selected").val(),
+				seguimiento:$("#Seguimiento option:selected").val(),
+				notas:$("#NotasSeguimiento").val(),
                 tipoProcedimiento:"insertar"
             };
             $.ajax({
@@ -35,8 +27,29 @@ var x;
                 error:problemas
             }); 
             return false;
-        } 
+	});
 
+	$( "#cancel" ).click(function() {
+	    $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/gestion_folios/folios.php", 
+                success:cargarFolios,
+                timeout:4000,
+                error:problemas
+        }); 
+        return false;
+    });		
+	
+});
+
+    function cargarFolios()
+    {
+        $("#div_contenido").load('pages/gestion_folios/folios.php');
+    }
+	
     function llegadaGuardar()
     {
         $("#div_contenido").load('pages/gestion_folios/folios.php',data);
@@ -46,4 +59,3 @@ var x;
     {
         $("#div_contenido").text('Problemas en el servidor.');
     }
-    

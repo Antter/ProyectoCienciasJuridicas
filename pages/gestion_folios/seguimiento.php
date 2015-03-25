@@ -1,3 +1,7 @@
+<?php
+    require_once($maindir."funciones/getRandomColor.php");
+?>
+
 <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
 
@@ -9,79 +13,54 @@
             <div class="col-md-12">
               <!-- The time line -->
               <ul class="timeline">
-                <!-- timeline time label -->
-                <li class="time-label">
-                  <span class="bg-red">
-                    10 Feb. 2014
-                  </span>
-                </li>
-                <!-- /.timeline-label -->
+
                 <!-- timeline item -->
-                <li>
-                  <i class="fa fa-envelope bg-blue"></i>
-                  <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                    <div class="timeline-body">
-                      Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                      weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                      jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                      quora plaxo ideeli hulu weebly balihoo...
-                    </div>
-                    <div class='timeline-footer'>
-                      <a class="btn btn-primary btn-xs">Read more</a>
-                      <a class="btn btn-danger btn-xs">Delete</a>
-                    </div>
-                  </div>
-                </li>
+				<?php 
+				//date_format($antFecha, "g:ia \o\n l jS F Y")
+				    foreach( $rows as $row ){ 
+				
+				        $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+                        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+				
+				        $date = date_create($row['FechaCambio']);
+				
+				        if(!isset($antFecha)){
+							$antFecha = $date;
+			                // timeline-label
+                                echo '<li class="time-label">';
+                                echo '<span class="bg-light-blue">'.$dias[date_format($antFecha,'w')]." ".date_format($antFecha,'d')." de ".$meses[date_format($antFecha,'n')-1]. " del ".date_format($antFecha,'Y').'</span>';
+                                echo '</li>';
+                            //timeline-label 
+						}else{				
+						    $interval = $date->diff($antFecha);
+							$dif = $interval->format('%R%a');
+							if($dif > 0){
+								$antFecha = $date;
+								// timeline-label
+                                    echo '<li class="time-label">';
+                                    echo '<span class="bg-light-blue">'.$dias[date_format($antFecha,'w')]." ".date_format($antFecha,'d')." de ".$meses[date_format($antFecha,'n')-1]. " del ".date_format($antFecha,'Y').'</span>';
+                                    echo '</li>';
+                                //timeline-label 
+							}
+						}
+				
+				        echo '<li>';
+						$randNum = rand(2,4);
+						$randColor = getColor($randNum);
+					    echo '<i class="fa fa-user '.$randColor.'"></i>';
+					    echo '<div class="timeline-item">';
+					    echo '<span class="time"> '.date_format($date, "g:ia").' <i class="fa fa-clock-o"></i></span>';
+					    echo '<h3 class="timeline-header no-border"><a href="#"> Estado del seguimiento: </a> '.$row["DescripcionEstadoSeguimiento"].' </h3>';
+						echo '<div class="timeline-body">'.$row["Notas"].'</div>';
+					    echo '<div class="timeline-footer">';
+                        echo '<span class="label label-primary">'.$row["DescripcionPrioridad"].'</span>';
+		                echo '</div>';
+                        echo '</div>';
+					    echo '</li>';
+											
+					}
+				?>
                 <!-- END timeline item -->
-                <!-- timeline item -->
-                <li>
-                  <i class="fa fa-user bg-aqua"></i>
-                  <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-                    <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-                  </div>
-                </li>
-                <!-- END timeline item -->
-                <!-- timeline item -->
-                <li>
-                  <i class="fa fa-comments bg-yellow"></i>
-                  <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                    <div class="timeline-body">
-                      Take me to your leader!
-                      Switzerland is small and neutral!
-                      We are more like Germany, ambitious and misunderstood!
-                    </div>
-                    <div class='timeline-footer'>
-                      <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                    </div>
-                  </div>
-                </li>
-                <!-- END timeline item -->
-                <!-- timeline time label -->
-                <li class="time-label">
-                  <span class="bg-green">
-                    3 Jan. 2014
-                  </span>
-                </li>
-                <!-- /.timeline-label -->
-                <!-- timeline item -->
-                <li>
-                  <i class="fa fa-camera bg-purple"></i>
-                  <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-                    <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-                    <div class="timeline-body">
-                      <img src="http://placehold.it/150x100" alt="..." class='margin' />
-                      <img src="http://placehold.it/150x100" alt="..." class='margin'/>
-                      <img src="http://placehold.it/150x100" alt="..." class='margin'/>
-                      <img src="http://placehold.it/150x100" alt="..." class='margin'/>
-                    </div>
-                  </div>
-                </li>
               </ul>
             </div><!-- /.col -->
           </div><!-- /.row -->

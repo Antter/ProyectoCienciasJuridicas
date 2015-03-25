@@ -31,7 +31,7 @@ else
 //$query = "SELECT id, username, password, salt FROM member WHERE username = '$username';";
 try{
 
-$query = $db->prepare('SELECT id_Usuario,Password FROM usuario WHERE nombre = :LoginUsuario;');
+$query = $db->prepare('SELECT id_Usuario,Password,Id_Rol FROM usuario WHERE nombre = :LoginUsuario AND Estado = 1;');
 $query -> bindParam(":LoginUsuario",$LoginUsuario);
 $query -> execute();
  
@@ -67,6 +67,7 @@ if($LoginPassword != $result['Password'])
 { // Redirect to home page after successful login.
 	session_regenerate_id();
 	$_SESSION['user_id'] = $result['id_Usuario'];
+	$_SESSION['user_rol'] = $result['Id_Rol'];
 	$_SESSION['nombreUsuario'] = $LoginUsuario;
 	$_SESSION['timeout'] = time();
 	session_write_close();

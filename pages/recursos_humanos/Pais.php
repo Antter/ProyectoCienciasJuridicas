@@ -108,7 +108,7 @@
                                     <p class="help-block">Ejemplo: Honduras, Mexico, Estados Unidos</p>
                                 </div>
 
-                                <button type="button"  id="guardarpais" class="btn btn-primary">Agregar</button>
+                                <button type="button"  id="guardarpais" class="btn btn-primary" >Agregar</button>
                                 <button type="reset" class="btn btn-default">Cancelar</button>
                             </form>
                         </div>

@@ -21,18 +21,12 @@ include "../../../../Datos/conexion.php";
             $direc=limpiar($_POST['direccion']);
             $email=limpiar($_POST['email']);
             $estCivil = $_POST['estCivil'];
+            $nacionalidad = $_POST['nacionalidad'];
 
            mysql_query("INSERT INTO persona (N_identidad, Primer_nombre, Segundo_nombre, Primer_apellido,
-            Segundo_apellido, Fecha_nacimiento, Sexo, Direccion, Correo_electronico, Estado_Civil)
-            VALUES ('$identi', '$pNombre','$sNombre','$pApellido','$sApellido','$fNac','$sexo','$direc', '$email', '$estCivil')");
+            Segundo_apellido, Fecha_nacimiento, Sexo, Direccion, Correo_electronico, Estado_Civil, Nacionalidad)
+            VALUES ('$identi', '$pNombre','$sNombre','$pApellido','$sApellido','$fNac','$sexo','$direc', '$email', '$estCivil','$nacionalidad')");
 
-            //Agregar multiples telefonos
-            for($i=0; $i<count($_POST['numTel']); $i++){
-                $telefono = $_POST['numTel'][$i];
-                $tipo = $_POST['tipo'][$i];
-                mysql_query("INSERT INTO telefono (ID_Telefono, Tipo, Numero, N_identidad)
-                    VALUES (DEFAULT,'$tipo','$telefono','$identi')");
-            }
             echo $pNombre." ".$pApellido." ha sido agregado(a) con éxito!";
         }
 
@@ -74,5 +68,14 @@ include "../../../../Datos/conexion.php";
                 mysql_query("INSERT INTO experiencia_academica (ID_Experiencia_academica, Institucion, Tiempo, N_identidad)
                                     VALUES (DEFAULT,'$nomInst','$tiempo','$identi')");
             echo "Experiencia académica ha sido agregada con éxito!";
+        }
+
+        if(!empty($_POST['idTel'])){
+            $tipo = $_POST['tipo'];
+            $telef = $_POST['telef'];
+            $identi=$_POST['idTel'];
+            mysql_query("INSERT INTO telefono (ID_Telefono, Tipo, Numero, N_identidad)
+             VALUES (DEFAULT,'$tipo','$telef','$identi')");
+            echo "Teléfono ha sido agregado con éxito!";
         }
 ?>

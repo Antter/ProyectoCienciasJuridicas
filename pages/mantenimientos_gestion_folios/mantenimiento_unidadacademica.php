@@ -9,6 +9,7 @@
   else
   {
     $contenido = 'gestion_de_folios';
+	$navbar_loc = 'mantenimiento';
   }
 
   require_once($maindir."funciones/check_session.php");
@@ -43,55 +44,11 @@
 
 ?>
 
-<!-- Script para inicializar el funcionamiento de la tabla -->
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-    $('#tabla_unidadacademica').dataTable(); // example es el id de la tabla
-  } );
-</script>
-
 <div class="container-fluid">
 <div class="row">
-  <div class="col-sm-2">
-      <!-- Left column -->
-      
-      <ul class="list-unstyled">
-        <li class="nav-header"> <a id="gestion_folios" href="#"><i class="glyphicon glyphicon-home"></i> Inicio </a></li>
-        <hr>
-
-        <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-          <h5>Manejo de folios<i class="glyphicon glyphicon-chevron-down"></i></h5>
-          </a>
-            <ul class="list-unstyled collapse in" id="userMenu">
-                
-                <li><a id="folios" href="#"><i class="glyphicon glyphicon-book"></i> Folios
-                  <!-- <span class="badge badge-info">4</span>--></a></li>
-                <li><a id="alertas "href="#"><i class="glyphicon glyphicon-bell"></i> Alertas 
-                  <!-- <span class="badge badge-info">10</span>--></a></li>
-                <li><a id="notificaciones" href="#"><i class="glyphicon glyphicon-flag"></i> Notificaciones
-                  <!-- <span class="badge badge-info">6</span>--></a></li>
-            </ul>
-        </li>
-        <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2">
-          <h5>Mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
-          </a>
-        
-            <ul class="list-unstyled collapse" id="menu2">
-                <li><a id="mantenimiento_organizacion" href="#">Mantenimiento de Organizacion</a>
-                </li>
-                <li><a id="mantenimiento_unidadacademica" href="#">Mantenimiento de unidad academica</a>
-                </li>
-                <li><a id="mantenimiento_prioridad"href="#">Mantenimiento de prioridad</a>
-                </li>
-				<li><a id="mantenimiento_ubicacionfisica"href="#">Mantenimiento de ubicacion fisica</a>
-                </li>			
-            </ul>
-        </li>
-      </ul>
-           
-      <hr>
-
-    </div><!-- /col-2 -->
+<?php 
+    require_once("../gestion_folios/navbar.php");
+?>
     <div class="col-sm-10">
     <section class="content">
  
@@ -160,6 +117,7 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
 <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+	  <form role="form" id="form" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Unidad Academica</h4>
@@ -168,25 +126,34 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">Nombre de la Unidad Academica</span>
-                <input name="NombreUnidadAcademica" id="Insertar_NombreUnidadAcademica" type="text" class="form-control" placeholder="NombreUnidadAcademica">
+                <input name="NombreUnidadAcademica" id="Insertar_NombreUnidadAcademica" type="text" class="form-control" placeholder="NombreUnidadAcademica" maxlength="50" required>
               </div>
             </div>
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">Ubicacion de la Unidad Academica</span>
-                <input name="UbicacionUnidadAcademica" id="Insertar_UbicacionUnidadAcademica" type="text" class="form-control" placeholder="UbicacionUnidadAcademica">
+                <input name="UbicacionUnidadAcademica" id="Insertar_UbicacionUnidadAcademica" type="text" class="form-control" placeholder="UbicacionUnidadAcademica" maxlength="250" required>
               </div>
             </div>       
           </div> 
           <div class="modal-footer clearfix">
-            <button type="button" name="submit" id="nueva_unidadacademica" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-pencil"></i> Insertar</button>
+            <button name="submit" id="submit" class="btn btn-primary pull-left"><i class="glyphicon glyphicon-pencil"></i> Insertar</button>
           </div>
+		</form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script type="text/javascript">
-    $(".btn-primary").on('click',function(){
+<!-- Script para inicializar el funcionamiento de la tabla -->
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('#tabla_unidadacademica').dataTable({
+	  "order": [[ 4, "desc" ]],
+	  "fnDrawCallback": function( oSettings ) {
+	  
+	    $(".btn-primary").unbind('click');
+	  
+	    $(".btn-primary").on('click',function(){
         mode = $(this).data('mode');
         id = $(this).data('id');
         if(mode == "actualizar"){
@@ -224,8 +191,12 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
           }
           return false;
         }
-    });
-
+       });
+	  }
+	}); // tabla_unidadacademica es el id de la tabla
+  });
+  
+  
     function eliminarUnidadAcademica(){
 
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_unidadacademica.php',data);
@@ -236,32 +207,12 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
     }
 </script>
 
-<script type='text/javascript'>
-        
-  $(document).ready(function() {
-    $(".alert").addClass("in").fadeOut(4500);
-/* swap open/close side menu icons */
-      $('[data-toggle=collapse]').click(function(){
-      // toggle icon
-        $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
-      });  
-  });
-        
-</script>
-
 <!-- Script necesario para que la tabla se ajuste a el tamanio de la pag-->
 <script type="text/javascript">
   // For demo to fit into DataTables site builder...
   $('#tabla_unidadacademica')
     .removeClass( 'display' )
     .addClass('table table-striped table-bordered');
-</script>
-
-<script type="text/javascript">
-    function ValidaSoloNumeros() {
-      if ((event.keyCode < 48) || (event.keyCode > 57)) 
-        event.returnValue = false;
-      }
 </script>
 
 <script type="text/javascript" src="js/gestion_folios/mantenimiento_unidadacademica.js" ></script>

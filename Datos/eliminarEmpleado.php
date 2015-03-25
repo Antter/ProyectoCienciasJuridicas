@@ -14,9 +14,7 @@ if (isset($_POST['codigoE'])) {
     
      $query=mysql_query("UPDATE empleado SET fecha_salida='$fecha',estado_empleado='0' WHERE No_Empleado='".$id."'");
    
-     var_dump($query);
-     echo $fecha;
-     echo $id;
+
      
     if($query){
     

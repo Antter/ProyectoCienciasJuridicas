@@ -23,20 +23,21 @@
 
             require_once("../../conexion/config.inc.php");
     
-            $sql = "UPDATE ubicacion_archivofisico SET DescripcionUbicacionFisica =:addDescripcionUbicacionFisica,
-                           Capacidad = :addCapacidad, TotalIngresados =  :addTotalIngresados, HabilitadoParaAlmacenar = :addHabilitadoParaAlmacenar
-						   WHERE Id_UbicacionArchivoFisico = :addId_UbicacionArchivoFisico";
+            $sql = "CALL sp_actualizar_ubicacion_archivo_fisica(?,?,?,?,?,@mensaje,@codMensaje)";
 						   
         $query = $db->prepare($sql);
-        $query ->bindParam(":addDescripcionUbicacionFisica",$addDescripcionUbicacionFisica);
-        $query ->bindParam(":addCapacidad",$addCapacidad);
-		$query ->bindParam(":addTotalIngresados",$addTotalIngresados);
-		$query ->bindParam(":addHabilitadoParaAlmacenar",$addHabilitadoParaAlmacenar);
-		$query ->bindParam(":addId_UbicacionArchivoFisico",$addId_UbicacionArchivoFisico);
+        $query ->bindParam(1,$addId_UbicacionArchivoFisico,PDO::PARAM_STR);
+        $query ->bindParam(2,$addDescripcionUbicacionFisica,PDO::PARAM_STR);
+        $query ->bindParam(3,$addCapacidad,PDO::PARAM_STR);
+	$query ->bindParam(4,$addTotalIngresados,PDO::PARAM_STR);
+	$query ->bindParam(5,$addHabilitadoParaAlmacenar,PDO::PARAM_STR);
+		
         $query->execute();
 
-            $mensaje = "Ubicacion Fisica del archivo actualizada correctamente";
-            $codMensaje = 1;
+           	$output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+            $mensaje = $output['@mensaje'];
+		$codMensaje = $output['@codMensaje'];
         }
     }catch(PDOExecption $e){
     	$mensaje = "Al tratar de insertar, por favor intente de nuevo";

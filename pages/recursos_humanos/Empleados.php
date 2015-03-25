@@ -2,7 +2,30 @@
 
 
 
-include '../../Datos/conexion.php';
+ require_once('../../Datos/conexion.php');
+
+
+if(isset($_POST["tipoProcedimiento"])){
+    $tipoProcedimiento = $_POST["tipoProcedimiento"];
+    
+    if($tipoProcedimiento == "insertar"){
+       
+    require_once("../../Datos/insertarEmpleado.php");
+    }
+     if($tipoProcedimiento == "Eliminar"){
+    require_once("../../Datos/eliminarEmpleadoXGrupo.php");
+    }
+      
+     if($tipoProcedimiento == "Actualizar"){
+    require_once("../../Datos/actualizarEmpleado.php");
+    }
+}
+
+
+
+ $consulta_mysql = "SELECT * FROM `persona`";
+ $rec = mysql_query($consulta_mysql);
+
 
 
 ?>
@@ -34,7 +57,7 @@ include '../../Datos/conexion.php';
             {
                
                 var x;
-                x = $("#persona");
+                x = $("#buscarP");
                 x.click(buscar);
                 
             }
@@ -46,7 +69,7 @@ include '../../Datos/conexion.php';
                
                 
                 data={
-                    idpersona:$('#id_persona').val()
+                    idpersona:$('#identidad').val()
                 }
                 
                 $.ajax({
@@ -68,20 +91,20 @@ include '../../Datos/conexion.php';
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#Rbusqueda");
                 x.html('Cargando...');
             }
 
             function llegadabuscar()
             {
-                $("#contenedor2").load('Datos/BuscarPersona.php',data);
+                $("#Rbusqueda").load('Datos/BuscarPersona.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#Rbusqueda").text('Problemas en el servidor.');
             }
 
 
@@ -100,81 +123,38 @@ include '../../Datos/conexion.php';
       
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Ingreso de Empleados</h1>
+                    <h1 class="page-header"><strong>Empleados</strong></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
-           
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Busqueda de persona por numero de identidad
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6">       
-
-                                    <form role="form">
-
-
-                                        <!--<div class="form-group">-->
-
-
-                                        <select name='idpersona' id="id_persona">
-                                            <?php
-                                            $consulta_mysql = "SELECT * FROM `persona`";
-                                            $rec = mysql_query($consulta_mysql);
-
-
-
-                                            while ($row = mysql_fetch_array($rec)) {
-                                                echo "<option value = '" . $row['N_identidad'] . "'>";
-                                                
-                                                
-
-                                                echo $row["N_identidad"];
-
-                                                echo "</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                        
-                                        <button id="persona" class="btn btn-primary">Buscar</button>
-                                        
-                                    </form>
-                                    
-                               </div>
-                              </div>
-                        </div>
-                </div>
-            </div>
-
-
-
-                                        <!--<button type="submit" class="btn btn-primary" class="icon-ok" >Buscar</button>-->
-
-                                        <!--</div>-->
-
-
-                                        <!-- ---------------------------------------   -->
-                                        
-     
-            <!-- /.row -->
-
-            <!-- /#page-wrapper -->
-            
-            
- <div id="contenedor2" class="panel-body">
-      <?php
-        
-       
-
-        include "../../Datos/BuscarPersona.php";
+    
+     <div class="box-header">
+        <h3 class="box-title">Gestion de Empleados <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Agregar nuevo empleado</a></h3>
+      </div><!-- /.box-header -->
          
-     
-        ?>
- </div>           
+           
+                                           <?php
+ 
+  if(isset($codMensaje) and isset($mensaje)){
+    if($codMensaje == 1){
+      echo '<div class="alert alert-success">';
+      echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+      echo '<strong>Exito! </strong>';
+      echo $mensaje;
+      echo '</div>';
+    }else{
+      echo '<div class="alert alert-danger">';
+      echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+      echo '<strong>Error! </strong>';
+      echo $mensaje;
+      echo '</div>';
+    }
+  } 
+
+?>
+
+      
+       
 
 <div id="contenedor3" class="panel-body">
         <?php
@@ -189,33 +169,60 @@ include '../../Datos/conexion.php';
 
 
 
+            
+            
+            
+            
+ <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	  <form role="form" id="form" name="form" action="#">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Agregar un nuevo empleado </h4>
+      </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <div class="input-group">
+                          <span class="input-group-addon">buscar por numero de identidad</span>
+
+                              <div class="input-group">
+                                  <input id="identidad" type="text"   class="form-control" placeholder="Buscar empleado..."    required>
+                                  <span class="input-group-btn">
+                                      <button id="buscarP" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
+                                  </span>
+                              </div>
+                           
+                        
+                      </div>   
+                       
+                  </div>
+                  <div id="Rbusqueda" class="form-group">
+
+  <?php
+  
+  
+   
+  ?>
+
+                  </div>
+              </div>
+           <!--  <div class="modal-footer clearfix">
+            <button name="submit" id="submit" class="insertarbg btn btn-primary pull-left"><i class="glyphicon glyphicon-pencil"></i> Insertar</button>
+          </div>
+           -->
+                
+                    
+          </form>
+    
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+   </div>
    
 
 
 
 
-<!-- /#wrapper -->
-
-<!-- jQuery -->
-
-
-<!-- Bootstrap Core JavaScript -->
-
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script type="text/javascript" src="../js/bootstrap.js"></script>
-
-
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-<!-- Flot Charts JavaScript -->
-
-<!-- Custom Theme JavaScript -->
-<script src="../dist/js/sb-admin-2.js"></script>
-
-	
-<script type="text/javascript"></script>
 
 </body>
 

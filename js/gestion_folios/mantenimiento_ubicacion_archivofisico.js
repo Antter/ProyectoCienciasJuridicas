@@ -1,23 +1,13 @@
-var id;
-var data;
-var x;
-    x=$(document);
-    x.ready(inicio);
-
-    function inicio(){
-
-        var x;
-        x=$("#nueva_ubicacion_archivofisico");
-        x.click(nueva_ubicacion_archivofisico);
-       
-    }
-
-        function nueva_ubicacion_archivofisico() {
+$( document ).ready(function() {
+	
+	$("form").submit(function(e) {
+	    e.preventDefault();
+		$("#compose-modal-actualizar").modal('hide');
             data={
                 DescripcionUbicacionFisica:$("#Insertar_DescripcionUbicacionFisica").val(),
                 Capacidad:$("#Insertar_Capacidad").val(),
 				TotalIngresados:$("#Insertar_TotalIngresados").val(),
-				HabilitadoParaAlmacenar:$("#Insertar_HabilitadoParaAlmacenar").val(),
+				HabilitadoParaAlmacenar:$("#Insertar_HabilitadoParaAlmacenar option:selected").val(),
                 tipoProcedimiento:"insertar"
             };
 
@@ -32,15 +22,13 @@ var x;
                 error:problemas
             }); 
             return false;
-        }
+    });
 
-        function quitarModal(){
-
-            $("#compose-modal").modal('hide');
-        }
+});
 
         function NuevaUbicacionArchivoFisico(){
 
+		    $('body').removeClass('modal-open');
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_archivofisico.php',data);
         }
         function problemas(){

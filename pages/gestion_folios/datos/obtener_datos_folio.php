@@ -1,10 +1,11 @@
 <?php
 
-    require_once("../../conexion/config.inc.php");
+    require($maindir."conexion/config.inc.php");
 
-    $query = $db->prepare("SELECT folios.NroFolio, folios.PersonaReferente, unidad_academica.NombreUnidadAcademica, organizacion.NombreOrganizacion, folios.TipoFolio,
-    	folios.FechaEntrada, folios.FechaCreacion, ubicacion_archivofisico.DescripcionUbicacionFisica, prioridad.DescripcionPrioridad, folios.DescripcionAsunto 
-    	FROM folios INNER JOIN ubicacion_archivofisico ON folios.UbicacionFisica = ubicacion_archivofisico.id_UbicacionArchivoFisico 
+    $query = $db->prepare("SELECT folios.NroFolio, folios.PersonaReferente, folios.UnidadAcademica, unidad_academica.NombreUnidadAcademica, folios.Organizacion, 
+	    organizacion.NombreOrganizacion, folios.TipoFolio,folios.FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
+		ubicacion_archivofisico.DescripcionUbicacionFisica ,folios.Prioridad  ,prioridad.DescripcionPrioridad, folios.DescripcionAsunto 
+    	FROM folios INNER JOIN ubicacion_archivofisico ON folios.UbicacionFisica = ubicacion_archivofisico.Id_UbicacionArchivoFisico 
     	INNER JOIN prioridad ON folios.Prioridad = prioridad.Id_Prioridad 
     	LEFT JOIN unidad_academica ON folios.UnidadAcademica = unidad_academica.Id_UnidadAcademica 
     	LEFT JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion 

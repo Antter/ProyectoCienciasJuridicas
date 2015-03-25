@@ -31,12 +31,24 @@ var x;
 		y1.click(mantenimiento_unidadacademica);
 		
 		var y2;
-		y1=$("#mantenimiento_prioridad");
-		y1.click(mantenimiento_prioridad);
+		y2=$("#mantenimiento_prioridad");
+		y2.click(mantenimiento_prioridad);
 		
 		var y3;
-		y1=$("#mantenimiento_ubicacionArchivoFisico");
-		y1.click(mantenimiento_ubicacion_archivofisico);
+		y3=$("#mantenimiento_ubicacionfisica");
+		y3.click(mantenimiento_ubicacion_archivofisico);
+		
+		var y4;
+		y4=$("#mantenimiento_estado_seguimiento");
+		y4.click(mantenimiento_estado_seguimiento);
+		
+		var y5;
+		y5=$("#mantenimiento_ubicacion_notificaciones");
+		y5.click(mantenimiento_ubicacion_notificaciones);
+		
+		var y6;
+		y6=$("#mantenimiento_folios");
+		y6.click(mantenimiento_folios);
        
     }
 
@@ -55,6 +67,9 @@ var x;
         }
 
         function folios() {
+		    data={
+			    tipoFolio:"todos"
+			};
             $.ajax({
                 async:true,
                 type: "POST",
@@ -75,7 +90,7 @@ var x;
                 dataType: "html",
                 contentType: "application/x-www-form-urlencoded",
                 url:"pages/gestion_folios/alertas.php", 
-                success:Aletas,
+                success:Alertas,
                 timeout:4000,
                 error:problemas
             }); 
@@ -88,7 +103,7 @@ var x;
                 type: "POST",
                 dataType: "html",
                 contentType: "application/x-www-form-urlencoded",
-                url:"pages/gestion_folios/notificaciones.php", 
+                url:"pages/gestion_folios/Notificacion.php", 
                 success:Notificaciones,
                 timeout:4000,
                 error:problemas
@@ -151,6 +166,48 @@ var x;
             }); 
             return false;
         }
+		
+		function mantenimiento_estado_seguimiento() {
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/mantenimientos_gestion_folios/mantenimiento_estado_seguimiento.php", 
+                success:MantenimientoEstadoSeguimiento,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+        }
+		
+		function mantenimiento_ubicacion_notificaciones() {
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_notificaciones.php", 
+                success:MantenimientoUbicacionNotificaciones,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+        }
+		
+		function mantenimiento_folios() {
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/mantenimientos_gestion_folios/mantenimiento_folios.php", 
+                success:MantenimientoFolios,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+        }
 
         function GestionFolios(){
 
@@ -158,7 +215,7 @@ var x;
         }
         function Folios(){
 
-            $("#div_contenido").load('pages/gestion_folios/folios.php');
+            $("#div_contenido").load('pages/gestion_folios/folios.php',data);
         }
         function Alertas(){
 
@@ -166,7 +223,7 @@ var x;
         }
         function Notificaciones(){
 
-            $("#div_contenido").load('pages/gestion_folios/notificaciones.php');
+            $("#div_contenido").load('pages/gestion_folios/Notificacion.php');
         }
         function MantenimientoOrganizacion(){
 
@@ -183,6 +240,18 @@ var x;
 		function MantenimientoUbicacionArchivoFisico(){
 
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_archivofisico.php');
+        }
+		function MantenimientoEstadoSeguimiento(){
+
+            $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_estado_seguimiento.php');
+        }
+		function MantenimientoUbicacionNotificaciones(){
+
+            $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_notificaciones.php');
+        }
+		function MantenimientoFolios(){
+
+            $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_folios.php');
         }
         function problemas(){
 

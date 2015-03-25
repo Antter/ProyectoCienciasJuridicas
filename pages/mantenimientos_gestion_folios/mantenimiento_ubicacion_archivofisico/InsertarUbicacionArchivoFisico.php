@@ -23,17 +23,19 @@
 
         require_once("../../conexion/config.inc.php");
 	
-        $sql = "INSERT INTO ubicacion_archivofisico Values(NULL,:addDescripcionUbicacionFisica,:addCapacidad,:addTotalIngresados, :addHabilitadoParaAlmacenar)";
+        $sql = "CALL sp_insertar_ubicacion_archivo_fisica(?,?,?,?,@mensaje,@codMensaje)";
 
-        $query = $db->prepare($sql);
-        $query ->bindParam(":addDescripcionUbicacionFisica",$addDescripcionUbicacionFisica);
-        $query ->bindParam(":addCapacidad",$addCapacidad);
-		$query ->bindParam(":addTotalIngresados",$addTotalIngresados);
-		$query ->bindParam(":addHabilitadoParaAlmacenar",$addHabilitadoParaAlmacenar);
-        $query->execute();
+        $query1 = $db->prepare($sql);
+        $query1 ->bindParam(1,$addDescripcionUbicacionFisica,PDO::PARAM_STR);
+        $query1 ->bindParam(2,$addCapacidad,PDO::PARAM_STR);
+	$query1 ->bindParam(3,$addTotalIngresados,PDO::PARAM_STR);
+	$query1 ->bindParam(4,$addHabilitadoParaAlmacenar,PDO::PARAM_STR);
+        $query1->execute();
 
-        $mensaje = "Ubicacion de archivo Fisica insertada correctamente";
-        $codMensaje = 1;
+        $output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+            $mensaje = $output['@mensaje'];
+		$codMensaje = $output['@codMensaje'];
 
         }
 

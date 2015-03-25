@@ -4,14 +4,17 @@
         require_once("../../conexion/config.inc.php");
         $adId_UnidadAcademica = $_POST['Id_UnidadAcademica'];
 
-        $sql = "DELETE FROM unidad_academica WHERE Id_UnidadAcademica = :adId_UnidadAcademica";
+        $sql = "CALL sp_eliminar_unidad_academica(?,@mensaje,@codMensaje)";
 
         $query = $db->prepare($sql);
-        $query ->bindParam(":adId_UnidadAcademica",$adId_UnidadAcademica);
+        $query ->bindParam(1,$adId_UnidadAcademica,PDO::PARAM_STR);
         $query->execute();
 
-        $mensaje = "Unidad Academica eliminada correctamente";
-        $codMensaje = 1;
+		$output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+            $mensaje = $output['@mensaje'];
+		$codMensaje = $output['@codMensaje'];
+
     }catch(PDOExecption $e){
     	$mensaje = "Al tratar de eliminar la Unidad Academica, por favor intente de nuevo";
         $codMensaje = 0;

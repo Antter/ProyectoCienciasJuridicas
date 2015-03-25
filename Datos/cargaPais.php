@@ -127,6 +127,26 @@
 
 
         </script>
+        
+                 <script type="text/javascript" charset="utf-8">
+          
+ $(document).ready(function() {
+  
+    $('#tabla_paises').dataTable({
+	  "order": [[ 1, "desc" ]],
+	  "fnDrawCallback": function(oSettings ) {
+              
+                
+                
+                
+		
+		
+
+      }
+	}); // example es el id de la tabla
+  });
+
+    </script>
     
     
     
@@ -146,7 +166,7 @@
 
    
     <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped">
+        <table id="tabla_paises"  class="table table-bordered table-hover table-striped">
             <thead>
         <tr>
             <th><strong>ID pais</strong></th>

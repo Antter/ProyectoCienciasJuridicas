@@ -12,15 +12,17 @@
 
             require_once("../../conexion/config.inc.php");
     
-            $sql = "UPDATE prioridad SET DescripcionPrioridad =:addDescripcionPrioridad
-                            WHERE Id_Prioridad = :addId_Prioridad";
-            $query = $db->prepare($sql);
-            $query->bindParam(":addDescripcionPrioridad",$addDescripcionPrioridad);
-            $query->bindParam(":addId_Prioridad",$addId_Prioridad);
-            $query->execute();
+            $sql = "CALL sp_actualizar_prioridad(?,?,@mensaje,@codMensaje)";
+            $query1 = $db->prepare($sql);
+            $query1->bindParam(1,$addId_Prioridad,PDO::PARAM_STR);
+            $query1->bindParam(2,$addDescripcionPrioridad,PDO::PARAM_STR);
+            $query1->execute();
+            
+            $output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+        $mensaje = $output['@mensaje'];
+		$codMensaje = $output['@codMensaje'];
 
-            $mensaje = "Prioriad actualizada correctamente";
-            $codMensaje = 1;
         }
     }catch(PDOExecption $e){
     	$mensaje = "Al tratar de insertar, por favor intente de nuevo";

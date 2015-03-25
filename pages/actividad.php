@@ -291,11 +291,9 @@ $query = mysql_query("SELECT * FROM actividades where id_actividad='".$idAct."'"
                 <div class="modal-body" id="myModal2body">
                     
                     
-                <div class="modal-footer">
-                    <button type="button"  class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardar" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-                </div>
+                
             </div>
+                
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
@@ -335,8 +333,32 @@ $query = mysql_query("SELECT * FROM actividades where id_actividad='".$idAct."'"
         var x;
         x=$("#asignarSubActividad");
         x.click(asignarSubActividad);
+        
+        
        
     }
+    
+    
+    function insertarSubActividad(){
+            //id2 = $(this).parents("tr").find("td").eq(0).html();
+              //alert(id);      
+                data2 ={
+                idAct:$("#idAct").val()
+            };  
+            //alert($("#nombre").val()); 
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/crearSubActividad.php", 
+                //beforeSend:inicioSub,
+                success:llegadaInsertarSubActividad,
+                timeout:4000,
+                error:problemasSub
+            }); 
+            return false;
+        }
         
         function asignarSubActividad(){
             //id2 = $(this).parents("tr").find("td").eq(0).html();
@@ -351,7 +373,7 @@ $query = mysql_query("SELECT * FROM actividades where id_actividad='".$idAct."'"
                 dataType: "html",
                 contentType: "application/x-www-form-urlencoded",
                 url:"pages/crearSubActividad.php", 
-                beforeSend:inicioSub,
+                //beforeSend:inicioSub,
                 success:llegadaasignarSubActividad,
                 timeout:4000,
                 error:problemasSub
@@ -381,16 +403,18 @@ $query = mysql_query("SELECT * FROM actividades where id_actividad='".$idAct."'"
             return false;
         } 
         
-            function inicioSub()
-{
-    var x=$("#nuevaSub");
-    x.html('Cargando...');
-}
+
     function inicioEnvio()
 {
     var x=$("#responsables");
     x.html('Cargando...');
 }
+function llegadaInsertarSubActividad()
+{
+    $("#myModal2body").load('pages/crearSubActividad.php',data2);
+    $('#myModal2').modal('show');
+}
+
 function llegadaasignarSubActividad()
 {
     $("#myModal2body").load('pages/crearSubActividad.php',data2);

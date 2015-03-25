@@ -69,37 +69,6 @@
                                                             <textarea id="direccion" class="form-control" rows="3" name="direccion"></textarea>
                                                         </div>
                                                         <div class="form-group">
-                                                                  <label>Teléfono(s)</label>
-                                                                  <div class="multi-field-wrapper-tel">
-                                                                      <div class="multi-fields-tel">
-                                                                          <div class="multi-field-tel">
-                                                                              <input type="text" id="tel" name="numTel[]">
-                                                                              <select name="tipo[]">
-                                                                                  <option value="celular">Celular</option>
-                                                                                  <option value="fijo">Fijo</option>
-                                                                                  <option value="oficina">Oficina</option>
-                                                                                  <option value="otro">Otro</option>
-                                                                              </select>
-                                                                              <button type="button" class="btn btn-default remove-field-tel">Borrar</button>
-                                                                          </div>
-                                                                      </div>
-                                                                      <button type="button" class="btn btn-primary add-field-tel">Añadir Teléfono</button>
-                                                                  </div>
-                                                              <script type="text/javascript">
-                                                                  $('.multi-field-wrapper-tel').each(function() {
-                                                                      var $wrapper = $('.multi-fields-tel', this);
-                                                                      $(".add-field-tel", $(this)).click(function(e) {
-                                                                          $('.multi-field-tel:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
-                                                                          $('.multi-field-tel:second-child', $wrapper).clone(true).appendTo($wrapper).find('select');
-                                                                      });
-                                                                      $('.multi-field-tel .remove-field-tel', $wrapper).click(function() {
-                                                                          if ($('.multi-field-tel', $wrapper).length > 1)
-                                                                              $(this).parent('.multi-field-tel').remove();
-                                                                      });
-                                                                  });
-                                                              </script>
-                                                        </div>
-                                                        <div class="form-group">
                                                             <label>Correo electrónico</label>
                                                             <input id="email" class="form-control" name="email" required>
                                                         </div>
@@ -111,6 +80,10 @@
                                                                 <option>Divorciado</option>
                                                                 <option>Viudo</option>
                                                             </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Nacionalidad</label>
+                                                            <input id="nacionalidad" class="form-control" name="nacionalidad" required>
                                                         </div>
                                                 </div>
                                             </div>
@@ -156,9 +129,11 @@
                 primerApellido:$('#primerApellido').val(),
                 segundoApellido:$('#segundoApellido').val(),
                 sexo:$('#sexoMas').val(),
+                fecha:$('#fecha').val(),
                 direccion:$('#direccion').val(),
                 email:$('#email').val(),
-                estCivil:$('#estCivil').val()
+                estCivil:$('#estCivil').val(),
+                nacionalidad:$('#nacionalidad').val()
             };
 
             $.ajax({

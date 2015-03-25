@@ -21,7 +21,7 @@ else
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['user_id']) || (trim($_SESSION['user_id']) == '')) 
   {
-    header("location: ".$maindir."login/login.php?error_code=0");
+    header('Location: '.$maindir.'login/logout.php');
     exit();
   }
 else

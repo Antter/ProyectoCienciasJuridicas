@@ -36,5 +36,11 @@ include "../../../../Datos/conexion.php";
                 mysql_query("DELETE FROM experiencia_academica WHERE N_identidad = '$identi'");
                 echo "La experiencia académica se ha eliminado correctamente!";
         }
+        //Experiencia Académica
+        if(isset($_POST['idTel'])){
+            $identi = $_POST['idTel'];
+            mysql_query("DELETE FROM telefono WHERE N_identidad = '$identi'");
+            echo "Los teléfonos asociados se han eliminado correctamente!";
+        }
 ?>
 

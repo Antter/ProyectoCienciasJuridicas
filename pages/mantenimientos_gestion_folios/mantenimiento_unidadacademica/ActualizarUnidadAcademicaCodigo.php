@@ -15,16 +15,17 @@
 
             require_once("../../conexion/config.inc.php");
     
-            $sql = "UPDATE unidad_academica SET NombreUnidadAcademica =:addNombreUnidadAcademica,
-                           UbicacionUnidadAcademica = :addUbicacionUnidadAcademica WHERE Id_UnidadAcademica = :addId_UnidadAcademica";
+            $sql = "CALL sp_actualizar_unidad_academica(?,?,?,@mensaje,@codMensaje)";
             $query = $db->prepare($sql);
-            $query->bindParam(":addNombreUnidadAcademica",$addNombreUnidadAcademica);
-            $query->bindParam(":addUbicacionUnidadAcademica",$addUbicacionUnidadAcademica);
-            $query->bindParam(":addId_UnidadAcademica",$addId_UnidadAcademica);
+            $query->bindParam(1,$addId_UnidadAcademica,PDO::PARAM_STR);
+            $query->bindParam(2,$addNombreUnidadAcademica,PDO::PARAM_STR);
+            $query->bindParam(3,$addUbicacionUnidadAcademica,PDO::PARAM_STR);
             $query->execute();
 
-            $mensaje = "Unidad Academica actualizada correctamente";
-            $codMensaje = 1;
+        	$output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+            $mensaje = $output['@mensaje'];
+		$codMensaje = $output['@codMensaje'];
         }
     }catch(PDOExecption $e){
     	$mensaje = "Al tratar de insertar, por favor intente de nuevo";

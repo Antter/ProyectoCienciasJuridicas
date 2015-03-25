@@ -1,19 +1,10 @@
-var id;
-var data;
-var x;
-    x=$(document);
-    x.ready(inicio);
-
-    function inicio(){
-
-        var x;
-        x=$("#nueva_prioridad");
-        x.click(nueva_prioridad);
-       
-    }
-
-        function nueva_prioridad() {
+$( document ).ready(function() {
+	
+	$("form").submit(function(e) {
+	    e.preventDefault();
+		$("#compose-modal-actualizar").modal('hide');
             data={
+			    Id_Prioridad:$("#Insertar_Id_Prioridad").val(),
                 DescripcionPrioridad:$("#Insertar_DescripcionPrioridad").val(),
                 tipoProcedimiento:"insertar"
             };
@@ -29,15 +20,12 @@ var x;
                 error:problemas
             }); 
             return false;
-        }
+    });
 
-        function quitarModal(){
-
-            $("#compose-modal").modal('hide');
-        }
-
+});
         function NuevaPrioridad(){
 
+		    $('body').removeClass('modal-open');
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_prioridad.php',data);
         }
         function problemas(){

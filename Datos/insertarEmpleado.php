@@ -1,9 +1,12 @@
 <?php
 
-include "../Datos/conexion.php";
-require_once('funciones.php');
+//include "../Datos/conexion.php";
+//require_once('funciones.php');
 
 //include "$root\curriculo\Datos\funciones.php";
+
+$enlace = mysql_connect('localhost', 'root', '');
+ mysql_select_db("sistema_ciencias_juridicas", $enlace);
         
         
           
@@ -29,7 +32,11 @@ require_once('funciones.php');
             $query= mysql_query("INSERT INTO `empleado_has_cargo`(`No_Empleado`, `ID_cargo`, `Fecha_ingreso_cargo`) VALUES ('$no_empleado','$cargo','$fecha')");
             
             if($query){
-             echo mensajes('Empleado agregado con Exito','verde');
+                
+                   $mensaje = 'Empleado agregado con Exito';
+            $codMensaje = 1;
+             
+            
 	
 		//echo '<METAHTTP-EQUIV="REFRESH" CONTENT="2">' ;
 		//echo mensajes('Ingresado exitosamente','verde');
@@ -37,12 +44,18 @@ require_once('funciones.php');
 	
 	
 	}else{
-            echo mensajes('error al ingresar el registro o empleado actualmente existente','rojo');
+             $mensaje = 'error al ingresar el registro o empleado actualmente existente';
+             $codMensaje = 0;
+            
         }
 	
-	}
+        }else{
+            
+             $mensaje = 'no se pudo agregar';
+            $codMensaje = 0;
+        }
         
         
-    include "../Datos/cargarEmpleados.php";
+    
         
   ?>

@@ -4,14 +4,17 @@
         require_once("../../conexion/config.inc.php");
         $adId_UbicacionArchivoFisico = $_POST['Id_UbicacionArchivoFisico'];
 
-        $sql = "DELETE FROM ubicacion_archivofisico WHERE Id_UbicacionArchivoFisico = :adId_UbicacionArchivoFisico";
-
+        $sql = "CALL sp_eliminar_ubicacion_archivo_fisica(?,@mensaje,@codMensaje)";	
         $query = $db->prepare($sql);
-        $query ->bindParam(":adId_UbicacionArchivoFisico",$adId_UbicacionArchivoFisico);
+        $query ->bindParam(1,$adId_UbicacionArchivoFisico,PDO::PARAM_STR);
         $query->execute();
 
-        $mensaje = "Ubicacion Archivo Fisica eliminada correctamente";
-        $codMensaje = 1;
+       	$output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+	//var_dump($output);
+        $mensaje = $output['@mensaje'];
+	$codMensaje = $output['@codMensaje'];
+
+
     }catch(PDOExecption $e){
     	$mensaje = "Al tratar de eliminar la Ubicacion Archivo Fisica, por favor intente de nuevo";
         $codMensaje = 0;

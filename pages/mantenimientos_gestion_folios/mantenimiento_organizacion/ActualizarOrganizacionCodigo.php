@@ -15,16 +15,18 @@
 
             require_once("../../conexion/config.inc.php");
     
-            $sql = "UPDATE organizacion SET NombreOrganizacion =:addNombreOrganizacion,
-                           Ubicacion = :addUbicacion WHERE Id_Organizacion = :addIdOrganizacion";
-            $query = $db->prepare($sql);
-            $query->bindParam(":addNombreOrganizacion",$addNombreOrganizacion);
-            $query->bindParam(":addUbicacion",$addUbicacion);
-            $query->bindParam(":addIdOrganizacion",$addIdOrganizacion);
-            $query->execute();
+            $sql = "CALL sp_actualizar_organizacion(?,?,?,@mensaje,@codMensaje)";
+            $query1 = $db->prepare($sql);
+            $query1->bindParam(1,$addIdOrganizacion,PDO::PARAM_STR);
+            $query1->bindParam(2,$addNombreOrganizacion,PDO::PARAM_STR);
+            $query1->bindParam(3,$addUbicacion,PDO::PARAM_STR);
+       
+            $query1->execute();
 
-            $mensaje = "Organizacion actualizada correctamente";
-            $codMensaje = 1;
+            $output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+	    //var_dump($output);
+            $mensaje = $output['@mensaje'];
+            $codMensaje = $output['@codMensaje'];
         }
     }catch(PDOExecption $e){
     	$mensaje = "Al tratar de insertar, por favor intente de nuevo";

@@ -9,10 +9,11 @@
   else
   {
     $contenido = 'gestion_de_folios';
+	$navbar_loc = 'contenido';
   }
 
   require_once($maindir."funciones/check_session.php");
-
+  
   require_once($maindir."funciones/timeout.php");
   
   require_once($maindir.'pages/navbar.php');
@@ -23,90 +24,34 @@
     $tipoProcedimiento =  $_POST['tipoProcedimiento'];
     if($tipoProcedimiento == 'insertar'){
       require_once("insertar_nuevo_folio.php");
-    }
+    }elseif($tipoProcedimiento == 'actualizar_folio_'){
+	  require_once("actualizar_datos_folio_codigo.php");
+	}
   }
 
-  $query = $db->prepare("SELECT * FROM ( SELECT folios.NroFolio, folios.PersonaReferente, unidad_academica.NombreUnidadAcademica AS ENTIDAD, 
-                         folios.FechaEntrada, folios.TipoFolio FROM folios INNER JOIN unidad_academica ON folios.UnidadAcademica = unidad_academica.Id_UnidadAcademica 
-                         UNION SELECT folios.NroFolio, folios.PersonaReferente, organizacion.NombreOrganizacion AS ENTIDAD, 
-                         folios.FechaEntrada ,folios.TipoFolio FROM folios INNER JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion ) T1 
-                        ORDER BY `T1`.`fechaEntrada` DESC");
-    $query->execute();
-    $rows = $query->fetchAll();
-        if($rows){
-            //$number_of_rows = $rows->rowCount();
-            $folios = 1;
-        }else{
-            $number_of_rows = 0;
-            $folios = 0;
-        }
-    $query = null;
-    $db = null;
+  if(isset($_POST['tipoFolio'])){
+    $tipoFolio = $_POST['tipoFolio'];
+    if($tipoFolio == 'foliosEntrada'){
+	  require_once('datos/datos_folios_entrada.php');
+	}elseif($tipoFolio == 'foliosSalida'){
+	  require_once('datos/datos_folios_salida.php');
+	}else{
+	  require_once('datos/datos_folios.php');
+	}
+  }else{
+	require_once('datos/datos_folios.php');
+  }
 
 ?>
-
-<!-- Script para inicializar el funcionamiento de la tabla -->
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-    $('#tabla_folios').dataTable(); // example es el id de la tabla
-  } );
-</script>
 
 <!-- Main -->
 <div class="container-fluid">
 <div class="row">
-  <div class="col-sm-2">
-      <!-- Left column -->
-      
-      <ul class="list-unstyled">
-        <li class="nav-header"> <a id="gestion_folios" href="#"><i class="glyphicon glyphicon-home"></i> Inicio </a></li>
-        <hr>
-
-        <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-          <h5>Manejo de folios<i class="glyphicon glyphicon-chevron-down"></i></h5>
-          </a>
-            <ul class="list-unstyled collapse in" id="userMenu">
-                
-                <li><a id="folios" href="#"><i class="glyphicon glyphicon-book"></i> Folios
-                  <!-- <span class="badge badge-info">4</span>--></a></li>
-                <li><a id="alertas "href="#"><i class="glyphicon glyphicon-bell"></i> Alertas 
-                  <!-- <span class="badge badge-info">10</span>--></a></li>
-                <li><a id="notificaciones" href="#"><i class="glyphicon glyphicon-flag"></i> Notificaciones
-                  <!-- <span class="badge badge-info">6</span>--></a></li>
-            </ul>
-        </li>
-        <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2">
-          <h5>Mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
-          </a>
-        
-            <ul class="list-unstyled collapse" id="menu2">
-                <li><a id="mantenimiento_organizacion" href="#">Mantenimiento de Organizacion</a>
-                </li>
-                <li><a id="mantenimiento_unidadacademica" href="#">Mantenimiento de unidad academica</a>
-                </li>
-                <li><a id="mantenimiento_prioridad"href="#">Mantenimiento de prioridad</a>
-                </li>
-				<li><a id="mantenimiento_ubicacionfisica"href="#">Mantenimiento de ubicacion fisica</a>
-                </li>			
-            </ul>
-        </li>
-      </ul>
-           
-      <hr>
-
-    </div><!-- /col-2 -->
+    <?php 
+        require_once("../gestion_folios/navbar.php");
+    ?>
     <div class="col-sm-10">
-
-<!--
-          <div class="container">
-
-<table id="example" class="display" cellspacing="0" width="100%"><thead><tr><th>Name</th><th>Position</th><th>Office</th><th>Salary</th></tr></thead><tbody><tr><td>Tiger Nixon</td><td>System Architect</td><td>Edinburgh</td><td>$320,800</td></tr><tr><td>Garrett Winters</td><td>Accountant</td><td>Tokyo</td><td>$170,750</td></tr><tr><td>Ashton Cox</td><td>Junior Technical Author</td><td>San Francisco</td><td>$86,000</td></tr><tr><td>Cedric Kelly</td><td>Senior Javascript Developer</td><td>Edinburgh</td><td>$433,060</td></tr><tr><td>Airi Satou</td><td>Accountant</td><td>Tokyo</td><td>$162,700</td></tr><tr><td>Brielle Williamson</td><td>Integration Specialist</td><td>New York</td><td>$372,000</td></tr><tr><td>Herrod Chandler</td><td>Sales Assistant</td><td>San Francisco</td><td>$137,500</td></tr><tr><td>Rhona Davidson</td><td>Integration Specialist</td><td>Tokyo</td><td>$327,900</td></tr><tr><td>Colleen Hurst</td><td>Javascript Developer</td><td>San Francisco</td><td>$205,500</td></tr><tr><td>Sonya Frost</td><td>Software Engineer</td><td>Edinburgh</td><td>$103,600</td></tr><tr><td>Jena Gaines</td><td>Office Manager</td><td>London</td><td>$90,560</td></tr><tr><td>Quinn Flynn</td><td>Support Lead</td><td>Edinburgh</td><td>$342,000</td></tr><tr><td>Charde Marshall</td><td>Regional Director</td><td>San Francisco</td><td>$470,600</td></tr><tr><td>Haley Kennedy</td><td>Senior Marketing Designer</td><td>London</td><td>$313,500</td></tr><tr><td>Tatyana Fitzpatrick</td><td>Regional Director</td><td>London</td><td>$385,750</td></tr><tr><td>Michael Silva</td><td>Marketing Designer</td><td>London</td><td>$198,500</td></tr><tr><td>Paul Byrd</td><td>Chief Financial Officer (CFO)</td><td>New York</td><td>$725,000</td></tr><tr><td>Gloria Little</td><td>Systems Administrator</td><td>New York</td><td>$237,500</td></tr><tr><td>Bradley Greer</td><td>Software Engineer</td><td>London</td><td>$132,000</td></tr><tr><td>Dai Rios</td><td>Personnel Lead</td><td>Edinburgh</td><td>$217,500</td></tr><tr><td>Jenette Caldwell</td><td>Development Lead</td><td>New York</td><td>$345,000</td></tr><tr><td>Yuri Berry</td><td>Chief Marketing Officer (CMO)</td><td>New York</td><td>$675,000</td></tr><tr><td>Caesar Vance</td><td>Pre-Sales Support</td><td>New York</td><td>$106,450</td></tr><tr><td>Doris Wilder</td><td>Sales Assistant</td><td>Sidney</td><td>$85,600</td></tr><tr><td>Angelica Ramos</td><td>Chief Executive Officer (CEO)</td><td>London</td><td>$1,200,000</td></tr><tr><td>Gavin Joyce</td><td>Developer</td><td>Edinburgh</td><td>$92,575</td></tr><tr><td>Jennifer Chang</td><td>Regional Director</td><td>Singapore</td><td>$357,650</td></tr><tr><td>Brenden Wagner</td><td>Software Engineer</td><td>San Francisco</td><td>$206,850</td></tr><tr><td>Fiona Green</td><td>Chief Operating Officer (COO)</td><td>San Francisco</td><td>$850,000</td></tr><tr><td>Shou Itou</td><td>Regional Marketing</td><td>Tokyo</td><td>$163,000</td></tr><tr><td>Michelle House</td><td>Integration Specialist</td><td>Sidney</td><td>$95,400</td></tr><tr><td>Suki Burks</td><td>Developer</td><td>London</td><td>$114,500</td></tr><tr><td>Prescott Bartlett</td><td>Technical Author</td><td>London</td><td>$145,000</td></tr><tr><td>Gavin Cortez</td><td>Team Leader</td><td>San Francisco</td><td>$235,500</td></tr><tr><td>Martena Mccray</td><td>Post-Sales support</td><td>Edinburgh</td><td>$324,050</td></tr><tr><td>Unity Butler</td><td>Marketing Designer</td><td>San Francisco</td><td>$85,675</td></tr><tr><td>Howard Hatfield</td><td>Office Manager</td><td>San Francisco</td><td>$164,500</td></tr><tr><td>Hope Fuentes</td><td>Secretary</td><td>San Francisco</td><td>$109,850</td></tr><tr><td>Vivian Harrell</td><td>Financial Controller</td><td>San Francisco</td><td>$452,500</td></tr><tr><td>Timothy Mooney</td><td>Office Manager</td><td>London</td><td>$136,200</td></tr><tr><td>Jackson Bradshaw</td><td>Director</td><td>New York</td><td>$645,750</td></tr><tr><td>Olivia Liang</td><td>Support Engineer</td><td>Singapore</td><td>$234,500</td></tr><tr><td>Bruno Nash</td><td>Software Engineer</td><td>London</td><td>$163,500</td></tr><tr><td>Sakura Yamamoto</td><td>Support Engineer</td><td>Tokyo</td><td>$139,575</td></tr><tr><td>Thor Walton</td><td>Developer</td><td>New York</td><td>$98,540</td></tr><tr><td>Finn Camacho</td><td>Support Engineer</td><td>San Francisco</td><td>$87,500</td></tr><tr><td>Serge Baldwin</td><td>Data Coordinator</td><td>Singapore</td><td>$138,575</td></tr><tr><td>Zenaida Frank</td><td>Software Engineer</td><td>New York</td><td>$125,250</td></tr><tr><td>Zorita Serrano</td><td>Software Engineer</td><td>San Francisco</td><td>$115,000</td></tr><tr><td>Jennifer Acosta</td><td>Junior Javascript Developer</td><td>Edinburgh</td><td>$75,650</td></tr><tr><td>Cara Stevens</td><td>Sales Assistant</td><td>New York</td><td>$145,600</td></tr><tr><td>Hermione Butler</td><td>Regional Director</td><td>London</td><td>$356,250</td></tr><tr><td>Lael Greer</td><td>Systems Administrator</td><td>London</td><td>$103,500</td></tr><tr><td>Jonas Alexander</td><td>Developer</td><td>San Francisco</td><td>$86,500</td></tr><tr><td>Shad Decker</td><td>Regional Director</td><td>Edinburgh</td><td>$183,000</td></tr><tr><td>Michael Bruce</td><td>Javascript Developer</td><td>Singapore</td><td>$183,000</td></tr><tr><td>Donna Snider</td><td>Customer Support</td><td>New York</td><td>$112,000</td></tr></tbody></table>
-      
-    </div>
-
--->
-
-<section class="content">
+        <section class="content">
 
 <?php
  
@@ -148,24 +93,57 @@
                                             <div style="margin-top: 15px;">
                                                 <ul class="nav nav-pills nav-stacked">
                                                     <li class="header">Tipos de folios</li>
-                                                    <li class="active"><a href="#"><i class="fa fa-inbox"></i> Folios (14)</a></li>
-                                                    <li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>
-                                                    <li><a href="#"><i class="glyphicon glyphicon-send"></i> Folios de Salida</a></li>
+                                                <?php
+												    if(isset($_POST['tipoFolio'])){
+													    $tipoFolio = $_POST['tipoFolio'];
+													    if($tipoFolio == 'todos'){
+														    echo '<li class="active"><a id="todosFolios" href="#"><i class="fa fa-inbox"></i> Folios </a></li>';    
+														}else{
+														    echo '<li><a id="todosFolios" href="#"><i class="fa fa-inbox"></i> Folios </a></li>';
+														}
+												
+														if($tipoFolio == 'foliosEntrada'){
+														    echo '<li class="active"><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
+														}else{
+														    echo '<li><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
+														}
+														
+														if($tipoFolio == 'foliosSalida'){
+														    echo '<li class="active"><a id="foliosSalida" href="#"><i class="glyphicon glyphicon-send"></i> Folios de Salida</a></li>';
+														}else{
+														    echo '<li><a id="foliosSalida" href="#"><i class="glyphicon glyphicon-send"></i> Folios de Salida</a></li>';
+														}
+													}else{
+													    echo '<li class="active"><a id="todosFolios" href="#"><i class="fa fa-inbox"></i> Folios </a></li>';    
+														echo '<li><a id="foliosSalida" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
+														echo '<li><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-send"></i> Folios de Salida</a></li>';
+													}
+												?>													                                          
                                                 </ul>
                                             </div>
                                         </div><!-- /.col (LEFT) -->
                                         <div class="col-md-9 col-sm-8">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Folios</h3>
+								<?php
+						            if(isset($_POST['tipoFolio'])){
+									    $tipoFolio = $_POST['tipoFolio'];
+									    if($tipoFolio == 'todos'){
+											echo '<h3 class="box-title">Folios</h3>';    
+										}elseif($tipoFolio == 'foliosSalida'){
+									        echo '<h3 class="box-title">Folios de salida</h3>';
+										}elseif($tipoFolio == 'foliosEntrada'){
+										    echo '<h3 class="box-title">Folios de entrada</h3>';
+										}
+									}
+							    ?>	
+                                    
                                 </div><!-- /.box-header -->
                                 <div class="box-body table-responsive">
-                                    <table id="tabla_folios" class="table table-bordered table-striped">
-                                      
 <?php 
         if($folios == 1){
-
 echo <<<HTML
+                                    <table id="tabla_folios" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Numero de Folio</th>
@@ -201,9 +179,9 @@ HTML;
 
 HTML;
                 if ($TipoFolio == 0) {
-                    echo "<td> Salida </td>";
-                }else{
                     echo "<td> Entrada </td>";
+                }else{
+                    echo "<td> Salida </td>";
                 }
                 echo "<td> ".$FechaEntrada." </td>";
                 echo "</tr>";
@@ -221,6 +199,7 @@ echo <<<HTML
                                                 <th>Fecha de entrada</th>
                                             </tr>
                                         </tfoot>
+									</table>
 HTML;
 
         }
@@ -232,8 +211,6 @@ HTML;
         }
 
 ?>
-                                        
-                                    </table>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
 
@@ -251,25 +228,41 @@ HTML;
 
 </div><!-- /Main -->
 
+<!-- Script para inicializar el funcionamiento de la tabla -->
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('#tabla_folios').dataTable({
+	  "order": [[ 4, "desc" ]],
+	  "fnDrawCallback": function( oSettings ) {
+	    $(".table-striped").find('tr[data-id]').unbind('click');
+	  
+        $(".table-striped").find('tr[data-id]').on('click', function () {
+          id = $(this).data('id');
+          data ={ idFolio:id};     
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/gestion_folios/datos_folio.php", 
+                success:llegadaVer,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+        });
+      }
+	}); // example es el id de la tabla
+  });
+</script>
+
+
 <!-- Script necesario para que la tabla se ajuste a el tamanio de la pag-->
 <script type="text/javascript">
   // For demo to fit into DataTables site builder...
   $('#tabla_folios')
     .removeClass( 'display' )
     .addClass('table table-striped table-bordered');
-</script>
-
-<script type='text/javascript'>
-        
-  $(document).ready(function() {
-    $(".alert").addClass("in").fadeOut(4500);
-/* swap open/close side menu icons */
-      $('[data-toggle=collapse]').click(function(){
-      // toggle icon
-        $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
-      });  
-  });
-        
 </script>
 
 <script type="text/javascript" src="js/gestion_folios/folios.js" ></script>

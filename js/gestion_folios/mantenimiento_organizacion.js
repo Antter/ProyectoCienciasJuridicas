@@ -1,18 +1,8 @@
-var id;
-var data;
-var x;
-    x=$(document);
-    x.ready(inicio);
-
-    function inicio(){
-
-        var x;
-        x=$("#nueva_organizacion");
-        x.click(nueva_organizacion);
-       
-    }
-
-        function nueva_organizacion() {
+$( document ).ready(function() {
+	
+	$("form").submit(function(e) {
+	    e.preventDefault();
+		$("#compose-modal-actualizar").modal('hide');
             data={
                 Organizacion:$("#Insertar_NombreOrganizacion").val(),
                 Ubicacion:$("#Insertar_Ubicacion").val(),
@@ -30,15 +20,12 @@ var x;
                 error:problemas
             }); 
             return false;
-        }
+    });
 
-        function quitarModal(){
-
-            $("#compose-modal").modal('hide');
-        }
-
+});
         function NuevaOrganizacion(){
 
+		    $('body').removeClass('modal-open');
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_organizacion.php',data);
         }
         function problemas(){

@@ -2,7 +2,7 @@
 
   if(!isset( $_SESSION['user_id'] ))
   {
-    header('Location: '.$maindir.'/login/login.php');
+    header('Location: '.$maindir.'login/logout.php');
     exit();
   }
   else

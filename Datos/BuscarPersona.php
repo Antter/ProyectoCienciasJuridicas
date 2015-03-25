@@ -10,14 +10,14 @@
 	$pais='';
 	
 	$enlace = mysql_connect('localhost', 'root', '');
-mysql_select_db("sistema_ciencias_juridicas", $enlace);
+        mysql_select_db("sistema_ciencias_juridicas", $enlace);
 	
 	  if (isset($_POST['idpersona'])) 
     {
 	  $id=$_POST['idpersona'];
 	  $pa = mysql_query("SELECT * FROM persona WHERE N_identidad='".$id."'");
             
-      //$pa=mysql_query("SELECT * FROM persona WHERE N_identidad='$id'");			  
+     			  
 		if($row=mysql_fetch_array($pa)){
 			$existe=TRUE;
 			
@@ -29,6 +29,8 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
 			
 		}
                 else{
+                    $existe=FALSE;
+                    
                     
                echo mensajes('No se encontro ningun registro','azul');
 
@@ -69,13 +71,16 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
                 // var d=$("#cargo").val();
                 // alert(d);
                 
+                 var idpersona = "<?php echo $id; ?>" ;
+                
                 data={
-                    identi:$('#idp').val(),
+                    identi:idpersona,
                     cod_empleado:$('#cod').val(),
                     fecha:$('#fecha').val(),
                     obs:$('#obs').val(),
                     id_dep:$('#depar').val(),
-                    cargo:$('#cargo').val()
+                    cargo:$('#cargo').val(),
+                    tipoProcedimiento:"insertar"
                 };
                 
                 
@@ -84,10 +89,10 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
                     type: "POST",
                     dataType: "html",
                     contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
+                    beforeSend: inicioEnvioAP,
                     success: llegadainsertarEmpleado,
                     timeout: 4000,
-                    error: problemas
+                    error: problemasAP
                 });
                 return false;
             }
@@ -96,22 +101,23 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
             
 
 
-            function inicioEnvio()
+            function inicioEnvioAP()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
 
             function llegadainsertarEmpleado()
             {
-                $("#contenedor2").load('Datos/insertarEmpleado.php',data);
+                $('body').removeClass('modal-open');
+                $("#contenedor").load('pages/recursos_humanos/Empleados.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
 
-            function problemas()
+            function problemasAP()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -123,64 +129,46 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
     </head>
     
     <body>
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Datos Personales
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-6">       
-
-
-
-                                <form role="form" action="#" method="Post">
-
-                                    <div class="form-group">
-                                        <label>Numero de identidad</label>
-                                        <input class="form-control" name="n_identidad" id="idp" value= "<?Php echo $id ?>"  readonly> <!-- agregue el atrributo name que mediante este vas a poder acceder al valor de la etiqueta -->
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Primer Nombre</label>
-                                        <input class="form-control" name="Primer_nombre" value= "<?Php echo $nombre ?>"  readonly> <!-- agregue el atrributo name que mediante este vas a poder acceder al valor de la etiqueta -->
-
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label>Primer Apellido</label>
-                                        <input class="form-control" name="Primer_apellido" value= "<?Php echo $apellido ?>"  readonly> <!-- agregue el atrributo name que mediante este vas a poder acceder al valor de la etiqueta -->
-
-                                    </div>
-
-                                    <!-- ---------------------------------------   -->
-
-                                </form>
-
-                            </div>
-                            <!-- /.col-lg-6 (nested) -->
-
-                            <!-- /.col-lg-6 (nested) -->
+        
+        <?php
+        if($existe){
+    echo <<<HTML
+     
+        
+    <div class="row">  
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Informacion personal
+                </div>
+                <div class="panel-body">
+                 <div class="row">
+                        <div class="col-xs-12">
+                             
+                            <strong> Numero de identidad :</strong>   $id 
+                           
+                            </br>
+                            <strong> Nombre :</strong> $nombre $apellido 
+                            </br>
+                           
+                  
                         </div>
-                        <!-- /.row (nested) -->
-
+                     <div class="col-xs-12">
+                         
+                         
+                         
+                     </div>
                     </div>
-                    <!-- /.panel-body -->
-
+                    <!-- /.row (nested) -->
                 </div>
 
-                <!-- /.panel -->
-
             </div>
-
-            <!-- /.col-lg-12 -->
+            <!-- /.panel -->
         </div>
+        <!-- /.col-lg-12 -->
+    </div>
 
+            
 
         <div class="row">
             <div class="col-lg-12">
@@ -191,25 +179,29 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6"> 
+                            <div class="col-lg-12"> 
 
                                 <form role="form" action="#" method="Post">
 
                                     <div class="form-group">
-                                        <label>Codigo Empleado</label>
-                                        <input class="form-control" name="cod_empleado" id="cod" required=""> <!-- agregue el atrributo name que mediante este vas a poder acceder al valor de la etiqueta -->
-
+     
+                                         <label  class="col-lg-6 control-label" >Codigo Empleado</label>
+                                            
+                                        <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="cod_empleado" id="cod" required> 
+                                        </div>
+                                           
                                     </div>
 
-                                    <!-- ---------------------------------------   -->
 
+                                   <div class="form-group">
+                                        <label class="col-lg-6 control-label" >Departamento</label>
+                                   
+                                    <div class="col-lg-6">
+                                        <select name='depar' class="form-control" id="depar" >
 
-                                    <div class="form-group">
-                                        <label>Departamento</label>
-
-                                        <select name='depar' id="depar">
-
-                                            <?php
+HTML;
+    
                                             $consulta_mysql = "SELECT * FROM `departamento_laboral`";
                                             $rec = mysql_query($consulta_mysql);
 
@@ -222,24 +214,27 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
 
                                                 echo "</option>";
                                             }
-                                            ?>
-
-
+                                           
+HTML;
+                                          echo <<<HTML
 
                                         </select>
-                                    </div>
+                                  </div>
+                                </div>
+                               
 
 
-
+                                  
 
                                     <!-- ---------------------------------------   -->
 
-                                    <div class="form-group" >
-                                        <label>Cargo</label>
+                                     <div class="form-group">
+                                        <label class="col-lg-6 control-label">Cargo</label>
+                                    
+                                    <div class="col-lg-6" >
+                                        <select name='cargo' class="form-control" id="cargo">
 
-                                        <select name='cargo' id="cargo">
-
-                                            <?php
+HTML;
                                             $consulta_mysql = "SELECT * FROM `cargo`";
                                             $rec = mysql_query($consulta_mysql);
 
@@ -252,22 +247,31 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
 
                                                 echo "</option>";
                                             }
-                                            ?>
+HTML;
+echo<<<HTML
                                         </select>
-                                    </div>
-
-                                    <div class="form-group" >
-                                        <label>Fecha de ingreso como empleado</label>
-                                        <input type="date" name="Fecha" id="fecha" /> <!-- agregue el atrributo name que mediante este vas a poder acceder al valor de la etiqueta -->
-
-
-                                    </div>
-
-
+                                     </div>
+                                    
+                                     </div>
 
                                     <div class="form-group">
-                                        <strong>Observacion:</strong> <br /><textarea name="comentarios" rows="3" cols="50" id="obs" ></textarea>
+                                        <label class="col-lg-6 control-label">Fecha de ingreso como empleado</label>
+                                  
+                                    <div class="col-lg-6">
+                                        <input type="date"  class="form-control" name="Fecha" id="fecha" required> <!-- agregue el atrributo name que mediante este vas a poder acceder al valor de la etiqueta -->
+                                     </div>
                                     </div>
+                                   
+
+
+
+                                   <div class="form-group">
+                                        <label class="col-lg-6 control-label"><strong>Observacion:</strong></label> 
+                                  
+                                    <div class="col-lg-6">
+                                        <textarea name="comentarios" rows="3" cols="31"  id="obs" ></textarea>
+                                    </div>
+                                   </div>
 
 
 
@@ -290,8 +294,9 @@ mysql_select_db("sistema_ciencias_juridicas", $enlace);
             </div>
         </div>
 
-
-
+HTML;
+        }
+        ?>
 
 
 

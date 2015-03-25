@@ -41,8 +41,12 @@ $query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin",$enlace);
                         <td><div class="text" id="titulo-<?php echo $id ?>"><?php echo $row['nombre']?></div></td>
                         <td><div class="text" id="del-<?php echo $id ?>"><?php echo $row['fecha_de_Inicio']?></div></td>
                         <td><div class="text" id="al-<?php echo $id ?>"><?php echo $row['fecha_Fin']?></div></td>
-                        <td><a class="ver btn btn-primary ">ver</a></td>
-                        <td><a class="elimina btn btn-primary ">eliminar</a></td>
+                        <td><a class="ver btn btn-success  fa fa-arrow-right "></a>
+                            <a class="editar btn btn-info fa fa-pencil "></a>
+                            <a class="elimina btn btn-danger fa fa-trash-o"></a>
+                        </td>
+                        <td></td>
+                        <td></td>
                     </tr>
 					<?php
 				}
@@ -64,108 +68,118 @@ $query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin",$enlace);
 
 
 </body>
+<script>
 
- <script>
-    // JavaScript Document
-var id;
-var id1;
-var data;
-var data1;
+            $(document).ready(function() {
 
-///esta parte selecciona el Poa que se quiere ver 
-            $(document).ready(function(){
-                fn_dar_eliminar();               
-            });
-			
-			
-              $(document).ready(function(){
-                fn_dar_ver();               
-            });
-            
-             function fn_dar_eliminar(){
-          
-                $("a.elimina").click(function(){
-                    id1 = $(this).parents("tr").find("td").eq(0).html();
-                    eliminarUnPOA();
-                  
+                
+                $(".ver").click(function() {
+                id = $(this).parents("tr").find("td").eq(0).html();
+                //alert(id);      
+                data1 = {ide: id};
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    url: "pages/crearObjetivo.php",
+                    beforeSend: inicioVer,
+                    success: llegadaVer,
+                    timeout: 4000,
+                    error: problemas
                 });
-            };
-            
-            function fn_dar_ver(){
-                $("a.ver").click(function(){
+                return false;
+            });
+            $(".elimina").click(function() {
+                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta)
+                {
+
                     id = $(this).parents("tr").find("td").eq(0).html();
-                    consultaDePOAS();
-                    
-                });
-            };
+                    // alert(id);      
+                    data = {id: id};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "Datos/eliminarPOA.php",
+                        beforeSend: inicioEliminar,
+                        success: llegadaEliminar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
+            });
+            
+            $(".editar").click(function() {
+                
 
-//// en esta parte implemeta el ajax
-        function eliminarUnPOA(){
-        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-        if (respuesta){  
-             data1 ={ id:id1};
-    
-    $.ajax({
-        async:true,
-        type: "POST",
-        dataType: "html",
-        contentType: "application/x-www-form-urlencoded",
-        url:"Datos/eliminarPOA.php",     
-        beforeSend:inicioEliminar,
-        success:llegadaEliminarUnPOA,
-        timeout:4000,
-        error:problemas
-    }); 
-    return false;
-        }
-} 
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id);      
+                    data4 = {id: id};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        //: "application/x-www-form-urlencoded",
+                        //url: "pages/editarPOA.php",
+                        //beforeSend: inicioEliminar,
+                        success: llegadaEditarPOA,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                
+            });
 
+
+            });
+
+            
+
+
+
+            function inicioVer()
+            {
+                var x = $("#contenedor");
+                x.html('Cargando...');
+            }
+
+            function inicioEliminar()
+            {
+                var x = $("#contenedor2");
+                x.html('Cargando...');
+            }
+            function inicioEnvio()
+            {
+                var x = $("#contenedor2");
+                x.html('Cargando...');
+            }
+            function llegadaEditarPOA()
+            {
+                $("#cuerpoEditar").load('pages/editarPOA.php', data4);
+                $('#editarPOA').modal('show');
+            }
+            function llegadaEliminar()
+            {
+                $("#contenedor2").load('Datos/eliminarPOA.php', data);
+            }
+            function llegadaVer()
+            {
+                $("#contenedor").load('pages/crearObjetivo.php', data1);
+            }
+            function llegadaGuardar()
+            {
+                $("#contenedor2").load('Datos/insertarPOA.php', data2);
+            }
+
+            function problemas()
+            {
+                $("#contenedor2").text('Problemas en el servidor.');
+            }
+
+        </script>
  
-    
-        
-         function consultaDePOAS(){
-             data ={ ide:id                
-        };
-    
-    $.ajax({
-        async:true,
-        type: "POST",
-        dataType: "html",
-        contentType: "application/x-www-form-urlencoded",
-        url:"pages/crearObjetivo.php",     
-        beforeSend:inicioConsulta,
-        success:llegadaConsultaPOAs,
-        timeout:4000,
-        error:problemas
-    }); 
-    return false;
-} 
-
-function inicioConsulta()
-{
-    var x=$("#contenedor");
-    x.html('Cargando...');
-}
-function inicioEliminar()
-{
-    var x=$("#contenedor2");
-    x.html('Cargando...');
-}
-function llegadaEliminarUnPOA()
-{
-    $("#contenedor2").load('Datos/eliminarPOA.php',data1);
-}
-function llegadaConsultaPOAs()
-{
-    $("#contenedor").load('pages/crearObjetivo.php',data);
-}
-function problemas()
-{
-    $("#contenedor").text('Problemas en el servidor.');
-}
-
-
-    
-    </script>
-
 </html>

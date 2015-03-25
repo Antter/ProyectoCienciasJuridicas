@@ -15,15 +15,17 @@
 
         require_once("../../conexion/config.inc.php");
 	
-        $sql = "INSERT INTO organizacion Values(NULL,:addNombreOrganizacion,:addUbicacion)";
+        $sql = "CALL sp_insertar_organizacion(?,?,@mensaje,@codMensaje)";
 
         $query = $db->prepare($sql);
-        $query ->bindParam(":addNombreOrganizacion",$addNombreOrganizacion);
-        $query ->bindParam(":addUbicacion",$addUbicacion);
+        $query ->bindParam(1,$addNombreOrganizacion,PDO::PARAM_STR);
+        $query ->bindParam(2,$addUbicacion,PDO::PARAM_STR);
         $query->execute();
 
-        $mensaje = "Organizacion insertada correctamente";
-        $codMensaje = 1;
+        $output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+        $mensaje = $output['@mensaje'];
+	$codMensaje = $output['@codMensaje'];
 
         }
 

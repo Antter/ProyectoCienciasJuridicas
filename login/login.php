@@ -62,7 +62,7 @@ if(isset( $_SESSION['user_id'] ))
       <div id="login-page">
         <div class="container">
           <form class="form-login">
-            <h2 class="form-login-heading">Inicio de sesion</h2>
+            <h2 class="form-login-heading">Inicio de sesion sistema de ciencias juridicas</h2>
               <div class="login-wrap">
 
 <?php
@@ -127,13 +127,16 @@ if(isset( $_SESSION['user_id'] ))
 ?>
 
                 <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario" autofocus>
-                <br>
+                <br/>
                 <input type="password" name="password" id="password" class="form-control" placeholder="contraseña">
+				<br/>
+				<!--
                 <label class="checkbox">
                     <span class="pull-right">
                         <a data-toggle="modal" href="login.html#myModal"> Olvido su contraseña? </a>
                     </span>
                 </label>
+				-->
                 <input type="button" class="btn btn-primary btn-lg btn-block" value="Acceder" onclick="login();">
                    </input>
                 <hr>

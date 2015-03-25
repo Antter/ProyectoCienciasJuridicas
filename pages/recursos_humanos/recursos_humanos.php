@@ -27,8 +27,7 @@
     </head>
     
     <body>
-    
-    
+	
     <div class="container-fluid">
          <div class="row">
              <div class="col-sm-3">
@@ -66,6 +65,7 @@
             <ul class="list-unstyled collapse in" id="userMenu2">
                 
                 <li><a id="empleado" href="#"><i class="glyphicon "></i>Empleados </a></li>
+                <li><a id="gestionGC" href="#"><i class="glyphicon "></i>Gestion de Grupos</a></li>
                 
             </ul>
         </li>
@@ -94,6 +94,10 @@
                   <li><a id="comite" href="#">Grupo o Comité</a>
                 </li>
                   <li><a id="pais" href="#">Paises</a>
+                </li>
+				 <li><a id="usuarios" href="#">Usuarios</a>
+                </li>
+				 <li><a id="roles" href="#">Roles</a>
                 </li>
                 
             </ul>
@@ -363,19 +367,9 @@
                         <!-- /.panel-body -->
                     </div>
                     </div>
-                        
-                        
+                                                
            <!--  </div> -->
-                          
-                          
-                          
-                          
-                          
-                          
-                          
-
-                          
-                          
+                       
                     </div>
                 </div>
             </div>
@@ -388,15 +382,7 @@
  </div>
 
     </div>
-
-
-
-
-
-       
-
-      
-        
+    
          <script>
 
             /* 
@@ -422,7 +408,14 @@
                 x = $("#pais");
                 x.click(paises);
                 
-                
+                var y;
+				y = $("#usuarios");
+				y.click(usuarios);
+				
+				var y1;
+				y1 = $("#roles");
+				y1.click(roles);
+				
                 var x;
                 x=$("#departamentos");
                 x.click(departamentos);
@@ -461,9 +454,14 @@
         var x;
         x = $("#expLab");
         x.click(expLab);
+        
         var x;
         x = $("#formAcad");
         x.click(formAcad);
+        
+        var x;
+        x = $("#gestionGC");
+        x.click(gestiondeGrupos);
                 
                 
             }
@@ -588,7 +586,35 @@
                 return false;
             }
            
-            
+            function usuarios()
+            {
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: llegadaUsuarios,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            }
+			
+			function roles()
+            {
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: llegadaRoles,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            }
             
                     function persona()
             {
@@ -676,6 +702,21 @@
         });
         return false;
     }
+    
+        function gestiondeGrupos()
+    {
+        $.ajax({
+            async: true,
+            type: "POST",
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded",
+            beforeSend: inicioEnvio,
+            success: llegadagestiondeGrupos,
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
             
             
             
@@ -724,6 +765,18 @@
                 $("#contenedor").load('pages/recursos_humanos/Pais.php');
                 //$("#contenedor").load('../cargarPOAs.php');
             }
+			
+			function llegadaUsuarios()
+            {
+                $("#contenedor").load('pages/recursos_humanos/Usuarios.php');
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+			
+			function llegadaRoles()
+            {
+                $("#contenedor").load('pages/recursos_humanos/Roles.php');
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
             
                      function llegadaempleado()
             {
@@ -756,6 +809,12 @@
     {
         $("#contenedor").load('pages/recursos_humanos/cv/menuformAcad.php');
     }
+    
+    
+      function llegadagestiondeGrupos()
+    {
+        $("#contenedor").load('pages/recursos_humanos/gestion_Grupos_comite.php');
+    }
             
             
 
@@ -768,13 +827,7 @@
 
         </script>
         
-        
-        
-
-    <!-- Morris Charts JavaScript -->
-    <script src="bower_components/raphael/raphael-min.js"></script>
-    <script src="bower_components/morrisjs/morris.min.js"></script>
-    <script src="js/morris-data.js"></script>
+     
         
         
     </body>

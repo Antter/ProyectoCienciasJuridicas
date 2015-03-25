@@ -3,6 +3,12 @@
 include '../../Datos/conexion.php';
 
 
+      $cargoE='';
+     $idCargoE='';
+      $fechacE='';
+      
+$enlace = mysql_connect('localhost', 'root', '');
+mysql_select_db("sistema_ciencias_juridicas", $enlace);
 
 $codigoE = $_POST['codigo'];
 
@@ -13,6 +19,8 @@ $codigoE = $_POST['codigo'];
      
       $nombreE=$row['Primer_nombre'];
       $apellidoE=$row['Primer_apellido'];
+      $nidentidad=$row['N_identidad'];
+      $fechaE=$row['Fecha_ingreso'];
       $depE=$row['nombre_departamento'];
       $depID=$row['Id_departamento_laboral'];
       $obsE=$row['Observacion'];
@@ -20,18 +28,7 @@ $codigoE = $_POST['codigo'];
     
      
  $nombreC =$nombreE." ".$apellidoE;
- 
-
-          
-         
- }
- 
- 
- if($row2=mysql_fetch_array($resultado2)){
-     
-      $cargoE=$row2['Cargo'];
-     $idCargoE=$row2['ID_cargo'];
-      $fechaE=$row2['Fecha_ingreso_cargo'];
+      
  }
  
  
@@ -58,19 +55,136 @@ $codigoE = $_POST['codigo'];
                  <div class="row">
                         <div class="col-xs-12">
                              
+                            <strong> Numero de identidad :</strong> <?php echo $nidentidad ?>
+                            <div class="pull-right"><strong>Codigo empleado: </strong><?php echo $codigoE ?></div>
+                            </br>
                             <strong> Nombre :</strong> <?php echo $nombreC ?>
-                            <small class="pull-right">Codigo empleado: <?php echo $codigoE ?></small>
-                            
-                           
-                        </div><!-- /.col -->
+                            </br>
+                            <strong> Fecha Ingreso como empleado :</strong> <?php echo $fechaE ?>
+                  
+                        </div>
+                     <div class="col-xs-12">
+                         
+                         
+                         
+                     </div>
                     </div>
                     <!-- /.row (nested) -->
                 </div>
-                
-                
-                <!-- /.panel-body -->
+
             </div>
             <!-- /.panel -->
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    
+        <div class="row">
+       
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-list-alt"></i>Informacion laboral
+                </div>
+                <div class="panel-body">
+                 <div class="row">
+                        <div class="col-xs-12">
+                             
+                            <strong> Departamento laboral :</strong> <?php echo $depE ?>
+                            </br>
+                            </br>
+                            
+      
+                            
+                            
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+        <tr>
+            <th><strong>Cargo</strong></th>
+            <th><strong>Fecha de ingreso</strong></th>
+            <th><strong>Fecha de salida</strong></th>
+            
+
+        </tr>
+            </thead>
+      <tbody>
+          
+        <?php
+        while ($row3=mysql_fetch_array($resultado2)) {
+            $id = $row3['ID_cargo'];
+            $fechaS=$row3['Fecha_salida_cargo'];
+            
+            
+            
+         ?>
+            
+          <tr>
+                  <td id="cargoP"><?php echo $row3['Cargo'] ?></td>
+                  <td id="fechaic"> <?php echo $row3['Fecha_ingreso_cargo']?></td>
+                  
+             <?php
+              if ($fechaS== NULL || $fechaS=="0000-00-00") {
+                    echo "<td> Actualmente </td>";
+                }else{
+                    echo "<td> $fechaS </td>";
+                }
+             ?>
+           
+
+
+         </tr>
+
+
+   <?php } ?>
+ </tbody>
+    </table>
+
+    </div>
+      
+                          
+                  
+                        </div>
+                     <div class="col-xs-12">
+                         
+                         
+                         
+                     </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    
+    
+    
+    
+            <div class="row">
+       
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-eye-open"></i>Observaciones
+                </div>
+                <div class="panel-body">
+                 <div class="row">
+                        <div class="col-xs-12">
+                             
+                            <strong>Observacion :</strong> <?php echo $obsE ?>
+                            
+                                   
+                        </div>
+                  
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    

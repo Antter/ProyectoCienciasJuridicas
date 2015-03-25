@@ -15,15 +15,17 @@
 
         require_once("../../conexion/config.inc.php");
 	
-        $sql = "INSERT INTO unidad_academica Values(NULL,:addNombreUnidadAcademica,:addUbicacionUnidadAcademica)";
+        $sql = "CALL sp_insertar_unidad_academica(?,?,@mensaje,@codMensaje)";
 
         $query = $db->prepare($sql);
-        $query ->bindParam(":addNombreUnidadAcademica",$addNombreUnidadAcademica);
-        $query ->bindParam(":addUbicacionUnidadAcademica",$addUbicacionUnidadAcademica);
+        $query ->bindParam(1,$addNombreUnidadAcademica,PDO::PARAM_STR);
+        $query ->bindParam(2,$addUbicacionUnidadAcademica,PDO::PARAM_STR);
         $query->execute();
 
-        $mensaje = "Unidad Academica insertada correctamente";
-        $codMensaje = 1;
+		$output = $db->query("select @mensaje, @codMensaje")->fetch(PDO::FETCH_ASSOC);
+		//var_dump($output);
+            $mensaje = $output['@mensaje'];
+		$codMensaje = $output['@codMensaje'];
 
         }
 

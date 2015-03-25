@@ -1,18 +1,8 @@
-var id;
-var data;
-var x;
-    x=$(document);
-    x.ready(inicio);
-
-    function inicio(){
-
-        var x;
-        x=$("#nueva_unidadacademica");
-        x.click(nueva_unidadacademica);
-       
-    }
-
-        function nueva_unidadacademica() {
+$( document ).ready(function() {
+	
+	$("form").submit(function(e) {
+	    e.preventDefault();
+		$("#compose-modal-actualizar").modal('hide');
             data={
                 UnidadAcademica:$("#Insertar_NombreUnidadAcademica").val(),
                 Ubicacion:$("#Insertar_UbicacionUnidadAcademica").val(),
@@ -30,15 +20,13 @@ var x;
                 error:problemas
             }); 
             return false;
-        }
-
-        function quitarModal(){
-
-            $("#compose-modal").modal('hide');
-        }
+    });
+	
+});
 
         function NuevaUnidadAcademica(){
 
+		    $('body').removeClass('modal-open');
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_unidadacademica.php',data);
         }
         function problemas(){
