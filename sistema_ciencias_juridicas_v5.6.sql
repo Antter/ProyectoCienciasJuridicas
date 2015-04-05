@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-03-2015 a las 05:17:02
+-- Tiempo de generación: 01-04-2015 a las 06:58:24
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.5.19
 
@@ -299,15 +299,7 @@ END;
 COMMIT;   
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_seguimiento`( 
-    IN numFolio_ VARCHAR(25), 
-	IN fechaFin_ DATE,
-	IN prioridad_ TINYINT, 
-	IN seguimiento_ TINYINT,
-	IN notas_ TEXT,
-    OUT mensaje VARCHAR(150), 
-    OUT codMensaje TINYINT  
-)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_seguimiento`(IN `numFolio_` VARCHAR(25), IN `fechaFin_` DATE, IN `prioridad_` TINYINT, IN `seguimiento_` TINYINT, IN `notas_` TEXT, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
 BEGIN 
  
    DECLARE id INTEGER DEFAULT 0;
@@ -331,6 +323,7 @@ BEGIN
        UPDATE seguimiento SET Notas = notas_, Prioridad = prioridad_, EstadoSeguimiento = seguimiento_ WHERE NroFolio = numFolio_;
 	 ELSE
 	   UPDATE seguimiento SET Notas = notas_, Prioridad = prioridad_, FechaFinal = fechaFin_, EstadoSeguimiento = seguimiento_ WHERE NroFolio = numFolio_;
+       UPDATE alerta SET Atendido=1 WHERE NroFolioGenera = numFolio_;
 	 END IF;
 	 
      INSERT INTO seguimiento_historico VALUES(NULL,id,seguimiento_,notas_,prioridad_,NOW());
@@ -801,7 +794,7 @@ CREATE TABLE IF NOT EXISTS `alerta` (
   `NroFolioGenera` varchar(25) NOT NULL,
   `FechaCreacion` datetime NOT NULL,
   `Atendido` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1053,17 +1046,6 @@ CREATE TABLE IF NOT EXISTS `folios` (
   `Prioridad` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `folios`
---
-
-INSERT INTO `folios` (`NroFolio`, `FechaCreacion`, `FechaEntrada`, `PersonaReferente`, `UnidadAcademica`, `Organizacion`, `DescripcionAsunto`, `TipoFolio`, `UbicacionFisica`, `Prioridad`) VALUES
-('12345ABC', '2015-02-26', '2015-02-26', 'persona', 1, NULL, 'Asunto 1', 1, 1, 2),
-('12345CCC', '2015-02-27', '2015-02-27', '2dwdw', 1, NULL, 'edveve', 1, 1, 1),
-('folioman4', '2015-03-18', '2015-03-18', 'dom', NULL, 10, 'domingo', 0, 1, 1),
-('prueba123', '2015-02-01', '2015-03-01', 'ref', 1, NULL, 'ref', 0, 1, 1),
-('test2', '2015-02-28', '2015-03-01', 'ref', NULL, 7, 'desc', 1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1163,22 +1145,9 @@ CREATE TABLE IF NOT EXISTS `notificaciones_folios` (
   `Titulo` text NOT NULL,
   `Cuerpo` text NOT NULL,
   `FechaCreacion` date NOT NULL,
-  `IdUbicacionNotificacion` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `notificaciones_folios`
---
-
-INSERT INTO `notificaciones_folios` (`Id_Notificacion`, `NroFolio`, `IdEmisor`, `Titulo`, `Cuerpo`, `FechaCreacion`, `IdUbicacionNotificacion`) VALUES
-(18, 'test2', 1, 'fa', 'gad', '2015-03-19', 1),
-(24, 'prueba123', 1, 'gggggg', 'gggg', '2015-03-19', 1),
-(25, '12345CCC', 1, 'uuuu', 'uuu', '2015-03-19', 2),
-(26, '12345ABC', 45456, '1', 'jajajajajaja', '2015-03-19', 2),
-(27, '12345CCC', 45456, '2', 'jajajajajjaj', '2015-03-19', 2),
-(28, 'folioman4', 45456, '3', 'xD', '2015-03-19', 2),
-(29, 'folioman4', 2, 'Seguimiento finalizado', 'El seguimiento se ha finalizado por favor confirmar', '2015-03-22', 2),
-(30, 'folioman4', 45457, 'seguimiento del folio terminado folioman4', 'el seguimiento ha finalizado correctamente, notificare a la decana.', '2015-03-22', 2);
+  `IdUbicacionNotificacion` int(11) NOT NULL,
+  `Estado` tinyint(4) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1213,24 +1182,7 @@ CREATE TABLE IF NOT EXISTS `organizacion` (
 `Id_Organizacion` int(11) NOT NULL,
   `NombreOrganizacion` text NOT NULL,
   `Ubicacion` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `organizacion`
---
-
-INSERT INTO `organizacion` (`Id_Organizacion`, `NombreOrganizacion`, `Ubicacion`) VALUES
-(7, 'TRQ123', 'TRT123'),
-(8, 'org123', 'ibu123'),
-(10, 'test2', 'test2'),
-(11, 'test3', 'test3'),
-(13, 'tram111', 'tram111'),
-(14, 'prueba111', 'prueba111'),
-(15, 'uyg', 'bihi'),
-(16, 'gg', 'guguy'),
-(17, 'huhu', 'guygu'),
-(18, 'ftgug', 'iuhuih'),
-(19, 'guygu', 'huhu');
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1357,19 +1309,7 @@ CREATE TABLE IF NOT EXISTS `prioridad_folio` (
   `IdFolio` varchar(25) NOT NULL,
   `Id_Prioridad` tinyint(4) NOT NULL,
   `FechaEstablecida` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `prioridad_folio`
---
-
-INSERT INTO `prioridad_folio` (`Id_PrioridadFolio`, `IdFolio`, `Id_Prioridad`, `FechaEstablecida`) VALUES
-(1, 'folioman4', 1, '2015-03-18'),
-(2, 'folioman4', 2, '2015-03-18'),
-(3, 'folioman4', 1, '2015-03-18'),
-(4, 'folioman4', 2, '2015-03-18'),
-(5, 'folioman4', 1, '2015-03-18'),
-(6, '12345ABC', 2, '2015-03-21');
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1401,10 +1341,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 --
 
 INSERT INTO `roles` (`Id_Rol`, `Descripcion`) VALUES
-(1, 'Admin'),
-(2, 'gjhjghjghj'),
-(40, 'Secretaria de la decana -puede acceder a la mayor parte del sistema pero no puede modifcar ni eliminar determinado contenido, no puede realizar acciones que modifiquen el funcionamiento del sistema'),
-(50, 'Decano - Puede realizar cualquier accion administrativa en el sistema, pero no puede realizar acciones que modifiquen el funcionamiento del sistema'),
+(40, 'Secretaria de la decana'),
+(50, 'Decano'),
 (100, 'root');
 
 -- --------------------------------------------------------
@@ -1421,15 +1359,7 @@ CREATE TABLE IF NOT EXISTS `seguimiento` (
   `FechaInicio` date NOT NULL,
   `FechaFinal` date DEFAULT NULL,
   `EstadoSeguimiento` tinyint(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `seguimiento`
---
-
-INSERT INTO `seguimiento` (`Id_Seguimiento`, `NroFolio`, `Notas`, `Prioridad`, `FechaInicio`, `FechaFinal`, `EstadoSeguimiento`) VALUES
-(1, '12345ABC', '', 0, '2015-02-26', NULL, 1),
-(2, 'folioman4', 'finalizado weee', 1, '2015-03-18', '2015-03-18', 5);
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1444,16 +1374,7 @@ CREATE TABLE IF NOT EXISTS `seguimiento_historico` (
   `Notas` text NOT NULL,
   `Prioridad` tinyint(4) NOT NULL,
   `FechaCambio` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `seguimiento_historico`
---
-
-INSERT INTO `seguimiento_historico` (`Id_SeguimientoHistorico`, `Id_Seguimiento`, `Id_Estado_Seguimiento`, `Notas`, `Prioridad`, `FechaCambio`) VALUES
-(1, 1, 1, '', 0, '2015-02-26 00:00:00'),
-(2, 2, 1, 'domas', 1, '2015-03-17 17:16:39'),
-(3, 2, 5, 'finalizado weee', 1, '2015-03-18 01:47:11');
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1621,13 +1542,6 @@ CREATE TABLE IF NOT EXISTS `unidad_academica` (
   `UbicacionUnidadAcademica` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `unidad_academica`
---
-
-INSERT INTO `unidad_academica` (`Id_UnidadAcademica`, `NombreUnidadAcademica`, `UbicacionUnidadAcademica`) VALUES
-(1, 'unidad acad 1', 'ubicacion 1');
-
 -- --------------------------------------------------------
 
 --
@@ -1672,11 +1586,11 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id_Usuario`, `No_Empleado`, `nombre`, `Password`, `Id_Rol`, `Fecha_Creacion`, `Fecha_Alta`, `Estado`) VALUES
-(1, 'lm91', 'prueba', 'prueba', 1, '2015-03-11', '2015-03-21', 0),
-(2, 'flux', 'Admin', 'Admin', 100, '2015-03-14', NULL, 1),
-(45456, 'lm91', 'prueba14', 'dom', 1, '2015-03-10', '2015-03-21', 0),
-(45457, 'flux', 'secretaria', 'prueba', 40, '2015-03-20', NULL, 1),
-(45466, 'mo93', 'decana', 'prueba', 50, '2015-03-21', NULL, 1);
+(1, 'lm91', 'prueba', 'prueba', 100, '2015-03-11', NULL, 1),
+(2, 'flux', 'admin', 'admin', 100, '2015-03-14', NULL, 1),
+(45456, 'lm91', 'prueba14', 'dom', 40, '2015-03-10', '2015-03-21', 0),
+(45457, 'flux', 'admin2', 'dom', 40, '2015-03-20', NULL, 1),
+(45466, 'mo93', 'mon11', 'dom', 40, '2015-03-21', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1688,7 +1602,7 @@ CREATE TABLE IF NOT EXISTS `usuario_alertado` (
 `Id_UsuarioAlertado` int(11) NOT NULL,
   `Id_Alerta` int(11) NOT NULL,
   `Id_Usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1701,22 +1615,9 @@ CREATE TABLE IF NOT EXISTS `usuario_notificado` (
   `Id_Notificacion` int(11) NOT NULL,
   `Id_Usuario` int(11) NOT NULL,
   `IdUbicacionNotificacion` tinyint(4) NOT NULL,
+  `Estado` tinyint(11) NOT NULL,
   `Fecha` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `usuario_notificado`
---
-
-INSERT INTO `usuario_notificado` (`Id_UsuarioNotificado`, `Id_Notificacion`, `Id_Usuario`, `IdUbicacionNotificacion`, `Fecha`) VALUES
-(21, 18, 45456, 3, '2015-03-19'),
-(26, 24, 45456, 3, '2015-03-19'),
-(27, 25, 2, 3, '2015-03-19'),
-(28, 26, 1, 1, '2015-03-19'),
-(29, 27, 1, 1, '2015-03-19'),
-(30, 28, 1, 1, '2015-03-19'),
-(31, 29, 45457, 3, '2015-03-22'),
-(32, 30, 2, 3, '2015-03-22');
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Índices para tablas volcadas
@@ -2046,7 +1947,7 @@ MODIFY `id_Actividades_Terminadas` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `alerta`
 --
 ALTER TABLE `alerta`
-MODIFY `Id_Alerta` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `Id_Alerta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `area`
 --
@@ -2121,7 +2022,7 @@ MODIFY `Motivo_ID` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `notificaciones_folios`
 --
 ALTER TABLE `notificaciones_folios`
-MODIFY `Id_Notificacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `Id_Notificacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `objetivos_institucionales`
 --
@@ -2131,7 +2032,7 @@ MODIFY `id_Objetivo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `organizacion`
 --
 ALTER TABLE `organizacion`
-MODIFY `Id_Organizacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+MODIFY `Id_Organizacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
@@ -2151,7 +2052,7 @@ MODIFY `id_Poa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT de la tabla `prioridad_folio`
 --
 ALTER TABLE `prioridad_folio`
-MODIFY `Id_PrioridadFolio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `Id_PrioridadFolio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `responsables_por_actividad`
 --
@@ -2166,12 +2067,12 @@ MODIFY `Id_Rol` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=101;
 -- AUTO_INCREMENT de la tabla `seguimiento`
 --
 ALTER TABLE `seguimiento`
-MODIFY `Id_Seguimiento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `Id_Seguimiento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `seguimiento_historico`
 --
 ALTER TABLE `seguimiento_historico`
-MODIFY `Id_SeguimientoHistorico` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `Id_SeguimientoHistorico` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `sub_actividad`
 --
@@ -2236,12 +2137,12 @@ MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45467;
 -- AUTO_INCREMENT de la tabla `usuario_alertado`
 --
 ALTER TABLE `usuario_alertado`
-MODIFY `Id_UsuarioAlertado` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `Id_UsuarioAlertado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuario_notificado`
 --
 ALTER TABLE `usuario_notificado`
-MODIFY `Id_UsuarioNotificado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+MODIFY `Id_UsuarioNotificado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Restricciones para tablas volcadas
 --
