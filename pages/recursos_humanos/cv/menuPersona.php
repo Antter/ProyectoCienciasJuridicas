@@ -287,7 +287,7 @@
         }
         function llegadaActualizar()
         {
-            $("#container").load('pages/recursos_humanos/cv/actualizar/.php');
+            $("#container").load('pages/recursos_humanos/cv/actualizar/infoPersonal.php');
         }
         function llegadaEliminar()
         {
@@ -299,7 +299,7 @@
         }
         function llegadaActualizarTel()
         {
-            $("#container").load('pages/recursos_humanos/cv/actualizar/.php');
+            $("#container").load('pages/recursos_humanos/cv/actualizar/telefono.php');
         }
         function llegadaEliminarTel()
         {

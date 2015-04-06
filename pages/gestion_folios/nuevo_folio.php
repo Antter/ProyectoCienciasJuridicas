@@ -89,7 +89,7 @@ require_once("datos/datos_nuevo_folio.php");
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">Persona referente</span>
-                                                        <input type="text" name="personaReferente" class="form-control" id="personaReferente" placeholder="Persona Referente" title="Completa este campo" required>
+                                                        <input type="text" maxlength="50" name="personaReferente" class="form-control" id="personaReferente" placeholder="Persona Referente" title="Completa este campo" required>
                                                     </div>
                                                 </div>
 										        <h3 >Selecciones una organizacion o una unidad academica</h3>
@@ -120,7 +120,7 @@ require_once("datos/datos_nuevo_folio.php");
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">Descripcion</span>
-                                                        <textarea id="Descripcion" class="form-control" name="Descripcion" rows="3" placeholder="Ingrese una descripcion..." title="Completa este campo" required></textarea>
+                                                        <textarea id="Descripcion" class="form-control" name="Descripcion" rows="3" maxlength="300" placeholder="Ingrese una descripcion..." title="Completa este campo" required></textarea>
                                                     </div>
                                                 </div>
 									        </div>
@@ -176,7 +176,7 @@ require_once("datos/datos_nuevo_folio.php");
 										        <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"> Notas del seguimiento </span>
-                                                        <textarea id="NotasSeguimiento" class="form-control" name="NotasSeguimiento" rows="3" placeholder="Ingrese una nota referente al sequimiento..." required></textarea>
+                                                        <textarea id="NotasSeguimiento" maxlength="300" class="form-control" name="NotasSeguimiento" rows="3" placeholder="Ingrese una nota referente al sequimiento..." required></textarea>
                                                     </div>
                                                 </div>
                                             </div>

@@ -54,14 +54,8 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                 var x;
                 x = $(".agregarbg");
                 x.click(variable);
-                
-                 var x;
-                x = $(".insertarbg");
-                x.click(insertar);
-                
-                var x;
-                x = $("#buscarE");
-                x.click(buscar);
+                 
+         
                 
                  var x;
                 x = $(".verbg");
@@ -85,40 +79,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
             }
             
             
-            
-             function insertar()
-            {
-                
-                 
-                 codE=$("#codEmple").val();
-              
-                 
-                // alert(codE);
-                // alert(y);
-                $("#compose-modal").modal('hide');
-                data={
-                 cod_empleado:codE,
-                 nombreGrupo:y,
-                 tipoProcedimiento:"insertar"
-                };
-                
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                   
-                    beforeSend: inicioEnvioXgrupo,
-                    success: insertarEmpleadoGrupo,
-                    timeout: 4000,
-                    error: problemasXgrupo
-                });
-                return false;
-            }
-            
-            
-            
-            
+           
              function ver()
             {
                 
@@ -138,14 +99,57 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                     error: problemasVer
                 });
                 return false;
-            }
+            
+    
+    }
             
 
 
-            function buscar()
+      
+            
+            
+            
+            
+            $( document ).ready(function() {
+
+             $("form").submit(function(e) {
+	       e.preventDefault();
+          
+                if(validator()){
+            
+             codE=$("#codEmple").val();
+              
+                 
+                // alert(codE);
+                // alert(y);
+                $("#compose-modal").modal('hide');
+                data={
+                 cod_empleado:codE,
+                 nombreGrupo:y,
+                 tipoProcedimiento:"insertar"
+                };
+                
+                
+            
+            $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                   
+                    beforeSend: inicioEnvioXgrupo,
+                    success: insertarEmpleadoGrupo,
+                    timeout: 4000,
+                    error: problemasXgrupo
+                });
+                }
+            return false;
+	});
+        
+              $( "#buscarE" ).click(function() {
             {
                 
-                 
+                 if(validator()){
                  id=$("#codEmple").val();
                  
                
@@ -166,8 +170,58 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                     timeout: 4000,
                     error: problemas
                 });
+            }
                 return false;
             }
+        });
+        
+        
+    
+        
+   });
+        
+        
+            function soloLetrasYNumeros(text){
+	    var letters = /^[0-9]+$/; 
+			if(text.match(letters)){
+			    return true;
+			}else{
+			    return false;
+			}
+	}
+
+    function validator(){
+	    var nombre = $("#codEmple").val();
+	 
+		
+		//valida si se han itroduzido otros digitos aparte de numeros y letras
+		
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#buscar").addClass("has-warning");
+			$("#buscar").find("label").text("Codigo de empleado: Solo son permitidos numeros");
+			$("#codEmple").focus();
+			return false;
+		}else{
+		    $("#buscar").removeClass("has-warning");
+			$("#buscar").find("label").text("Codigo empleado");
+		}
+		
+		
+		
+		return true;
+	}
+        
+            
+            
+           
+            
+
+
+            
+            
+            
+            
+            
             
            
             
@@ -237,18 +291,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
 
         </script>
         
-      <SCRIPT language=Javascript>
-      
-      function isNumberKey(evt)
-      {
-         var charCode = (evt.which) ? evt.which : event.keyCode
-         if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
- 
-         return true;
-      }
-      
-   </SCRIPT>
+
    
    
          <script type="text/javascript" charset="utf-8">
@@ -401,15 +444,18 @@ HTML;
         <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Agregar un nuevo miembro al grupo </h4>
       </div>
               <div class="modal-body">
-                  <div class="form-group">
+                  <div id="buscar" class="form-group">
+                      <label></label>
                       <div class="input-group">
                           <span class="input-group-addon">buscar por numero de empleado</span>
 
-                              <div class="input-group">
-                                  <input id="codEmple" type="text"   class="form-control" placeholder="Buscar empleado..."  onkeypress="return isNumberKey(event)"  required>
+                              <div  class="input-group">
+              
+                                  <input id="codEmple" type="text"   class="form-control" placeholder="Buscar empleado..."  required>
                                   <span class="input-group-btn">
                                       <button id="buscarE" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
                                   </span>
+                                 
                               </div>
                            
                         

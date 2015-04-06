@@ -7,7 +7,7 @@
 
             require_once("../../conexion/config.inc.php");
     
-            $sql = "UPDATE notificaciones_folios SET IdUbicacionNotificacion ='1'
+            $sql = "UPDATE notificaciones_folios SET IdUbicacionNotificacion ='1' 
                            WHERE Id_Notificacion =:addIdNotificacion";
             $query = $db->prepare($sql);
             $query->bindParam(":addIdNotificacion",$addIdNotificacion);

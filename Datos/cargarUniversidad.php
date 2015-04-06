@@ -209,7 +209,7 @@ HTML;
             
                <td><center>
                     <button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash"> </button>
-                </center></td>;
+                </center></td>
                         
                         
                 <td>

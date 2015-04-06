@@ -20,33 +20,25 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
     
       <script>
         
-           var x;
-            x = $(document);
-            x.ready(guardarUni);
+       
+           
+          $( document ).ready(function() {
+
+           $("form").submit(function(e) {
+	    e.preventDefault();
+          
+               if(validator()){
             
-            function guardarUni()
-            {
-                var x;
-                x = $("#guardarUni");
-                x.click(insertarUni);
-                
-            }
-
-
-            function insertarUni()
-            {
-                var pnombre= $("#nombreU").val();
-                //alert(pnombre);
-                var pais=$("#idpais").val();
-               // alert(pais);
-                
-                data={
+            data={
                     nombre:$('#nombreU').val(),
-                    pais:$("#idpais").val()
+                    pais:$("#idpais").val(),
+                    tipoProcedimiento:"insertar"
                 };
                 
-                $.ajax({
-                    async: true,
+                
+            
+            $.ajax({
+                   async: true,
                     type: "POST",
                     dataType: "html",
                     contentType: "application/x-www-form-urlencoded",
@@ -54,9 +46,12 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                     success: llegadaInsertarUni,
                     timeout: 4000,
                     error: problemas
-                });
-                return false;
-            }
+            }); 
+            return false;
+               }
+	});
+        
+   });
             
            
             
@@ -79,6 +74,46 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+
+
+
+
+            function soloLetrasYNumeros(text){
+	    var letters = /^[0-9a-zA-Z ]+$/; 
+			if(text.match(letters)){
+			    return true;
+			}else{
+			    return false;
+			}
+	}
+
+    function validator(){
+	    var nombre = $("#nombreU").val();
+	 
+		
+		//valida si se han itroduzido otros digitos aparte de numeros y letras
+		
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#Nuniv").addClass("has-warning");
+			$("#Nuniv").find("label").text("Nombre del universidades: Solo son permitidos numeros y letras");
+			$("#nombreU").focus();
+			return false;
+		}else{
+		    $("#Nuniv").removeClass("has-warning");
+			$("#Nuniv").find("label").text("Nombre del usuario");
+		}
+		
+		
+		
+		return true;
+	}
+        
+            
+            
+           
+            
+
+
 
 
 
@@ -108,8 +143,8 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                         <div class="row">
                             <div class="col-lg-6">
 
-                                <form role="form" action="#" method='POST'>
-                                    <div class="form-group">
+                                <form role="form" id="form" action="#" method='POST'>
+                                    <div id="Nuniv" class="form-group">
                                         <label>Nombre de la Universidad</label>
                                         <input class="form-control" id="nombreU"  name="nombre" required>
 
@@ -140,7 +175,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                                     </div>
 
 
-                                    <button id="guardarUni" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" id="guardarUni" class="btn btn-primary">Guardar</button>
                                     <button type="reset" class="btn btn-default">Cancelar</button>
 
 

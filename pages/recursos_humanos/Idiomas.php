@@ -34,9 +34,9 @@ and open the template in the editor.
                                 <div class="col-lg-6">
 
                                     <form role="form" action="#" method='POST'>
-                                        <div class="form-group">
+                                        <div id="idiomaNombre" class="form-group">
                                             <label>Nombre del Idioma</label>
-                                            <input id="nombreIdioma" class="form-control" >
+                                            <input title="Se necesita un nombre" type="text" id="nombreIdioma" name="nombreIdioma" class="form-control" required>
 
                                         </div>
 
@@ -79,28 +79,17 @@ and open the template in the editor.
             </div>
 
  <script>
+    $( document ).ready(function() {
 
-            /* 
-             * To change this license header, choose License Headers in Project Properties.
-             * To change this template file, choose Tools | Templates
-             * and open the template in the editor.
-             */
-
-            var x;
-            x = $(document);
-            x.ready(guardarIdioma);
-            function guardarIdioma()
-            {
-                var x;
-                x = $("#guardarIdioma");
-                x.click(insertarIdioma);
-             
-            }
-
-            function insertarIdioma()
-            {
+    $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
+                   
+                
                 data={
-                    nombreIdioma:$('#nombreIdioma').val()
+                    nombreIdioma:$('#nombreIdioma').val(),
+                    tipoProcedimiento:"insertar"
                 }
                 $.ajax({
                     async: true,
@@ -111,9 +100,12 @@ and open the template in the editor.
                     success: llegadaInsertarIdiomas,
                     timeout: 4000,
                     error: problemas
-                });
+                }); }
                 return false;
-            }
+	});
+    
+        
+   });
 
 
             function inicioEnvio()
@@ -132,6 +124,37 @@ and open the template in the editor.
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+            
+             
+                function soloLetrasYNumeros(text)
+             {
+                var letters = /^[0-9a-zA-Z ]+$/; 
+		if(text.match(letters)){
+                    return true;
+			}
+                        else{
+			    return false;
+			}
+            }
+
+            function validator(){
+	    var nombre = $("#nombreIdioma").val();
+
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#idiomaNombre").addClass("has-warning");
+			$("#idiomaNombre").find("label").text("Nombre del idioma: Solo son permitidos numeros y letras");
+			$("#nombreIdioma").focus();
+			return false;
+		}else{
+		    $("#idiomaNombre").removeClass("has-warning");
+			$("#idiomaNombre").find("label").text("Nombre del idioma");
+		}
+		
+		
+		
+		return true;
+                }
+
 
 
 

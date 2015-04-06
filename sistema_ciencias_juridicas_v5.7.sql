@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-04-2015 a las 06:58:24
+-- Tiempo de generación: 06-04-2015 a las 13:38:30
 -- Versión del servidor: 5.6.21
--- Versión de PHP: 5.5.19
+-- Versión de PHP: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -1333,6 +1333,7 @@ CREATE TABLE IF NOT EXISTS `responsables_por_actividad` (
 
 CREATE TABLE IF NOT EXISTS `roles` (
 `Id_Rol` tinyint(4) NOT NULL,
+  `nombre_Rol` varchar(40) NOT NULL,
   `Descripcion` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
 
@@ -1340,10 +1341,10 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Volcado de datos para la tabla `roles`
 --
 
-INSERT INTO `roles` (`Id_Rol`, `Descripcion`) VALUES
-(40, 'Secretaria de la decana'),
-(50, 'Decano'),
-(100, 'root');
+INSERT INTO `roles` (`Id_Rol`, `nombre_Rol`, `Descripcion`) VALUES
+(40, 'secretaria', 'Secretaria de la decana'),
+(50, 'Decano', 'Decano'),
+(100, 'root', 'root');
 
 -- --------------------------------------------------------
 

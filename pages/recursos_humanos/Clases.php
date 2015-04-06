@@ -27,9 +27,10 @@ include ('../../Datos/conexion.php');
                                 <div class="col-lg-6">
 
                                     <form role="form" action="#" method='POST'>
-                                        <div class="form-group">
+                                        <div id="claseNombre" class="form-group">
+                                            
                                             <label>Nombre de la Clase</label>
-                                            <input id="nombre" class="form-control" >
+                                            <input title="Se necesita un nombre" type="text" class="form-control" id="nombre" name="nombre" required>
 
                                         </div>
 
@@ -79,23 +80,21 @@ include ('../../Datos/conexion.php');
              * and open the template in the editor.
              */
 
-            var x;
-            x = $(document);
-            x.ready(guardarClase);
-            function guardarClase()
-            {
-                var x;
-                x = $("#guardarClase");
-                x.click(insertarClase);
-             
-            }
+         $( document ).ready(function() {
 
-            function insertarClase()
-            {
+    $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
+            
                 data={
-                    nombre:$('#nombre').val()
+                    nombre:$('#nombre').val(),
+                    tipoProcedimiento:"insertar"
                 }
-                $.ajax({
+                
+                
+            
+            $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
@@ -105,8 +104,12 @@ include ('../../Datos/conexion.php');
                     timeout: 4000,
                     error: problemas
                 });
-                return false;
-            }
+                }
+            return false;
+	});
+    
+        
+   });
 
 
             function inicioEnvio()
@@ -125,6 +128,36 @@ include ('../../Datos/conexion.php');
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+            
+            function soloLetrasYNumeros(text)
+             {
+                var letters = /^[0-9a-zA-Z ]+$/; 
+		if(text.match(letters)){
+                    return true;
+			}
+                        else{
+			    return false;
+			}
+            }
+
+            function validator(){
+	    var nombre = $("#nombre").val();
+
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#claseNombre").addClass("has-warning");
+			$("#claseNombre").find("label").text("Nombre de la clase: Solo son permitidos numeros y letras");
+			$("#nombre").focus();
+			return false;
+		}else{
+		    $("#claseNombre").removeClass("has-warning");
+			$("#claseNombre").find("label").text("Nombre de la Clase");
+		}
+		
+		
+		
+		return true;
+                }
+
 
 
 

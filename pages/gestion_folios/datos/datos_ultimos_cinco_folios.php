@@ -5,10 +5,10 @@
     // Obtiene los ultimos 5 folios ingresados al sistema.
 
     $query = $db->prepare("SELECT folios.NroFolio, folios.FechaEntrada, folios.TipoFolio, seguimiento.EstadoSeguimiento, 
-        folios.Prioridad ,prioridad.DescripcionPrioridad, estado_seguimiento.DescripcionEstadoSeguimiento FROM folios 
-        INNER JOIN prioridad ON folios.Prioridad = prioridad.Id_Prioridad INNER JOIN seguimiento ON folios.NroFOlio = seguimiento.NroFolio 
-        INNER JOIN estado_seguimiento ON seguimiento.EstadoSeguimiento = estado_seguimiento.Id_Estado_Seguimiento 
-        ORDER BY folios.fechaEntrada DESC LIMIT 5");
+	folios.Prioridad ,prioridad.DescripcionPrioridad, estado_seguimiento.DescripcionEstadoSeguimiento FROM folios 
+	INNER JOIN prioridad ON folios.Prioridad = prioridad.Id_Prioridad INNER JOIN seguimiento ON folios.NroFOlio = seguimiento.NroFolio 
+	INNER JOIN estado_seguimiento ON seguimiento.EstadoSeguimiento = estado_seguimiento.Id_Estado_Seguimiento 
+	ORDER BY folios.fechaEntrada DESC,folios.NroFolio DESC LIMIT 5");
     $query->execute();
     $rows_folios = $query->fetchAll();
         if($rows_folios){

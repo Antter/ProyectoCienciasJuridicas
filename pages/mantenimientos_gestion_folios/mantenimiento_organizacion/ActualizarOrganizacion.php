@@ -67,8 +67,8 @@
         <tbody>
             <tr><form action='#'>
 			    <td><p id="Id_Organizacion"><?php echo $result['Id_Organizacion']; ?></p></td>
-				<td><input name='NombreOrganizacion' id="NombreOrganizacion" type ='text' value="<?php echo htmlentities($result['NombreOrganizacion']); ?>" placeholder="<?php echo htmlentities($result['NombreOrganizacion']); ?>" ></td>
-				<td><input name='Ubicacion' id="Ubicacion" type ='text' value="<?php echo htmlentities($result['Ubicacion']); ?>" placeholder="<?php echo htmlentities($result['Ubicacion']); ?>" ></td>
+				<td><input name='NombreOrganizacion' id="NombreOrganizacion" type ='text' maxlength="50" value="<?php echo htmlentities($result['NombreOrganizacion']); ?>" placeholder="<?php echo htmlentities($result['NombreOrganizacion']); ?>" ></td>
+				<td><input name='Ubicacion' id="Ubicacion" type ='text' maxlength="300" value="<?php echo htmlentities($result['Ubicacion']); ?>" placeholder="<?php echo htmlentities($result['Ubicacion']); ?>" ></td>
                <td> <button type="button" id="actulizar_organizacion" data-id=<?php echo $result['Id_Organizacion']; ?> class="btn btn-primary pull-left" data-mode="actualizar" >Actualizar</button></td>
 			   <td><a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" data-mode="cancelar"><i class="fa fa-pencil"></i>Cancelar</a></td>
              </form>			

@@ -44,34 +44,16 @@
     
     <head>
         <script>
-         var x;
-            x = $(document);
-            x.ready(inicio);
+
             
-            function inicio()
-            {
-                
-                var x;
-                x = $("#Empleado");
-                x.click(agregar);
-                
-            }
+            $( document ).ready(function() {
 
-
-            function agregar()
-            {
-              // var c= $("$date("Y-m-d")").val();
-               //alert(c);
-                //var i=$("#idp").val();
-                 //alert(i);
-                 //var o=$("#obs").val();
-                 //alert(o);
-                 //var f=$("#fecha").val();
-                 //alert(f);
-                // var d=$("#cargo").val();
-                // alert(d);
-                
-                 var idpersona = "<?php echo $id; ?>" ;
+           $("form").submit(function(e) {
+	    e.preventDefault();
+          
+               if(validator()){
+            
+             var idpersona = "<?php echo $id; ?>" ;
                 
                 data={
                     identi:idpersona,
@@ -83,8 +65,8 @@
                     tipoProcedimiento:"insertar"
                 };
                 
-                
-                $.ajax({
+            
+            $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
@@ -93,9 +75,46 @@
                     success: llegadainsertarEmpleado,
                     timeout: 4000,
                     error: problemasAP
-                });
-                return false;
-            }
+            }); 
+            return false;
+               }
+	});
+        
+   });
+            
+            
+          
+                      function soloLetrasYNumeros(text){
+	    var letters = /^[0-9]+$/; 
+			if(text.match(letters)){
+			    return true;
+			}else{
+			    return false;
+			}
+	}
+
+    function validator(){
+	    var nombre = $("#cod").val();
+	 
+		
+		//valida si se han itroduzido otros digitos aparte de numeros y letras
+		
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#Cempleado").addClass("has-warning");
+			$("#Cempleado").find("label").text("codigo empleado: Solo numeros");
+			$("#cod").focus();
+			return false;
+		}else{
+		    $("#Cempleado").removeClass("has-warning");
+			$("#Cempleado").find("label").text("codigo empleado");
+		}
+		
+		
+		
+		return true;
+	}
+            
+            
             
            
             
@@ -181,9 +200,9 @@
                         <div class="row">
                             <div class="col-lg-12"> 
 
-                                <form role="form" action="#" method="Post">
+                                <form role="form" id="form" action="#" method="Post">
 
-                                    <div class="form-group">
+                                    <div id="Cempleado" class="form-group">
      
                                          <label  class="col-lg-6 control-label" >Codigo Empleado</label>
                                             

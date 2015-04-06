@@ -35,9 +35,9 @@ and open the template in the editor.
                             <div class="col-lg-6">
 
                                 <form role="form" action="#" method='POST'>
-                                    <div class="form-group">
+                                    <div id="grupoNombre" class="form-group">
                                         <label>Nombre del Grupo o Comité</label>
-                                        <input id="nombreComite" class="form-control" >
+                                        <input title="Se necesita un nombre" type="text" name="nombreComite" id="nombreComite" class="form-control" required>
 
                                     </div>
 
@@ -79,23 +79,21 @@ and open the template in the editor.
              * and open the template in the editor.
              */
 
-            var x;
-            x = $(document);
-            x.ready(guardarComite);
-            function guardarComite()
-            {
-                var x;
-                x = $("#guardarComite");
-                x.click(insertarComite);
+        $( document ).ready(function() {
 
-            }
-
-            function insertarComite()
-            {
-                data = {
-                    nombreComite: $('#nombreComite').val()
+    $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
+            
+              data = {
+                    nombreComite: $('#nombreComite').val(),
+                    tipoProcedimiento:"insertar"
                 }
-                $.ajax({
+                
+                
+            
+           $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
@@ -105,8 +103,12 @@ and open the template in the editor.
                     timeout: 4000,
                     error: problemas
                 });
-                return false;
             }
+                return false;
+	});
+    
+        
+   });
 
 
             function inicioEnvio()
@@ -125,6 +127,36 @@ and open the template in the editor.
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+            
+            
+                function soloLetrasYNumeros(text)
+             {
+                var letters = /^[0-9a-zA-Z ]+$/; 
+		if(text.match(letters)){
+                    return true;
+			}
+                        else{
+			    return false;
+			}
+            }
+
+            function validator(){
+	    var nombre = $("#nombreComite").val();
+
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#grupoNombre").addClass("has-warning");
+			$("#grupoNombre").find("label").text("Nombre del grupo o comite: Solo son permitidos numeros y letras");
+			$("#nombreComite").focus();
+			return false;
+		}else{
+		    $("#grupoNombre").removeClass("has-warning");
+			$("#grupoNombre").find("label").text("Nombre del Grupo o Comite");
+		}
+		
+		
+		
+		return true;
+                }
 
 
 

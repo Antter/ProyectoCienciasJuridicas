@@ -11,7 +11,7 @@
 
     <title>Módulo Curricular</title>
     <!-- CSS -->
-    
+
 </head>
 
 <body>
@@ -41,7 +41,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Primer nombre</label>
-                                                            <input id="primerNombre" class="form-control" name="primerNombre"required>
+                                                            <input id="primerNombre" class="form-control" name="primerNombre" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Segundo nombre</label>
@@ -99,15 +99,19 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+    <script src="pages/recursos_humanos/cv/validacion.js"></script>
+    <script>
+        $(function(){
+            $('#identidad').validCampo('0123456789-');
+            $('#primerNombre').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#segundoNombre').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#primerApellido').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#segundoApellido').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#nacionalidad').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        });
+    </script>
 
     <script>
-
-        /*
-         * To change this license header, choose License Headers in Project Properties.
-         * To change this template file, choose Tools | Templates
-         * and open the template in the editor.
-         */
-
         var x;
         x = $(document);
         x.ready(inicio);
@@ -165,10 +169,7 @@
             $("#contenedor").text('Problemas en el servidor.');
         }
 
-
-
     </script>
-
 </body>
 
 </html>

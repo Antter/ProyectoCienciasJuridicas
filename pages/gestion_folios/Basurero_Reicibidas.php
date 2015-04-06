@@ -9,7 +9,7 @@
 
             require_once("../../conexion/config.inc.php");
     
-            $sql = "UPDATE usuario_notificado SET IdUbicacionNotificacion ='1'
+            $sql = "UPDATE usuario_notificado SET IdUbicacionNotificacion ='1' 
                            WHERE Id_Notificacion = :addIdNotificacion and Id_Usuario=:addUsuario";
             $query = $db->prepare($sql);
             $query->bindParam(":addIdNotificacion",$addIdNotificacion);

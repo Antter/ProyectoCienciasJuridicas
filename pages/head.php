@@ -21,7 +21,7 @@ else
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['user_id']) || (trim($_SESSION['user_id']) == '')) 
   {
-    header('Location: '.$maindir.'login/logout.php');
+    header('Location: '.$maindir.'login/logout.php?code=100');
     exit();
   }
 else
@@ -39,15 +39,12 @@ require_once($maindir."funciones/timeout.php");
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
-        <title>Sistema gestor de correspondencia</title>
+        <title>Sistema ciencias juridicas</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
-
-        <!-- <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">  -->
-        <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"> -->
         <link rel="stylesheet" type="text/css" href="css/datatables/dataTables.bootstrap.css">
-        <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 
         <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>

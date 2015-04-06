@@ -18,29 +18,21 @@ include ('../../Datos/conexion.php');
              * and open the template in the editor.
              */
 
-            var x;
-            x = $(document);
-            x.ready(guardarDepartamento);
+     $( document ).ready(function() {
 
-            function guardarDepartamento()
-            {
-                var x;
-                x = $("#guardarDepartamento");
-                x.click(insertarDepartamento);
-
-            }
-
-
-            function insertarDepartamento()
-            {
-
-
-
-                data = {
-                    departamento: $('#nombreDepartamento').val()
-                };
-
-                $.ajax({
+    $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
+            
+                data={
+                    departamento:$('#nombreDepartamento').val(),
+                    tipoProcedimiento:"insertar"
+                }
+                
+                
+            
+            $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
@@ -50,9 +42,12 @@ include ('../../Datos/conexion.php');
                     timeout: 4000,
                     error: problemas
                 });
-                return false;
-            }
-
+                }
+            return false;
+	});
+    
+        
+   });
 
 
 
@@ -74,6 +69,36 @@ include ('../../Datos/conexion.php');
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+            
+            function soloLetrasYNumeros(text)
+             {
+                var letters = /^[0-9a-zA-Z ]+$/; 
+		if(text.match(letters)){
+                    return true;
+			}
+                        else{
+			    return false;
+			}
+            }
+
+            function validator(){
+	    var nombre = $("#nombreDepartamento").val();
+
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#nombreDepto").addClass("has-warning");
+			$("#nombreDepto").find("label").text("Nombre del Departamento: Solo son permitidos numeros y letras");
+			$("#nombreDepartamento").focus();
+			return false;
+		}else{
+		    $("#nombreDepto").removeClass("has-warning");
+			$("#nombreDepto").find("label").text("Nombre del Departamento");
+		}
+		
+		
+		
+		return true;
+                }
+
 
 
 
@@ -101,12 +126,12 @@ include ('../../Datos/conexion.php');
                         <div class="row">
                             <div class="col-lg-6">
                                 <form role="form" action="#" method="POST">
-                                    <div class="form-group">
+                                    <div id="nombreDepto" class="form-group">
                                         <label>Nombre Departamento</label>
-                                        <input type="text" class="form-control" id="nombreDepartamento">
+                                        <input title="Se necesita un nombre" type="text" class="form-control" id="nombreDepartamento" name="nombreDepartamento" required>
                                     </div>
 
-                                    <button type="button"  id="guardarDepartamento" class="btn btn-primary">Agregar</button>
+                                    <button type="submit"  id="guardarDepartamento" class="btn btn-default">Agregar</button>
                                     <button type="reset" class="btn btn-default">Cancelar</button>
                                 </form>
                             </div>

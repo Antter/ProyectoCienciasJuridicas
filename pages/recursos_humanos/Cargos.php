@@ -28,15 +28,13 @@
 
                                     <form role="form" action="#" method='POST'>
                                         <div class="form-group">
-                                            <label>Nombre del Cargo</label>
-                                            <input id="nombre" class="form-control" >
-
+                                            <div id="cargoNombre" class="form-group">
+                                                <label>Nombre del Cargo</label>
+                                                <input title="Se necesita un nombre" type="text"  class="form-control" id="nombre" name="nombre" required >
+                                            </div>
                                         </div>
-
                                         <button id="guardarCargo" type="submit" class="btn btn-default">Agregar</button>
                                         <button type="reset" class="btn btn-default">Cancelar</button>
-
-
                                     </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
@@ -79,23 +77,22 @@
              * and open the template in the editor.
              */
 
-            var x;
-            x = $(document);
-            x.ready(guardarCargo);
-            function guardarCargo()
-            {
-                var x;
-                x = $("#guardarCargo");
-                x.click(insertarCargo);
-             
-            }
 
-            function insertarCargo()
-            {
+ $( document ).ready(function() {
+
+    $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
+            
                 data={
-                    nombre:$('#nombre').val()
+                    nombre:$('#nombre').val(),
+                    tipoProcedimiento:"insertar"
                 }
-                $.ajax({
+                
+                
+            
+            $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
@@ -105,9 +102,12 @@
                     timeout: 4000,
                     error: problemas
                 });
-                return false;
-            }
-
+                }
+            return false;
+	});
+    
+        
+   });
 
             function inicioEnvio()
             {
@@ -125,6 +125,36 @@
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+            
+            
+             function soloLetrasYNumeros(text)
+             {
+                var letters = /^[0-9a-zA-Z ]+$/; 
+		if(text.match(letters)){
+                    return true;
+			}
+                        else{
+			    return false;
+			}
+            }
+
+            function validator(){
+	    var nombre = $("#nombre").val();
+
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#cargoNombre").addClass("has-warning");
+			$("#cargoNombre").find("label").text("Nombre del Cargo: Solo son permitidos numeros y letras");
+			$("#nombre").focus();
+			return false;
+		}else{
+		    $("#cargoNombre").removeClass("has-warning");
+			$("#cargoNombre").find("label").text("Nombre del Cargo");
+		}
+		
+		
+		
+		return true;
+                }
 
 
 

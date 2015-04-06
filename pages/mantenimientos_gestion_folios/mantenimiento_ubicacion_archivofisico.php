@@ -136,29 +136,13 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">Capacidad</span>
-                <input name="Capacidad" id="Insertar_Capacidad" type="text" onKeyPress="return soloNumeros(event)" class="form-control" placeholder="Capacidad" onkeypress="ValidaSoloNumeros();" maxlength="4" required>
-				                                    <script type="text/javascript">
-
-                                            // Solo permite ingresar numeros.
-                                            function soloNumeros(e) {
-                                                var key = window.Event ? e.which : e.keyCode
-                                                return (key >= 48 && key <= 57)
-                                            }
-                                         </script>
+                <input name="Capacidad" id="Insertar_Capacidad" type="text" class="form-control" placeholder="Capacidad" onkeypress="ValidaSoloNumeros();" maxlength="4" required>
               </div>
             </div>       
 			<div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">TotalIngresados</span>
-                <input name="TotalIngresados" id="Insertar_TotalIngresados" type="text" onKeyPress="return soloNumeros(event)" class="form-control" placeholder="TotalIngresados" onkeypress="ValidaSoloNumeros();" maxlength="4" required>
-				                                    <script type="text/javascript">
-
-                                            // Solo permite ingresar numeros.
-                                            function soloNumeros(e) {
-                                                var key = window.Event ? e.which : e.keyCode
-                                                return (key >= 48 && key <= 57)
-                                            }
-                                         </script>
+                <input name="TotalIngresados" id="Insertar_TotalIngresados" type="text" class="form-control" placeholder="TotalIngresados" onkeypress="ValidaSoloNumeros();" maxlength="4" required>
               </div>
             </div>       
 			<div class="form-group">
@@ -243,6 +227,10 @@ $(document).ready(function() {
 
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_archivofisico/ActualizarUbicacionArchivoFisico.php',data);
     }
+	function ValidaSoloNumeros() {
+      if ((event.keyCode < 48) || (event.keyCode > 57)) 
+        event.returnValue = false;
+    }
 </script>
 
 <!-- Script necesario para que la tabla se ajuste a el tamanio de la pag-->
@@ -251,13 +239,6 @@ $(document).ready(function() {
   $('#tabla_ubicacion_archivofisico')
     .removeClass( 'display' )
     .addClass('table table-striped table-bordered');
-</script>
-
-<script type="text/javascript">
-    function ValidaSoloNumeros() {
-      if ((event.keyCode < 48) || (event.keyCode > 57)) 
-        event.returnValue = false;
-      }
 </script>
 
 <script type="text/javascript" src="js/gestion_folios/mantenimiento_ubicacion_archivofisico.js" ></script>

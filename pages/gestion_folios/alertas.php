@@ -23,7 +23,7 @@
   $user = $_SESSION['nombreUsuario'];
 
   //este arreglo modifica la descripcion de la prioridad es decir cambia de color segun prioridad
-  $estadoFolio = array("normal"=>"btn-success","Informativo"=>"btn-success","Urgente"=>"btn-warning");
+  $estadoFolio = array("Normal"=>"btn-success","informativo"=>"btn-success","Urgente"=>"btn-warning");
 
 //hace todos los filtros para mostrar las alertas
   $query = $db->prepare("select alerta.NroFolioGenera, folios.FechaCreacion, folios.DescripcionAsunto, folios.Prioridad, prioridad.DescripcionPrioridad 

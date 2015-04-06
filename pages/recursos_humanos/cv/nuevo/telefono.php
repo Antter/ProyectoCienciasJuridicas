@@ -71,6 +71,12 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+<script src="pages/recursos_humanos/cv/validacion.js"></script>
+<script>
+    $(function(){
+        $('#telef').validCampo('0123456789-+ ');
+    });
+</script>
 <script>
 
     /*

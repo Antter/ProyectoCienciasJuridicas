@@ -74,19 +74,19 @@
 			    <td>NroFolio</td>
 			    <td>
 				<input type="hidden" id="NroFolioAnt" name="NroFolioAnt" value="<?php echo $result['NroFolio']; ?>">
-				<input name="NroFolio" id="NroFolio" value="<?php echo $result['NroFolio']; ?>" required></td>
+				<input name="NroFolio" id="NroFolio" type="text" maxlength="25" value="<?php echo $result['NroFolio']; ?>" required></td>
 		     </tr>
 			 <tr>
 			     <td>FechaCreacion</td>
-			     <td><input name='FechaCreacion' id="FechaCreacion" type ='text' value="<?php echo htmlentities($result['FechaCreacion']); ?>" placeholder="<?php echo htmlentities($result['FechaCreacion']); ?>" required></td>
+			     <td><input name='FechaCreacion' id="FechaCreacion" type ='text' maxlength="10" value="<?php echo htmlentities($result['FechaCreacion']); ?>" placeholder="<?php echo htmlentities($result['FechaCreacion']); ?>" required></td>
 			 </tr>
 			  <tr>
 			  <td>FechaEntrada</td>
-			  <td><input name='FechaEntrada' id="FechaEntrada" type ='text' value="<?php echo htmlentities($result['FechaEntrada']); ?>" placeholder="<?php echo htmlentities($result['FechaEntrada']); ?>" required></td>
+			  <td><input name='FechaEntrada' id="FechaEntrada" type ='text' maxlength="10" value="<?php echo htmlentities($result['FechaEntrada']); ?>" placeholder="<?php echo htmlentities($result['FechaEntrada']); ?>" required></td>
 			  </tr>
 				<tr>
 			  <td>PersonaReferente</td>
-			  <td><input name='PersonaReferente' id="PersonaReferente" type ='text' value="<?php echo htmlentities($result['PersonaReferente']); ?>" placeholder="<?php echo htmlentities($result['PersonaReferente']); ?>" ></td>
+			  <td><input name='PersonaReferente' id="PersonaReferente" type ='text' maxlength="50" value="<?php echo htmlentities($result['PersonaReferente']); ?>" placeholder="<?php echo htmlentities($result['PersonaReferente']); ?>" ></td>
 			  </tr>
 			  <tr>
 			  <td>UnidadAcademica</td>

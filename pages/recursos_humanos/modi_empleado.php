@@ -29,7 +29,7 @@ if(isset($_POST['codigo']) and $existe==FALSE ){
  
  $codigoE = $_POST['codigo'];
  
-  echo($codigoE);
+  
 
  $resultado=mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1' and No_Empleado='".$codigoE."'");
  $resultado2=mysql_query("SELECT * FROM empleado_has_cargo inner join cargo on cargo.ID_cargo=empleado_has_cargo.ID_cargo where No_Empleado='".$codigoE."'");
@@ -52,7 +52,7 @@ if(isset($_POST['codigo']) and $existe==FALSE ){
         
          $codigoE = $_POST['codigo2'];
 
-         echo($codigoE);
+         
          
  $resultado=mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1' and No_Empleado='".$codigoE."'");
  $resultado2=mysql_query("SELECT * FROM empleado_has_cargo inner join cargo on cargo.ID_cargo=empleado_has_cargo.ID_cargo where No_Empleado='".$codigoE."'");
@@ -104,11 +104,8 @@ if(isset($_POST['codigo']) and $existe==FALSE ){
             function inicio()
             {
                
-                var x;
-                x = $("#ActualizarE");
-                x.click(Actualizar);
-                
-                
+ 
+                               
                  var x;
                 x = $(".insertarbc");
                 x.click(nuevoCargo);
@@ -123,35 +120,7 @@ if(isset($_POST['codigo']) and $existe==FALSE ){
             }
 
 
-            function Actualizar()
-            {
-               
-                var id = "<?php echo $noE; ?>" ;
-                alert(id);
-                 var codT = "<?php echo $codigoE; ?>" ;
-         
-                data={
-                    codigo:$('#cod').val(),
-                    codigo2:codT,
-                    nidentidadE:id,
-                    departE:$('#dep').val(),
-                    fechaE:$('#fecha').val(),
-                    obsE:$('#obs').val(),
-                    tipoProcedimiento:"Actualizar"
-                };
-                
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
-                    success: ActualizarEmple,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
+ 
             
             
              function nuevoCargo()
@@ -212,6 +181,84 @@ if(isset($_POST['codigo']) and $existe==FALSE ){
                 return false;
             }
             }
+            
+            
+            
+            
+            
+   $( document ).ready(function() {
+
+             $("form").submit(function(e) {
+	       e.preventDefault();
+          
+                if(validator()){
+            
+                 var id = "<?php echo $noE; ?>" ;
+                alert(id);
+                 var codT = "<?php echo $codigoE; ?>" ;
+         
+                data={
+                    codigo:$('#cod').val(),
+                    codigo2:codT,
+                    nidentidadE:id,
+                    departE:$('#dep').val(),
+                    fechaE:$('#fecha').val(),
+                    obsE:$('#obs').val(),
+                    tipoProcedimiento:"Actualizar"
+                };
+                
+                
+            
+            $.ajax({
+                  async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    beforeSend: inicioEnvio,
+                    success: ActualizarEmple,
+                    timeout: 4000,
+                    error: problemas
+                });
+                }
+            return false;
+	});
+        
+        
+   });
+        
+        
+            function soloLetrasYNumeros(text){
+	    var letters = /^[0-9]+$/; 
+			if(text.match(letters)){
+			    return true;
+			}else{
+			    return false;
+			}
+	}
+
+    function validator(){
+	    var nombre = $("#cod").val();
+	 
+		
+		//valida si se han itroduzido otros digitos aparte de numeros y letras
+		
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#CodE").addClass("has-warning");
+			$("#CodE").find("label").text("Codigo de empleado: Solo son permitidos numeros");
+			$("#cod").focus();
+			return false;
+		}else{
+		    $("#CodE").removeClass("has-warning");
+			$("#CodE").find("label").text("Codigo empleado");
+		}
+		
+		
+		
+		return true;
+	}
+            
+            
+            
             
             
             
@@ -419,9 +466,9 @@ HTML;
                     <div class="row">
                         <div class="col-lg-12"> 
 
-                            <form role="form" action="#">
+                            <form role="form" id="form" name="form" action="#">
                                 
-                                    <div class="form-group">
+                                    <div id="CodE" class="form-group">
                                         <div class="form-input">
                                          <label  class="col-lg-6 control-label" >Codigo Empleado :</label>
                                               

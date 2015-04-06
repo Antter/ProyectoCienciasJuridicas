@@ -4,7 +4,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
         <meta charset="UTF-8">
@@ -19,29 +19,25 @@
              * and open the template in the editor.
              */
 
-            var x;
-            x = $(document);
-            x.ready(guardarPais);
+  
             
-            function guardarPais()
-            {
-                var x;
-                x = $("#guardarpais");
-                x.click(insertarpais);
-                
-            }
+            
+            
+    $( document ).ready(function() {
 
-
-            function insertarpais()
-            {
-                
-                
-                
-                data={
-                    Pais:$('#nombrepais').val()
+    $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
+            
+            data={
+                    Pais:$('#nombrePais').val(),
+                    tipoProcedimiento:"insertar"
                 };
                 
-                $.ajax({
+                
+            
+            $.ajax({
                     async: true,
                     type: "POST",
                     dataType: "html",
@@ -50,9 +46,46 @@
                     success: llegadaInsertarPais,
                     timeout: 4000,
                     error: problemas
-                });
-                return false;
-            }
+            }); 
+                }
+            return false;
+	});
+    
+        
+   });
+        
+        
+            function soloLetrasYNumeros(text){
+	    var letters = /^[0-9a-zA-Z ]+$/; 
+			if(text.match(letters)){
+			    return true;
+			}else{
+			    return false;
+			}
+	}
+
+    function validator(){
+	    var nombre = $("#nombrePais").val();
+	 
+		
+		//valida si se han itroduzido otros digitos aparte de numeros y letras
+		
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#Npais").addClass("has-warning");
+			$("#Npais").find("label").text("Nombre del usuario: Solo son permitidos numeros y letras");
+			$("#nombrePais").focus();
+			return false;
+		}else{
+		    $("#Npais").removeClass("has-warning");
+			$("#Npais").find("label").text("Nombre del usuario");
+		}
+		
+		
+		
+		return true;
+	}
+        
+            
             
            
             
@@ -101,14 +134,14 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="#" method="POST">
-                                <div class="form-group">
+                            <form role="form" id="form"action="#" method="POST">
+                                <div id="Npais" class="form-group">
                                     <label>Nombre Pais</label>
-                                    <input type="text" class="form-control" id="nombrepais">
+                                    <input title="Se necesita un nombre" type="text"  class="form-control" name="nombrePais" id="nombrePais" required >
                                     <p class="help-block">Ejemplo: Honduras, Mexico, Estados Unidos</p>
                                 </div>
 
-                                <button type="button"  id="guardarpais" class="btn btn-primary" >Agregar</button>
+                                <button type="submit" name="submit"  id="submit" class="submit btn btn-primary" >Agregar</button>
                                 <button type="reset" class="btn btn-default">Cancelar</button>
                             </form>
                         </div>
@@ -149,7 +182,7 @@
         
         
 
-        include '../../Datos/cargaPais.php';
+      include '../../Datos/cargaPais.php';
       
         
      

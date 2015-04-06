@@ -139,15 +139,17 @@
                                 </div><!-- /.box-header -->
                                 <div class="box-body table-responsive no-padding">
                                     <table class="table table-hover">
-                                        <tr>
-                                            <th>Folio</th>
-                                            <th>Tipo de folio</th>
-                                            <th>Fecha</th>
-                                            <th>Prioridad</th>
-                                            <th>Seguimiento</th>
-                                        </tr>
                                         <?php
                                         if($folios == 1){
+										
+										echo "<tr>";
+                                        echo "<th>Folio</th>";
+                                        echo "<th>Tipo de folio</th>";
+                                        echo "<th>Fecha</th>";
+                                        echo "<th>Prioridad</th>";
+                                        echo "<th>Seguimiento</th>";
+                                        echo "</tr>";
+										
                                             foreach ($rows_folios as $row) {
 
                                                 $NroFolio = $row['NroFolio'];
@@ -180,7 +182,7 @@
                                             }                                        
                                         }elseif($folios == 0){
                                             echo "<tr>";
-                                            echo "<td>No hay ningun folio</td>";
+                                            echo "<td>No hay ningun folio actualmente en el sistema</td>";
                                             echo "</tr>";
                                         }
                                         ?>

@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h2 class="page-header">
-                                <i class="glyphicon glyphicon-list-alt"></i> Folio <?php echo $result['NroFolio']; ?>
+                                <i class="fa fa-newspaper-o"></i> Folio <?php echo $result['NroFolio']; ?>
                                 <i class="fa fa-globe"></i> <?php echo $result['DescripcionPrioridad']; ?>
                                 <small class="pull-right">Fecha de Entrada: <?php echo $result['FechaEntrada']; ?></small>
                             </h2>
@@ -148,17 +148,17 @@
 										}
 										if($finalizado){
 					                        echo '<strong><p> * El seguimiento de este folio ha finalizado. </p></strong>';
-											echo '<button class="btn btn-default pull-right"><i class="fa fa-print"></i> Reporte del seguimiento </button>';
-											echo '<button class="btn btn-primary pull-right" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
+											echo '<button class="btn btn-default pull-right" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
+											echo '<button class="btn btn-primary pull-right" style="margin-right: 5px;" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
 										}else{
                                             echo '<button class="btn btn-warning" data-toggle="modal" data-target="#compose-modal-actualizar"><i class="glyphicon glyphicon-wrench"></i> Actualizar Seguimiento </button>';
-							                echo '<button class="btn btn-default pull-right"><i class="fa fa-print"></i> Reporte del seguimiento </button>';
-											echo '<button class="btn btn-primary pull-right" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
+							                echo '<button class="btn btn-default pull-right" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
+											echo '<button class="btn btn-primary pull-right" style="margin-right: 5px;" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
 									    }
 									}else{
                                         echo '<button class="btn btn-warning" data-toggle="modal" data-target="#compose-modal-actualizar"><i class="glyphicon glyphicon-wrench"></i> Actualizar Seguimiento </button>';
-										echo '<button class="btn btn-default pull-right"><i class="fa fa-print"></i> Reporte del seguimiento </button>';
-							            echo '<button class="btn btn-primary pull-right" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
+										echo '<button class="btn btn-default pull-right" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
+							            echo '<button class="btn btn-primary pull-right" style="margin-right: 5px;" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
 									}
 							?>
                         </div>
@@ -264,7 +264,33 @@ $( document ).ready(function() {
 				$('#Seguimiento_actualizar').val(-1);
 			}
 		});
+        
+	$(".btn-default").on('click',function(){
+          mode = $(this).data('mode');
+          id1 = $(this).data('id');
+          if(mode == "verPDF"){
+           
+			data={
+            NroFolio:id
+            };
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/gestion_folios/crear_pdf.php", 
+                success:reportePDF,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+          }
+        });
 });
+
+function reportePDF(){
+		window.open('pages/gestion_folios/crear_pdf.php?id1='+id1);
+	}
 </script>
 
 <script type="text/javascript" src="js/gestion_folios/modificacion_folio.js" ></script>

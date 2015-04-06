@@ -135,12 +135,7 @@
     $('#tabla_paises').dataTable({
 	  "order": [[ 1, "desc" ]],
 	  "fnDrawCallback": function(oSettings ) {
-              
-                
-                
-                
-		
-		
+              	
 
       }
 	}); // example es el id de la tabla

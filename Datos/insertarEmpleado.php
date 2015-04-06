@@ -5,10 +5,7 @@
 
 //include "$root\curriculo\Datos\funciones.php";
 
-$enlace = mysql_connect('localhost', 'root', '');
- mysql_select_db("sistema_ciencias_juridicas", $enlace);
-        
-        
+
           
 	If(isset($_POST['cod_empleado'])){
 	
@@ -21,15 +18,41 @@ $enlace = mysql_connect('localhost', 'root', '');
 		 $identi=$_POST['identi'];
                  $cargo=$_POST['cargo'];
                //  $fechaingreso=$_POST['fecha2'];
-                 		 
+                 
+            	
+		 
+		
+               //  $fechaingreso=$_POST['fecha2'];
+               //  
+                 $enlace = mysql_connect('localhost', 'root', '');
+                 mysql_select_db("sistema_ciencias_juridicas", $enlace);
+           
+              
+              $rec2=mysql_query("SELECT N_identidad FROM empleado WHERE N_identidad='".$identi."'");
+              $rec3=mysql_fetch_array($rec2);
+             
+          
+             
+             
+                
+         if($identi==$rec3['N_identidad']){        
  
+             
+             
+               $mensaje = 'Empleado actualmente existente ';
+            $codMensaje = 0;
+            
+         }else{
+             
+             
+             
 	$query= mysql_query("INSERT INTO empleado(`No_Empleado`,`N_identidad`,`Id_departamento`,`Fecha_ingreso`,`Observacion`,`estado_empleado`,`foto_perfil`) VALUES ('$no_empleado','$identi','$id_dep','$fecha','$obs','1','null')");
 	
 	
 	if($query){
             
             
-            $query= mysql_query("INSERT INTO `empleado_has_cargo`(`No_Empleado`, `ID_cargo`, `Fecha_ingreso_cargo`) VALUES ('$no_empleado','$cargo','$fecha')");
+          $query= mysql_query("INSERT INTO `empleado_has_cargo`(`No_Empleado`, `ID_cargo`, `Fecha_ingreso_cargo`) VALUES ('$no_empleado','$cargo','$fecha')");
             
             if($query){
                 
@@ -49,13 +72,14 @@ $enlace = mysql_connect('localhost', 'root', '');
             
         }
 	
-        }else{
-            
-             $mensaje = 'no se pudo agregar';
-            $codMensaje = 0;
         }
         
-        
+        }else{
+            
+            
+            
+            
+        }
     
         
   ?>

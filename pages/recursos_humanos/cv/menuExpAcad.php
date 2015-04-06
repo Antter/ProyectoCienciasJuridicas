@@ -157,7 +157,7 @@
         }
         function llegadaActualizar()
         {
-            $("#container").load('pages/recursos_humanos/cv/actualizar/.php');
+            $("#container").load('pages/recursos_humanos/cv/actualizar/expAcademica.php');
         }
         function llegadaEliminar()
         {

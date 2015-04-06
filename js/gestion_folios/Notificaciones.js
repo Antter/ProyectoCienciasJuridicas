@@ -33,26 +33,9 @@ $( document ).ready(function() {
         }); 
         return false;
     });
-
-    $( "#basurero" ).click(function() {
-        data={
-            tipoNotificacion:"Basurero"
-        };
-        $.ajax({
-                async:true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                url:"pages/gestion_folios/Notificacion.php", 
-                success:notificacion,
-                timeout:4000,
-                error:problemas
-        }); 
-        return false;
-    });
-
-
-    $( "#submit" ).click(function() {
+	
+	$("form").submit(function(e) {
+	    e.preventDefault();
             data={
                
              NroFolio:$("#NroFolio").val(),
@@ -76,8 +59,63 @@ $( document ).ready(function() {
                 error:problemas  }); 
                 
         return false;
+	});
+	
+    $( "#basurero_recibida" ).click(function() {
+        data={
+            tipoNotificacion:"BasureroRecibida"
+        };
+        $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/gestion_folios/Notificacion.php", 
+                success:notificacion,
+                timeout:4000,
+                error:problemas
+        }); 
+        return false;
     });
+
+    $( "#basurero_enviada" ).click(function() {
+        data={
+            tipoNotificacion:"BasureroEnviada"
+        };
+        $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/gestion_folios/Notificacion.php", 
+                success:notificacion,
+                timeout:4000,
+                error:problemas
+        }); 
+        return false;
+    });
+
 });
+
+
+
+function Ver(){
+
+    $("#div_contenido").load('pages/gestion_folios/datos_folio.php',data);
+}
+
+function InfoNotifificacion(){
+
+    $("#div_contenido").load('pages/gestion_folios/datos_notificacion.php',data);
+}
+
+
+
+
+ function notificacion(){
+
+    $("#div_contenido").load('pages/gestion_folios/Notificacion.php',data);
+}
 
 function EnviarNotificacion(){
          $('body').removeClass('modal-open');

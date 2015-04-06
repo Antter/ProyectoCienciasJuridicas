@@ -1,5 +1,11 @@
 <?php
     $rol = $_SESSION['user_rol'];
+	if(!isset($userId)){
+	    $userId = $_SESSION['user_id'];
+	}
+	require($maindir."conexion/config.inc.php");
+	
+	require_once($maindir."pages/gestion_folios/datos/datos_cuenta_alertas.php")
 ?>
 
 <div class="col-sm-2">
@@ -18,12 +24,17 @@
 				    echo '<ul class="list-unstyled collapse" id="userMenu">';
 				}
             ?>			
-                <li><a id="folios" href="#"><i class="glyphicon glyphicon-book"></i> Folios
+                <li><a id="folios" href="#"><i class="glyphicon glyphicon-book"></i><span>Folios</span>
                   <!-- <span class="badge badge-info">4</span>--></a></li>
-                <li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i> Alertas 
-                  <!-- <span class="badge badge-info">10</span>--></a></li>
-                <li><a id="notificaciones" href="#"><i class="glyphicon glyphicon-flag"></i> Notificaciones
-                  <!-- <span class="badge badge-info">6</span>--></a></li>
+				  
+		    <?php
+			    if($cuenta_alertas > 0){
+				    echo '<li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i><span>Alertas</span><span class="label label-default pull-right">'.$cuenta_alertas.'</span></a></li>';
+				}else{
+				    echo '<li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i><span>Alertas</span></a></li>';
+				}
+			?> 
+                <li><a id="notificaciones" href="#"><i class="glyphicon glyphicon-flag"></i><span>Notificaciones<span></a></li>
             </ul>
         </li>
 		<?php

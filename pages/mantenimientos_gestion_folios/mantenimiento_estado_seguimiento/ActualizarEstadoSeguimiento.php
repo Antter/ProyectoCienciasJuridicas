@@ -66,7 +66,7 @@
         <tbody>
             <tr><form action='#'>
 			    <td><p id="Id_Estado_Seguimiento"><?php echo $result['Id_Estado_Seguimiento']; ?></p></td>
-				<td><input name='DescripcionEstadoSeguimiento' id="DescripcionEstadoSeguimiento" type ='text' value="<?php echo htmlentities($result['DescripcionEstadoSeguimiento']); ?>" placeholder="<?php echo htmlentities($result['DescripcionEstadoSeguimiento']); ?>" ></td>				
+				<td><input name='DescripcionEstadoSeguimiento' id="DescripcionEstadoSeguimiento" type ='text' maxlength="50" value="<?php echo htmlentities($result['DescripcionEstadoSeguimiento']); ?>" placeholder="<?php echo htmlentities($result['DescripcionEstadoSeguimiento']); ?>" ></td>				
                <td> <button type="button" id="actulizar_estado_seguimiento" data-id=<?php echo $result['Id_Estado_Seguimiento']; ?> class="btn btn-primary pull-left" data-mode="actualizar">Actualizar</button></td>
 			   <td><a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" data-mode="cancelar"><i class="fa fa-pencil"></i>Cancelar</a></td>
              </form>			

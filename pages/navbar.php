@@ -2,12 +2,13 @@
 
   if(!isset( $_SESSION['user_id'] ))
   {
-    header('Location: '.$maindir.'login/logout.php');
+    header('Location: '.$maindir.'login/logout.php?code=100');
     exit();
   }
   else
   {
 	$user = $_SESSION['nombreUsuario'];
+	$rol = $_SESSION['user_rol']; 
   }
 
 ?>
@@ -95,7 +96,8 @@ HTML;
 
 HTML;
               }
-             
+			  
+        if($rol >= 40){
              // pagina del modulo de gestion de folios
             if($contenido == 'gestion_de_folios') 
               {
@@ -114,7 +116,7 @@ HTML;
                 <li><a role='button' id="gestion_de_folios" href="javascript:ajax_('$url')" >Gestion de folios</a></li>
 HTML;
               }
-              
+        }     
 ?>
 
            </ul>

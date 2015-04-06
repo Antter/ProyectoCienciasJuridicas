@@ -69,9 +69,9 @@
         <tbody>
             <tr><form action='#'>
 			    <td><p id="Id_UbicacionArchivoFisico"><?php echo $result['Id_UbicacionArchivoFisico']; ?></p></td>
-				<td><input name='DescripcionUbicacionFisica' id="DescripcionUbicacionFisica" type ='text' value="<?php echo htmlentities($result['DescripcionUbicacionFisica']); ?>" placeholder="<?php echo htmlentities($result['DescripcionUbicacionFisica']); ?>" ></td>
-				<td><input name='Capacidad' id="Capacidad" type ='text' value="<?php echo htmlentities($result['Capacidad']); ?>" placeholder="<?php echo htmlentities($result['Capacidad']); ?>" ></td>
-				<td><input name='TotalIngresados' id="TotalIngresados" type ='text' value="<?php echo htmlentities($result['TotalIngresados']); ?>" placeholder="<?php echo htmlentities($result['TotalIngresados']); ?>" ></td>
+				<td><input name='DescripcionUbicacionFisica' id="DescripcionUbicacionFisica" type ='text' maxlength="100" value="<?php echo htmlentities($result['DescripcionUbicacionFisica']); ?>" placeholder="<?php echo htmlentities($result['DescripcionUbicacionFisica']); ?>" ></td>
+				<td><input name='Capacidad' id="Capacidad" type ='text' maxlength="10" onkeypress="ValidaSoloNumeros();" value="<?php echo htmlentities($result['Capacidad']); ?>" placeholder="<?php echo htmlentities($result['Capacidad']); ?>" ></td>
+				<td><input name='TotalIngresados' id="TotalIngresados" type ='text' maxlength="10" onkeypress="ValidaSoloNumeros();" value="<?php echo htmlentities($result['TotalIngresados']); ?>" placeholder="<?php echo htmlentities($result['TotalIngresados']); ?>" ></td>
 				<td>
 				<div class="form-group">
                 <div class="input-group">
@@ -109,7 +109,7 @@
 	mode = $(this).data('mode');
 	if(mode == "actualizar"){
             id = $(this).data('id');
-      data={
+          data={
             Id_UbicacionArchivoFisico:id,
             DescripcionUbicacionFisica:$("#DescripcionUbicacionFisica").val(),
             Capacidad:$("#Capacidad").val(),
@@ -126,19 +126,8 @@
                 success:actualizarUbicacionArchivoFisicoFinalizado,
                 timeout:4000
           }); 
-          return false;}
-    });
-
-    function actualizarUbicacionArchivoFisicoFinalizado(){
-            $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_archivofisico.php',data);
-    }
-</script>
-
-
-<script type="text/javascript">
-    $(".btn-primary").on('click',function(){
-        mode = $(this).data('mode');
-         if(mode == "cancelar"){       
+          return false;
+		  }else if(mode == "cancelar"){       
           $.ajax({
                 async:true,
                 type: "POST",
@@ -154,11 +143,17 @@
         }
     });
 
-    function CancelarUbicacionArchivoFisico(){
+    function actualizarUbicacionArchivoFisicoFinalizado(){
+            $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_archivofisico.php',data);
+    }
+	function CancelarUbicacionArchivoFisico(){
 
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_ubicacion_archivofisico.php');
     }
+	function ValidaSoloNumeros() {
+      if ((event.keyCode < 48) || (event.keyCode > 57)) 
+        event.returnValue = false;
+    }
 </script>
-
 
 <script type="text/javascript" src="js/gestion_folios/navbar_lateral.js" ></script>

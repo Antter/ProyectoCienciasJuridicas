@@ -34,9 +34,9 @@ and open the template in the editor.
                                 <div class="col-lg-6">
 
                                     <form role="form" action="#" method='POST'>
-                                        <div class="form-group">
+                                        <div id="tipoNombre" class="form-group">
                                             <label>Nombre del Tipo de Estudio</label>
-                                            <input id="nombreTipo" class="form-control" >
+                                            <input title="Se necesita un nombre" type="text" id="nombreTipo" name="nombreIdioma" class="form-control" required>
 
                                         </div>
 
@@ -82,19 +82,12 @@ and open the template in the editor.
              * and open the template in the editor.
              */
 
-            var x;
-            x = $(document);
-            x.ready(guardarTipo);
-            function guardarTipo()
-            {
-                var x;
-                x = $("#guardarTipo");
-                x.click(insertarTipo);
-             
-            }
+            $( document ).ready(function() {
 
-            function insertarTipo()
-            {
+             $("form").submit(function(e) {
+	    e.preventDefault();
+          
+                if(validator()){
                 data={
                     nombre:$('#nombreTipo').val()
                 }
@@ -107,10 +100,12 @@ and open the template in the editor.
                     success: llegadaInsertarTipo,
                     timeout: 4000,
                     error: problemas
-                });
+                });}
                 return false;
-            }
-
+	});
+    
+        
+   });
 
             function inicioEnvio()
             {
@@ -128,6 +123,35 @@ and open the template in the editor.
             {
                 $("#contenedor2").text('Problemas en el servidor.');
             }
+            
+             function soloLetrasYNumeros(text)
+             {
+                var letters = /^[0-9a-zA-Z ]+$/; 
+		if(text.match(letters)){
+                    return true;
+			}
+                        else{
+			    return false;
+			}
+            }
+
+            function validator(){
+	    var nombre = $("#nombreTipo").val();
+
+		if(soloLetrasYNumeros(nombre) == false){
+		    $("#tipoNombre").addClass("has-warning");
+			$("#tipoNombre").find("label").text("Nombre del Tipo estudio: Solo son permitidos numeros y letras");
+			$("#nombreTipo").focus();
+			return false;
+		}else{
+		    $("#tipoNombre").removeClass("has-warning");
+			$("#tipoNombre").find("label").text("Nombre del tipo estudio");
+		}
+		
+		
+		
+		return true;
+                }
 
 
 

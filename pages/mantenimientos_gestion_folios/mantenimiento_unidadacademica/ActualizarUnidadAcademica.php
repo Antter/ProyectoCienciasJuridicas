@@ -67,8 +67,8 @@
         <tbody>
             <tr><form action='#'>
 			    <td><p id="Id_UnidadAcademica"><?php echo $result['Id_UnidadAcademica']; ?></p></td>
-				<td><input name='NombreUnidadAcademica' id="NombreUnidadAcademica" type ='text' value="<?php echo htmlentities($result['NombreUnidadAcademica']); ?>" placeholder="<?php echo htmlentities($result['NombreUnidadAcademica']); ?>" ></td>
-				<td><input name='UbicacionUnidadAcademica' id="UbicacionUnidadAcademica" type ='text' value="<?php echo htmlentities($result['UbicacionUnidadAcademica']); ?>" placeholder="<?php echo htmlentities($result['UbicacionUnidadAcademica']); ?>" ></td>
+				<td><input name='NombreUnidadAcademica' id="NombreUnidadAcademica" type ='text' maxlength="50" value="<?php echo htmlentities($result['NombreUnidadAcademica']); ?>" placeholder="<?php echo htmlentities($result['NombreUnidadAcademica']); ?>" ></td>
+				<td><input name='UbicacionUnidadAcademica' id="UbicacionUnidadAcademica" type ='text' maxlength="300" value="<?php echo htmlentities($result['UbicacionUnidadAcademica']); ?>" placeholder="<?php echo htmlentities($result['UbicacionUnidadAcademica']); ?>" ></td>
                <td> <button type="button" id="actulizar_unidadacademica" data-id=<?php echo $result['Id_UnidadAcademica']; ?> class="btn btn-primary pull-left" data-mode="actualizar">Actualizar</button></td>
 			   <td><a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" data-mode="cancelar"><i class="fa fa-pencil"></i>Cancelar</a></td>
              </form>			
