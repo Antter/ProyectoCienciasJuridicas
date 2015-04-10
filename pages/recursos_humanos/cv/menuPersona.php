@@ -10,10 +10,7 @@ require_once('../../../Datos/conexion.php');
 ?>
 
 
-    <head>
-        
-        
-        
+    <head>    
          <script>
  
           $( document ).ready(function() {
@@ -35,34 +32,20 @@ require_once('../../../Datos/conexion.php');
                     type: "POST",
                     dataType: "html",
                     contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
+                    beforeSend: busqueda,
                     success: llegadaBusqueda,
                     timeout: 4000,
-                    error: problemas
+                    error: problemasbusqueda
             }); 
             return false;
                
 	});
         
-                var x;
-                x = $(".verb");
-                x.click(VerPerfil);
-                
-            $("form2").submit(function(e) {
+        
+         $("#form2").submit(function(e) {
 	    e.preventDefault();
-            
-                var x;
-                 x = $("#guardarp");
-               x.click(insertarpersona);
-           });
-        
-        
-   });
-            
-            
-             function insertarpersona()
-        {
-            data={
+          
+            data3={
                 identidad:$('#identidad').val(),
                 primerNombre:$('#primerNombre').val(),
                 segundoNombre:$('#segundoNombre').val(),
@@ -81,51 +64,24 @@ require_once('../../../Datos/conexion.php');
                 type: "POST",
                 dataType: "html",
                 contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
+                beforeSend: insertarPersona,
                 success: llegadaInsertarPersona,
                 timeout: 4000,
-                error: problemas
+                error: problemasInsertar
             });
             return false;
-        }
+        });
+        
 
-               function inicioEnvio()
-        {
-            var x = $("#contenedor");
-            x.html('Cargando...');
-        }
-               function llegadaInsertarPersona()
-        {
-            $("#contenedor").load('pages/recursos_humanos/cv/nuevo/personaAgregar.php',data);
-        }
+   });
             
             
+
            
-               function VerPerfil()
-            {
-                var pid = $(this).parents("tr").find("td").eq(0).html();
-               
+   
 
 
-                data2 = {identi: pid};
-
-
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    //  url:"pages/recursos_humanos/modi_universidad.php",  
-                    beforeSend: inicioEnvio,
-                    success: verPerfilP,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
-
-
-            function inicioEnvio()
+            function busqueda()
             {
                 var x = $("#contenedor2");
                 x.html('Cargando...');
@@ -137,17 +93,29 @@ require_once('../../../Datos/conexion.php');
                 
             }
             
-              function verPerfilP()
+            function problemasbusqueda()
             {
-                $("#contenedor").load('pages/recursos_humanos/cv/reportes/personaObtener.php',data2);
-                
+                $("#contenedor").text('Problemas en el servidor.');
+            }
+
+               function insertarPersona()
+            {
+                var x = $("#contenedor");
+                x.html('Cargando...');
+            }
+            
+          function llegadaInsertarPersona()
+        {
+            $("#contenedor").load('pages/recursos_humanos/cv/nuevo/personaAgregar.php',data3);
+        }
+        
+           function problemasInsertar()
+            {
+                $("#contenedor").text('Problemas en el servidor.');
             }
             
 
-            function problemas()
-            {
-                $("#contenedor2").text('Problemas en el servidor.');
-            }
+            
 
          </script>
         
@@ -364,7 +332,7 @@ require_once('../../../Datos/conexion.php');
 	  <form role="form" id="form2" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Agregar un nuevo empleado </h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Agregar perfil </h4>
       </div>
               <div class="modal-body">
                   <div id="IngresoPersona" class="form-group">
@@ -400,7 +368,7 @@ require_once('../../../Datos/conexion.php');
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
                                                             <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" required></div>
                                                         </div>
-                                                        <div class="form-group">
+                                                        <div class="form-group" id="sexoOpcion" name="sex">
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>
                                                             <div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino
                                                             <input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>

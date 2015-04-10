@@ -51,7 +51,7 @@
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
                                                             <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" required></div>
                                                         </div>
-                                                        <div class="form-group">
+                                                        <div class="form-group"id="sexoOpcion">
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>
                                                             <div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino
                                                             <input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>
@@ -131,13 +131,18 @@
 
         function insertarpersona()
         {
+            
+           var sexo= document.getElementById('sexoOpcion').value; 
+           alert(sexo);
+         
+            
             data={
                 identidad:$('#identidad').val(),
                 primerNombre:$('#primerNombre').val(),
                 segundoNombre:$('#segundoNombre').val(),
                 primerApellido:$('#primerApellido').val(),
                 segundoApellido:$('#segundoApellido').val(),
-                sexo:$('#sexoMas').val(),
+                sexo:sexo,
                 fecha:$('#fecha').val(),
                 direccion:$('#direccion').val(),
                 email:$('#email').val(),

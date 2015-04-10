@@ -52,14 +52,7 @@
                             <li>
                                 <a id="expLab" href="#">Experiencia Laboral</a>
                             </li>
-                             <li>
-                                <a id="busqueda" href="#">Busqueda</a>
-                            </li>
-                            
-                             <li>
-                                <a id="reportes" href="#">Reportes</a>
-                            </li>
-                
+                   
                 
             </ul>
         </li>
@@ -470,13 +463,7 @@
         x = $("#gestionGC");
         x.click(gestiondeGrupos);
         
-         var x;
-        x = $("#busqueda");
-        x.click(Busqueda);
-        
-           var x;
-                x = $("#reportes");
-                x.click(reportes);
+  
                 
                 
             }
@@ -733,37 +720,7 @@
         return false;
     }
        
-       
-       
-           function Busqueda()
-            {
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
-                    success: llegadabusqueda,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
-            
-               function reportes()
-            {
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
-                    success: llegadareportes,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
+ 
             
             
 
@@ -862,15 +819,7 @@
         $("#contenedor").load('pages/recursos_humanos/gestion_Grupos_comite.php');
     }
     
-      function llegadabusqueda()
-    {
-        $("#contenedor").load('pages/recursos_humanos/BusquedaAvanzada.php');
-    }
-    
-     function llegadareportes()
-            {
-                $("#contenedor").load('pages/recursos_humanos/cv/reportes/reportePersona.php');
-            }
+
             
             
 
