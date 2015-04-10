@@ -1,7 +1,9 @@
 <?php
-include 'conexion.php';
+require_once("../../conexion/conn.php");  
 
-$query = mysql_query("SELECT * FROM tbl_unidad_academica", $enlace);
+$conexion = mysqli_connect($host, $username, $password, $dbname);
+
+$rec = mysqli_query($conexion, "SELECT * from unidad_acad");
 ?>
 
 <!DOCTYPE html>
@@ -37,46 +39,58 @@ $query = mysql_query("SELECT * FROM tbl_unidad_academica", $enlace);
                                     <form role="form" action="#", method ="GET">
                                         <div class="form-group">
                                             <label>Nombre Unidad</label>
-                                            <input id = "descripcionUnidad" class="form-control" name ="edificio">
+                                            <input id = "descripcionUnidad" class="form-control" name ="dunidad">
                                         </div>
 										<button id = "guardarUnidad" class="btn btn-default">Agregar</button>
 										
                                         <button type="reset" class="btn btn-default">Cancelar</button><br><br>
-										<table class="table table-bordered">
-											<tr class="well">
-												<td><strong>Id_Unidad</strong></td>
-												<td><strong>Unidad</strong></td>
-												<td><strong>Eliminar</strong></td>
-
-											</tr>
-											<?php
-											require_once("conexion.php");
-											if(isset($_GET['Id_Unidad'])){
-												$id=$_GET['Id_Unidad'];	
-												mysqli_query($conexion, "DELETE FROM tbl_unidad_academica
-												WHERE Unidad_ID='$id'");	
-												//echo mensajes('Motivo"'.$id.'" Eliminado con Exito','verde');	
-											}
-											?>
-											<?php
-												//require_once("conexion.php");
-												//$pame=mysqli_query($conexion, "SELECT * FROM tbl_unidad_academica");
-												while($row=mysql_fetch_array($query)){
-											?>
-											<tr>
-											<td><?php echo $row['Unidad_ID']; ?></td>
-											<td><?php echo $row['descripcion']; ?></td>
-											<td>
-												<center>
-												<form action="" method='GET' >
-												<button type="submit"  name="Id_Unidad" value= <?php echo $row['Unidad_ID']; ?> >Eliminar</button>
-												</form>
-												</center>
-											</td> 
-											</tr>
 										
-											<?php } ?>
-										</table>
+<?php
+              
+                   echo <<<HTML
+                                    <table id="tabla_Unidad" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                            <th><strong>Unidad_ID</strong></th>
+                                             <th><strong>Nombre_unidad</strong></th>
+                                             <th><strong>Eliminar</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+HTML;
+
+               while ($row = mysqli_fetch_array($rec))  {
+
+             $idU = $row['Unidad_ID'];
+            $nombreU = $row['descripcion'];
+            
+            
+                echo "<tr data-id='".$idU."'>";
+                echo <<<HTML
+                <td>$idU</td>
+
+HTML;
+                //echo <<<HTML <td><a href='javascript:ajax_("'$url'");'>$NroFolio</a></td>HTML;
+                echo <<<HTML
+				
+                <td>$nombreU</td>
+				
+				  <td><center>
+                    <button name="Unidad_ID"  class="elimina btn btn-danger glyphicon glyphicon-edit"> </button>
+                </center></td>
+                   
+HTML;
+                echo "</tr>";
+
+            }
+
+                   echo <<<HTML
+                                       
+									</table>
+HTML;
+             
+?>
+											
 									</form>
 								</div>
 							</div>				
@@ -84,30 +98,39 @@ $query = mysql_query("SELECT * FROM tbl_unidad_academica", $enlace);
 					</div>						
 				</div>							
 			</div>								
-	</div>									
+	</div>		
+	
 	
 </body>
 
 <script>
+  $(document).ready(function(){
+                fn_dar_eliminar();               
+            });
 
-var id;
-var data;
-var x;
-x=$(document);
-x.ready(inicio);
+    var x;
+	var id;
+	var data;
+	var x;
+	x=$(document);
+	x.ready(inicio);
  
     function inicio(){
         var x;
         x=$("#guardarUnidad");
-        x.click(consultaUnidad);
+		x.click(consultaUnidad);
+		
         
-        var x;
+        
+       /* var x;
         x=$(".eliminar");
-        x.click(ver);
+        x.click(ver);*/
 	}
 	
 	function consultaUnidad() {
-            var dunidad=$("#descripcionUnidad").val(); 
+	var dunidad=$("#descripcionUnidad").val();
+	var patron = /[0-9]/;
+	         if(dunidad != '' && !(patron.test(dunidad))){		
             //alert(dmotivo);
             data ={ dunidad:$("#descripcionUnidad").val()};
             $.ajax({
@@ -117,12 +140,14 @@ x.ready(inicio);
                 contentType: "application/x-www-form-urlencoded",
                 url:"pages/permisos/insertarUnidad.php", 
                 beforeSend:inicioEnvio,
+				data:data,
                 success:llegadaGuardar,
                 timeout:4000,
                 error:function(result){  
             alert('ERROR ' + result.status + ' ' + result.statusText);  
           }
             }); 
+			}else{alert ('El nombre esta vacío ó contiene numeros');}
             return false;
     }
 	
@@ -132,7 +157,8 @@ x.ready(inicio);
 	}
 	
 	function llegadaGuardar(){
-		$("#contenedor").load('pages/permisos/insertarUnidad.php', data);
+		alert("Transacción completada correctamente");
+		$("#contenedor").load('pages/permisos/Unidad_Academica.php', data);
 	}
 	
 	function problemas()
@@ -140,6 +166,54 @@ x.ready(inicio);
     $("#contenedor").text('Problemas en el servidor.');
 	}
 	
+	//Eliminar Unidad Academica
+	
+	
+	   function eliminarUnidad(){
+	 // var Unidad_ID=$("#Unidad_ID").val();
+	   //data ={ Unidad_ID:$("#Unidad_ID").val()};
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ Unidad_ID:id1};
+			
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        url:"pages/permisos/eliminarUnidad.php",     
+        beforeSend:inicioEnvio,
+		//data:data,
+        success:llegadaEliminarUnidad,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+        }
+} 
+
+    function llegadaEliminarUnidad()
+            {
+                $("#contenedor").load('pages/permisos/eliminarUnidad.php',data1);
+				alert("Transacción completada correctamente");
+				$("#contenedor").load('pages/permisos/Unidad_Academica.php');
+            }
+			
+	function fn_dar_eliminar(){
+          
+		$(".elimina").click(function(){
+			id1 = $(this).parents("tr").find("td").eq(0).html();
+			//alert(id1);
+			eliminarUnidad();
+		  
+		});
+	};
+
+	  function problemas()
+            {
+                $("#contenedor").text('Problemas en el servidor.');
+            }
+
 </script>
 
 

@@ -1,9 +1,10 @@
 <?php
-	require_once("conexion.php"); 
+	require_once("../../conexion/conn.php");  
+	$conexion = mysqli_connect($host, $username, $password, $dbname); 
 	
 	$edificio = $_POST['dedificio'];
-	$query = "INSERT INTO tbl_edificios(descripcion) VALUES('$edificio')";
+	$query = "INSERT INTO edificios(descripcion) VALUES('$edificio')";
 	
-	mysql_query($query, $enlace);
-	mysql_close($enlace);
+	$resultado = mysqli_query($conexion, $query) or die("Error " . mysqli_error($link));
+	mysqli_close($conexion);
 ?>

@@ -60,8 +60,7 @@
                 var x;
                 x = $(".verb");
                 x.click(VerPerfil);
-            }
-            ;
+            };
 
 
 

@@ -32,10 +32,8 @@
 <div id="wrapper">
 
         
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">                
-                <a class="navbar-brand" href="#">Sistema POA</a>
-            </div>
+        
+         
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
@@ -44,10 +42,14 @@
                             <a id="crear" href="#"><i class="fa fa-table fa-fw"></i>POAs</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i>Mis Actividades</a>
+                            <a id="actividades" href="#"><i class="fa fa-dashboard fa-fw"></i>Mis Actividades</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes</a>
+                            <a  id="reportes" href="#"><i class="fa fa-file-pdf-o fa-fw"></i> Reportes</a>
+                            
+                        </li>
+                        <li>
+                            <a  id="estadisticas" href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas</a>
                             
                         </li>
                         <li  >
@@ -62,14 +64,12 @@
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
-            <!-- /.navbar-static-side -->
-        </nav>
+         
     </div>
     <div id="page-wrapper">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
+ 
                 
-                <div id="contenedor" class="panel-body">
+                <div id="contenedor">
                     <?php
                     
                         //include 'pages/crearPOA.php';
@@ -163,8 +163,7 @@
                 </div>
                 </div>
                 
-            </div>
-        </div>
+         
     </div>
     
 

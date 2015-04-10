@@ -1,7 +1,10 @@
 <?php
-include 'conexion.php';
+//include 'conexion.php';
+require_once("../../conexion/conn.php");  
 
-$query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
+$conexion = mysqli_connect($host, $username, $password, $dbname);
+
+$rec = mysqli_query($conexion, "SELECT * from motivos");
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +17,7 @@ $query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+	
 	
 </head>
 
@@ -46,43 +50,54 @@ $query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
 										
                                         <button type="reset" class="btn btn-default">Cancelar</button><br><br>
 										
-									<table class="table table-bordered">
-										<tr class="well">
-										<td><strong>Id_Motivo</strong></td>
-										<td><strong>Motivo</strong></td>
-										<td><strong>Eliminar</strong></td>
-										</tr>
-										<?php
-											require_once("conexion.php");
-											if(isset($_GET['Id_Motivo'])){
-												$id=$_GET['Id_Motivo'];	
-												mysql_query($conexion, "DELETE FROM tbl_motivos
-												WHERE Motivo_ID='$id'");	
-												//echo mensajes('Motivo"'.$id.'" Eliminado con Exito','verde');	
-											}
-										?>
-										
-										<?php
-											//require_once("conexion.php");
-											//$pame=mysqli_query($conexion, "SELECT * FROM tbl_motivos");
-											while($row=mysql_fetch_array($query)){
-										?>
-										
-										<tr>
-										<td><?php echo $row['Motivo_ID']; ?></td>
-										<td><?php echo $row['descripcion']; ?></td>
-										<td>
-											<center>    
-											<form action="" method='GET' >
-											<button id = "eliminar" name="Id_Motivo" value= <?php echo $row['Motivo_ID']; ?>> Eliminar </button>
-											
-											</form>
-											</center>
-										</td>					
-										</tr>
-										
-										<?php } ?>
+									<?php
+              
+                   echo <<<HTML
+                                    <table id="tabla_Motivos" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                            <th><strong>ID Motivo</strong></th>
+                                             <th><strong>Descripcion Motivo</strong></th>
+                                             <th><strong>Eliminar</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+HTML;
+
+               while ($row = mysqli_fetch_array($rec))  {
+
+				$idM = $row['Motivo_ID'];
+				$dmotivo = $row['descripcion'];
+            
+            
+                echo "<tr data-id='".$idM."'>";
+                echo <<<HTML
+                <td>$idM</td>
+
+HTML;
+                //echo <<<HTML <td><a href='javascript:ajax_("'$url'");'>$NroFolio</a></td>HTML;
+                echo <<<HTML
+				
+                <td>$dmotivo</td>
+				
+				  <td><center>
+                    <button name="Motivo_ID"  class="elimina btn btn-danger glyphicon glyphicon-edit"> </button>
+                </center></td>
+
+
+HTML;
+                echo "</tr>";
+
+            }
+
+                   echo <<<HTML
+                                       
 									</table>
+HTML;
+             
+               ?>
+									
+									
 									</form>
 								</div>
 							</div>
@@ -93,6 +108,10 @@ $query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
 	</div>
 
 <script>
+$(document).ready(function(){
+                fn_dar_eliminar();               
+            });
+			
  var id;
  var data;
  var x;
@@ -104,16 +123,18 @@ $query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
         x=$("#guardar");
         x.click(consulta);
         
-        var x;
+       /* var x;
         x=$(".eliminar");
-        x.click(ver);
+        x.click(ver);*/
 	}
 	
 	function consulta() {
             var dmotivo=$("#motivo").val(); 
+			var patron = /[0-9]/;
+			if(dmotivo != '' && !(patron.test(dmotivo))){
             //alert(dmotivo);
-            data ={ dmotivo:$("#motivo").val()};
-            $.ajax({
+               data ={ dmotivo:$("#motivo").val()};
+               $.ajax({
                 async:true,
                 type: "POST",
                 dataType: "html",
@@ -121,13 +142,16 @@ $query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
                 url:"pages/permisos/insertarMotivos.php", 
                 beforeSend:inicioEnvio,
                 success:llegadaGuardar,
+				data:data,
                 timeout:4000,
                 error:function(result){  
             alert('ERROR ' + result.status + ' ' + result.statusText);  
           }
             }); 
+			}else{alert('El campo esta vacio ó contiene numeros');}
             return false;
     }
+
 	
 	function inicioEnvio(){
     var x=$("#contenedor");
@@ -135,18 +159,55 @@ $query = mysql_query("SELECT * FROM tbl_motivos", $enlace);
 	}
 	
 	function llegadaGuardar(){
-		$("#contenedor").load('pages/permisos/insertarMotivos.php', data);
+		alert("Transacción completada correctamente");
+		$("#contenedor").load('pages/permisos/motivo.php', data);
 	}
 	
 	function problemas()
 	{
     $("#contenedor").text('Problemas en el servidor.');
 	}
+	
+	function eliminarMotivo(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ Motivo_ID:id1};
+			
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/eliminarMotivos.php",     
+			beforeSend:inicioEnvio,
+			//data:data,
+			success:llegadaEliminarMotivo,
+			timeout:4000,
+			error:problemas
+		}); 
+		return false;
+		}
+	}
 
+	function llegadaEliminarMotivo()
+            {
+                $("#contenedor").load('pages/permisos/eliminarMotivos.php',data1);
+				alert("Transacción completada correctamente");
+				$("#contenedor").load('pages/permisos/motivo.php');
+            }
+			
+	function fn_dar_eliminar(){
+          
+		$(".elimina").click(function(){
+			id1 = $(this).parents("tr").find("td").eq(0).html();
+			//alert(id1);
+			eliminarMotivo();
+		  
+		});
+	};
 	
 </script>
 	
 </body>
-
 
 </html>	

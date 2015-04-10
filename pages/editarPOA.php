@@ -89,7 +89,7 @@ and open the template in the editor.
                     format: 'yyyy-mm-dd',
                     autoclose: true,
                     todayBtn: true
-                   
+
                 }).on('show', function() {
                     // Obtener valores actuales z-index de cada elemento
                     var zIndexModal = $('#myModal').css('z-index');
@@ -159,39 +159,41 @@ and open the template in the editor.
             });
         </script>
 
-    </script>
 
-</head>
 
-<body>
-    <input type="hidden" id="idPOA" value="<?php echo $idPoa; ?>">  
-    <form role="form" id="form" name="form">
-        <div class="form-group">
-            <label>Titulo Del POA</label>
-            <input id="titulo2" class="form-control" value="<?php echo $titulo; ?>"  required="">
-        </div>
-        <div class="form-group">
-            <label for="dtp_input2" class="col-md-2 control-label">Del</label>
-            <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
-                <input type="text" class="form-control" size="5"  id="dp24" value="<?php echo $del; ?>" required>
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    </head>
+
+    <body>
+        <input type="hidden" id="idPOA" value="<?php echo $idPoa; ?>">  
+        <form role="form" id="form" name="form">
+            <div class="form-group">
+                <label>Titulo Del POA</label>
+                <input id="titulo2" class="form-control" value="<?php echo $titulo; ?>"  required="">
+            </div>
+            <div class="form-group">
+                <label for="dtp_input2" class="col-md-2 control-label">Del</label>
+                <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
+                    <input type="text" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
+                           class="form-control" size="5"  id="dp24" value="<?php echo $del; ?>" required>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
                 <label for="dtp_input2" class="col-md-2 control-label">Al</label>
                 <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
-                    <input type="text" class="form-control" size="5"  id="dp25" value="<?php echo $al; ?>" required>
+                    <input type="text"pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"
+                           class="form-control" size="5"  id="dp25" value="<?php echo $al; ?>" required>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                    <input type="hidden" id="dtp_input2" value="" /><br/>
-                    </div>
-                    <div class="form-group">
-                        <label>Observacion</label>
-                        <textarea id="observacion2" class="form-control" rows="3"><?php echo $observacion; ?></textarea>
-                    </div>
+                </div>
+                <input type="hidden" id="dtp_input2" value="" /><br/>
+            </div>
+            <div class="form-group">
+                <label>Observacion</label>
+                <textarea id="observacion2" class="form-control" rows="3"><?php echo $observacion; ?></textarea>
+            </div>
 
 
-                    <div class="modal-footer">
+            <div class="modal-footer">
 
-                        <button  id="guardar" class="btn btn-primary" >Guardar</button>
+                <button  id="guardar" class="btn btn-primary" >Guardar</button>
 
             </div>
 

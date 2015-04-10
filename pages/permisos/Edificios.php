@@ -1,7 +1,9 @@
 <?php
-include 'conexion.php';
+require_once("../../conexion/conn.php");  
 
-$query = mysql_query("SELECT * FROM tbl_edificios", $enlace);
+$conexion = mysqli_connect($host, $username, $password, $dbname);
+
+$rec = mysqli_query($conexion, "SELECT * from edificios");
 ?>
 
 <!DOCTYPE html>
@@ -45,41 +47,51 @@ $query = mysql_query("SELECT * FROM tbl_edificios", $enlace);
 										
                                         <button type="reset" class="btn btn-default">Cancelar</button><br><br>
 										
-										<table class="table table-bordered">
-											<tr class="well">
-											<td><strong>Id_Edificio</strong></td>
-											<td><strong>Edificio</strong></td>
-											<td><strong>Eliminar</strong></td>
-											</tr>
-											<?php
-												require_once("conexion.php");
-												if(isset($_GET['Id_Edificio'])){
-													$id=$_GET['Id_Edificio'];	
-													mysql_query($conexion, "DELETE FROM tbl_edificios
-													WHERE Edificio_ID='$id'");	
-													//echo mensajes('Motivo"'.$id.'" Eliminado con Exito','verde');	
-												}
-											?>
-											<?php
-												//require_once("conexion.php");
-												//$pame=mysqli_query($conexion, "SELECT * FROM tbl_edificios");
-												while($row=mysql_fetch_array($query)){
-											?>
-											
-											<tr>
-											<td><?php echo $row['Edificio_ID']; ?></td>
-											<td><?php echo $row['descripcion']; ?></td>
-											<td>
-												<center>                   
-												<form action="" method='GET' >						
-													<button type="submit"  name="Id_Edificio" value= <?php echo $row['Edificio_ID']; ?>> Eliminar </button>
-												</form>
-												</center>
-											</td> 
-											</tr>
-											
-											<?php } ?>
-										</table>
+										<?php
+              
+                   echo <<<HTML
+                                    <table id="tabla_Edificios" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                            <th><strong>ID Edificio</strong></th>
+                                             <th><strong>Nombre Edificio</strong></th>
+                                             <th><strong>Eliminar</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+HTML;
+
+               while ($row = mysqli_fetch_array($rec))  {
+
+				$idE = $row['Edificio_ID'];
+				$dedificio = $row['descripcion'];
+            
+            
+                echo "<tr data-id='".$idE."'>";
+                echo <<<HTML
+                <td>$idE</td>
+
+HTML;
+                //echo <<<HTML <td><a href='javascript:ajax_("'$url'");'>$NroFolio</a></td>HTML;
+                echo <<<HTML
+				
+                <td>$dedificio</td>
+				
+				  <td><center>
+                    <button name="Edificio_ID"  class="elimina btn btn-danger glyphicon glyphicon-edit"> </button>
+                </center></td>
+  
+HTML;
+                echo "</tr>";
+
+            }
+
+                   echo <<<HTML
+                                       
+									</table>
+HTML;
+               ?>
+
 									</form>
 								</div>
 							</div>				
@@ -93,6 +105,10 @@ $query = mysql_query("SELECT * FROM tbl_edificios", $enlace);
 
 
 <script>
+$(document).ready(function(){
+                fn_dar_eliminar();               
+            });
+ 
  var id;
  var data;
  var x;
@@ -104,13 +120,12 @@ $query = mysql_query("SELECT * FROM tbl_edificios", $enlace);
         x=$("#guardarEdificio");
         x.click(consultaEdificio);
         
-        var x;
-        x=$(".eliminar");
-        x.click(ver);
+        
 	}
 	
 	function consultaEdificio() {
             var dedificio=$("#nmedificio").val(); 
+			if(dedificio != ''){
             //alert(dmotivo);
             data ={ dedificio:$("#nmedificio").val()};
             $.ajax({
@@ -120,12 +135,14 @@ $query = mysql_query("SELECT * FROM tbl_edificios", $enlace);
                 contentType: "application/x-www-form-urlencoded",
                 url:"pages/permisos/insertarEdificios.php", 
                 beforeSend:inicioEnvio,
+				data:data,
                 success:llegadaGuardar,
                 timeout:4000,
                 error:function(result){  
             alert('ERROR ' + result.status + ' ' + result.statusText);  
           }
             }); 
+			}else{alert('El campo esta vacio');}
             return false;
     }
 	
@@ -135,13 +152,52 @@ $query = mysql_query("SELECT * FROM tbl_edificios", $enlace);
 	}
 	
 	function llegadaGuardar(){
-		$("#contenedor").load('pages/permisos/insertarEdificios.php', data);
+		alert("Transacción completada correctamente");
+		$("#contenedor").load('pages/permisos/Edificios.php', data);
 	}
 	
 	function problemas()
 	{
     $("#contenedor").text('Problemas en el servidor.');
 	}
+	
+	function eliminarEdificio(){
+        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+        if (respuesta){  
+             data1 ={ Edificio_ID:id1};
+			
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/eliminarEdificios.php",     
+			beforeSend:inicioEnvio,
+			//data:data,
+			success:llegadaeliminarEdificio,
+			timeout:4000,
+			error:problemas
+		}); 
+		return false;
+		}
+	}
+
+	function llegadaeliminarEdificio()
+            {
+                $("#contenedor").load('pages/permisos/eliminarEdificios.php',data1);
+				alert("Transacción completada correctamente");
+				$("#contenedor").load('pages/permisos/edificios.php');
+            }
+			
+	function fn_dar_eliminar(){
+          
+		$(".elimina").click(function(){
+			id1 = $(this).parents("tr").find("td").eq(0).html();
+			//alert(id1);
+			eliminarEdificio();
+		  
+		});
+	};
 
 	
 </script>

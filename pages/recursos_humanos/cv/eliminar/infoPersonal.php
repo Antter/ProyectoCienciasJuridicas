@@ -19,15 +19,11 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Agregar Persona
-            </div>
             <!-- .panel-heading -->
             <div class="panel-body">
                 <form role="form" method="post">
                     <div class="panel-group" id="accordion">
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <label>Información Personal</label>
@@ -65,8 +61,6 @@
                     <button id="elimPer" type="submit" class="btn btn-primary">Eliminar Información</button>
                 </form>
             </div>
-            <!-- .panel-body -->
-        </div>
         <!-- /.panel -->
     </div>
     <!-- /.col-lg-12 -->

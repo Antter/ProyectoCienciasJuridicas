@@ -17,84 +17,89 @@
 <body>
     
     <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Agregar Persona
-                        </div>
+                <div class="col-lg-8">
+                    <form role="form" method="post" class="form-horizontal">
                         <!-- .panel-heading -->
                         <div class="panel-body">
-                            <form role="form" method="post">
+                            <h1>Ingreso de Información Personal</h1></br>
                                 <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <label >Información personal</label>
+                                                <label><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Datos Generales</label>
                                             </h4>
                                         </div>
-                                        <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="col-lg-8">
                                                         <div class="form-group">
-                                                            <label>Número de Identidad</label>
-                                                            <input id="identidad" class="form-control" name="identidad" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Número de Identidad</label>
+                                                            <div class="col-sm-7"><input id="identidad" class="form-control" name="identidad" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Primer nombre</label>
-                                                            <input id="primerNombre" class="form-control" name="primerNombre" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer nombre</label>
+                                                            <div class="col-sm-7"><input id="primerNombre" class="form-control" name="primerNombre" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Segundo nombre</label>
-                                                            <input id="segundoNombre" class="form-control" name="segundoNombre" required>
+                                                            <label class="col-sm-5 control-label">Segundo nombre</label>
+                                                            <div class="col-sm-7"><input id="segundoNombre" class="form-control" name="segundoNombre"></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Primer Apellido</label>
-                                                            <input id="primerApellido" class="form-control" name="primerApellido" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer Apellido</label>
+                                                            <div class="col-sm-7"><input id="primerApellido" class="form-control" name="primerApellido" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Segundo Apellido</label>
-                                                            <input id="segundoApellido" class="form-control" name="segundoApellido" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
+                                                            <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <strong>Fecha de Nacimiento</strong>
-                                                            <input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd"><br>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>
+                                                            <div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino
+                                                            <input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Sexo</label>
-                                                            <input type="radio" name="sexo" id="sexoFem" value="F" checked>Femenino
-                                                            <input type="radio" name="sexo" id="sexoMas" value="M">Masculino
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Nacionalidad</label>
+                                                            <div class="col-sm-7"><input id="nacionalidad" class="form-control" name="nacionalidad" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Dirección</label>
-                                                            <textarea id="direccion" class="form-control" rows="3" name="direccion"></textarea>
+                                                            <label class="col-sm-5 control-label"><strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Fecha de Nacimiento</strong></label>
+                                                            <div class="col-sm-7"><input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd"><br></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Correo electrónico</label>
-                                                            <input id="email" class="form-control" name="email" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Estado civil</label>
+                                                            <div class="col-sm-7"><select class="form-control" id="estCivil" name="estCivil">
+                                                                    <option>Soltero</option>
+                                                                    <option>Casado</option>
+                                                                    <option>Divorciado</option>
+                                                                    <option>Viudo</option>
+                                                                </select></div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label>Estado civil</label>
-                                                            <select class="form-control" id="estCivil" name="estCivil">
-                                                                <option>Soltero</option>
-                                                                <option>Casado</option>
-                                                                <option>Divorciado</option>
-                                                                <option>Viudo</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Nacionalidad</label>
-                                                            <input id="nacionalidad" class="form-control" name="nacionalidad" required>
-                                                        </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <label><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Información de contacto</label>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">Dirección</label>
+                                                    <div class="col-sm-7"><textarea id="direccion" class="form-control" rows="3" name="direccion"></textarea></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Correo electrónico</label>
+                                                    <div class="col-sm-7"><input id="email" class="form-control" name="email" required></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </br><div class="alert alert-info" role="alert">IMPORTANTE: Los campos marcados con el signo <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> son obligatorios.</div>
+                                    </br><button type="submit" id="guardarp" class="btn btn-primary">Guardar Información</button>
                                 </div>
-                                <button type="submit" id="guardarp" class="btn btn-primary">Guardar Información</button>
-                            </form>
                         </div>
-                        <!-- .panel-body -->
-                    </div>
+                    </form>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
@@ -103,10 +108,10 @@
     <script>
         $(function(){
             $('#identidad').validCampo('0123456789-');
-            $('#primerNombre').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
-            $('#segundoNombre').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
-            $('#primerApellido').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
-            $('#segundoApellido').validCampo('abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#primerNombre').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#segundoNombre').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#primerApellido').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+            $('#segundoApellido').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
             $('#nacionalidad').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
         });
     </script>

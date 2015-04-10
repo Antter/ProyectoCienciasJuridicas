@@ -1,10 +1,15 @@
+
 <?php 
 
 //conexion a la base de datos 
-//$link = mysqli_connect("localhost","root","123","test8") or die("Error " . mysqli_error($link)); 
-require("conexion.php")
+ require_once("../../conexion/conn.php");  
+											     // $bd = 'sistema_ciencias_juridicas';
+                                                //$conexion = mysqli_connect('localhost', 'root', '', $bd);
+$link = mysqli_connect($host, $username, $password, $dbname);
+//$link = mysqli_connect("localhost","root","123","sistema_ciencias_juridicas") or die("Error " . mysqli_error($link)); 
+
 //variables recibidas por ajax	
-$nombre =  $_POST['name'];
+//$nombre =  $_POST['name'];
 $idusuario =  $_POST['idusuario'];
 $unidad =  $_POST['area'];
 $motivo =  $_POST['motivo'];
@@ -13,39 +18,35 @@ $fecha =  $_POST['fecha'];
 $horai =  $_POST['horai'];
 $horaf =  $_POST['horaf'];
 $cantidad =  $_POST['cantidad'];
+$fecha_solic= $hoy = date("Y-m-d"); ;
 
-$tildes = $enlace -> query("SET NAMES 'utf8'"); //Para que se muestren las tildes
+//echo($idusuario);
+$tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes
 $cont=0;
 
-//consultas para encontrar los ID
-$result = mysql_query("SELECT Edificio_ID FROM tbl_edificios  where descripcion='".$edificio."'", $enlace);
-$result2 = mysql_query("SELECT Unidad_ID FROM tbl_unidad_academica  where descripcion='".$unidad."'", $enlace);
-$result3 = mysql_query("SELECT Motivo_ID FROM tbl_motivos  where descripcion='".$motivo."'", $enlace);
-$result5 = mysql_query("SELECT No_Empleado FROM usuario  where id_Usuario='".$idusuario."'", $enlace);
-
+//consultas para encontrar los ID de cada campo seleccionado en los combobox
+$result = mysqli_query($link, "SELECT Edificio_ID FROM edificios  where descripcion='".$edificio."'");
+$result2 = mysqli_query($link, "SELECT Id_departamento_laboral FROM departamento_laboral  where nombre_departamento='".$unidad."'");
+$result3 = mysqli_query($link, "SELECT Motivo_ID FROM motivos  where descripcion='".$motivo."'");
+$result5 = mysqli_query($link, "SELECT No_Empleado FROM usuario  where id_Usuario='".$idusuario."'");
+//echo $result5
 
 // data seek de consultas
-mysql_data_seek ($result,$cont);
-mysql_data_seek ($result2,$cont);
-mysql_data_seek ($result3,$cont);
-mysql_data_seek ($result5,$cont);
+mysqli_data_seek ($result,$cont);
+mysqli_data_seek ($result2,$cont);
+mysqli_data_seek ($result3,$cont);
+mysqli_data_seek ($result5,$cont);
 //mysqli_data_seek ($result4,$cont);
 
 // arreglos de consultas
-$extraido= mysql_fetch_array($result);
-$extraido2= mysql_fetch_array($result2);
-$extraido3= mysql_fetch_array($result3);
-$extraido5= mysql_fetch_array($result5);
-//$extraido4=mysqli_fetch_array($result4);
+$extraido= mysqli_fetch_array($result);
+$extraido2= mysqli_fetch_array($result2);
+$extraido3= mysqli_fetch_array($result3);
+$extraido5= mysqli_fetch_array($result5);
 
-/*
-echo "- edificio: ".$extraido['Edificio_ID']."<br/>";
-echo "- edificio: ".$extraido2['Unidad_ID']."<br/>";
-echo "- edificio: ".$extraido3['Motivo_ID']."<br/>";
-*/
-
-	$query = "INSERT INTO tbl_permisos (
-	id_unidadAcademica,
+//Consulta de inserción a la base de datos
+	$query = "INSERT INTO permisos (
+	id_departamento,
 	No_Empleado,
 	id_motivo,
 	dias_permiso,
@@ -53,9 +54,10 @@ echo "- edificio: ".$extraido3['Motivo_ID']."<br/>";
 	hora_finalizacion,
 	id_Edificio_Registro,
 	fecha,
-	estado)
+	estado,
+	fecha_solicitud)
 	VALUES(
-	'".$extraido2['Unidad_ID']."',
+	'".$extraido2['Id_departamento_laboral']."',
 	'".$extraido5['No_Empleado']."',
 	'".$extraido3['Motivo_ID']."',
 	'".$cantidad."',
@@ -63,23 +65,28 @@ echo "- edificio: ".$extraido3['Motivo_ID']."<br/>";
 	'".$horaf."',
 	'".$extraido['Edificio_ID']."',
 	'".$fecha."',
-	'En espera'
+	'En espera',
+	'".$fecha_solic."'
 	)";
-
-    echo "Solicitud ingresada exitosamente ";
-	$result4 =mysql_query($query, $enlace) or die("Error " . mysql_error($enlace));
-	/*echo $query4;	
-	/*
-	echo $query;
-	$result4 =mysqli_query($link, $query) or die("Error " . mysqli_error($link));
-/
-//echo "- peso: ".$extraido['peso']."<br/>";
-echo "-----------------------------------<br/>";
-//$cont=$cont+1;
-
-
-mysqli_free_result($result);
-*/
-mysql_close($enlace);
+    
+	//se ejecuta la consulta de insercion y se verifica si se ha realizado o si ha fallado
+    $result4 =mysqli_query($link, $query) or die("Error " . mysqli_error($link));
+	
+		if ($result4 = 1) {
+			echo "Solicitud ingresada Exitosamente";
+		}
+		
+    mysqli_close($link); //Cierra la conexión con la base de datos
 
 ?>
+
+
+
+
+
+
+
+
+
+
+

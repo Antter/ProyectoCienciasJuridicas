@@ -10,7 +10,7 @@ function limpiar($tags)
 }
 
 //Información Personal
-if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_POST['segundoNombre']) and !empty($_POST['primerApellido']) and !empty($_POST['segundoApellido'])
+if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_POST['primerApellido']) and !empty($_POST['segundoApellido'])
     and !empty($_POST['direccion']) and !empty($_POST['email'])
 ) {
     $identi = limpiar($_POST['identidad']);

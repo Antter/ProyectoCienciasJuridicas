@@ -2,28 +2,37 @@
 <?php
 include '../Datos/conexion.php';
 $idAct = $_POST['idAct'];
-
+$iniAct=$_POST['iniAct'];
+$finAct=$_POST['finAct'];
 
 ?>
 <script>
-      
- var x;
- x=$(document);
- x.ready(inicio2);
- 
-    function inicio2(){
-  
-        var x;
-        x=$("#insertarSubAct");
-        x.click(insertarSubActividad);
-       
-    }
     
     
-    function insertarSubActividad(){
-            //id2 = $(this).parents("tr").find("td").eq(0).html();
-              //alert(id);      
-                data2 ={
+    
+    
+    $(document).ready(function() {
+
+                $("#form2").submit(function(e) {
+                    e.preventDefault();
+                    
+                    
+                    
+                    fechaSA = document.getElementById('dp1').value;
+                    
+                    inicioA = document.getElementById('iniAct').value;
+                    finalA = document.getElementById('finAct').value;
+                    inicioA = new Date(inicioA);
+                    finalA = new Date(finalA);
+                    fechaSA = new Date(fechaSA);
+                    
+                    if (fechaSA <inicioA  || fechaSA >finalA  ) {
+                        alert("Fechas Erroneas");
+                    } else{
+                        
+                    
+                    $("#myModal2").modal('hide');
+                     data2 ={
                 idAct:$("#idAct").val(),
                 nombreSub:$("#nombreSubAct").val(),
                 descripcion:$("#descripcion").val(),
@@ -39,22 +48,35 @@ $idAct = $_POST['idAct'];
                 async:true,
                 type: "POST",
                 dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                url:"pages/crearSubActividad.php", 
+                //contentType: "application/x-www-form-urlencoded",
+                //url:"pages/crearSubActividad.php", 
                 //beforeSend:inicioSub,
                 success:llegadaInsertarSubActividad,
                 timeout:4000,
                 error:problemasSub
             }); 
             return false;
-        }
-        
+             }
+
+                });
+                   
+                   
+                        
+                   
+                    
+                    
+                    
+                   
+                
+    });
+    
+  
        
 
 
 function llegadaInsertarSubActividad()
 {
-    $("#myModal2body").load('Datos/insertarSubActividad.php',data2);
+    $("#subActividades").load('Datos/insertarSubActividad.php',data2);
     //$('#myModal2').modal('show');
 }
 
@@ -62,7 +84,7 @@ function llegadaInsertarSubActividad()
 
 function problemasSub()
 {
-    $("#myModal2body").text('Problemas en el servidor.');
+    $("#subActividades").text('Problemas en el servidor.');
 }
 
 
@@ -155,22 +177,23 @@ function problemasSub()
     urchinTracker();
 </script>
 
-
+<form role="form2" id="form2" name="form2">
 <input type="hidden" id="idAct" value="<?php echo $idAct;?>">  
-
+<input type="hidden" id="iniAct" value="<?php echo $iniAct;?>">
+<input type="hidden" id="finAct" value="<?php echo $finAct;?>">
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon">Nombre</span>
-        <input id="nombreSubAct" type="text" class="form-control" placeholder="Nombre de la Sub Actividad">
+        <input id="nombreSubAct" type="text" class="form-control" placeholder="Nombre de la Sub Actividad" required>
     </div>
 </div>
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon">Descripción:</span>
-        <textarea rows="2" id="descripcion" class="form-control" placeholder="Puede escribir en que consiste" ></textarea>
+        <textarea rows="2" id="descripcion" class="form-control" placeholder="Puede escribir en que consiste" required ></textarea>
     </div>
 </div>
-<div  class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
+<div  class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d"  data-link-format="yyyy-m-d">
     <span class="input-group-addon">Fecha</span>
     <input placeholder="Fecha de Cumplimiento" type="text" class="form-control" size="5"  id="dp1" required>
     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -179,38 +202,69 @@ function problemasSub()
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon">Encargado</span>
-        <select class="form-control" id="encargado" >
-            <option value="0">Seleccione..</option>
+        <select class="form-control" id="encargado" required="">
+            <option value="">Seleccione..</option>
 
 
 
             <?php
-            $query = mysql_query("SELECT * FROM responsables_por_actividad where id_Actividad='" . $idAct . "'", $enlace);
-            while ($row = mysql_fetch_array($query)) {
-                $idRes = $row['id_Responsable'];
-                $query2 = mysql_query("select * from persona where N_identidad in (select N_identidad from empleado where No_Empleado in (select No_Empleado from grupo_o_comite_has_empleado where ID_Grupo_o_comite in (select ID_Grupo_o_comite from grupo_o_comite where ID_Grupo_o_comite='" . $idRes . "')))", $enlace);
-                while ($row = mysql_fetch_array($query2)) {
-                    $NoEmp = $row['No_Empleado'];
-                    $nombre = $row['Primer_nombre'] . " " . $row['Segundo_nombre'] . " " . $row['Primer_apellido'] . " " . $row['Segundo_apellido'];
-                    ?>
-                    <option value="<?php echo $NoEmp; ?>"><?php echo $nombre; ?></option>
+            
+            
+            
+            
+            
+            
+            $consulta1 = "SELECT * FROM responsables_por_actividad where id_Actividad=" . $idAct ;
+            
+if ($resultado1 = $conectar->query($consulta1)) {
+
+    while ($fila1 = $resultado1->fetch_row()) {
+        $idRes= $fila1[2];
+       $consulta2 = "select * from empleado where No_Empleado in (select No_Empleado from grupo_o_comite_has_empleado where ID_Grupo_o_comite in (select ID_Grupo_o_comite from grupo_o_comite where ID_Grupo_o_comite='" . $idRes . "'))";
+       if ($resultado2 = $conectar->query($consulta2)) {
+           while ($fila2 = $resultado2->fetch_row()) {
+               $idEmp=$fila2[1];
+               $NoEmp=$fila2[0];
+               $consulta3 = "SELECT * FROM persona where N_identidad='".$idEmp."'";
+               $resultado3 = $conectar->query($consulta3);
+               $fila3 = $resultado3->fetch_row();
+               $nombre=$fila3[1]." ".$fila3[2]." ".$fila3[3]." ".$fila3[4];
+                       
+                       ?>
+                    <option value="<?php echo $NoEmp ?>"><?php echo $nombre." ".$NoEmp ?></option>
                     <?php
-                }
-            }
-            ?>
+                   
+               
+           }
+           
+       }
+ 
+    }
+    //$resultado->close();
+}
+
+//$conectar->close();
+            
+            
+            
+            
+             ?>
+            
+            
+
         </select>
     </div>
 </div>
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon">Porcentaje</span>
-        <input id="porcentaje" type="text" class="form-control" placeholder="ingrese un valor numerico">
+        <input id="porcentaje" type="number" class="form-control" placeholder="ingrese un valor numerico"required="">
     </div>
 </div>
 <div class="form-group">
     <div class="input-group">
         <span class="input-group-addon">Costo</span>
-        <input id="costo" type="text" class="form-control" placeholder="costo Monetario ">
+        <input id="costo" type="number" step="0.01" class="form-control" placeholder="costo Monetario " required="">
     </div>
 </div>
 <div class="form-group">
@@ -221,8 +275,8 @@ function problemasSub()
 </div>
 <div class="modal-footer">
     <button type="button"  class="btn btn-default" data-dismiss="modal">Cancelar</button>
-    <button type="button" id="insertarSubAct" class="btn btn-primary" >Guardar</button>
+    <button id="guardarSubActividad" class="btn btn-primary" >Guardar</button>
 </div>
  
-
+</form>
 

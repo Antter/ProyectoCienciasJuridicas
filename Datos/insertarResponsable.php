@@ -15,13 +15,13 @@ $resultado=$consulta->execute();
 
 if($resultado==1)
     {
-    echo '<div id="resultado" class="alert alert-success">
+    echo '<div id="resultado2" class="alert alert-success">
         Se Asigno un Responsable
          
          </div>';
     
     }else{
-         echo '<div id="resultado" class="alert alert-danger">
+         echo '<div id="resultado2" class="alert alert-danger">
         No se Inserto ningun Nuevo elemento 
          
          </div>';
@@ -45,7 +45,7 @@ if($resultado==1)
                         ?>
                             <tr>
                                 <td><?php echo $nombre; ?></td>
-                                <td> <button type="button" id="eliminar" class="btn btn-danger fa fa-times">Eliminar</button></td>
+                                <td><a class="elimina btn btn-danger fa fa-trash-o"></a></td>
                             </tr>
                     
                     <?php
@@ -58,7 +58,7 @@ if($resultado==1)
 <script type="text/javascript">
 $(document).ready(function() {
     setTimeout(function() {
-        $("#resultado").fadeOut(1500);
+        $("#resultado2").fadeOut(1500);
     },3000);
 	
 });

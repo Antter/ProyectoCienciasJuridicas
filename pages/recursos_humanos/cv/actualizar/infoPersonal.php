@@ -18,10 +18,6 @@
     
     <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Actualizar Persona
-                        </div>
                         <div class="panel-body">
                             <div class="form-group">
                                 <label>Número de identidad</label>
@@ -38,8 +34,6 @@
                         <!-- .panel-heading -->
                             <div id="display"></div>
                         </div>
-                        <!-- .panel-body -->
-                    </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->

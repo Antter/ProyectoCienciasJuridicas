@@ -22,62 +22,61 @@ session_start();
                 $estCivil = $row['Estado_Civil'];
                 $nacionalidad = $row['Nacionalidad'];
 
-            echo '<form role="form" method="post"><div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
+            echo '<form role="form" method="post" class="form-horizontal">
+                        <!-- .panel-heading -->
+                        <div class="panel-body">
+                            <h1>Actualización de Información Personal</h1></br>
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <label >Información personal</label>
+                                                <label><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Datos Generales</label>
                                             </h4>
                                         </div>
-                                        <div class="panel panel-default">
                                             <div class="panel-body">
                                                 <div class="col-lg-8">
                                                         <div class="form-group">
-                                                            <label>Número de Identidad</label>
-                                                            <input id="identidad" class="form-control" name="identidad" value="'.$id.'" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Número de Identidad</label>
+                                                            <div class="col-sm-7"><input id="identidad" class="form-control" name="identidad"  value="'.$id.'" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Primer nombre</label>
-                                                            <input id="primerNombre" class="form-control" name="primerNombre" value="'.$pNombre.'" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer nombre</label>
+                                                            <div class="col-sm-7"><input id="primerNombre" class="form-control" name="primerNombre" value="'.$pNombre.'" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Segundo nombre</label>
-                                                            <input id="segundoNombre" class="form-control" name="segundoNombre" value="'.$sNombre.'" required>
+                                                            <label class="col-sm-5 control-label">Segundo nombre</label>
+                                                            <div class="col-sm-7"><input id="segundoNombre" class="form-control" name="segundoNombre" value="'.$sNombre.'"></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Primer Apellido</label>
-                                                            <input id="primerApellido" class="form-control" name="primerApellido" value="'.$pApellido.'" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer Apellido</label>
+                                                            <div class="col-sm-7"><input id="primerApellido" class="form-control" name="primerApellido" value="'.$pApellido.'" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Segundo Apellido</label>
-                                                            <input id="segundoApellido" class="form-control" name="segundoApellido" value="'.$sApellido.'" required>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
+                                                            <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" value="'.$sApellido.'" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <strong>Fecha de Nacimiento</strong>
-                                                            <input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd" value="'.$fNac.'" required><br>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Sexo</label>';
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>';
                                                             if($sexo == 'F'){
-                                                                echo '<input type="radio" name="sexo" id="sexoFem" value="F" checked>Femenino';
-                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M">Masculino';
+                                                                echo '<div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino';
+                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>';
                                                             }
                                                             if($sexo == 'M'){
-                                                                echo '<input type="radio" name="sexo" id="sexoFem" value="F">Femenino';
-                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M" checked>Masculino';
+                                                                echo '<div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F">&nbsp;Femenino';
+                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M" checked>&nbsp;Masculino</div>';
                                                             }
                                                         echo '</div>
                                                         <div class="form-group">
-                                                            <label>Dirección</label>
-                                                            <textarea id="direccion" class="form-control" rows="3" name="direccion">'.$direc.'</textarea>
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Nacionalidad</label>
+                                                            <div class="col-sm-7"><input id="nacionalidad" class="form-control" name="nacionalidad" value="'.$nacionalidad.'" required></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Correo electrónico</label>
-                                                            <input id="email" class="form-control" name="email" value="'.$email.'" required>
+                                                            <label class="col-sm-5 control-label"><strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Fecha de Nacimiento</strong></label>
+                                                            <div class="col-sm-7"><input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd" value="'.$fNac.'" required><br></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Estado civil</label>
-                                                            <select class="form-control" id="estCivil" name="estCivil">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Estado civil</label>
+                                                            <div class="col-sm-7"><select class="form-control" id="estCivil" name="estCivil">
                                                                 <option value="soltero"';
                                                                 if($estCivil == "Soltero") echo "selected";
                                                                 echo '>Soltero</option>
@@ -90,19 +89,37 @@ session_start();
                                                                 <option value="viudo"';
                                                                 if($estCivil == "Viudo") echo "selected";
                                                                 echo'>Viudo</option>';
-                                                            echo '
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Nacionalidad</label>
-                                                            <input id="nacionalidad" class="form-control" name="nacionalidad" value="'.$nacionalidad.'" required>
+                                                                echo '
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <label><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Información de contacto</label>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">Dirección</label>
+                                                    <div class="col-sm-7"><textarea id="direccion" class="form-control" rows="3" name="direccion">'.$direc.'</textarea></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Correo electrónico</label>
+                                                    <div class="col-sm-7"><input id="email" class="form-control" name="email" value="'.$email.'" required></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </br><div class="alert alert-info" role="alert">IMPORTANTE: Los campos marcados con el signo <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> son obligatorios.</div>
+                                </br><button type="submit" id="actualizar" class="btn btn-primary">Guardar Información</button>
                                 </div>
-                                <button type="submit" id="actualizar" class="btn btn-primary">Guardar Información</button></form>';
+                                </form>';
             }
         }
 

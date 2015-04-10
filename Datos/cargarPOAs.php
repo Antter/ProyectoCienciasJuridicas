@@ -1,79 +1,93 @@
 <?php
 include '../Datos/conexion.php';
 
-$query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin",$enlace);
+$query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin", $enlace);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
 
-    
-        
-    
-    
+    <body>
 
-    
-</head>
-
-<body>
-<div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>   
-                                            <th>id</th>
-                                            <th>Titulo</th>
-                                            <th>DEL</th>
-                                            <th>Al</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-				while($row = mysql_fetch_array($query))
-				{
-					$id = $row['id_Poa'];
-					?>
-					<tr>
-                                            <td><?php echo $row['id_Poa']?></td>
-                        <td><div class="text" id="titulo-<?php echo $id ?>"><?php echo $row['nombre']?></div></td>
-                        <td><div class="text" id="del-<?php echo $id ?>"><?php echo $row['fecha_de_Inicio']?></div></td>
-                        <td><div class="text" id="al-<?php echo $id ?>"><?php echo $row['fecha_Fin']?></div></td>
-                        <td><a class="ver btn btn-success  fa fa-arrow-right "></a>
-                            <a class="editar btn btn-info fa fa-pencil "></a>
-                            <a class="elimina btn btn-danger fa fa-trash-o"></a>
-                        </td>
-                        <td></td>
-                        <td></td>
+        <div class="box-body table-responsive">
+            <table id="tabla_prioridad" class='table table-bordered table-striped'>
+                <thead>
+                    <tr>   
+                        <th>id</th>
+                        <th>Titulo</th>
+                        <th>DEL</th>
+                        <th>Al</th>
+                        <th></th>
+                        
                     </tr>
-					<?php
-				}
-				 ?>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-   
-  
-   
-    
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = mysql_fetch_array($query)) {
+                        $id = $row['id_Poa'];
+                        ?>
+                        <tr>
+                            <td><?php echo $row['id_Poa'] ?></td>
+                            <td><div class="text" id="titulo-<?php echo $id ?>"><?php echo $row['nombre'] ?></div></td>
+                            <td><div class="text" id="del-<?php echo $id ?>"><?php echo $row['fecha_de_Inicio'] ?></div></td>
+                            <td><div class="text" id="al-<?php echo $id ?>"><?php echo $row['fecha_Fin'] ?></div></td>
+                            <td><a class="ver btn btn-success  fa fa-arrow-right "></a>
+                                <a class="editar btn btn-info fa fa-pencil "></a>
+                                <a class="elimina btn btn-danger fa fa-trash-o"></a>
+                            </td>
+                           
+                        </tr>
+                        <?php
+                    }
+                    ?>
+
+                </tbody>
+            </table>
+        </div>
 
 
+        
+        
+        
+        
+<script type="text/javascript">
 
+$(document).ready(function() {
+    $('#tabla_prioridad').dataTable({
+	    "order": [[ 0, "asc" ]],
+	    "fnDrawCallback": function( oSettings ) {
+		
+		}
+	}); // example es el id de la tabla
+});
  
+</script>
+
+<!-- Script necesario para que la tabla se ajuste a el tamanio de la pag-->
+<script type="text/javascript">
+  // For demo to fit into DataTables site builder...
+  $('#tabla_prioridad')
+    .removeClass( 'display' )
+    .addClass('table table-striped table-bordered');
+</script>
 
 
-</body>
-<script>
 
-            $(document).ready(function() {
 
-                
-                $(".ver").click(function() {
+
+
+
+
+
+
+
+    </body>
+    <script>
+
+        $(document).ready(function () {
+
+
+            $(".ver").click(function () {
                 id = $(this).parents("tr").find("td").eq(0).html();
                 //alert(id);      
                 data1 = {ide: id};
@@ -90,7 +104,7 @@ $query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin",$enlace);
                 });
                 return false;
             });
-            $(".elimina").click(function() {
+            $(".elimina").click(function () {
                 var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
                 if (respuesta)
                 {
@@ -112,74 +126,74 @@ $query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin",$enlace);
                     return false;
                 }
             });
-            
-            $(".editar").click(function() {
-                
 
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id);      
-                    data4 = {id: id};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        //: "application/x-www-form-urlencoded",
-                        //url: "pages/editarPOA.php",
-                        //beforeSend: inicioEliminar,
-                        success: llegadaEditarPOA,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-                
-            });
+            $(".editar").click(function () {
 
+
+                id = $(this).parents("tr").find("td").eq(0).html();
+                // alert(id);      
+                data4 = {id: id};
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    //: "application/x-www-form-urlencoded",
+                    //url: "pages/editarPOA.php",
+                    //beforeSend: inicioEliminar,
+                    success: llegadaEditarPOA,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
 
             });
 
-            
+
+        });
 
 
 
-            function inicioVer()
-            {
-                var x = $("#contenedor");
-                x.html('Cargando...');
-            }
 
-            function inicioEliminar()
-            {
-                var x = $("#contenedor2");
-                x.html('Cargando...');
-            }
-            function inicioEnvio()
-            {
-                var x = $("#contenedor2");
-                x.html('Cargando...');
-            }
-            function llegadaEditarPOA()
-            {
-                $("#cuerpoEditar").load('pages/editarPOA.php', data4);
-                $('#editarPOA').modal('show');
-            }
-            function llegadaEliminar()
-            {
-                $("#contenedor2").load('Datos/eliminarPOA.php', data);
-            }
-            function llegadaVer()
-            {
-                $("#contenedor").load('pages/crearObjetivo.php', data1);
-            }
-            function llegadaGuardar()
-            {
-                $("#contenedor2").load('Datos/insertarPOA.php', data2);
-            }
 
-            function problemas()
-            {
-                $("#contenedor2").text('Problemas en el servidor.');
-            }
+        function inicioVer()
+        {
+            var x = $("#contenedor");
+            x.html('Cargando...');
+        }
 
-        </script>
- 
+        function inicioEliminar()
+        {
+            var x = $("#contenedor2");
+            x.html('Cargando...');
+        }
+        function inicioEnvio()
+        {
+            var x = $("#contenedor2");
+            x.html('Cargando...');
+        }
+        function llegadaEditarPOA()
+        {
+            $("#cuerpoEditar").load('pages/editarPOA.php', data4);
+            $('#editarPOA').modal('show');
+        }
+        function llegadaEliminar()
+        {
+            $("#contenedor2").load('Datos/eliminarPOA.php', data);
+        }
+        function llegadaVer()
+        {
+            $("#contenedor").load('pages/crearObjetivo.php', data1);
+        }
+        function llegadaGuardar()
+        {
+            $("#contenedor2").load('Datos/insertarPOA.php', data2);
+        }
+
+        function problemas()
+        {
+            $("#contenedor2").text('Problemas en el servidor.');
+        }
+
+    </script>
+
 </html>

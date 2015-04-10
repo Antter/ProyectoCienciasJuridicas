@@ -1,0 +1,5 @@
+Select permisos.id_Permisos, Primer_nombre, Segundo_nombre, Primer_apellido, Segundo_Apellido, dias_permiso, 
+DATE_FORMAT(fecha,'%d-%m-%Y') as fecha, hora_inicio, hora_finalizacion, motivos.descripcion as mtd, 
+departamento_laboral.nombre_departamento as Departamento from permisos inner join motivos on permisos.id_motivo=motivos.Motivo_ID 
+inner join empleado on empleado.No_Empleado=permisos.No_Empleado inner join persona on persona.N_identidad=empleado.N_identidad 
+inner join departamento_laboral on departamento_laboral.id_departamento_laboral = permisos.id_departamento ORDER BY fecha asc

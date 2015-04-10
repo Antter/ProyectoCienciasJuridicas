@@ -24,7 +24,7 @@ $codigoE = $_POST['codigo'];
       $depE=$row['nombre_departamento'];
       $depID=$row['Id_departamento_laboral'];
       $obsE=$row['Observacion'];
-      $noE=$row['N_identidad'];
+      $noE=$row['No_Empleado'];
     
      
  $nombreC =$nombreE." ".$apellidoE;
@@ -187,4 +187,57 @@ $codigoE = $_POST['codigo'];
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <?php
+   echo '<button class="btn btn-primary pull-right" data-mode="verPDF" data-id="'.$noE.'" href="#">Exportar a PDF</button>';
+    ?>
     
+    
+    <script>
+    
+    
+    $( document ).ready(function() {
+        
+        
+        
+       $(".btn-primary").on('click',function(){
+          mode = $(this).data('mode');
+          id1 = $(this).data('id');
+          if(mode == "verPDF"){
+           
+			data={
+          //  NroEmpleado:id
+            };
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                //url:"pages/gestion_folios/crear_pdf.php", 
+                success:reportePDF,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+          }
+        });
+        
+        
+        
+        
+        
+    });
+    
+    
+    function reportePDF(){
+		window.open('pages/recursos_humanos/crearPDFempleado.php?id1='+id1);
+	}
+        
+           function problemas()
+            {
+                $("#contenedor").text('Problemas en el servidor.');
+            }
+    
+    
+    
+    
+    </script>
