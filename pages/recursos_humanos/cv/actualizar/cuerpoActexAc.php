@@ -4,6 +4,7 @@ session_start();
 if (isset($_POST['id'])) {
     $institucion = $_POST['institucion'];
     $tiempo = $_POST['tiempo'];
+      echo '<form role="form" id="form" action="#" method="POST">';
     echo '<div class="form-group">
                                                             <label>Institución</label>
                                                             <input id="modInst" class="form-control" value="'.$institucion.'" required>
@@ -13,27 +14,22 @@ if (isset($_POST['id'])) {
                                                             <input id="modTiem" class="form-control" value="'.$tiempo.'" required>
                                                         </div>';
     echo '<button class="btn btn-primary" id="btActualizar">Guardar Información</button>';
+    echo '</form>';
     $_SESSION['id'] = $_POST['id'];
 }
 ?>
 
 <script>
 
-    var x;
-    x = $(document);
-    x.ready(inicio);
+  
+    
+    
+         $( document ).ready(function() {
 
-    function inicio()
-    {
-        var x;
-        x = $("#btActualizar");
-        x.click(actexAc);
-    }
-
-
-    function actexAc()
-    {
-        data={
+    $("form").submit(function(e) {
+	    e.preventDefault();
+            
+       data={
             modInst:$('#modInst').val(),
             modTiem:$('#modTiem').val()
         };
@@ -48,23 +44,27 @@ if (isset($_POST['id'])) {
             timeout: 4000,
             error: problemas
         });
-        return false;
-    }
+        return false; 
+            
+        });
+    });
+
+
 
     function inicioEnvio()
     {
-        var x = $("#cuerpoAct");
+        var x = $("#cuerpoActEA");
         x.html('Cargando...');
     }
 
     function llegadaSelecPersona()
     {
-        $("#cuerpoAct").load('pages/recursos_humanos/cv/actualizar/eAcAct.php',data);
+        $("#cuerpoActEA").load('pages/recursos_humanos/cv/actualizar/eAcAct.php',data);
     }
 
     function problemas()
     {
-        $("#cuerpoAct").text('Problemas en el servidor.');
+        $("#cuerpoActEA").text('Problemas en el servidor.');
     }
 
 </script>

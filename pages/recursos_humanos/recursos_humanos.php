@@ -74,7 +74,7 @@
          
         
         
-        <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu3">
+        <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu3">
           <h5><i class="fa fa-edit fa-fw"></i>Tablas de mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
           </a>
         

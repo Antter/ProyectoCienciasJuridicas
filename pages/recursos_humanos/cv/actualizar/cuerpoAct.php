@@ -4,6 +4,7 @@ session_start();
 if (isset($_POST['id'])) {
     $tipo = $_POST['tipo'];
     $numero = $_POST['numero'];
+   echo '<form role="form" id="form" action="#" method="POST">';
     echo '<div class="form-group">
     <label>Tipo</label>
     <select id="modTipo" class="form-control">
@@ -24,27 +25,21 @@ if (isset($_POST['id'])) {
                                                             <input id="modTel" class="form-control" value="'.$numero.'" required>
                                                         </div>';
     echo '<button class="btn btn-primary" id="btActualizar">Guardar Información</button>';
+    echo '</form>';
     $_SESSION['id'] = $_POST['id'];
 }
 ?>
 
 <script>
 
-    var x;
-    x = $(document);
-    x.ready(inicio);
+   
+    
+     $( document ).ready(function() {
 
-    function inicio()
-    {
-        var x;
-        x = $("#btActualizar");
-        x.click(actTel);
-    }
-
-
-    function actTel()
-    {
-        data={
+    $("form").submit(function(e) {
+	    e.preventDefault();
+            
+                data={
             modTipo:$('#modTipo').val(),
             modTel:$('#modTel').val()
         };
@@ -60,7 +55,12 @@ if (isset($_POST['id'])) {
             error: problemas
         });
         return false;
-    }
+            
+            
+        });
+    });
+
+
 
     function inicioEnvio()
     {

@@ -32,7 +32,7 @@ if (isset($_POST['identi'])) {
         echo '<form role="form" method="post" class="form-horizontal">
                         <!-- .panel-heading -->
                         <div class="panel-body">
-                            <h1>Reporte de Persona</h1><button id="exportar" type="submit" class="btn btn-warning" style="float: right;"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Exportar como PDF</button></br></br></br>
+                            <h1>Reporte de Persona</h1><button class="btn btn-primary pull-right" data-mode="verPDF" data-id="'.$id.'" href="#">Exportar a PDF</button>
                                 <div class="panel-group" id="accordion">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
@@ -251,6 +251,10 @@ HTML;
 }
 ?>
 
+<?php
+   //echo '<button class="btn btn-primary pull-right" data-mode="verPDF" data-id="'.$id.'" href="#">Exportar a PDF</button>';
+    ?>
+
 <script>
 
     /*
@@ -258,43 +262,46 @@ HTML;
      * To change this template file, choose Tools | Templates
      * and open the template in the editor.
      */
-
-    var y;
-    y = $(document);
-    y.ready(inicio);
-
-    function inicio() {
-        var y;
-        y = $("#exportar");
-        y.click(exportar);
-    }
-
-
-    function exportar() {
-        $.ajax({
-            async: true,
-            type: "POST",
-            dataType: "html",
-            contentType: "application/x-www-form-urlencoded",
-            beforeSend: inicioEnvio,
-            success: llegadaExportar,
-            timeout: 4000,
-            error: problemas
+    
+    $( document ).ready(function() {
+        
+        
+       $(".btn-primary").on('click',function(){
+          mode = $(this).data('mode');
+          iden = $(this).data('id');
+          if(mode == "verPDF"){
+           
+			data={
+          //  NroEmpleado:id
+            };
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                //url:"pages/gestion_folios/crear_pdf.php", 
+                success:reportePDF,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+          }
         });
-        return false;
-    }
-
-    function inicioEnvio() {
-        var y = $("#contenedor");
-        y.html('Cargando...');
-    }
-
-    function llegadaExportar() {
-        $("#contenedor").load('pages/recursos_humanos/cv/actualizar/personaActualizar.php', data);
-    }
-
-    function problemas() {
-        $("#contenedor").text('Problemas en el servidor.');
-    }
+        
+        
+        
+        
+        
+    });
+    
+    
+    function reportePDF(){
+		window.open('pages/recursos_humanos/cv/reportes/crearPDFpersona.php?iden='+iden);
+	}
+        
+           function problemas()
+            {
+                $("#contenedor").text('Problemas en el servidor.');
+            }
 
 </script>

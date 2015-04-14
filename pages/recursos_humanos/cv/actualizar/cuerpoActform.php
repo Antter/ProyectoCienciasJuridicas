@@ -83,15 +83,15 @@ HTML;
     }
 
     function inicioEnvio() {
-        var x = $("#cuerpoAct");
+        var x = $("#cuerpoActFA");
         x.html('Cargando...');
     }
 
     function llegadaSelecPersona() {
-        $("#cuerpoAct").load('pages/recursos_humanos/cv/actualizar/formAct.php', data);
+        $("#cuerpoActFA").load('pages/recursos_humanos/cv/actualizar/formAct.php', data);
     }
 
     function problemas() {
-        $("#cuerpoAct").text('Problemas en el servidor.');
+        $("#cuerpoActFA").text('Problemas en el servidor.');
     }
 </script>

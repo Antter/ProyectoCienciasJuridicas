@@ -53,18 +53,18 @@ if (isset($_POST['id'])) {
 
     function inicioEnvio()
     {
-        var x = $("#cuerpoAct");
+        var x = $("#cuerpoActEL");
         x.html('Cargando...');
     }
 
     function llegadaSelecPersona()
     {
-        $("#cuerpoAct").load('pages/recursos_humanos/cv/actualizar/eLabAct.php',data);
+        $("#cuerpoActEL").load('pages/recursos_humanos/cv/actualizar/eLabAct.php',data);
     }
 
     function problemas()
     {
-        $("#cuerpoAct").text('Problemas en el servidor.');
+        $("#cuerpoActEL").text('Problemas en el servidor.');
     }
 
 </script>
