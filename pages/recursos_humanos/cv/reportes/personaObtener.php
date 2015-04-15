@@ -32,7 +32,7 @@ if (isset($_POST['identi'])) {
         echo '<form role="form" method="post" class="form-horizontal">
                         <!-- .panel-heading -->
                         <div class="panel-body">
-                            <h1>Reporte de Persona</h1><button class="btn btn-primary pull-right" data-mode="verPDF" data-id="'.$id.'" href="#">Exportar a PDF</button>
+                            <h1>Reporte de Persona</h1><button class="btn btn-warning pull-right" data-mode="verPDF" data-id="'.$id.'" href="#">Exportar a PDF</button></br></br></br>
                                 <div class="panel-group" id="accordion">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
@@ -266,7 +266,7 @@ HTML;
     $( document ).ready(function() {
         
         
-       $(".btn-primary").on('click',function(){
+       $(".btn-warning").on('click',function(){
           mode = $(this).data('mode');
           iden = $(this).data('id');
           if(mode == "verPDF"){

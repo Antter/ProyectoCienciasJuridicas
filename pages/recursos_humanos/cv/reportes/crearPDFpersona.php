@@ -22,11 +22,21 @@ $resultado4=mysql_query("SELECT ID_Experiencia_laboral, Nombre_empresa, Tiempo F
 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial', '', 10);
-$pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 10 ,8, 20 , 20,'PNG');
+$pdf->SetFont('Arial', '', 18);
+$pdf->Image($maindir.'assets/img/lucen-aspicio.png', 50,30,200,200, 'PNG');
+$pdf->Image($maindir.'assets/img/logo_unah.png' , 10,5,20,35, 'PNG');
+$pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 170,8, 35 , 35,'PNG');
 $pdf->Cell(18, 10, '', 0);
-$pdf->Cell(120, 10, '			Perfil Persona', 0);
-$pdf->SetFont('Arial', '', 9);
+$pdf->SetFont('Arial', '', 18);
+$pdf->Cell(5, 10, '', 0);
+$pdf->Cell(70, 10, 'Universidad Nacional Autonoma de Honduras', 0);
+$pdf->Ln(25);
+$pdf->SetFont('Arial', 'U', 14);
+$pdf->Cell(30, 8, ' ', 0,0,"C");
+$pdf->Cell(130, 8, ' Perfil de la Persona', 0,0,"C");
+$pdf->Rect(6, 45, 200, 240 ,'D');
+$pdf->SetFont('Arial', '', 12);
+$pdf->Ln(10);
 $pdf->Cell(50, 10, 'Hoy: '.date('d-m-Y').'', 0);
 $pdf->Ln(20);
 if($row = mysql_fetch_array($resultado) or die("Error en: " . mysql_error())){
@@ -58,7 +68,7 @@ $pdf->Cell(120, 10, 'Fecha de nacimiento: '.$fNac, 0);
 $pdf->Ln(5);
 $pdf->Cell(130, 8, 'Estado Civil: '.$estCivil, 0);
 $pdf->Ln(15);
-$pdf->Cell(120, 9, '                                                                       INFORMACI�N DE CONTACTO', 0);
+$pdf->Cell(120, 9, '                                                                       INFORMACION DE CONTACTO', 0);
 $pdf->Ln(10);
 
 $pdf->Cell(125, 8, 'Direccion: '.$direc, 0);
@@ -81,6 +91,7 @@ $pdf->Ln(15);
 
 }
 
+$pdf->Cell(120, 9, '                                                                          FORMACION ACADEMICA', 0);
  while ($row2 = mysql_fetch_array($resultado3)){
             $id7 = $row2['ID_Estudios_academico'];
             $titulo = $row2['Nombre_titulo'];
@@ -91,7 +102,7 @@ $pdf->Ln(15);
             $row4 = mysql_fetch_array($t);
             $univ = $row4['nombre_universidad'];
  
- $pdf->Cell(120, 9, '                                                                          FORMACION ACADEMICA', 0);
+ 
  $pdf->Ln(10);
  $pdf->Cell(125, 8, 'Nombre del titulo: '.$titulo, 0);
 $pdf->Ln(5);
@@ -101,12 +112,13 @@ $pdf->Cell(125, 8, 'Universidad: '.$univ, 0);
 $pdf->Ln(15);
  }
 
+ $pdf->Cell(120, 9, '                                                                          EXPERIENCIA LABORAL', 0);
 while ($row11 = mysql_fetch_array($resultado4)){
             $id9 = $row11['ID_Experiencia_laboral'];
             $nomEmp = $row11['Nombre_empresa'];
             $tiempo = $row11['Tiempo'];
 
-$pdf->Cell(120, 9, '                                                                          EXPERIENCIA LABORAL', 0);
+
 $pdf->Ln(10);
  $pdf->Cell(125, 8, 'Nombre de la Empresa: '.$nomEmp, 0);
 $pdf->Ln(5);

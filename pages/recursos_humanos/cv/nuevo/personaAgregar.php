@@ -1,13 +1,18 @@
 <?php
 session_start();
 
-include "../../../../Datos/conexion.php";
+//include "../../../../Datos/conexion.php";
 
 function limpiar($tags)
 {
     $tags = strip_tags($tags);
     return $tags;
+    
+    
 }
+
+
+
 
 //Información Personal
 if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_POST['primerApellido']) and !empty($_POST['segundoApellido'])
@@ -39,51 +44,122 @@ if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_
 }
 
 //Formación Académica
-if (!empty($_POST['idforAcad'])) {
-    $tipo = $_POST['tipo'];
-    $pa = mysql_query("SELECT ID_Tipo_estudio FROM tipo_estudio WHERE Tipo_estudio = '$tipo'");
-    $row = mysql_fetch_array($pa);
-    $idTipo = $row['ID_Tipo_estudio'];
-
+if (!empty($_POST['identi'])and isset($_POST['agregarFA'])) {
+    
+  
+    
+    $tipoE = $_POST['tipoE'];
+   
+   
+    
     $nomTitulo = $_POST['titulo'];
-    $nomUni = $_POST['universidad'];
-    $p = mysql_query("SELECT Id_universidad FROM universidad WHERE nombre_universidad = '$nomUni'");
-    $r = mysql_fetch_array($p);
-    $idUni = $r['Id_universidad'];
-    $identidad = $_POST['idforAcad'];
+   
+    $idUni = $_POST['universidadFA'];
+   
+    $identidad = $_POST['identi'];
+ 
 
-    mysql_query("INSERT INTO estudios_academico (ID_Estudios_academico, Nombre_titulo,ID_Tipo_estudio, N_identidad, Id_universidad)
-                    VALUES (DEFAULT,'$nomTitulo','$idTipo','$identidad','$idUni')");
-    echo "Formación Académica ha sido agregada con éxito!";
+    $queryFAA=mysql_query("INSERT INTO estudios_academico (ID_Estudios_academico, Nombre_titulo,ID_Tipo_estudio, N_identidad, Id_universidad)
+                    VALUES (DEFAULT,'".$nomTitulo."','".$tipoE."','".$identidad."','".$idUni."')");
+    
+  
+    
+        if($queryFAA){
+        
+           $mensaje = 'Formación Académica ha sido agregada con éxito!';
+            $codMensaje = 1;
+    
+    
+   }else{
+           $mensaje = 'error al ingresar el registro de formacion academica ';
+           $codMensaje = 0;
+       
+   }
+
+    
+  
 }
 
 //Experiencia laboral
-if (!empty($_POST['ideLab'])) {
-    $nomEmp = limpiar($_POST['nombreEmpresa']);
-    $tiempo = limpiar($_POST['tiempoLab']);
-    $identi = $_POST['ideLab'];
+if (isset($_POST['agregarEL'])) {
+    $nomEmp = $_POST['nombreEmpresa'];
+    $tiempo = $_POST['tiempoLab'];
+    $identi = $_POST['identi'];
 
-    mysql_query("INSERT INTO experiencia_laboral (ID_Experiencia_laboral, Nombre_empresa, Tiempo, N_identidad)
+   $queryELA=mysql_query("INSERT INTO experiencia_laboral (ID_Experiencia_laboral, Nombre_empresa, Tiempo, N_identidad)
                             VALUES (DEFAULT,'$nomEmp','$tiempo','$identi')");
-    echo "Experiencia laboral ha sido agregada con éxito!";
+    
+    
+            if($queryELA){
+        
+           $mensaje = 'Experiencia laboral ha sido agregada con éxito!!';
+            $codMensaje = 1;
+    
+    
+   }else{
+           $mensaje = 'error al ingresar el registro de experiencia laboral ';
+           $codMensaje = 0;
+       
+   }
+    
+    
 }
 
 //Experiencia Académica
-if (!empty($_POST['ideAcad'])) {
-    $nomInst = limpiar($_POST['nombreInst']);
-    $tiempo = limpiar($_POST['tiempoAcad']);
-    $identi = $_POST['ideAcad'];
-    mysql_query("INSERT INTO experiencia_academica (ID_Experiencia_academica, Institucion, Tiempo, N_identidad)
+if (isset($_POST['agregarEA'])) {
+    $nomInst = $_POST['nombreInst'];
+    $tiempo = $_POST['tiempoAcad'];
+    $identi = $_POST['identi'];
+    
+    $queryEAA=mysql_query("INSERT INTO experiencia_academica (ID_Experiencia_academica, Institucion, Tiempo, N_identidad)
                                     VALUES (DEFAULT,'$nomInst','$tiempo','$identi')");
-    echo "Experiencia académica ha sido agregada con éxito!";
+    
+   if($queryEAA){
+        
+           $mensaje = 'Experiencia académica ha sido agregada con éxito!!';
+            $codMensaje = 1;
+    
+    
+   }else{
+           $mensaje = 'error al ingresar el registro de experiencia academica ';
+           $codMensaje = 0;
+       
+   }
+    
+   
+    
+    
+    
+    
 }
 
-if (!empty($_POST['idTel'])) {
+
+//numeros de telefono
+if(isset($_POST['agregarTEL'])){
+if (!empty($_POST['identi']) and !empty($_POST['telef']) ) {
     $tipo = $_POST['tipo'];
-    $telef = limpiar($_POST['telef']);
-    $identi = $_POST['idTel'];
-    mysql_query("INSERT INTO telefono (ID_Telefono, Tipo, Numero, N_identidad)
+    $telef = $_POST['telef'];
+    $identi = $_POST['identi'];
+    
+    
+   $queryAT=mysql_query("INSERT INTO telefono (ID_Telefono, Tipo, Numero, N_identidad)
              VALUES (DEFAULT,'$tipo','$telef','$identi')");
-    echo "Teléfono ha sido agregado con éxito!";
+   
+    if($queryAT){
+        
+           $mensaje = 'Teléfono ha sido agregado con éxito!';
+            $codMensaje = 1;
+    
+    
+   }else{
+           $mensaje = 'error al ingresar el registro de numero telefonico';
+           $codMensaje = 0;
+       
+   }
+}else{
+    $mensaje = 'error al ingresar el registro de numero telefonico campos vacios o errores con servidor';
+           $codMensaje = 0;
+    
+}
 }
 ?>
