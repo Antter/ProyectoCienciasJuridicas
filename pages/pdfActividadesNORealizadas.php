@@ -16,7 +16,7 @@ class PDF extends FPDF
     //Movernos a la derecha
     $this->Cell(15);
     //Título
-    $this->Cell(30,5,'Actividades NO Realizadas',0,0,'C');
+    $this->Cell(30,45,'Actividades NO Realizadas',0,0,'C');
     //Salto de línea
 
       
@@ -36,7 +36,7 @@ class PDF extends FPDF
    function TablaSimple($header)
    {
     //Cabecera
-    foreach($header as $col){$this->Cell(40,7,$col,1);}
+    foreach($header as $col){$this->Cell(40,9,$col,1);}
     include '../Datos/conexion.php';
     $query = mysql_query("call sp_lee_actividades_no_terminadas_poa()", $enlace);
     while ($row = mysql_fetch_array($query)) {
@@ -55,12 +55,17 @@ class PDF extends FPDF
 }
 
 $pdf=new PDF();
-//Títulos de las columnas
+$pdf->AddPage();
+$pdf->SetFont('Arial', '', 10);
+$pdf->Image('../assets/img/logo-cienciasjuridicas.png' , 10 ,8, 20 , 20,'PNG');
+$pdf->Cell(18, 10, '', 0);
+$pdf->SetFont('Arial', '', 9);
+$pdf->Cell(50, 10, 'Hoy: '.date('d-m-Y').'', 0);
+$pdf->Ln(20);
+$pdf->Ln(5);
 $header=array('Actividad','Inicio','Fin');
 $pdf->AliasNbPages();
-//Primera página
-$pdf->AddPage();
-$pdf->SetY(25);
+
 $pdf->TablaSimple($header);
 
 $pdf->Output();

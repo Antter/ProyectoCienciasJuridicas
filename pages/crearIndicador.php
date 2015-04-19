@@ -45,10 +45,10 @@ while ($row = mysql_fetch_array($query)) {
         
         
         <script>
-            $(document).ready(function() {
+            
+             $(document).on("click","#retonoPOA",function() {
+                 
                 
-                
-                 $("#retonoPOA").click(function(){
                     
                     $.ajax({
         async:true,
@@ -63,18 +63,19 @@ while ($row = mysql_fetch_array($query)) {
         error:problemas
     }); 
     return false;
-                });
-
+               
+              
+             });
+             
 function llegadaCrear()
 {
     $("#contenedor").load('pages/crearPOA.php');
      //$("#contenedor").load('../cargarPOAs.php');
-}
-                
-                
-                
-                
-                $("#retonoOBJ").click(function () {
+}             
+             
+             $(document).on("click","#retonoOBJ",function() {
+                 
+             
                     //id = $(this).parents("tr").find("td").eq(0).html();
                     //alert(id);
                     id=$("#idPoa").val();
@@ -84,24 +85,106 @@ function llegadaCrear()
                         type: "POST",
                         dataType: "html",
                         contentType: "application/x-www-form-urlencoded",
-                        url: "pages/crearObjetivo.php",
+                        //url: "pages/crearObjetivo.php",
                         //beforeSend: inicioVer,
                         success: llegadaRetornoObj,
                         timeout: 4000,
                         error: problemas
                     });
                     return false;
-                });
+                 
               
-              
+             });
+             
               function llegadaRetornoObj()
             {
                 $("#contenedor").load('pages/crearObjetivo.php', data1);
             }
+             
+             
+             
+             $(document).on("click",".verIndicador",function() {
+                 
                 
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                // alert(id);      
+                data = {ide: id};
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    url: "pages/crearActividad.php",
+                   // beforeSend: inicioVer,
+                    success: llegadaVer,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+               
+                 
+                 
+             });
+             
+             $(document).on("click",".eliminarIndicador",function() {
+                 
                 
+                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta)
+                {
+                    id2 = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id2);      
+                    data2 = {ide: id2, obj: $("#idObj").val()};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        //url: "Datos/eliminarIndicador.php",
+                        //beforeSend: inicioEliminar,
+                        success: llegadaEliminar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
                 
-                
+                 
+                 
+             });
+             
+             $(document).on("click",".editarIndicador",function() {
+             
+             
+
+
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id);      
+                    data4 = {idInd: id,
+                        idObj: $('#idObj').val()
+                    };
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        //: "application/x-www-form-urlencoded",
+                        //url: "pages/editarPOA.php",
+                        //beforeSend: inicioEliminar,
+                        success: llegadaEditarIndicador,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+
+                 
+                 
+                 
+             });
+             
+             
+             
+            $(document).ready(function() {
+      
 
                 $("#form2").submit(function(e) {
                     e.preventDefault();
@@ -125,68 +208,6 @@ function llegadaCrear()
                
 
                     limpiarCamposIndicador();
-                    return false;
-
-                });
-
-                $(".verIndicador").click(function() {
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                // alert(id);      
-                data = {ide: id};
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    url: "pages/crearActividad.php",
-                   // beforeSend: inicioVer,
-                    success: llegadaVer,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-                });
-                $(".eliminarIndicador").click(function() {
-                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-                if (respuesta)
-                {
-                    id2 = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id2);      
-                    data2 = {ide: id2, obj: $("#idObj").val()};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        contentType: "application/x-www-form-urlencoded",
-                        //url: "Datos/eliminarIndicador.php",
-                        //beforeSend: inicioEliminar,
-                        success: llegadaEliminar,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-                }
-                });
-
-                $(".editarIndicador").click(function() {
-
-
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id);      
-                    data4 = {idInd: id,
-                        idObj: $('#idObj').val()
-                    };
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        //: "application/x-www-form-urlencoded",
-                        //url: "pages/editarPOA.php",
-                        //beforeSend: inicioEliminar,
-                        success: llegadaEditarIndicador,
-                        timeout: 4000,
-                        error: problemas
-                    });
                     return false;
 
                 });

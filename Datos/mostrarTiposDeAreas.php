@@ -9,8 +9,8 @@ $query = mysql_query("Select * from tipo_area", $enlace);
     </head>
     <body>
         <div>
-            <select class="form-control" id="tipoArea" >
-                <option>Seleccione</option>
+            <select class="form-control" id="tipoArea">
+                <option value="0">Seleccione</option>
                 <?php
                 $contador = 0;
                 while ($row = mysql_fetch_array($query)) {

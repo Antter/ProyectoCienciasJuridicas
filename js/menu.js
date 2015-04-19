@@ -22,14 +22,58 @@ function inicio()
     x.click(reportes);
   
   
-  var y;
-    y=$("#ajustes");
-    y.click(ajustes);
+ 
    
   var y;
     y=$("#estadisticas");
-    y.click(estadisticas);   
+    y.click(estadisticas); 
+    
+      var y;
+    y=$("#areas");
+    y.click(areas);
+   
+   y=$("#tipoDeAreas");
+    y.click(tiposDeAreas);
 }
+
+
+
+
+
+function areas()
+{
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        //url:"pages/mantenimiento.php",    
+        // url:"../cargarPOAs.php",  
+       // beforeSend:inicioEnvio,
+        success:p_areas,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+}
+
+function tiposDeAreas()
+{
+    $.ajax({
+        async:true,
+        type: "POST",
+        dataType: "html",
+        contentType: "application/x-www-form-urlencoded",
+        //url:"pages/poas.php",    
+        // url:"../cargarPOAs.php",  
+        //beforeSend:inicioEnvio,
+        success:p_tiposDeAreas,
+        timeout:4000,
+        error:problemas
+    }); 
+    return false;
+}
+
 
 
 
@@ -157,4 +201,14 @@ function llegadaCrear()
 function problemas()
 {
     $("#contenedor").text('Problemas en el servidor.');
+}
+
+function p_areas()
+{
+    $("#contenedor").load('pages/areas.php');
+}
+
+function p_tiposDeAreas()
+{
+    $("#contenedor").load('pages/tiposDeAreas.php');
 }

@@ -70,7 +70,7 @@ $query2 =null;
                             <select id="rol"class="form-control" width="420" style="width: 420px" name="rol" >
                                 <option value=-1> -- Seleccione el rol -- </option>
                                 <?php foreach($result2 as $row) { ?>
-                                <option value=<?php echo $row["Id_Rol"];?>><?php echo $row["Descripcion"];?></option><?php } ?>
+                                <option value=<?php echo $row["Id_Rol"];?>><?php echo $row["nombre_Rol"];?></option><?php } ?>
 						    </select>
                         </div>
                     </div>          

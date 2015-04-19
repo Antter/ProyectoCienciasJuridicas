@@ -491,7 +491,7 @@ $consulta24 = "SELECT * FROM actividades_terminadas where id_Actividad='" . $idA
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Responsable</h4>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Sub Actividad</h4>
                     </div>
                     <div class="modal-body" id="myModal2body">
 

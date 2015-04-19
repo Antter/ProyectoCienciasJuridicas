@@ -343,11 +343,12 @@
 				            <div class="form-group">
 				                <div class="input-group">
                                     <span class="input-group-addon">Numero Folio :</span>
-                                        <select id="NroFolio" class="form-control"name="NroFolio" >
-									     	<option value=-1>-- Seleccione --</option>
+                                         <input list="NroFolio" class="form-control" name="NroFolio" required>
+                                            <datalist id="NroFolio">
                                             <?php foreach( $filas as $row ) { ?>
                                             <option value="<?php echo $row['NroFolio'];?>"><?php echo $row["NroFolio"];?></option><?php } ?>
-									    </select>
+                      </datalist>
+                      </input>
 	                            </div>
                             </div>
                             <div class="form-group">

@@ -1,7 +1,7 @@
 <?php
 
 include '../Datos/conexion.php';
-$id = $_POST['ide'];
+$id = $_POST['idA'];
 
 $consulta = $conectar->prepare("CALL pa_eliminar_area(?)");
 $consulta->bind_param('i', $id);

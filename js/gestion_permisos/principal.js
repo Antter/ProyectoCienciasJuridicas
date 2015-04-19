@@ -30,6 +30,20 @@
 		var x4;
 		x4=$("#revision");
 		x4.click(Revision);
+		
+		var x5;
+		x5=$("#reportetotal");
+		x5.click(ReporteT);
+		
+		var x6;
+		x6=$("#reportetrimestral");
+		x6.click(ReporteTr);
+		
+		var x7;
+		x7=$("#nusuario");
+		x7.click(CrearUsuario);
+		
+
 	}
 
 
@@ -127,6 +141,87 @@
 		}); 
 		return false;
 	}
+	
+	function ReporteT()
+	{
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/ReporteTotal.php",    
+			// url:"../ReporteTotal.php",  
+			beforeSend:inicioEnvio,
+			success:llegadaReporteTotal,
+			timeout:4000,
+			error:function(result){  
+            alert('ERROR ' + result.status + ' ' + result.statusText);  
+          }
+		}); 
+		return false;
+	}
+	function ReporteTr()
+	{
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/reporteTrimestral.php",    
+			// url:"../reporteTrimestral.php",  
+			beforeSend:inicioEnvio,
+			success:llegadaReporteTrimestral,
+			timeout:4000,
+			error:function(result){  
+            alert('ERROR ' + result.status + ' ' + result.statusText);  
+          }
+		}); 
+		return false;
+	}
+	function CrearUsuario()
+	{
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/Nuevo_usuario.php",      
+			beforeSend:inicioEnvio,
+			success:llegadaCreacion,
+			timeout:4000,
+			error:function(result){  
+            alert('ERROR ' + result.status + ' ' + result.statusText);  
+          }
+		}); 
+		return false;
+	}
+	
+	//$(".btn-default").on('click',
+	/*function CrearSolicitudPDF(){
+          mode = $(this).data('mode');
+          id1 = $(this).data('id');
+          if(mode == "verPDF"){
+           
+			data={
+            NroFolio:id
+            };
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/permisos/crear_pdfpermiso.php", 
+                success:reportePDF,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+          }
+    };
+	
+	function reportePDF(){
+		window.open('pages/permisos/crear_pdfpermiso.php?id1='+id1);
+	}*/
 
 	function inicioEnvio()
 	{
@@ -157,6 +252,19 @@
 	{
 		$("#contenedor").load('pages/permisos/Revision.php');
 		 //$("#contenedor").load('../permisos/Revision.php');
+	}
+	function llegadaReporteTotal()
+	{
+		$("#contenedor").load('pages/permisos/ReporteTotal.php');
+		 //$("#contenedor").load('../permisos/ReporteTotal.php');
+	}
+	function llegadaReporteTrimestral()
+	{
+		$("#contenedor").load('pages/permisos/reporteTrimestral.php');
+		 //$("#contenedor").load('../permisos/reporteTrimestral.php');
+	}
+	function llegadaCreacion(){
+		$("#contenedor").load('pages/permisos/Nuevo_usuario.php');
 	}
 	function problemas()
 	{

@@ -3,6 +3,23 @@
  // require_once('../../Datos/conexion.php');
  $queryCE = mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1'");
 
+ 
+   $maindir = "../../";
+
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+ 
+ 
 ?>
 
 
@@ -242,21 +259,35 @@ HTML;
                
             
                <td><center>
-                    <button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash"> </button>
-                </center></td>
-                        
-                        
-                <td>
-
-                <center>
-                    <button type="submit" class="editarb btn btn-primary glyphicon glyphicon-edit"  title="Editar">
-                      </button>
-                </center>
-
-
-
-                </td>   
+HTML;
+                if($_SESSION['user_rol'] != 100){
+          echo '<button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"> </button>
+                </center></td>';
+                }else{
+                echo '<button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash"> </button>
+                </center></td>';
                     
+                }
+                
+
+              echo  '<td>
+
+                <center>';
+                
+                if($_SESSION['user_rol'] != 100){
+            echo  ' <button type="submit" class="editarb btn btn-primary glyphicon glyphicon-edit" disabled="TRUE" title="Editar">
+                      </button>';
+                }else{
+                 echo '<button type="submit" class="editarb btn btn-primary glyphicon glyphicon-edit"  title="Editar">
+                      </button>';
+                }
+                
+               echo '</center>
+
+                </td>   ';
+                    
+                
+                echo <<<HTML
                   <td>
 
                 <center>
@@ -265,9 +296,8 @@ HTML;
                 </center>
 
 
-
                 </td>          
-                        
+                       
                         
 HTML;
                 echo "</tr>";

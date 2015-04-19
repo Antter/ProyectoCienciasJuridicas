@@ -22,7 +22,7 @@ $pame = mysql_query("SELECT * FROM roles");
             <table id="tabla_roles" class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>
-                        <th><strong><center>ID Rol</center></strong></th>
+                        <th><strong><center>Nivel Rol</center></strong></th>
                         <th><strong><center>Nombre del Rol</center></strong></th>
                         <th><strong><center>Descripción del Rol</center></strong></th>
                         <th><strong><center>Eliminar</center></strong></th>
@@ -35,6 +35,7 @@ $pame = mysql_query("SELECT * FROM roles");
                     <?php
                     while ($row = mysql_fetch_array($pame)) {
                         $idRol = $row['Id_Rol'];
+                       // $id = $row['ID_Rol'];
                         ?>
 
                         <tr>

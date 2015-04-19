@@ -50,6 +50,72 @@ and open the template in the editor.
         <script src="js/bootstrap-datepicker.js"></script>
 
         <script>
+            
+             $(document).on("click",".ver",function () {
+                 
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    //alert(id);      
+                    data1 = {ide: id};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "pages/crearObjetivo.php",
+                        beforeSend: inicioVer,
+                        success: llegadaVer,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+
+             });
+             
+             $(document).on("click",".elimina",function () {
+             
+                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                    if (respuesta)
+                    {
+
+                        id = $(this).parents("tr").find("td").eq(0).html();
+                        // alert(id);      
+                        data = {id: id};
+                        $.ajax({
+                            async: true,
+                            type: "POST",
+                            dataType: "html",
+                            contentType: "application/x-www-form-urlencoded",
+                            url: "Datos/eliminarPOA.php",
+                            beforeSend: inicioEliminar,
+                            success: llegadaEliminar,
+                            timeout: 4000,
+                            error: problemas
+                        });
+                        return false;
+                    }                 
+             });
+             $(document).on("click",".editar",function () {
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id);      
+                    data4 = {id: id};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        //: "application/x-www-form-urlencoded",
+                        //url: "pages/editarPOA.php",
+                        //beforeSend: inicioEliminar,
+                        success: llegadaEditarPOA,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+
+                
+                 
+             });
+             
+             
 
             $(document).ready(function () {
 
@@ -95,68 +161,7 @@ and open the template in the editor.
 
                 });
 
-                $(".ver").click(function () {
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                    //alert(id);      
-                    data1 = {ide: id};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        contentType: "application/x-www-form-urlencoded",
-                        url: "pages/crearObjetivo.php",
-                        beforeSend: inicioVer,
-                        success: llegadaVer,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-                });
-                $(".elimina").click(function () {
-                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-                    if (respuesta)
-                    {
-
-                        id = $(this).parents("tr").find("td").eq(0).html();
-                        // alert(id);      
-                        data = {id: id};
-                        $.ajax({
-                            async: true,
-                            type: "POST",
-                            dataType: "html",
-                            contentType: "application/x-www-form-urlencoded",
-                            url: "Datos/eliminarPOA.php",
-                            beforeSend: inicioEliminar,
-                            success: llegadaEliminar,
-                            timeout: 4000,
-                            error: problemas
-                        });
-                        return false;
-                    }
-                });
-
-                $(".editar").click(function () {
-
-
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id);      
-                    data4 = {id: id};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        //: "application/x-www-form-urlencoded",
-                        //url: "pages/editarPOA.php",
-                        //beforeSend: inicioEliminar,
-                        success: llegadaEditarPOA,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-
-                });
-
-
+            
             });
 
 

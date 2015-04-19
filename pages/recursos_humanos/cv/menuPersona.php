@@ -6,6 +6,15 @@ require_once('../../../Datos/conexion.php');
  $resultado1 = mysql_query($consulta1);
  $tipo_estudio = mysql_fetch_array($resultado1);
  
+   if(isset($_POST["tipoProcedimiento"])){
+    $tipoProcedimiento = $_POST["tipoProcedimiento"];
+    
+    if($tipoProcedimiento == "insetarPersona"){
+       
+    require_once('../../../pages/recursos_humanos/cv/nuevo/personaAgregar.php');
+    }
+   }
+ 
 
 ?>
 
@@ -56,7 +65,9 @@ require_once('../../../Datos/conexion.php');
                 direccion:$('#direccion').val(),
                 email:$('#email').val(),
                 estCivil:$('#estCivil').val(),
-                nacionalidad:$('#nacionalidad').val()
+                nacionalidad:$('#nacionalidad').val(),
+                tipoProcedimiento:"insetarPersona",
+                agregarPE:"si"
             };
 
             $.ajax({
@@ -89,7 +100,7 @@ require_once('../../../Datos/conexion.php');
 
             function llegadaBusqueda()
             {
-                $("#contenedor2").load('Datos/consultaRH.php',data);
+                $("#contenedor2").load('pages/recursos_humanos/cv/consultaRH.php',data);
                 
             }
             
@@ -106,7 +117,8 @@ require_once('../../../Datos/conexion.php');
             
           function llegadaInsertarPersona()
         {
-            $("#contenedor").load('pages/recursos_humanos/cv/nuevo/personaAgregar.php',data3);
+            $('body').removeClass('modal-open');
+            $("#contenedor").load('pages/recursos_humanos/cv/menuPersona.php',data3);
         }
         
            function problemasInsertar()
@@ -118,6 +130,20 @@ require_once('../../../Datos/conexion.php');
             
 
          </script>
+         
+             <script src="pages/recursos_humanos/cv/validacion.js"></script>
+<script>
+    $(function(){
+        $('#identidad').validCampo('0123456789-');
+        $('#primerNombre').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#segundoNombre').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#primerApellido').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#segundoApellido').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#nacionalidad').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+    });
+</script>
+
+         
         
         
     </head>
@@ -133,6 +159,28 @@ require_once('../../../Datos/conexion.php');
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
+    
+    
+             <?php
+ 
+  if(isset($codMensaje) and isset($mensaje)){
+    if($codMensaje == 1){
+      echo '<div class="alert alert-success">';
+      echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+      echo '<strong>Exito! </strong>';
+      echo $mensaje;
+      echo '</div>';
+    }else{
+      echo '<div class="alert alert-danger">';
+      echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+      echo '<strong>Error! </strong>';
+      echo $mensaje;
+      echo '</div>';
+    }
+  } 
+
+?>
+    
     <div class="row ex2">
         <a>
             <div class="col-lg-3 col-md-6">
@@ -157,159 +205,9 @@ require_once('../../../Datos/conexion.php');
                 </div>
             </div>
         </a>
-        <a>
-     
-      <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Busqueda por filtros
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form role="form" id="form" action="#" method="POST">
-
-                                               <div class="form-group">
-                                    <label class="col-lg-6"><h5><strong>Licenciatura :</strong></h5></label>
-                               
-
-                                   <div class="col-lg-6">
-                                       <select name="lic" class="form-control" id="lic" required>
-                                        
-                                       
-                                        <option value=-1>Ninguna</option>
-
-                                        <?php
-                                        $consulta_mysql = "SELECT distinct nombre_titulo FROM `estudios_academico` inner join tipo_estudio on estudios_academico.ID_Tipo_estudio=tipo_estudio.ID_Tipo_estudio where tipo_estudio.tipo_estudio='licenciatura'";
-                                        $resultado3 = mysql_query($consulta_mysql);
-                                        //$rec=mysql_fetch_array($resultado3);
-
-
-
-                                        while ($row = mysql_fetch_array($resultado3)) {
-
-                                          
-                                                
-                                            
-                                                echo "<option value = '" . $row['nombre_titulo'] . "'>";
-                                            
-
-                                            echo $row["nombre_titulo"];
-
-                                            echo "</option>";
-                                        }
-                                        ?>
-
-
-
-                                    </select>
-                                </div>
-                               </div>
-                                
-                                <br>
-                                <br>
-                                <br>
-                                
-                                           <div class="form-group">
-                                    <label class="col-lg-6"><h5><strong>Maestria :</strong></h5></label>
-                               
-
-                                   <div class="col-lg-6">
-                                       <select name="maestr" class="form-control" id="maestr" required>
-                                        
-                                       
-                                        <option value=-1>Ninguna</option>
-
-                                        <?php
-                                        $consulta_mysql = "SELECT distinct nombre_titulo FROM `estudios_academico` inner join tipo_estudio on estudios_academico.ID_Tipo_estudio=tipo_estudio.ID_Tipo_estudio where tipo_estudio.tipo_estudio='Maestria'";
-                                        $resultado3 = mysql_query($consulta_mysql);
-                                        //$rec=mysql_fetch_array($resultado3);
-
-
-
-                                        while ($row = mysql_fetch_array($resultado3)) {
-
-                                       
-                                            echo "<option value = '" . $row['nombre_titulo'] . "'>";
-                                            
-
-                                            echo $row["nombre_titulo"];
-
-                                            echo "</option>";
-                                        }
-                                        ?>
-
-
-
-                                    </select>
-                                </div>
-                               </div>
-                                
-                                
-                                <br>
-                                <br>
-                                
-                                
-                                
-                                
-                                                 <div class="form-group">
-                                    <label class="col-lg-6"><h5><strong>Doctorado :</strong></h5></label>
-                               
-
-                                   <div class="col-lg-6">
-                                       <select name="doc" class="form-control" id="doc" required>
-                                        
-                                         
-                                        <option value=-1>Ninguno</option>
-
-                                        <?php
-                                        $consulta_mysql = "SELECT distinct nombre_titulo FROM `estudios_academico` inner join tipo_estudio on estudios_academico.ID_Tipo_estudio=tipo_estudio.ID_Tipo_estudio where tipo_estudio.tipo_estudio='Doctorado'";
-                                        $resultado3 = mysql_query($consulta_mysql);
-                                        //$rec=mysql_fetch_array($resultado3);
-
-
-
-                                        while ($row = mysql_fetch_array($resultado3)) {
-
-                            
-                                           echo "<option value = '" . $row['nombre_titulo'] . "'>";
-                                           
-
-                                            echo $row["nombre_titulo"];
-
-                                            echo "</option>";
-                                        }
-                                        ?>
-
-
-
-                                    </select>
-                                </div>
-                               </div>
-                                
-                                
-                                
-                                <br>
-                                <br>
-                                
-                              
-                              <button type="submit" name="submit"  id="submit" class="submit btn btn-primary glyphicon glyphicon-search" > Buscar</button>
-                           
-
-
-                            </form>
-                        </div>
-                       
-                    </div>
-                    <!-- /.row (nested) -->
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-        <!-- /.col-lg-12 -->
     </div>
+        
+      
 
  
  <div id="contenedor2" class="panel-body">
@@ -462,154 +360,3 @@ require_once('../../../Datos/conexion.php');
     
     
     
-    <script>
-
-        /*
-         * To change this license header, choose License Headers in Project Properties.
-         * To change this template file, choose Tools | Templates
-         * and open the template in the editor.
-         */
-
-        var x;
-        x = $(document);
-        x.ready(menuInicioPersonas);
-        function menuInicioPersonas()
-        {
-           // var x;
-           // x = $("#agregar");
-          //  x.click(agregar);
-            var x;
-            x = $("#actualizar");
-            x.click(actualizar);
-            var x;
-            x=$("#eliminar");
-            x.click(eliminar);
-            var x;
-            x = $("#agregarTel");
-            x.click(agregarTel);
-            var x;
-            x = $("#actualizarTel");
-            x.click(actualizarTel);
-            var x;
-            x=$("#eliminarTel");
-            x.click(eliminarTel);
-        }
-        function agregar()
-        {
-            $.ajax({
-                async: true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
-                success: llegadaAgregar,
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-        function actualizar()
-        {
-            $.ajax({
-                async: true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
-                success: llegadaActualizar,
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-
-        function eliminar()
-        {
-            $.ajax({
-                async: true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
-                success: llegadaEliminar,
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-        function agregarTel()
-        {
-            $.ajax({
-                async: true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
-                success: llegadaAgregarTel,
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-        function actualizarTel()
-        {
-            $.ajax({
-                async: true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
-                success: llegadaActualizarTel,
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-
-        function eliminarTel()
-        {
-            $.ajax({
-                async: true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: inicioEnvio,
-                success: llegadaEliminarTel,
-                timeout: 4000,
-                error: problemas
-            });
-            return false;
-        }
-
-        function inicioEnvio()
-        {
-            var x = $("#container");
-            x.html('Cargando...');
-        }
-
-        function llegadaAgregar()
-        {
-            $("#container").load('pages/recursos_humanos/cv/nuevo/infoPersonal.php');
-        }
-        function llegadaActualizar()
-        {
-            $("#container").load('pages/recursos_humanos/cv/actualizar/infoPersonal.php');
-        }
-        function llegadaEliminar()
-        {
-            $("#container").load('pages/recursos_humanos/cv/eliminar/infoPersonal.php');
-        }
-        function llegadaAgregarTel()
-        {
-            $("#container").load('pages/recursos_humanos/cv/nuevo/telefono.php');
-        }
-        function llegadaActualizarTel()
-        {
-            $("#container").load('pages/recursos_humanos/cv/actualizar/telefono.php');
-        }
-        function llegadaEliminarTel()
-        {
-            $("#container").load('pages/recursos_humanos/cv/eliminar/telefono.php');
-        }
-
-    </script>

@@ -14,8 +14,19 @@ require_once($maindir . "funciones/timeout.php");
 ?>
 
 <?php
-//Esta seccion obtiene el nombre de usuario que ha iniciado sesión y lo guarda en una variable
-$idusuario = $_SESSION['user_id'];
+	//Esta seccion obtiene el nombre de usuario que ha iniciado sesión y lo guarda en una variable
+	$idusuario = $_SESSION['user_id'];
+
+	include("../../conexion/conn.php");  
+	$conexion = mysqli_connect($host, $username, $password, $dbname);
+	$rec = mysqli_query($conexion, "select departamento_laboral.nombre_departamento from departamento_laboral where Id_departamento_laboral in( SELECT Id_departamento FROM empleado where No_Empleado in (Select No_Empleado from usuario where id_Usuario='$idusuario'))");
+	$row = mysqli_fetch_array($rec);
+	
+	//$result = mysqli_query($conexion, "SELECT No_Empleado FROM usuario  where id_Usuario='$idusuario'");
+	//$row2 = mysqli_fetch_array($result);
+	
+	//$fquery = mysqli_query($conexion, "select fecha_solicitud, DATE_FORMAT(fecha, '%Y-%m-%d') from permisos inner join usuario on permisos.No_Empleado=usuario.No_Empleado where usuario.No_Empleado='".$row2['No_Empleado']."'");
+	//$frow = mysqli_fetch_array($fquery);
 ?> 
 
 
@@ -31,43 +42,41 @@ $idusuario = $_SESSION['user_id'];
     $(document).ready(function() {
 
         $("form").submit(//Se realiza cuando se ejecuta un "submit" en el formulario, el "submit" se encuentra en el boton "Envíar Solicitud"
+		
+						function(e) {
 
+							e.preventDefault();
+								data = {
+									idusuario: "<?php echo $idusuario; ?>",
+									nombre: $('input:text[name=nombre]').val(),
+									area: "<?php echo $row['nombre_departamento']?>",
+									motivo: $('select[name=motivo]').val(),
+									edificio: $('select[name=edificio]').val(),
+									horaf: $("#horaf").val(),
+									horai: $("#horai").val(),
+									fecha: $("#fecha").val(),
+									cantidad: $("#cantidad").val(),
+									fecha_solic: $fecha_a
+								};  //la seccion de codigo anterior almacena en un conjunto data las variables que 
+								//la funcion enviara para que se ejecute la consulta en el archivo php
+							
+							$.ajax({
+								async: true,
+								type: "POST",
+								// dataType: "html",
+								// contentType: "application/x-www-form-urlencoded",
+								url: "../SistemaCienciasJuridicas/pages/permisos/Isolicitud.php",
+								success: llegadaGuardar,
+								data: data,
+								timeout: 4000,
+								error: problemas
+							}); //La función implemente ajax para enviar la información a otros 
+							//documentos que realizaran otros procedimientos sin necesidad de refrescar toda la pagina
+							return false;
+						}
+						
 		
-		
-		
-		
-                function(e) {
-
-                    e.preventDefault();
-
-                    data = {
-                        idusuario: "<?php echo $idusuario; ?>",
-                        nombre: $('input:text[name=nombre]').val(),
-                        area: $('select[name=area]').val(),
-                        motivo: $('select[name=motivo]').val(),
-                        edificio: $('select[name=edificio]').val(),
-                        horaf: $("#horaf").val(),
-                        horai: $("#horai").val(),
-                        fecha: $("#fecha").val(),
-                        cantidad: $("#cantidad").val(),
-                        fecha_solic: $fecha_a
-                    };  //la seccion de codigo anterior almacena en un conjunto data las variables que 
-                    //la funcion enviara para que se ejecute la consulta en el archivo php
-					
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        // dataType: "html",
-                        // contentType: "application/x-www-form-urlencoded",
-                        url: "../SistemaCienciasJuridicas/pages/permisos/Isolicitud.php",
-                        success: llegadaGuardar,
-                        data: data,
-                        timeout: 4000,
-                        error: problemas
-                    }); //La función implemente ajax para enviar la información a otros 
-                    //documentos que realizaran otros procedimientos sin necesidad de refrescar toda la pagina
-                    return false;
-                });
+		);
     });
 
     function llegadaGuardar(datos)
@@ -84,9 +93,7 @@ $idusuario = $_SESSION['user_id'];
 <!DOCTYPE html>
 <html lang="en">
 
-
     <head>
-
 
         <meta charset="utf-8">
 
@@ -119,76 +126,54 @@ $idusuario = $_SESSION['user_id'];
                             <div class="row">
                                 <div class="col-lg-6">
                                     <form id="formulario">
-                                        <div class="form-group">
+                                       
+										<div class="form-group">
                                             <label>Nombre : </label>
 
-<?php echo strtoupper($_SESSION['nombreUsuario']) ?>
+												<?php echo strtoupper($_SESSION['nombreUsuario']) ?>
 
                                         </div>
 
-                                        <div color: 'blue'>
-                                             <label>Departamento :</label>  
+                                        <div color: 'black' class="form-group" >
+										<?php
+										
+											echo "Departamento:";
+											echo '<label Id="area" name="area">  ';
+												echo $row['nombre_departamento'];
+											echo '</label>'
 
-                                            <select class="form-control" Id="area" name="area">
-<?php
-/* Este codigo jala los datos que hay en la tabla de edificios y los muestra en el 
-  combobox */
-require_once("../../conexion/conn.php");  
-											     // $bd = 'sistema_ciencias_juridicas';
-                                                //$conexion = mysqli_connect('localhost', 'root', '', $bd);
-												$conexion = mysqli_connect($host, $username, $password, $dbname);
-
-$rec = mysqli_query($conexion, "SELECT nombre_departamento from departamento_laboral");
-while ($row = mysqli_fetch_array($rec)) {
-    echo "<option>";
-    echo $row['nombre_departamento'];
-    echo "</option>";
-}
-?>											
-                                            </select>
+										?>											
                                         </div>
                                         <div class="form-group">
                                             <label>Solicito permiso por motivo de :</label>
                                             <select class="form-control" Id="motivo" name="motivo">
 
 
-<?php
-/* Este codigo jala los datos que hay en la tabla de motivos y los muestra en el 
-  combobox */
-require_once("../../conexion/conn.php");  
-											     // $bd = 'sistema_ciencias_juridicas';
-                                                //$conexion = mysqli_connect('localhost', 'root', '', $bd);
-												$conexion = mysqli_connect($host, $username, $password, $dbname);
-
-$rec1 = mysqli_query($conexion, "SELECT descripcion from motivos");
-while ($row = mysqli_fetch_array($rec1)) {
-    echo "<option>";
-    echo $row['descripcion'];
-    echo "</option>";
-}
-?>
-
-
-                                            </select>                                       
+											<?php
+											/* Este codigo jala los datos que hay en la tabla de motivos y los muestra en el 
+											  combobox */
+											  
+												$rec1 = mysqli_query($conexion, "SELECT descripcion from motivos");
+												while ($row = mysqli_fetch_array($rec1)) {
+													echo "<option>";
+													echo $row['descripcion'];
+													echo "</option>";
+												}
+											?>
+											</select>                                       
                                         </div>
+										
                                         <div class="form-group">
                                             <label>Edificio donde tiene registrada su asistencia :</label>
                                             <select class="form-control" Id="edificio" name="edificio">
                                                 <?php
-                                                /* Este codigo jala los datos que hay en la tabla de edificios y los muestra en el 
-                                                  combobox */
-                                               require_once("../../conexion/conn.php");  
-											     // $bd = 'sistema_ciencias_juridicas';
-                                                //$conexion = mysqli_connect('localhost', 'root', '', $bd);
-												$conexion = mysqli_connect($host, $username, $password, $dbname);
-
-                                                $rec2 = mysqli_query($conexion, "SELECT descripcion from edificios");
-                                                while ($row = mysqli_fetch_array($rec2)) {
-                                                    echo "<option>";
-                                                    echo $row['descripcion'];
-                                                    echo "</option>";
-                                                }
-                                                mysqli_close($conexion);
+													$rec2 = mysqli_query($conexion, "SELECT descripcion from edificios");
+													while ($row = mysqli_fetch_array($rec2)) {
+														echo "<option>";
+														echo $row['descripcion'];
+														echo "</option>";
+													}
+													mysqli_close($conexion);
                                                 ?>
                                             </select>                                       
                                         </div>
@@ -200,7 +185,7 @@ while ($row = mysqli_fetch_array($rec1)) {
                                         <div>
                                             <label>Fecha:</label>
 
-                                            <p> <input type="date" id="fecha" name="datepicker" required ></p>									
+                                            <p> <input type="date" id="fecha" name="datepicker" required ></p>												
                                         </div>
                                         <div>
                                             <label>Hora Inicio:</label>											

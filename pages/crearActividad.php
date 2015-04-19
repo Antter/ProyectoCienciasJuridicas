@@ -17,12 +17,6 @@ while ($row = mysql_fetch_array($query)) {
 ?>
 
 
-
-
-
-
-
-
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -75,11 +69,9 @@ and open the template in the editor.
 
 
 
-
-            $(document).ready(function () {
-
-
-                $("#retonoPOA").click(function () {
+$(document).on("click","#retonoPOA",function () {
+    
+   
 
                     $.ajax({
                         async: true,
@@ -94,18 +86,23 @@ and open the template in the editor.
                         error: problemas
                     });
                     return false;
-                });
+               
 
-                function llegadaCrear()
+                
+
+    
+    
+});
+
+function llegadaCrear()
                 {
                     $("#contenedor").load('pages/crearPOA.php');
                     //$("#contenedor").load('../cargarPOAs.php');
                 }
 
-
-
-
-                $("#retonoOBJ").click(function () {
+$(document).on("click","#retonoOBJ",function () {
+    
+    
                     //id = $(this).parents("tr").find("td").eq(0).html();
                     //alert(id);
                     id = $("#idPoa").val();
@@ -115,24 +112,27 @@ and open the template in the editor.
                         type: "POST",
                         dataType: "html",
                         contentType: "application/x-www-form-urlencoded",
-                        url: "pages/crearObjetivo.php",
+                        //url: "pages/crearObjetivo.php",
                         //beforeSend: inicioVer,
                         success: llegadaRetornoObj,
                         timeout: 4000,
                         error: problemas
                     });
                     return false;
-                });
+              
+                
 
+    
+    
+});
 
-                function llegadaRetornoObj()
+function llegadaRetornoObj()
                 {
                     $("#contenedor").load('pages/crearObjetivo.php', data1);
                 }
-
-
-
-                $("#retonoIND").click(function () {
+$(document).on("click","#retonoIND",function () {
+    
+ 
                     //id1 = $(this).parents("tr").find("td").eq(0).html();
                     // alert(id1); 
                     id1 = $("#idObj").val();
@@ -142,42 +142,111 @@ and open the template in the editor.
                         type: "POST",
                         dataType: "html",
                         contentType: "application/x-www-form-urlencoded",
-                        url: "pages/crearIndicador.php",
-                        beforeSend: inicioVer,
+                        //url: "pages/crearIndicador.php",
+                        //beforeSend: inicioVer,
                         success: llegadaRetornoInd,
                         timeout: 4000,
                         error: problemas
                     });
                     return false;
-                });
+                
 
 
-                function llegadaRetornoInd()
+              
+    
+    
+});
+
+  function llegadaRetornoInd()
                 {
                     $("#contenedor").load('pages/crearIndicador.php', data1);
                 }
 
+$(document).on("click",".verActividad",function () {
+    
+  
+                    id2 = $(this).parents("tr").find("td").eq(0).html();
+                    idInd = $("#idInd").val();
+                    //alert(id);      
+                    data2 = {ide: id2, idInd: idInd};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                       // url: "pages/actividad.php",
+                        beforeSend: inicioVer,
+                        success: llegadaVer,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+              
+    
+    
+});
+
+
+$(document).on("click",".eliminarActividad",function () {
+   
+   
+                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                    if (respuesta)
+                    {
+                        idac = $(this).parents("tr").find("td").eq(0).html();
+                        data3 = {idActividad: idac, idIndice: $("#idInd").val()};
+                        $.ajax({
+                            async: true,
+                            type: "POST",
+                            dataType: "html",
+                            contentType: "application/x-www-form-urlencoded",
+                            //url: "Datos/eliminarActividad.php",
+                            beforeSend: inicioEliminar,
+                            success: llegadaEliminar,
+                            timeout: 4000,
+                            error: problemas
+                        });
+                        return false;
+                    }
+                
+    
+    
+    
+});
 
 
 
+$(document).on("click",".editarActividad",function () {
+    
 
 
 
+                    id56 = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id);      
+                    data70 = {idAct: id56,
+                        idInd: $('#idInd').val()
+                    };
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        //: "application/x-www-form-urlencoded",
+                        //url: "pages/editarPOA.php",
+                        //beforeSend: inicioEliminar,
+                        success: llegadaEditarActividad,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+
+               
+    
+    
+});
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+            $(document).ready(function () {
 
 
                 $("#form5").submit(function (e) {
@@ -233,69 +302,6 @@ and open the template in the editor.
                     }
 
                 });
-
-                $(".verActividad").click(function () {
-                    id2 = $(this).parents("tr").find("td").eq(0).html();
-                    idInd = $("#idInd").val();
-                    //alert(id);      
-                    data2 = {ide: id2, idInd: idInd};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        contentType: "application/x-www-form-urlencoded",
-                        url: "pages/actividad.php",
-                        beforeSend: inicioVer,
-                        success: llegadaVer,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-                });
-                $(".eliminarActividad").click(function () {
-                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-                    if (respuesta)
-                    {
-                        idac = $(this).parents("tr").find("td").eq(0).html();
-                        data3 = {idActividad: idac, idIndice: $("#idInd").val()};
-                        $.ajax({
-                            async: true,
-                            type: "POST",
-                            dataType: "html",
-                            contentType: "application/x-www-form-urlencoded",
-                            url: "Datos/eliminarActividad.php",
-                            beforeSend: inicioEliminar,
-                            success: llegadaEliminar,
-                            timeout: 4000,
-                            error: problemas
-                        });
-                        return false;
-                    }
-                });
-
-                $(".editarActividad").click(function () {
-
-
-                    id56 = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id);      
-                    data70 = {idAct: id56,
-                        idInd: $('#idInd').val()
-                    };
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        //: "application/x-www-form-urlencoded",
-                        //url: "pages/editarPOA.php",
-                        //beforeSend: inicioEliminar,
-                        success: llegadaEditarActividad,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-
-                });
-
 
             });
 

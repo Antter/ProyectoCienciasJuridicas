@@ -20,16 +20,14 @@
 <?php $idusuario= $_SESSION['user_id']; ?> 
 
 <?php 
-
+	
 	$rol = $_SESSION['user_rol'];
 	require_once("../../conexion/conn.php"); 
 	$conexion = mysqli_connect($host, $username, $password, $dbname);
 	if($rol == 30){
-		//$query1 = mysqli_query($conexion, "SELECT Id_departamento FROM empleado where ='".$unidad."'");
 		$query = mysqli_query($conexion, "SELECT  Id_departamento FROM empleado where No_Empleado in (Select No_Empleado from usuario where id_Usuario='".$idusuario."')");
 		mysqli_data_seek ($query,0);
 		$extraido = mysqli_fetch_array($query);
-		//echo $extraido['Id_departamento'];
 		
 		
 		$consulta  = mysqli_query($conexion, "Select permisos.id_Permisos, Primer_nombre, Segundo_nombre, Primer_apellido, Segundo_Apellido, dias_permiso, 
@@ -39,6 +37,15 @@
 			inner join departamento_laboral on departamento_laboral.id_departamento_laboral = permisos.id_departamento where permisos.estado = 'En espera' 
 			and permisos.id_departamento = '".$extraido['Id_departamento']."' ORDER BY fecha asc");
 
+	}else{
+		if($rol == 50){
+			$consulta = mysqli_query($conexion, "Select permisos.id_Permisos, Primer_nombre, Segundo_nombre, Primer_apellido, Segundo_Apellido, dias_permiso, 
+			DATE_FORMAT(fecha,'%d-%m-%Y') as fecha, hora_inicio, hora_finalizacion, motivos.descripcion as mtd, 
+			departamento_laboral.nombre_departamento from permisos inner join motivos on permisos.id_motivo=motivos.Motivo_ID 
+			inner join empleado on empleado.No_Empleado=permisos.No_Empleado inner join persona on persona.N_identidad=empleado.N_identidad 
+			inner join departamento_laboral on departamento_laboral.id_departamento_laboral = permisos.id_departamento where permisos.estado = 'En espera' 
+			and permisos.dias_permiso >= '3' ORDER BY fecha asc");
+		}
 	}
 ?>
 
@@ -113,28 +120,15 @@ HTML;
                 echo <<<HTML
                 <td>
 				
-				
 				$pnombre
-			     $snombre 
+			    $snombre 
 				$papellido 
 				$sapellido 
 				
 				
 </td>
 HTML;
-     /*           echo <<<HTML
-                <td>
-				$pnombre 
-			
-				
-				</td>
-HTML;
-                echo <<<HTML
-                <td>$papellido</td>
-HTML;
-                echo <<<HTML
-                <td>$sapellido</td>
-HTML;*/
+    
                 echo <<<HTML
                 <td>$dias</td>
 HTML;
@@ -153,14 +147,13 @@ HTML;
                 echo <<<HTML
                 <td>$Depto</td>
                
-            
                 <td><center>
 					<button class="aprobarb btn btn-primary glyphicon glyphicon-thumbs-up"  title="Aprobar">
-                </center></td>;
+                </center></td>
 				
 				<td><center>
 					<button class="denegarb btn btn-primary glyphicon glyphicon-edit"  title="Denegar">
-                </center></td>;
+                </center></td>
                         
 HTML;
                 echo "</tr>";

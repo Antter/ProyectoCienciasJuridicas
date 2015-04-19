@@ -28,6 +28,7 @@
             
             data={
                     rol:$('#nombreRol').val(),
+                    nivel1:$('#nivel').val(),
                     descripcion:$('#descripcion').val(),
                     tipoProcedimiento:"insertar"
                 };
@@ -134,6 +135,10 @@
                                 <div id="desrol" class="form-group">
                                     <label>Descripción</label>
                                     <input title="Se necesita una descripción" type="text"  class="form-control" name="descripcion" id="descripcion" required >
+                                </div>
+                                <div id="rolni" class="form-group">
+                                    <label>Nivel Rol</label>
+                                    <input title="Se necesita un nivel en numeros" type="text"  class="form-control" name="nivel" id="nivel" required >
                                 </div>
 
                                 <button type="submit" name="submit"  id="submit" class="submit btn btn-primary" >Agregar</button>

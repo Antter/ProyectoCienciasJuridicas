@@ -13,11 +13,21 @@ $resultado2=mysql_query("SELECT * FROM empleado_has_cargo inner join cargo on ca
 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial', '', 10);
-$pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 10 ,8, 20 , 20,'PNG');
+$pdf->SetFont('Arial', '', 18);
+$pdf->Image($maindir.'assets/img/lucen-aspicio.png', 50,30,200,200, 'PNG');
+$pdf->Image($maindir.'assets/img/logo_unah.png' , 10,5,20,35, 'PNG');
+$pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 170,8, 35 , 35,'PNG');
 $pdf->Cell(18, 10, '', 0);
-$pdf->Cell(120, 10, '			Perfil Empleado', 0);
-$pdf->SetFont('Arial', '', 9);
+$pdf->SetFont('Arial', '', 18);
+$pdf->Cell(5, 10, '', 0);
+$pdf->Cell(70, 10, 'Universidad Nacional Autonoma de Honduras', 0);
+$pdf->Ln(25);
+$pdf->SetFont('Arial', 'U', 14);
+$pdf->Cell(30, 8, ' ', 0,0,"C");
+$pdf->Cell(130, 8, ' Perfil de Empleado', 0,0,"C");
+$pdf->Rect(6, 45, 200, 240 ,'D');
+$pdf->SetFont('Arial', '', 12);
+$pdf->Ln(10);
 $pdf->Cell(50, 10, 'Hoy: '.date('d-m-Y').'', 0);
 $pdf->Ln(20);
 if($row = mysql_fetch_array($resultado) or die("Error en: " . mysql_error())){
@@ -26,18 +36,18 @@ if($row = mysql_fetch_array($resultado) or die("Error en: " . mysql_error())){
       $apellidoE=$row['Primer_apellido'];
       $apellidoE2=$row['Segundo_apellido'];
       $nombreC =$nombreE." ".$nombreE2." ".$apellidoE." ".$apellidoE2;
-$pdf->Cell(120, 9, '                                                                       INFORMACIÓN PERSONAL', 0);
+$pdf->Cell(120, 9, '                                                                       INFORMACION PERSONAL', 0);
 $pdf->Ln(10);
 
 
-$pdf->Cell(125, 8, 'Número de Identidad: '.$row['N_identidad'], 0);
+$pdf->Cell(125, 8, 'Nï¿½mero de Identidad: '.$row['N_identidad'], 0);
 $pdf->Cell(120, 10, 'Empleado: '.$id, 0);
 $pdf->Ln(5);
 $pdf->Cell(130, 8, 'Nombre: '.$nombreC, 0);
 $pdf->Ln(5);
 $pdf->Cell(130, 8, 'Fecha de ingreso como empleado: '.$row['Fecha_ingreso'], 0);
 $pdf->Ln(15);
-$pdf->Cell(120, 9, '                                                                       INFORMACIÓN LABORAL', 0);
+$pdf->Cell(120, 9, '                                                                       INFORMACION LABORAL', 0);
 $pdf->Ln(10);
 
  while ($row2=mysql_fetch_array($resultado2)) {
@@ -58,7 +68,7 @@ $pdf->Ln(15);
  
  $pdf->Cell(120, 9, '                                                                          OBSERVACIONES', 0);
  $pdf->Ln(10);
- $pdf->Cell(125, 8, 'Observación: '.$row['Observacion'], 0);
+ $pdf->Cell(125, 8, 'Observacion: '.$row['Observacion'], 0);
 $pdf->Ln(5);
  
 /*$pdf->Cell(135, 8, 'Asunto: '.$result['DescripcionAsunto'], 0);

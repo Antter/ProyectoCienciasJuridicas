@@ -31,21 +31,6 @@ if(isset($_POST['identi'])){
     $queryTEL = mysql_query("SELECT ID_Telefono, Tipo, Numero FROM telefono WHERE N_identidad= '".$_POST['identi']."'");
 }
 
-if(isset($_POST['identi'])){
-    $queryFA = mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$_POST['identi']."'");
-}
-
-if(isset($_POST['identi'])){
-    $queryEL = mysql_query("SELECT ID_Experiencia_laboral, Nombre_empresa, Tiempo FROM experiencia_laboral WHERE N_identidad= '".$_POST['identi']."'");
-}
-
-if(isset($_POST['identi'])){
-    $queryEA = mysql_query("SELECT ID_Experiencia_academica, Institucion, Tiempo FROM experiencia_academica WHERE N_identidad= '".$_POST['identi']."'");
-}
-
-
-
-
 
 if (isset($_POST['identi'])) {
     $identi = $_POST['identi'];
@@ -66,11 +51,11 @@ if (isset($_POST['identi'])) {
         $nacionalidad = $row['Nacionalidad'];
 
         //Experiencia Académica
-        $query = mysql_query("SELECT ID_Experiencia_academica, Institucion, Tiempo FROM experiencia_academica WHERE N_identidad= '" . $_POST['identi'] . "'");
+        $queryEA = mysql_query("SELECT experiencia_academica.ID_Experiencia_academica, Institucion, Tiempo,Clase FROM experiencia_academica inner join clases_has_experiencia_academica on clases_has_experiencia_academica.ID_Experiencia_academica=experiencia_academica.ID_Experiencia_academica inner join clases on clases.ID_Clases=clases_has_experiencia_academica.ID_Clases WHERE N_identidad='". $_POST['identi'] ."'");
         //Formación académica
         $queryFA = mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$_POST['identi']."'");
         //Experiencia laboral
-        $queryEL = mysql_query("SELECT ID_Experiencia_laboral, Nombre_empresa, Tiempo FROM experiencia_laboral WHERE N_identidad= '".$_POST['identi']."'");
+        $queryEL = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE N_identidad='".$_POST['identi']."'");
     
         
         
@@ -80,9 +65,12 @@ if (isset($_POST['identi'])) {
 }
 ?>
         
-         
+ <html lang="es">      
 
 <head>
+    
+    <meta charset="utf-8">
+    
     <script>
     $(document).ready(function(){
         $("form").submit(function(e) {
@@ -195,7 +183,7 @@ if (isset($_POST['identi'])) {
             identi:id,
             
             tipoE:$('#tipoE').val(),
-            titulo:$('#titulo').val(),
+            titulo:$('#tituloFA').val(),
             universidadFA:$('#universidadFA').val(),
             agregarFA:"si",
             tipoProcedimiento:"insetarFA"
@@ -363,6 +351,8 @@ if (isset($_POST['identi'])) {
         $('#telef').validCampo('0123456789-+ ');
     });  
 </script>
+
+
 </head>
 
 
@@ -670,6 +660,7 @@ HTML;
                                             <th>ID</th>
                                             <th>Nombre de la Empresa</th>
                                             <th>Tiempo (meses)</th>
+                                            <th>Cargo</th>
                                             <th>Editar</th>
                                         </tr>
                                         </thead>
@@ -683,6 +674,7 @@ HTML;
             $id = $row['ID_Experiencia_laboral'];
             $nomEmp = $row['Nombre_empresa'];
             $tiempo = $row['Tiempo'];
+            $cargo =  $row['cargo'];
 
             echo "<tr data-id='".$id."'>";
             echo <<<HTML
@@ -693,9 +685,13 @@ HTML;
 HTML;
             echo <<<HTML
             <td>$tiempo</td>
+            <td>$cargo</td>      
 HTML;
             echo <<<HTML
-                <td>
+            
+                 <td>
+            
+      
                 <center>
                     <button type="submit" class="actualELB btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="actualexLab" title="Editar">
                       </button>
@@ -750,6 +746,7 @@ HTML;
                                             <th>ID</th>
                                             <th>Institución</th>
                                             <th>Tiempo (meses)</th>
+                                            <th>clase</th>
                                             <th>Editar</th>
                                         </tr>
                                         </thead>
@@ -763,6 +760,7 @@ HTML;
             $id = $row['ID_Experiencia_academica'];
             $inst = $row['Institucion'];
             $tiempo = $row['Tiempo'];
+            $clase=$row['Clase'];
 
             echo "<tr data-id='".$id."'>";
             echo <<<HTML
@@ -773,6 +771,8 @@ HTML;
 HTML;
             echo <<<HTML
             <td>$tiempo</td>
+             <td>$clase</td>
+                    
 HTML;
             echo <<<HTML
                 <td>
@@ -973,7 +973,7 @@ HTML;
                                             </div>
                                             <div class="form-group">
                                                 <label>Título</label>
-                                                <select id="titulo" name="titulo" class="form-control">
+                                                <select id="tituloFA" name="titulo" class="form-control">
                                                     <?php
                                                     $pa=mysql_query("SELECT * FROM titulo");
                                                     while($row=mysql_fetch_array($pa)){
@@ -1211,3 +1211,4 @@ HTML;
 
 
 </body>
+</html>

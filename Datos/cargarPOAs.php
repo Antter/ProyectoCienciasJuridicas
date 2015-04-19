@@ -54,6 +54,7 @@ $query = mysql_query("SELECT * FROM poa  ORDER BY fecha_Fin", $enlace);
 
 $(document).ready(function() {
     $('#tabla_prioridad').dataTable({
+            
 	    "order": [[ 0, "asc" ]],
 	    "fnDrawCallback": function( oSettings ) {
 		
@@ -82,118 +83,6 @@ $(document).ready(function() {
 
 
     </body>
-    <script>
-
-        $(document).ready(function () {
-
-
-            $(".ver").click(function () {
-                id = $(this).parents("tr").find("td").eq(0).html();
-                //alert(id);      
-                data1 = {ide: id};
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    url: "pages/crearObjetivo.php",
-                    beforeSend: inicioVer,
-                    success: llegadaVer,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            });
-            $(".elimina").click(function () {
-                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-                if (respuesta)
-                {
-
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id);      
-                    data = {id: id};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        contentType: "application/x-www-form-urlencoded",
-                        url: "Datos/eliminarPOA.php",
-                        beforeSend: inicioEliminar,
-                        success: llegadaEliminar,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-                }
-            });
-
-            $(".editar").click(function () {
-
-
-                id = $(this).parents("tr").find("td").eq(0).html();
-                // alert(id);      
-                data4 = {id: id};
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    //: "application/x-www-form-urlencoded",
-                    //url: "pages/editarPOA.php",
-                    //beforeSend: inicioEliminar,
-                    success: llegadaEditarPOA,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-
-            });
-
-
-        });
-
-
-
-
-
-        function inicioVer()
-        {
-            var x = $("#contenedor");
-            x.html('Cargando...');
-        }
-
-        function inicioEliminar()
-        {
-            var x = $("#contenedor2");
-            x.html('Cargando...');
-        }
-        function inicioEnvio()
-        {
-            var x = $("#contenedor2");
-            x.html('Cargando...');
-        }
-        function llegadaEditarPOA()
-        {
-            $("#cuerpoEditar").load('pages/editarPOA.php', data4);
-            $('#editarPOA').modal('show');
-        }
-        function llegadaEliminar()
-        {
-            $("#contenedor2").load('Datos/eliminarPOA.php', data);
-        }
-        function llegadaVer()
-        {
-            $("#contenedor").load('pages/crearObjetivo.php', data1);
-        }
-        function llegadaGuardar()
-        {
-            $("#contenedor2").load('Datos/insertarPOA.php', data2);
-        }
-
-        function problemas()
-        {
-            $("#contenedor2").text('Problemas en el servidor.');
-        }
-
-    </script>
+    
 
 </html>

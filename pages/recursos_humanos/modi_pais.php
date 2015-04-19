@@ -29,23 +29,21 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
     
      <script>
 
-   
-
-            var x;
-            x = $(document);
-            x.ready(inicio);
+    $(document).ready(function(){
+        $("form").submit(function(e) {
+            e.preventDefault();
             
-            
-        
-            function inicio()
-            {
-              
-                 var x;
+              var x;
                 x = $("#actualizarP");
                 x.click(editarPais);
-            };
+                
+                var x;
+                x = $("#cancelarP");
+                x.click(cancelarPais);
             
-   
+        });
+    });
+
 
                 function editarPais()
             {
@@ -77,6 +75,34 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
             }
             }
             
+              function cancelarPais()
+            {
+                
+                     
+                     
+                     
+              
+                 data ={
+                       
+                    }; 
+                
+                
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                 //  url:"pages/recursos_humanos/modi_universidad.php",  
+                    beforeSend: inicioEnvio,
+                    success: cancelareditarP,
+                    timeout: 4000,
+                    error: problemas
+                });
+            
+                return false;
+            
+            }
+            
 
 
             function inicioEnvio()
@@ -88,6 +114,12 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
              function llegadaEditarPais()
             {
                 $("#contenedor2").load('Datos/actualizarPais.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function cancelareditarP()
+            {
+                $("#contenedor").load('pages/recursos_humanos/Pais.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          
@@ -153,7 +185,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                                 <button id="actualizarP" class="btn btn-primary" class="icon-ok" >Actualizar</button>
 
 
-                                <button type="reset" class="btn btn-default"   >Cancelar</button>
+                                <button id="cancelarP" type="reset" class="btn btn-default"   >Cancelar</button>
 
 
 

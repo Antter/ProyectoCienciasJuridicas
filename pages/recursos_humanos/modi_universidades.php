@@ -52,6 +52,14 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                  var x;
                 x = $("#actualizarU");
                 x.click(editarUni);
+                
+                
+                var x;
+                x = $("#cancelarU");
+                x.click(editarcancel);
+                
+                
+                
             };
             
    
@@ -84,6 +92,33 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
             }
             }
             
+                       function editarcancel()
+            {
+              
+                 
+              
+                 data ={
+                    }; 
+                
+                
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                 //  url:"pages/recursos_humanos/modi_universidad.php",  
+                    beforeSend: inicioEnvio,
+                    success: llegadaEditarUni,
+                    timeout: 4000,
+                    error: problemas
+                });
+            
+                return false;
+          
+            }
+            
+            
+            
 
 
             function inicioEnvio()
@@ -95,6 +130,12 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
              function llegadaEditarUni()
             {
                 $("#contenedor2").load('Datos/actualizarUniversidad.php',data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
+            
+              function llegadaEditarUni()
+            {
+                $("#contenedor").load('pages/recursos_humanos/universidades.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          
@@ -191,7 +232,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
                                         <button id="actualizarU" class="btn btn-primary" class="icon-ok" >Actualizar</button>
 
 
-                                        <button type="button" class="btn btn-default"  onClick="location.href='universidades.php'"  >Cancelar</button>
+                                        <button id="cancelarU" type="button" class="btn btn-default" >Cancelar</button>
 
                                     </form>
 

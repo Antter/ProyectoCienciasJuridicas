@@ -44,14 +44,9 @@
                                 <a id="personas" href="#">Personas</a>
                             </li>
                             <li>
-                                <a id="expAcademica" href="#">Experiencia Academica</a>
+                                <a id="Busqueda" href="#">Busqueda</a>
                             </li>
-                            <li>
-                                <a id="formAcad" href="#">Formación Academica</a>
-                            </li>
-                            <li>
-                                <a id="expLab" href="#">Experiencia Laboral</a>
-                            </li>
+                    
                    
                 
             </ul>
@@ -70,15 +65,28 @@
             </ul>
         </li>
         
+          <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#userMenu3">
+          <h5><i class="fa fa-user fa-fw"></i>Gestion de usuarios <i class="glyphicon glyphicon-chevron-down"></i></h5>
+          </a>
+            <ul class="list-unstyled collapse in" id="userMenu3">
+                
+                 <li><a id="usuarios" href="#">Usuarios</a>
+                </li>
+		<li><a id="roles" href="#">Roles</a>
+                </li>
+                
+            </ul>
+        </li>
+        
         
          
         
         
-        <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu3">
+        <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu4">
           <h5><i class="fa fa-edit fa-fw"></i>Tablas de mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
           </a>
         
-            <ul class="list-unstyled collapse" id="menu3">
+            <ul class="list-unstyled collapse" id="menu4">
                 <li><a id="idiomas" href="#">Idiomas</a>
                 </li>
                 <li><a id="clases" href="#">Clases</a>
@@ -95,10 +103,9 @@
                 </li>
                   <li><a id="pais" href="#">Paises</a>
                 </li>
-				 <li><a id="usuarios" href="#">Usuarios</a>
+                  <li><a id="titulo" href="#">Titulo</a>
                 </li>
-				 <li><a id="roles" href="#">Roles</a>
-                </li>
+		
                 
             </ul>
         </li>
@@ -223,150 +230,7 @@
                 </a>
             </div>
           
-             <div class="row">
-           <!--     <div class="col-lg-8"> -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Gráfica de Área
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Acciones
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div id="morris-area-chart"></div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Gráfica de Barras
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Acciones
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3325</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:20 PM</td>
-                                                    <td>$234.34</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3324</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:03 PM</td>
-                                                    <td>$724.17</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3323</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:00 PM</td>
-                                                    <td>$23.71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:49 PM</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:23 PM</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:15 PM</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:13 PM</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
-                                </div>
-                                <!-- /.col-lg-8 (nested) -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.panel-body -->
-                        
-                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
-                            <a href="#" class="btn btn-default btn-block">View Details</a>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    </div>
+            
                                                 
            <!--  </div> -->
                        
@@ -448,20 +312,21 @@
          var x;
         x = $("#personas");
         x.click(personas);
-        var x;
-        x = $("#expAcademica");
-        x.click(expAcademica);
-        var x;
-        x = $("#expLab");
-        x.click(expLab);
-        
-        var x;
-        x = $("#formAcad");
-        x.click(formAcad);
+   
         
         var x;
         x = $("#gestionGC");
         x.click(gestiondeGrupos);
+        
+        
+         var x;
+        x = $("#titulo");
+        x.click(Titulo);
+        
+        
+         var x;
+        x = $("#Busqueda");
+        x.click(busqueda);
         
   
                 
@@ -662,48 +527,7 @@
         });
         return false;
     }
-    function expAcademica()
-    {
-        $.ajax({
-            async: true,
-            type: "POST",
-            dataType: "html",
-            contentType: "application/x-www-form-urlencoded",
-            beforeSend: inicioEnvio,
-            success: llegadaexpAcademica,
-            timeout: 4000,
-            error: problemas
-        });
-        return false;
-    }
-    function expLab()
-    {
-        $.ajax({
-            async: true,
-            type: "POST",
-            dataType: "html",
-            contentType: "application/x-www-form-urlencoded",
-            beforeSend: inicioEnvio,
-            success: llegadaexpLab,
-            timeout: 4000,
-            error: problemas
-        });
-        return false;
-    }
-    function formAcad()
-    {
-        $.ajax({
-            async: true,
-            type: "POST",
-            dataType: "html",
-            contentType: "application/x-www-form-urlencoded",
-            beforeSend: inicioEnvio,
-            success: llegadaformacad,
-            timeout: 4000,
-            error: problemas
-        });
-        return false;
-    }
+  
     
         function gestiondeGrupos()
     {
@@ -719,7 +543,36 @@
         });
         return false;
     }
-       
+    
+            function Titulo()
+    {
+        $.ajax({
+            async: true,
+            type: "POST",
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded",
+            beforeSend: inicioEnvio,
+            success: llegadaTitulo,
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    }
+    
+                  function busqueda()
+    {
+        $.ajax({
+            async: true,
+            type: "POST",
+            dataType: "html",
+            contentType: "application/x-www-form-urlencoded",
+            beforeSend: inicioEnvio,
+            success: llegadabusqueda,
+            timeout: 4000,
+            error: problemas
+        });
+        return false;
+    } 
  
             
             
@@ -800,25 +653,22 @@
     {
         $("#contenedor").load('pages/recursos_humanos/cv/menuPersona.php');
     }
-    function llegadaexpAcademica()
-    {
-        $("#contenedor").load('pages/recursos_humanos/cv/menuExpAcad.php');
-    }
-    function llegadaexpLab()
-    {
-        $("#contenedor").load('pages/recursos_humanos/cv/menuExpLaboral.php');
-    }
-    function llegadaformacad()
-    {
-        $("#contenedor").load('pages/recursos_humanos/cv/menuformAcad.php');
-    }
-    
+
     
       function llegadagestiondeGrupos()
     {
         $("#contenedor").load('pages/recursos_humanos/gestion_Grupos_comite.php');
     }
     
+       function llegadaTitulo()
+    {
+        $("#contenedor").load('pages/recursos_humanos/Titulo.php');
+    }
+    
+        function llegadabusqueda()
+    {
+        $("#contenedor").load('pages/recursos_humanos/cv/BusquedaAvanzada.php');
+    }
 
             
             

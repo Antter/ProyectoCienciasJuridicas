@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/pages/recursos_humanos/BusquedaAvanzada.php</file>
-            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/Datos/consultaRH.php</file>
-            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/Datos/cargarPersonas.php</file>
+            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/pages/recursos_humanos/cv/nuevo/personaAgregar.php</file>
+            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/pages/recursos_humanos/cv/EditarCV.php</file>
+            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/pages/recursos_humanos/cv/menuPersona.php</file>
+            <file>file:/C:/xampp/htdocs/SistemaCienciasJuridicas/pages/recursos_humanos/modi_pais.php</file>
         </group>
     </open-files>
 </project-private>

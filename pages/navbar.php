@@ -78,7 +78,9 @@ HTML;
                 <li><a role="button" href="javascript:ajax_('$url');">Permisos</a></li>
 
 HTML;
+                
               }
+              if($rol >= 40){
              // pagina del recursos humanos
             if($contenido == 'recursos_humanos') 
               {
@@ -96,7 +98,7 @@ HTML;
 
 HTML;
               }
-			  
+              }	  
         if($rol >= 40){
              // pagina del modulo de gestion de folios
             if($contenido == 'gestion_de_folios') 

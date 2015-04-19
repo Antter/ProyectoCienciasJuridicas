@@ -44,12 +44,8 @@ while ($row = mysql_fetch_array($query)) {
         <script>
 
 
-            $(document).ready(function() {
-
-
-                $("#retonoPOA").click(function(){
-                    
-                    $.ajax({
+ $(document).on("click","#retonoPOA",function() {
+       $.ajax({
         async:true,
         type: "POST",
         dataType: "html",
@@ -62,13 +58,97 @@ while ($row = mysql_fetch_array($query)) {
         error:problemas
     }); 
     return false;
-                });
 
-function llegadaCrear()
+     
+     
+     
+ });
+ 
+ 
+   function llegadaCrear()
 {
     $("#contenedor").load('pages/crearPOA.php');
      //$("#contenedor").load('../cargarPOAs.php');
 }
+ 
+ 
+ $(document).on("click",".verObjetivo",function() {
+    
+   
+                    id1 = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id1);      
+                    data1 = {ide: id1};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "pages/crearIndicador.php",
+                        //beforeSend: inicioVer,
+                        success: llegadaVerObjetivo,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                
+     
+     
+     
+ });
+ $(document).on("click",".eliminarObjetivo",function() {
+ 
+                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                    if (respuesta)
+                    {
+                        id2 = $(this).parents("tr").find("td").eq(0).html();
+                        // alert(id2)
+
+                        data2 = {id: id2, idPOA: $("#idPOA").val()};
+                        $.ajax({
+                            async: true,
+                            type: "POST",
+                            dataType: "html",
+                            contentType: "application/x-www-form-urlencoded",
+                            //url: "Datos/eliminarObjetivo.php",
+                            //beforeSend: inicioEliminar,
+                            success: llegadaElminarObjetivo,
+                            timeout: 4000,
+                            error: problemas
+                        });
+                        return false;
+                    }
+                 
+     
+     
+     
+ });
+ $(document).on("click",".editarObjetivo",function() {
+     
+                   id = $(this).parents("tr").find("td").eq(0).html();
+                    // alert(id);      
+                    data4 = {idObj: id,
+                        
+                        idPOA:$('#idPOA').val()
+                    };
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        //: "application/x-www-form-urlencoded",
+                        //url: "pages/editarPOA.php",
+                        //beforeSend: inicioEliminar,
+                        success: llegadaEditarObjetivo,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+
+                 
+     
+     
+ });
+
+            $(document).ready(function() {
 
 
                 $("#form").submit(function(e) {
@@ -98,71 +178,6 @@ function llegadaCrear()
                     return false;
 
                 });
-
-                $(".verObjetivo ").click(function() {
-                    id1 = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id1);      
-                    data1 = {ide: id1};
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        contentType: "application/x-www-form-urlencoded",
-                        url: "pages/crearIndicador.php",
-                        beforeSend: inicioVer,
-                        success: llegadaVerObjetivo,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-                });
-                $(".eliminarObjetivo").click(function() {
-                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-                    if (respuesta)
-                    {
-                        id2 = $(this).parents("tr").find("td").eq(0).html();
-                        // alert(id2)
-
-                        data2 = {id: id2, idPOA: $("#idPOA").val()};
-                        $.ajax({
-                            async: true,
-                            type: "POST",
-                            dataType: "html",
-                            contentType: "application/x-www-form-urlencoded",
-                            url: "Datos/eliminarObjetivo.php",
-                            beforeSend: inicioEliminar,
-                            success: llegadaElminarObjetivo,
-                            timeout: 4000,
-                            error: problemas
-                        });
-                        return false;
-                    }
-                });
-
-                $(".editarObjetivo").click(function() {
-
-
-                    id = $(this).parents("tr").find("td").eq(0).html();
-                    // alert(id);      
-                    data4 = {idObj: id,
-                        
-                        idPOA:$('#idPOA').val()
-                    };
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        dataType: "html",
-                        //: "application/x-www-form-urlencoded",
-                        //url: "pages/editarPOA.php",
-                        //beforeSend: inicioEliminar,
-                        success: llegadaEditarObjetivo,
-                        timeout: 4000,
-                        error: problemas
-                    });
-                    return false;
-
-                });
-
 
             });
 

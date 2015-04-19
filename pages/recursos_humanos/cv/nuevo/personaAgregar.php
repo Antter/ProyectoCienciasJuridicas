@@ -15,6 +15,7 @@ function limpiar($tags)
 
 
 //Información Personal
+if(isset($_POST['agregarPE'])){
 if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_POST['primerApellido']) and !empty($_POST['segundoApellido'])
     and !empty($_POST['direccion']) and !empty($_POST['email'])
 ) {
@@ -33,18 +34,43 @@ if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_
     $date = date('Y-m-d');
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         if ($fNac < $date) {
-            mysql_query("INSERT INTO persona (N_identidad, Primer_nombre, Segundo_nombre, Primer_apellido,
+         $queryIP=mysql_query("INSERT INTO persona (N_identidad, Primer_nombre, Segundo_nombre, Primer_apellido,
                 Segundo_apellido, Fecha_nacimiento, Sexo, Direccion, Correo_electronico, Estado_Civil, Nacionalidad)
                 VALUES ('$identi', '$pNombre','$sNombre','$pApellido','$sApellido','$fNac','$sexo','$direc', '$email', '$estCivil','$nacionalidad')");
-            echo $pNombre . " " . $pApellido . " ha sido agregado(a) con éxito!";
-        } else echo 'Fecha incorrecta, datos no serán guardados!';
-    } else {
-        echo 'Correo electrónico inválido, datos no serán guardados!';
+            
+             if($queryIP){
+        
+           $mensaje = " ".$pNombre . " " . $pApellido . " ha sido agregado(a) con éxito!";
+            $codMensaje = 1;
+    
+    
+   }else{
+           $mensaje = 'error al ingresar el registro o registro actualmente existente';
+           $codMensaje = 0;
+       
+   }
+            
+           
+            } else {
+            
+            $mensaje = 'Fecha incorrecta, datos no serán guardados!';
+           $codMensaje = 0;
+            
+            
+            }
+        
+        
+            }else {
+       
+        
+        $mensaje = 'Correo electrónico inválido, datos no serán guardados!';
+           $codMensaje = 0;
     }
+}
 }
 
 //Formación Académica
-if (!empty($_POST['identi'])and isset($_POST['agregarFA'])) {
+if (isset($_POST['identi']) and isset($_POST['agregarFA'])) {
     
   
     

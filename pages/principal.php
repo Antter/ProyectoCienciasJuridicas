@@ -52,13 +52,13 @@
                             <a  id="estadisticas" href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas</a>
                             
                         </li>
-                        <li  >
-                            <a id="ajustes" href="#"><i class="fa fa-gears fa-fw"></i>Mantenimineto</a>
-                        </li>
-                        
-                        
-                        
-                        
+                                               <li data-popover="true" rel="popover" data-placement="right"><a href="#" data-target=".premium-menu" class="nav-header collapsed" data-toggle="collapse"><i class="fa fa-gears fa-fw"></i>Mantenimineto<i class="fa fa-collapse"></i></a></li>
+                    <li><ul class="premium-menu nav nav-list collapse">
+                            <li ><a id="areas" href="premium-profile.html"><span class="fa fa-caret-right"></span> Areas</a></li>
+                            <li ><a id="tipoDeAreas" href="premium-blog.html"><span class="fa fa-caret-right"></span> Tipos De Areas</a></li>
+                        </ul>
+                    </li>
+                                         
                         
                     </ul>
                 </div>

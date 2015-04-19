@@ -7,8 +7,8 @@
 		 $rol=$_POST['nombre'];
 		 $codigo=$_POST['idRol'];	 
                  $descripcion=$_POST['descripcion'];
-                 echo $descripcion;
-                 echo $rol;
+                // echo $descripcion;
+                // echo $rol;
                 $query= mysql_query("UPDATE roles SET 
                  Descripcion='$descripcion',
                  nombre_Rol='$rol'
