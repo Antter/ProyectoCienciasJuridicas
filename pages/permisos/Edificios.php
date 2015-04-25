@@ -55,7 +55,7 @@ $rec = mysqli_query($conexion, "SELECT * from edificios");
                                             <tr>
                                             <th><strong>ID Edificio</strong></th>
                                              <th><strong>Nombre Edificio</strong></th>
-                                             <th><strong>Eliminar</strong></th>
+                                             <th><strong>Editar</strong></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -105,10 +105,6 @@ HTML;
 
 
 <script>
-$(document).ready(function(){
-                fn_dar_eliminar();               
-            });
- 
  var id;
  var data;
  var x;
@@ -120,7 +116,9 @@ $(document).ready(function(){
         x=$("#guardarEdificio");
         x.click(consultaEdificio);
         
-        
+        var x;
+        x=$(".elimina");
+        x.click(editarEdificio);
 	}
 	
 	function consultaEdificio() {
@@ -146,6 +144,27 @@ $(document).ready(function(){
             return false;
     }
 	
+	function editarEdificio(){
+		var id = $(this).parents("tr").find("td").eq(0).html();
+		var respuesta=confirm("¿Esta seguro de que desea cambiar el registro seleccionado?");
+        if (respuesta){  
+			data = {Edificio_ID:id, dedificio:$('#nmedificio').val()};
+			$.ajax({
+				async:true,
+				type: "POST",
+				dataType: "html",
+				data:data,
+				contentType: "application/x-www-form-urlencoded",
+				url:"pages/permisos/editarEdificios.php",     
+				beforeSend:inicioEnvio,
+				success:llegadaEditarEdificio,
+				timeout:4000,
+				error:problemas
+			});
+			return false;
+		}
+	}
+	
 	function inicioEnvio(){
     var x=$("#contenedor");
     x.html('Cargando...');
@@ -161,43 +180,13 @@ $(document).ready(function(){
     $("#contenedor").text('Problemas en el servidor.');
 	}
 	
-	function eliminarEdificio(){
-        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-        if (respuesta){  
-             data1 ={ Edificio_ID:id1};
-			
-		$.ajax({
-			async:true,
-			type: "POST",
-			dataType: "html",
-			contentType: "application/x-www-form-urlencoded",
-			url:"pages/permisos/eliminarEdificios.php",     
-			beforeSend:inicioEnvio,
-			//data:data,
-			success:llegadaeliminarEdificio,
-			timeout:4000,
-			error:problemas
-		}); 
-		return false;
-		}
-	}
 
-	function llegadaeliminarEdificio()
-            {
-                $("#contenedor").load('pages/permisos/eliminarEdificios.php',data1);
-				alert("Transacción completada correctamente");
-				$("#contenedor").load('pages/permisos/edificios.php');
-            }
-			
-	function fn_dar_eliminar(){
-          
-		$(".elimina").click(function(){
-			id1 = $(this).parents("tr").find("td").eq(0).html();
-			//alert(id1);
-			eliminarEdificio();
-		  
-		});
-	};
+	function llegadaEditarEdificio()
+	{
+		$("#contenedor").load('pages/permisos/editarEdificios.php',data);
+		alert("Transacción completada correctamente");
+		$("#contenedor").load('pages/permisos/Edificios.php');
+	}
 
 	
 </script>

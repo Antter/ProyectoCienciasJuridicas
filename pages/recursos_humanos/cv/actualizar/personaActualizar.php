@@ -22,104 +22,7 @@ session_start();
                 $estCivil = $row['Estado_Civil'];
                 $nacionalidad = $row['Nacionalidad'];
 
-            echo '<form role="form" method="post" class="form-horizontal">
-                        <!-- .panel-heading -->
-                        <div class="panel-body">
-                            <h1>Actualización de Información Personal</h1></br>
-                                <div class="panel-group" id="accordion">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <label><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Datos Generales</label>
-                                            </h4>
-                                        </div>
-                                            <div class="panel-body">
-                                                <div class="col-lg-8">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Número de Identidad</label>
-                                                            <div class="col-sm-7"><input id="identidad" class="form-control" name="identidad"  value="'.$id.'" required></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer nombre</label>
-                                                            <div class="col-sm-7"><input id="primerNombre" class="form-control" name="primerNombre" value="'.$pNombre.'" required></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label">Segundo nombre</label>
-                                                            <div class="col-sm-7"><input id="segundoNombre" class="form-control" name="segundoNombre" value="'.$sNombre.'"></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer Apellido</label>
-                                                            <div class="col-sm-7"><input id="primerApellido" class="form-control" name="primerApellido" value="'.$pApellido.'" required></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
-                                                            <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" value="'.$sApellido.'" required></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>';
-                                                            if($sexo == 'F'){
-                                                                echo '<div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino';
-                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>';
-                                                            }
-                                                            if($sexo == 'M'){
-                                                                echo '<div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F">&nbsp;Femenino';
-                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M" checked>&nbsp;Masculino</div>';
-                                                            }
-                                                        echo '</div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Nacionalidad</label>
-                                                            <div class="col-sm-7"><input id="nacionalidad" class="form-control" name="nacionalidad" value="'.$nacionalidad.'" required></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Fecha de Nacimiento</strong></label>
-                                                            <div class="col-sm-7"><input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd" value="'.$fNac.'" required><br></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Estado civil</label>
-                                                            <div class="col-sm-7"><select class="form-control" id="estCivil" name="estCivil">
-                                                                <option value="soltero"';
-                                                                if($estCivil == "Soltero") echo "selected";
-                                                                echo '>Soltero</option>
-                                                                <option value="casado"';
-                                                                if($estCivil == "Casado") echo "selected";
-                                                                echo '>Casado</option>
-                                                                <option value="divorciado"';
-                                                                if($estCivil == "Divorciado") echo "selected";
-                                                                echo '>Divorciado</option>
-                                                                <option value="viudo"';
-                                                                if($estCivil == "Viudo") echo "selected";
-                                                                echo'>Viudo</option>';
-                                                                echo '
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <label><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Información de contacto</label>
-                                            </h4>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="col-lg-8">
-                                                <div class="form-group">
-                                                    <label class="col-sm-5 control-label">Dirección</label>
-                                                    <div class="col-sm-7"><textarea id="direccion" class="form-control" rows="3" name="direccion">'.$direc.'</textarea></div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Correo electrónico</label>
-                                                    <div class="col-sm-7"><input id="email" class="form-control" name="email" value="'.$email.'" required></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </br><div class="alert alert-info" role="alert">IMPORTANTE: Los campos marcados con el signo <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> son obligatorios.</div>
-                                </br><button type="submit" id="actualizar" class="btn btn-primary">Guardar Información</button>
-                                </div>
-                                </form>';
+          
             }
         }
 
@@ -129,9 +32,9 @@ session_start();
         }
 
         //Información Personal
-	  	if(!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_POST['segundoNombre']) and !empty($_POST['primerApellido'])and !empty($_POST['segundoApellido'])
+	  	if(!empty($_POST['identi']) and !empty($_POST['primerNombre']) and !empty($_POST['primerApellido'])
             and !empty($_POST['direccion'])and !empty($_POST['email'])){
-            $identi=limpiar($_POST['identidad']);
+            $identi=limpiar($_POST['identi']);
             $pNombre=limpiar($_POST['primerNombre']);
             $sNombre=limpiar($_POST['segundoNombre']);
             $pApellido=limpiar($_POST['primerApellido']);
@@ -162,22 +65,15 @@ session_start();
      * and open the template in the editor.
      */
 
-    var y;
-    y = $(document);
-    y.ready(inicioAct);
+   
 
-    function inicioAct()
-    {
-        var y;
-        y = $("#actualizar");
-        y.click(actualizarPer);
-    }
-
-
-    function actualizarPer()
-    {
+     $(document).ready(function(){
+        $("form").submit(function(e) {
+            e.preventDefault();
+            
+          $(".ActualizarB").click(function(){
         data={
-            identidad:$('#identidad').val(),
+            identi:$('#identidad').val(),
             primerNombre:$('#primerNombre').val(),
             segundoNombre:$('#segundoNombre').val(),
             primerApellido:$('#primerApellido').val(),
@@ -201,7 +97,13 @@ session_start();
             error: problemas
         });
         return false;
-    }
+    });
+            
+        });
+    });
+
+ 
+   
 
     function inicioEnvioAct()
     {
@@ -220,3 +122,134 @@ session_start();
     }
 
 </script>
+
+</script>
+<script src="pages/recursos_humanos/cv/validacion.js"></script>
+
+<script>
+    $(function(){
+        $('#identidad').validCampo('0123456789-');
+        $('#primerNombre').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#segundoNombre').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#primerApellido').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#segundoApellido').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+        $('#nacionalidad').validCampo(' abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚ');
+    });
+</script>
+
+
+<html lang="es">
+    <head></head>
+    <body>
+        
+        
+          <form role="form" method="post" class="form-horizontal">
+                        <!-- .panel-heading -->
+                        <div class="panel-body">
+                            <h1>Actualización de Información Personal</h1></br>
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <label><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Datos Generales</label>
+                                            </h4>
+                                        </div>
+                                            <div class="panel-body">
+                                                <div class="col-lg-8">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Número de Identidad</label>
+                                                            <div class="col-sm-7"><input id="identidad" class="form-control" name="identidad"  value="<?php echo "$id"; ?>" required></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer nombre</label>
+                                                            <div class="col-sm-7"><input id="primerNombre" class="form-control" name="primerNombre" value="<?php echo "$pNombre";?>" required></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label">Segundo nombre</label>
+                                                            <div class="col-sm-7"><input id="segundoNombre" class="form-control" name="segundoNombre" value=" <?php echo "$sNombre";?>" ></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer Apellido</label>
+                                                            <div class="col-sm-7"><input id="primerApellido" class="form-control" name="primerApellido" value="<?php echo"$pApellido"; ?>"required></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
+                                                            <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" value="<?php echo "$sApellido"; ?>" ></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>
+                                                            <?php
+                                                            if($sexo == 'F'){
+                                                                echo '<div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino';
+                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>';
+                                                            }
+                                                            if($sexo == 'M'){
+                                                                echo '<div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F">&nbsp;Femenino';
+                                                                echo '<input type="radio" name="sexo" id="sexoMas" value="M" checked>&nbsp;Masculino</div>';
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Nacionalidad</label>
+                                                            <div class="col-sm-7"><input id="nacionalidad" class="form-control" name="nacionalidad" value="<?php echo "$nacionalidad"; ?>" required></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Fecha de Nacimiento</strong></label>
+                                                            <div class="col-sm-7"><input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd" value="<?php echo"$fNac";?>" required><br></div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Estado civil</label>
+                                                            <div class="col-sm-7"><select class="form-control" id="estCivil" name="estCivil">
+                                                                    <?php
+                                                                echo '"<option value="soltero"';
+                                                                if($estCivil == "Soltero") echo "selected";
+                                                                echo '>Soltero</option>
+                                                                <option value="casado"';
+                                                                if($estCivil == "Casado") echo "selected";
+                                                                echo '>Casado</option>
+                                                                <option value="divorciado"';
+                                                                if($estCivil == "Divorciado") echo "selected";
+                                                                echo '>Divorciado</option>
+                                                                <option value="viudo"';
+                                                                if($estCivil == "Viudo") echo "selected";
+                                                                echo'>Viudo</option>';
+                                                                
+                                                                        ?>
+                                                                </select>
+                                                                        
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <label><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Información de contacto</label>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label">Dirección</label>
+                                                    <div class="col-sm-7"><textarea id="direccion" class="form-control" rows="3" name="direccion"><?php echo"$direc"; ?></textarea></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Correo electrónico</label>
+                                                    <div class="col-sm-7"><input id="email" class="form-control" name="email" value="<?php echo "$email"; ?>" required></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </br><div class="alert alert-info" role="alert">IMPORTANTE: Los campos marcados con el signo <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> son obligatorios.</div>
+                                </br><button type="submit" id="actualizar" class="ActualizarB btn btn-primary">Guardar Información</button>
+                                </div>
+                                </form>
+        
+        
+        
+        
+    </body>
+    
+</html>

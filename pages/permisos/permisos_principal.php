@@ -16,7 +16,7 @@
   require_once($maindir."funciones/timeout.php");
 
   require_once($maindir."pages/navbar.php");
-  require_once($maindir."pages/permisos/menu_permisos.php");
+
 
 ?>
 
@@ -48,11 +48,12 @@
 			inner join departamento_laboral on departamento_laboral.id_departamento_laboral = permisos.id_departamento where  
 			 permisos.id_departamento = '".$extraido['Id_departamento']."' and permisos.No_Empleado='".$extraido['No_Empleado']."' ORDER BY fecha asc");
 	
-?>
-  
-   <div class="col-sm-9">
-           <div class="row mt">
-                  <div class="col-md-12">
+		require_once($maindir."pages/permisos/menu_permisos.php");
+	?>
+
+<div class="container-fluid">
+<div class="row">
+  <div class="col-sm-9">
                       <div id="contenedor" class="content-panel">
 				   
 
@@ -61,10 +62,9 @@
                         </div>
                         <div class="panel-heading">
 						
-                            Estado de sus Solicitudes  .
+                            Estado de sus Solicitudes  
 							
-							
-							 <div class="box-body table-responsive">
+						<div class="box-body table-responsive">
 		    <?php
             
 			    echo <<<HTML
@@ -78,12 +78,11 @@
 								<th><strong>Segundo Apellido</strong></th>-->
 								<th><strong>Días</strong></th>
 								<th><strong>Fecha Solicitud</strong></th>
-								<th><strong>Hora Inicio Nombre</strong></th>
+								<th><strong>Hora Inicio</strong></th>
 								<th><strong>Hora Finalización</strong></th>												
 								<th><strong>Motivo</strong></th>
 								<th><strong>Departamento</strong></th>
 								<th><strong>Estado</strong></th>
-								<th><strong>Exporte</strong></th>
 								
 							</tr>
 						</thead>
@@ -148,35 +147,10 @@ HTML;
 				</center></td>
 				
 HTML;
-				if($estado=="Aprobado"){
-				echo<<<HTML
-				<td><center>
-					<button class="btn btn-default pull-right" data-mode="verPDF" data-id=$idP href="#">ExportarPDF</button>
-                </center></td>
-HTML;
-				}
 				
-				if($estado!="Aprobado"){
-				echo<<<HTML
-				<td><center>
-					<button class="btn btn-default>Pendiente</button>
-                </center></td>
-HTML;
-				}
 
-				
-					
-				
-            
-
-                
-				
 				echo "</tr>";
-				
-				
-				
-
-				
+	
             }
 
              
@@ -204,35 +178,7 @@ HTML;
 	
 	
 <script>
-$( document ).ready(function() {
 
-	$(".btn-default").on('click',function(){
-          mode = $(this).data('mode');
-          id1 = $(this).data('id');
-		  alert(id1);
-          if(mode == "verPDF"){
-           
-			data={
-            id1:id1
-            };
-            $.ajax({
-                async:true,
-                type: "GET",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                url:"pages/permisos/crear_pdfpermiso.php", 
-                success:reportePDF,
-                timeout:4000,
-                error:problemas
-            }); 
-            return false;
-          }
-        });
-});
-
-function reportePDF(data){
-		window.open('pages/permisos/crear_pdfpermiso.php?id1='+id1);
-	}
 </script>
 	
 	

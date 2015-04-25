@@ -65,21 +65,7 @@
             </ul>
         </li>
         
-          <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#userMenu3">
-          <h5><i class="fa fa-user fa-fw"></i>Gestion de usuarios <i class="glyphicon glyphicon-chevron-down"></i></h5>
-          </a>
-            <ul class="list-unstyled collapse in" id="userMenu3">
-                
-                 <li><a id="usuarios" href="#">Usuarios</a>
-                </li>
-		<li><a id="roles" href="#">Roles</a>
-                </li>
-                
-            </ul>
-        </li>
-        
-        
-         
+ 
         
         
         <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu4">
@@ -272,13 +258,7 @@
                 x = $("#pais");
                 x.click(paises);
                 
-                var y;
-				y = $("#usuarios");
-				y.click(usuarios);
-				
-				var y1;
-				y1 = $("#roles");
-				y1.click(roles);
+         
 				
                 var x;
                 x=$("#departamentos");
@@ -453,35 +433,9 @@
                 return false;
             }
            
-            function usuarios()
-            {
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
-                    success: llegadaUsuarios,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
+    
 			
-			function roles()
-            {
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: inicioEnvio,
-                    success: llegadaRoles,
-                    timeout: 4000,
-                    error: problemas
-                });
-                return false;
-            }
+	
             
                     function persona()
             {
@@ -622,17 +576,7 @@
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 			
-			function llegadaUsuarios()
-            {
-                $("#contenedor").load('pages/recursos_humanos/Usuarios.php');
-                //$("#contenedor").load('../cargarPOAs.php');
-            }
-			
-			function llegadaRoles()
-            {
-                $("#contenedor").load('pages/recursos_humanos/Roles.php');
-                //$("#contenedor").load('../cargarPOAs.php');
-            }
+	
             
                      function llegadaempleado()
             {
@@ -667,7 +611,7 @@
     
         function llegadabusqueda()
     {
-        $("#contenedor").load('pages/recursos_humanos/cv/BusquedaAvanzada.php');
+        $("#contenedor").load('pages/recursos_humanos/cv/MenuBusqueda.php');
     }
 
             

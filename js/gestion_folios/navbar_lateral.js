@@ -22,6 +22,10 @@ var x;
         x3=$("#notificaciones");
         x3.click(notificaciones);
 
+        var x4;
+        x4=$("#misFolios");
+        x4.click(misFolios);
+
         var y;
         y=$("#mantenimiento_organizacion");
         y.click(mantenimiento_organizacion);
@@ -49,6 +53,10 @@ var x;
 		var y6;
 		y6=$("#mantenimiento_folios");
 		y6.click(mantenimiento_folios);
+		
+		var y7;
+		y7=$("#mantenimiento_categoria");
+		y7.click(mantenimiento_categoria);
        
     }
 
@@ -77,6 +85,20 @@ var x;
                 contentType: "application/x-www-form-urlencoded",
                 url:"pages/gestion_folios/folios.php", 
                 success:Folios,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+        }
+
+        function misFolios() {
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/gestion_folios/misFolios.php", 
+                success:MisFolios,
                 timeout:4000,
                 error:problemas
             }); 
@@ -208,6 +230,20 @@ var x;
             }); 
             return false;
         }
+		
+		function mantenimiento_categoria() {
+            $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url:"pages/mantenimientos_gestion_folios/mantenimiento_categorias_folios.php", 
+                success:MantenimientoCategorias,
+                timeout:4000,
+                error:problemas
+            }); 
+            return false;
+        }
 
         function GestionFolios(){
 
@@ -217,6 +253,11 @@ var x;
 
             $("#div_contenido").load('pages/gestion_folios/folios.php',data);
         }
+        function MisFolios(){
+
+            $("#div_contenido").load('pages/gestion_folios/misFolios.php');
+        }
+
         function Alertas(){
 
             $("#div_contenido").load('pages/gestion_folios/alertas.php');
@@ -252,6 +293,10 @@ var x;
 		function MantenimientoFolios(){
 
             $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_folios.php');
+        }
+		function MantenimientoCategorias(){
+
+            $("#div_contenido").load('pages/mantenimientos_gestion_folios/mantenimiento_categorias_folios.php');
         }
         function problemas(){
 

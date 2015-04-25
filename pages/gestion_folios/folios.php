@@ -11,7 +11,7 @@
     $contenido = 'gestion_de_folios';
 	$navbar_loc = 'contenido';
   }
-
+  
   require_once($maindir."funciones/check_session.php");
   
   require_once($maindir."funciones/timeout.php");
@@ -21,19 +21,19 @@
   require_once($maindir."conexion/config.inc.php");
 
   if(isset($_POST['tipoProcedimiento'])){
-    $tipoProcedimiento =  $_POST['tipoProcedimiento'];
-    if($tipoProcedimiento == 'insertar'){
+    $tipoProcedimiento = $_POST['tipoProcedimiento'];
+    if($tipoProcedimiento == 'insertar' || $tipoProcedimiento == 'insertar_con_folio_respuesta'){
       require_once("insertar_nuevo_folio.php");
-    }elseif($tipoProcedimiento == 'actualizar_folio_'){
+	}elseif($tipoProcedimiento == 'actualizar_folio_'){
 	  require_once("actualizar_datos_folio_codigo.php");
 	}
   }
 
   if(isset($_POST['tipoFolio'])){
-    $tipoFolio = $_POST['tipoFolio'];
-    if($tipoFolio == 'foliosEntrada'){
+    $tipo = $_POST['tipoFolio'];
+    if($tipo == 'foliosEntrada'){
 	  require_once('datos/datos_folios_entrada.php');
-	}elseif($tipoFolio == 'foliosSalida'){
+	}elseif($tipo == 'foliosSalida'){
 	  require_once('datos/datos_folios_salida.php');
 	}else{
 	  require_once('datos/datos_folios.php');
@@ -85,11 +85,13 @@
                                             <div class="box-header">
                                                 <i class="fa fa-inbox"></i>
                                                 <h3 class="box-title"> Folios </h3>
+												
                                             </div>
                                             <!-- compose message btn -->
                                             <!-- <a class="btn btn-block btn-primary" id="nuevo_folio" href="javascript:ajax_('pages/gestion_folios/nuevo_folio.php');"><i class="fa fa-pencil"></i> Nuevo Folio</a> -->
                                             <!-- Navigation - folders-->
                                             <a class="btn btn-block btn-primary" id="nuevo_folio"><i class="fa fa-pencil"></i> Nuevo Folio</a>
+											<a class="btn btn-block btn btn-info" id="folios_pdf"><i class="fa fa-print"></i> Reporte Folios Diarios</a>
                                             <div style="margin-top: 15px;">
                                                 <ul class="nav nav-pills nav-stacked">
                                                     <li class="header">Tipos de folios</li>
@@ -103,7 +105,7 @@
 														}
 												
 														if($tipoFolio == 'foliosEntrada'){
-														    echo '<li class="active"><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
+														    echo '<li	 class="active"><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
 														}else{
 														    echo '<li><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
 														}
@@ -146,9 +148,10 @@ echo <<<HTML
                                     <table id="tabla_folios" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Numero de Folio</th>
-                                                <th>Persona referente</th>
+                                                <th>Folio</th>
+                                                <th>P. Referente</th>
                                                 <th>Entidad</th>
+												<th>Categoria</th>
                                                 <th>Tipo de folio</th>
                                                 <th>Fecha de entrada</th>
                                             </tr>
@@ -161,21 +164,16 @@ HTML;
             $NroFolio = $row['NroFolio'];
             $PersonaReferente = $row['PersonaReferente'];
             $ENTIDAD = $row['ENTIDAD'];
+			$categoria = $row['NombreCategoria'];
             $FechaEntrada = $row['FechaEntrada'];
             $TipoFolio = $row['TipoFolio'];
 
-                echo "<tr data-id='".$NroFolio."'>";
                 echo <<<HTML
+				<tr data-id='$NroFolio'>
                 <td><a href="#">$NroFolio</a></td>
-
-HTML;
-                //echo <<<HTML <td><a href='javascript:ajax_("'$url'");'>$NroFolio</a></td>HTML;
-                echo <<<HTML
                 <td><a href="#">$PersonaReferente</a></td>
-
-HTML;
-                echo <<<HTML
                 <td><a href="#">$ENTIDAD</a></td>
+				<td><a href="#">$categoria</a></td>
 
 HTML;
                 if ($TipoFolio == 0) {
@@ -192,9 +190,10 @@ echo <<<HTML
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>Numero de Folio</th>
-                                                <th>Persona referente</th>
+                                                <th>Folio</th>
+                                                <th>P. Referente</th>
                                                 <th>Entidad</th>
+												<th>Categoria</th>
                                                 <th>Tipo de folio</th>
                                                 <th>Fecha de entrada</th>
                                             </tr>
@@ -232,7 +231,7 @@ HTML;
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
     $('#tabla_folios').dataTable({
-	  "order": [[ 4, "desc" ]],
+	  "order": [[ 5, "desc" ]],
 	  "fnDrawCallback": function( oSettings ) {
 	    $(".table-striped").find('tr[data-id]').unbind('click');
 	  
@@ -253,16 +252,15 @@ HTML;
         });
       }
 	}); // example es el id de la tabla
-  });
-</script>
-
-
-<!-- Script necesario para que la tabla se ajuste a el tamanio de la pag-->
-<script type="text/javascript">
-  // For demo to fit into DataTables site builder...
-  $('#tabla_folios')
+	
+	$('#tabla_folios')
     .removeClass( 'display' )
     .addClass('table table-striped table-bordered');
+	
+	$("#folios_pdf").click(function() {
+			window.open('pages/gestion_folios/folios_diarios_pdf.php');
+	   	});	
+  });
 </script>
 
 <script type="text/javascript" src="js/gestion_folios/folios.js" ></script>

@@ -21,27 +21,29 @@ $query = $db->prepare("SELECT folios.NroFolio, folios.PersonaReferente, folios.U
 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial', '', 10);
-$pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 10 ,8, 20 , 20,'PNG');
+$pdf->SetFont('Arial', '', 18);
+$pdf->Image($maindir.'assets/img/lucen-aspicio.png', 50,30,200,200, 'PNG');
+$pdf->Image($maindir.'assets/img/logo_unah.png' , 10,5,20,35, 'PNG');
+$pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 170,8, 35 , 35,'PNG');
 $pdf->Cell(18, 10, '', 0);
 $pdf->Cell(120, 10, '			Reporte de Seguimientos del Folio', 0);
 $pdf->SetFont('Arial', '', 9);
 $pdf->Cell(50, 10, 'Hoy: '.date('d-m-Y').'', 0);
-$pdf->Ln(20);
-$pdf->Cell(115, 8, 'Folio: '.$idFolio, 0);
+$pdf->Ln(10);
+$pdf->Cell(115, 8, '                            Folio: '.$idFolio, 0);
 $pdf->Ln(5);
 if($result['TipoFolio'] == 0){
 	$tipo = "Folio de entrada";
     }elseif($result['TipoFolio'] == 1){
 		$tipo = "Folio de salida";
   	}
-$pdf->Cell(120, 8, 'Tipo de Folio: '.$tipo, 0);
+$pdf->Cell(120, 8, '                            Tipo de Folio: '.$tipo, 0);
 $pdf->Ln(5);
-$pdf->Cell(125, 8, 'Descripcion: '.$result['DescripcionPrioridad'], 0);
+$pdf->Cell(125, 8, '                            Descripcion: '.$result['DescripcionPrioridad'], 0);
 $pdf->Ln(5);
-$pdf->Cell(130, 8, 'Fecha de Entrada: '.$result['FechaEntrada'], 0);
+$pdf->Cell(130, 8, '                            Fecha de Entrada: '.$result['FechaEntrada'], 0);
 $pdf->Ln(5);
-$pdf->Cell(135, 8, 'Asunto: '.$result['DescripcionAsunto'], 0);
+$pdf->Cell(135, 8, '                            Asunto: '.$result['DescripcionAsunto'], 0);
 $pdf->Ln(10);
 $pdf->SetFont('Arial', 'B', 11);
 $pdf->Cell(70, 8, '', 0);

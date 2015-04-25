@@ -20,6 +20,10 @@ require_once($maindir.'pages/navbar.php');
 
 require_once("datos/datos_nuevo_folio.php");
 
+  if(isset($_POST['idFolio'])){
+    $FolioPara = $_POST['idFolio'];
+  }
+
 ?>
 
 <link href="css/datepicker.css" rel="stylesheet">
@@ -51,48 +55,115 @@ require_once("datos/datos_nuevo_folio.php");
 </script>
 <!-- Main -->
 <div class="container-fluid">
-<div class="row">
+    <div class="row">
 <?php
     require_once("navbar.php");
 ?>
+
     <div class="col-sm-10">
-                <section class="content">
-                    <div class="row">
-                        <!-- left column -->
+
+	    <aside class="right-side">
+		    <?php 
+			    if(isset($FolioPara)){
+			        echo '<section class="content" id="section" data-folio="'.$FolioPara.'" data-pro="folio-respuesta">';
+			    }else{
+			        echo '<section class="content" id="section" data-pro="folio-nuevo">';
+			    } 
+			?>
+    
+	            <!-- begin box -->
+	            <div class="box box-primary">  
+				
+				    <div class="box-header with-border">
+					    <h3 class="box-title">Nuevo folio</h3>
+						<div class="box-tools pull-right">
+				            <button name="cancel" id="cancel" class="btn btn-box-tool"><i class="fa fa-times"></i> Cancelar </button>
+						</div>
+					</div><!-- /.box-header -->
+	
+	                <!-- begin box-body -->
+	                <div class="box-body">
+	                
+	                <div class="row"><!-- left column -->
+        
                         <div class="col-md-12">
-                            <!-- general form elements -->
-                            <div class="box box-primary">
-                                <div class="box-header">
-                                    <h1> Datos del folio </h1>
-                                </div><!-- /.box-header -->
-								<hr>
-                                <!-- form start -->
-                                <form role="form" id="form" name="form" action="#">
-                                    <div class="box-body">
-									    <div class="row">
-					                        <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Numero del folio</span>
-                                                        <input type="text" name="NroFolio" class="form-control" id="NroFolio" placeholder="Folio" maxlength="25" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Fecha del folio:</span>
-                                                        <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
-                                                            <input class="form-control" size="5" style="width: 345px" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask id="dp1" onkeypress="DenegarIngreso();" required>
-                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>   
-                                                    </div>            
+						    <div class="stepwizard">
+                                <div class="stepwizard-row setup-panel">
+                                    <div class="stepwizard-step">
+                                        <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+                                        <p>Datos generales</p>
+                                    </div>
+                                    <div class="stepwizard-step">
+                                        <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                        <p>Datos de almacenamiento</p>
+                                    </div>
+                                    <div class="stepwizard-step">
+                                        <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                        <p>Datos del seguimiento</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- form start -->
+                            <form role="form" id="form" name="form" action="#">
+                                <div class="row setup-content" id="step-1">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-12">
+                                            <h3> Datos generales</h3>
+											<div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"style="width: 200px"><strong>Numero del folio</strong></span>
+                                                    <input type="text" name="NroFolio" class="form-control" style="width: 550px" required="required" id="NroFolio" placeholder="Folio" maxlength="25">
                                                 </div>	
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">Persona referente</span>
-                                                        <input type="text" maxlength="50" name="personaReferente" class="form-control" id="personaReferente" placeholder="Persona Referente" title="Completa este campo" required>
-                                                    </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" style="width: 200px"><strong>Fecha del folio:</strong></span>
+                                                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
+                                                        <input type="text" class="form-control" required="required" size="5" style="width: 512px" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask id="dp1" placeholder="yyyy-mm-dd" onkeypress="DenegarIngreso();">
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>   
+                                                </div>            
+                                            </div>	
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" style="width: 200px" ><strong>Persona referente</strong></span>
+                                                    <input type="text" maxlength="50" name="personaReferente" class="form-control" style="width: 550px" required="required" id="personaReferente" placeholder="Persona Referente">
                                                 </div>
-										        <h3 >Selecciones una organizacion o una unidad academica</h3>
+                                            </div>
+									        <div class="form-group">
+										        <label>Tipo de folio</label>
+                                                <div class="input-group">	    
+                                                    <select id="TipoFolio" class="form-control" width="420" style="width: 420px" name="TipoFolio">
+                                                        <option value=-1> -- Seleccione el tipo de folio -- </option>
+                                                        <option value=0> folio de entrada</option>
+                                                        <option value=1> folio de salida </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+											<div class="form-group">
+								                <label>Categoria del folio</label>
+                                                <div class="input-group">
+                                                    <select id="Categoria" class="form-control" width="420" style="width: 420px" name="Categoria">
+                                                        <option value=-1> -- Seleccione la categoria del folio -- </option>
+                                                        <?php while($filas = mysqli_fetch_assoc($result6)) { ?>
+                                                        <option value="<?php echo $filas["Id_categoria"];?>"><?php echo $filas["NombreCategoria"];?></option><?php } mysqli_free_result($result6); mysqli_close($conexion); ?>
+											        </select>
+                                                </div>
+                                            </div>
+											<nav>
+                                                <ul class="pager">
+                                                    <li class="next"><a href="#" class="nextBtn">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                                                </ul>
+                                            </nav>
+                                            <!-- <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row setup-content" id="step-2">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-12">
+                                            <h3> Datos de almacenamiento</h3>
+											<h3 >Selecciones una organizacion o una unidad academica</h3>
 										        <div class="col-sm-12">
 											        <div class="col-sm-6">
 										                <div class="form-group">
@@ -116,95 +187,152 @@ require_once("datos/datos_nuevo_folio.php");
                                                             </div>
                                                         </div>
 											        </div>
+													<p id="error_entidad" class="error_text" style="color:red"></p>
 										        </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <span class="input-group-addon">Descripcion</span>
-                                                        <textarea id="Descripcion" class="form-control" name="Descripcion" rows="3" maxlength="300" placeholder="Ingrese una descripcion..." title="Completa este campo" required></textarea>
+                                                        <span class="input-group-addon"><strong>Descripcion</strong></span>
+                                                        <textarea id="Descripcion" class="form-control" name="Descripcion" required="required" rows="3" maxlength="300" placeholder="Ingrese una descripcion..."></textarea>
                                                     </div>
                                                 </div>
-									        </div>
-									        <div class="col-md-6">
-									            <div class="form-group">
-										            <label>Tipo de folio</label>
-                                                    <div class="input-group">	    
-                                                        <select id="TipoFolio" class="form-control" width="420" style="width: 420px" name="TipoFolio" required>
-                                                            <option value=-1> Seleccione el tipo de folio </option>
-                                                            <option value=0> folio de entrada</option>
-                                                            <option value=1> folio de salida </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-											            <label>Ubicacion fisica del folio</label>
-                                                        <select id="ubicacionFisica"class="form-control" width="420" style="width: 420px" name="ubicacionFisica" required>
-                                                            <option value=-1> Seleccione la ubicacion fisica </option>
-                                                            <?php while($filas = mysqli_fetch_assoc($result3)) { ?>
-                                                            <option value="<?php echo $filas["Id_UbicacionArchivoFisico"];?>"><?php echo $filas["DescripcionUbicacionFisica"];?></option><?php } mysqli_free_result($result3); ?>
-												        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="input-group">
-											            <label>Prioridad del folio</label>
-                                                        <select id="Prioridad" class="form-control" width="420" style="width: 420px" name="Prioridad" required>
-                                                            <option value=-1> Seleccione la prioridad del folio </option>
-                                                            <?php while($filas = mysqli_fetch_assoc($result4)) { ?>
-                                                            <option value="<?php echo $filas["Id_Prioridad"];?>"><?php echo $filas["DescripcionPrioridad"];?></option><?php } mysqli_free_result($result4); mysqli_close($conexion); ?>
-											            </select>
-                                                    </div>
-                                                </div>
-										        <div class="form-group">
-										            <div class="input-group">
-											            <label>Seguimiento inicial</label>
-                                                        <select id="Seguimiento" name="Seguimiento" class="form-control" width="420" style="width: 420px" required>
-                                                            <option value=-1> Seleccione el estado del seguimiento </option>
-                                                            <?php while($filas = mysqli_fetch_assoc($result5)) { ?>
-                                                            <option value="<?php echo $filas["Id_Estado_Seguimiento"];?>"><?php echo $filas["DescripcionEstadoSeguimiento"];?></option><?php } mysqli_free_result($result5); mysqli_close($conexion); ?>
-											            </select>
-                                                    </div>
-										        </div>
 												<div class="form-group">
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input id="chkFinalizado" type="checkbox"/>
-                                                             Comenzar seguimiento finalizado en este folio?
-                                                        </label>
-                                                    </div>
+											        <label>Ubicacion fisica del folio</label>
+                                                        <div class="input-group">          
+                                                            <select id="ubicacionFisica"class="form-control" width="420" style="width: 420px" name="ubicacionFisica">
+                                                                <option value=-1> -- Seleccione la ubicacion fisica -- </option>
+                                                                <?php while($filas = mysqli_fetch_assoc($result3)) { ?>
+                                                                <option value="<?php echo $filas["Id_UbicacionArchivoFisico"];?>"><?php echo $filas["DescripcionUbicacionFisica"];?></option><?php } mysqli_free_result($result3); ?>
+												            </select>
+                                                        </div>
                                                 </div>
-										        <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"> Notas del seguimiento </span>
-                                                        <textarea id="NotasSeguimiento" maxlength="300" class="form-control" name="NotasSeguimiento" rows="3" placeholder="Ingrese una nota referente al sequimiento..." required></textarea>
+                                                <div class="form-group">
+												    <label>Prioridad del folio</label>
+                                                        <div class="input-group">
+                                                            <select id="Prioridad" class="form-control" width="420" style="width: 420px" name="Prioridad">
+                                                                <option value=-1> -- Seleccione la prioridad del folio -- </option>
+                                                                <?php while($filas = mysqli_fetch_assoc($result4)) { ?>
+                                                                <option value="<?php echo $filas["Id_Prioridad"];?>"><?php echo $filas["DescripcionPrioridad"];?></option><?php } mysqli_free_result($result4); mysqli_close($conexion); ?>
+											                </select>
+                                                        </div>
+                                                </div>
+											<nav>
+                                                <ul class="pager">
+                                                    <li class="previous"><a href="#" class="prevBtn"><span aria-hidden="true">&larr;</span> Anterior</a></li>
+                                                    <li class="next"><a href="#" class="nextBtn">Siguiente <span aria-hidden="true">&rarr;</span></a></li>
+                                                </ul>
+                                            </nav>
+                                            <!-- <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Siguiente</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row setup-content" id="step-3">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-12">
+                                            <h3> Datos del seguimiento</h3>
+											<div class="form-group">
+											    <label>Persona encargada</label>
+										            <div class="input-group">
+                                                        <select id="Encargado" name="Encargado" class="form-control" width="420" style="width: 420px">
+                                                            <option value=-1> -- Sin encargado -- </option>
+                                                            <?php while($filas = mysqli_fetch_assoc($result7)) { ?>
+                                                            <option value="<?php echo $filas["id_Usuario"];?>"><?php echo $filas["Nombre"];?></option><?php } mysqli_free_result($result7); mysqli_close($conexion); ?>
+											            </select>
                                                     </div>
+										    </div>
+											<div class="form-group">
+											    <label>Estado del seguimiento</label>
+										        <div class="input-group">
+                                                    <select id="Seguimiento" name="Seguimiento" class="form-control" width="420" style="width: 420px">
+                                                        <option value=-1> -- Seleccione el estado del seguimiento -- </option>
+                                                        <?php while($filas = mysqli_fetch_assoc($result5)) { ?>
+                                                        <option value="<?php echo $filas["Id_Estado_Seguimiento"];?>"><?php echo $filas["DescripcionEstadoSeguimiento"];?></option><?php } mysqli_free_result($result5); mysqli_close($conexion); ?>
+											        </select>
+                                                </div>
+										    </div>
+									        <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="chkFinalizado" type="checkbox"/>
+                                                        Comenzar seguimiento finalizado en este folio?
+                                                    </label>
                                                 </div>
                                             </div>
-								        </div>
-							        </div><!-- /.box-body -->
-							    <div class="row">
-								    <div class="col-md-12">
-                                        <div class="box-footer">
-                                            <button name="submit" id="submit" class="btn btn-primary" style="width:200px;"><i class="glyphicon glyphicon-check"></i> Guardar</button>
-										    <button name="cancel" id="cancel" class="btn btn-default" style="width:200px;"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
+										    <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><strong>Notas d el seguimiento</strong></span>
+                                                    <textarea id="NotasSeguimiento" maxlength="300" class="form-control" name="NotasSeguimiento" rows="5" placeholder="Ingrese una nota referente al sequimiento..."></textarea>
+                                                </div>
+                                            </div>
+											<nav>
+                                                <ul class="pager">
+                                                    <li class="previous"><a href="#" class="prevBtn"><span aria-hidden="true">&larr;</span> Anterior</a></li>
+                                                    <button id="fin" class="btn btn-success btn-lg pull-right fin" type="submit">Finalizar!</button>
+                                                </ul>
+                                            </nav>
                                         </div>
-									</div>
-								</div>
-                                </form>
-                            </div><!-- /.box -->
-
-                        </div><!--/.col (left) -->
-                    </div>   <!-- /.row -->
-                </section><!-- /.content -->
-            </aside><!-- /.right-side -->
-        </div><!-- ./wrapper -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div> <!-- / .col-md-12 -->
+                    </div><!-- /. row right column -->
+	
+	                </div><!-- /. box-body -->
+	
+	            </div><!-- /. box -->
+				
+	        </section>
+		</aside><!-- /.right-side -->
+		
     </div><!--/col-span-10-->
-
-</div>
-<!-- /Main -->
+		
+    </div><!-- /. row -->
+	
+</div><!-- /. container-fluid -->
 
 <script>
     $( document ).ready(function() {
+	
+	    $('.next').click(function(){
+		    if(validator()){
+            $('.nav-tabs > .active').find('a').removeAttr('data-toggle', 'tab');
+            $('.nav-tabs > .active').next('li').find('a').attr('data-toggle', 'tab').trigger('click');
+			}
+        });
+		
+        $('.back').click(function(){
+		    if(validator()){
+            $('.nav-tabs > .active').find('a').removeAttr('data-toggle', 'tab');
+            $('.nav-tabs > .active').prev('li').find('a').attr('data-toggle', 'tab').trigger('click');
+			}
+        });
+	
+	    function validator(){
+		
+		    var valid = true;
+		    $("#error").text("");
+		
+		    //valida el numero del folio
+		     if(!$("#NroFolio").val()){
+		        $("#NroFolio").addClass("has-warning");
+			    $("#error").text("* Debe introducir el numero del folio n/");
+			    valid = false;
+		    }else{
+		        $("#NroFolio").removeClass("has-warning");
+				$("#error").focus();
+		    }
+		
+		    //valida la fecha de creacion del folio
+		    if(!$("#dp1").val()){
+		        $("#dp1").addClass("has-warning");
+			    $("#error").text("* Debe introducir la fecha de creacion del folio");
+			    valid = false;
+		    }else{
+		        $("#da1").removeClass("has-warning");
+				$("#error").focus();
+		    }
+		
+		    return valid;
+	    }
 	
         $( "#unidadAcademica" ).change(function() {
             var unidadAcademica = this.value;	

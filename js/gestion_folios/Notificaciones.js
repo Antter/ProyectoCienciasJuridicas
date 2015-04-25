@@ -36,8 +36,7 @@ $( document ).ready(function() {
 	
 	$("form").submit(function(e) {
 	    e.preventDefault();
-            data={
-               
+            data={       
              NroFolio:$("#NroFolio").val(),
                 idEmisor:$("#Insertar_Emisor").val(),
                 Titulo:$("#Insertar_Titulo").val(),

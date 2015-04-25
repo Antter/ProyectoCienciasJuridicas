@@ -76,14 +76,14 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon">Numero del folio</span>
 														<input type="hidden" id="NroFolioAnt" name="NroFolioAnt" value="<?php echo $result['NroFolio']; ?>">
-                                                        <input type="text" name="NroFolio" class="form-control" id="NroFolio" placeholder="<?php echo $result['NroFolio']; ?>" value="<?php echo $result['NroFolio']; ?>" maxlength="25" required>
+                                                        <input type="text" name="NroFolio" class="form-control" disabled="disabled" id="NroFolio" placeholder="<?php echo $result['NroFolio']; ?>" value="<?php echo $result['NroFolio']; ?>" maxlength="25" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">Fecha del folio:</span>
                                                         <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-m-d" data-link-field="dtp_input2" data-link-format="yyyy-m-d">
-                                                            <input class="form-control" size="5" value="<?php echo $result['FechaEntrada']; ?>" style="width: 345px" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask id="dp1" required>
+                                                            <input class="form-control" disabled="disabled" size="5" value="<?php echo $result['FechaEntrada']; ?>" style="width: 345px" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask id="dp1" required>
                                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                         </div>   
                                                     </div>            
@@ -132,6 +132,17 @@
                                                         </div>
 											        </div>
 										        </div>
+										    <div class="form-group">
+								                <label>Categoria del folio</label>
+                                                <div class="input-group">
+                                                    <select id="Categoria" class="form-control" width="420" style="width: 420px" name="Categoria">
+                                                        <option value=-1> -- Seleccione la categoria del folio -- </option>
+                                                        <?php while($filas = mysqli_fetch_assoc($result6)) { ?>
+                                                        <option  <?php if($result['categoria'] == $filas["Id_categoria"]){ echo "selected"; } ?>
+														value="<?php echo $filas["Id_categoria"];?>"><?php echo $filas["NombreCategoria"];?></option><?php } mysqli_free_result($result6); mysqli_close($conexion); ?>
+											        </select>
+                                                </div>
+                                            </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">Descripcion</span>
@@ -160,6 +171,17 @@
 												        </select>
                                                     </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+											            <label>Categoria del folio</label>
+                                                        <select id="ubicacionFisica"class="form-control" width="420" style="width: 420px" name="ubicacionFisica" required>
+                                                            <option value=-1> Seleccione la ubicacion fisica </option>
+                                                            <?php while($filas = mysqli_fetch_assoc($result3)) { ?>
+                                                            <option  <?php if($result['UbicacionFisica'] == $filas["Id_UbicacionArchivoFisico"]){ echo "selected";} ?> value="<?php echo $filas["Id_UbicacionArchivoFisico"];?>"><?php echo $filas["DescripcionUbicacionFisica"];?></option><?php } mysqli_free_result($result3); ?>
+												        </select>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <div class="input-group">
 											            <label>Prioridad del folio</label>

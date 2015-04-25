@@ -99,7 +99,7 @@ $(document).ready(function() {
                                         return false;
                                     
                                             }},
-				events: "eventos.php"
+				events: "pages/eventos.php"
                                 
                                 
                                     });

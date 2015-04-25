@@ -13,6 +13,11 @@ require_once('../../../Datos/conexion.php');
        
     require_once('../../../pages/recursos_humanos/cv/nuevo/personaAgregar.php');
     }
+      if($tipoProcedimiento == "editarPersona"){
+       
+    require_once('../../../pages/recursos_humanos/cv/nuevo/personaAgregar.php');
+    }
+    
    }
  
 
@@ -24,33 +29,6 @@ require_once('../../../Datos/conexion.php');
  
           $( document ).ready(function() {
 
-           $("form").submit(function(e) {
-	    e.preventDefault();
-
-            data={
-                    licencitura:$('#lic').val(),
-                    maestria:$("#maestr").val(),
-                    doctorado:$("#doc").val()
-                   
-                };
-                
-                
-            
-            $.ajax({
-                   async: true,
-                    type: "POST",
-                    dataType: "html",
-                    contentType: "application/x-www-form-urlencoded",
-                    beforeSend: busqueda,
-                    success: llegadaBusqueda,
-                    timeout: 4000,
-                    error: problemasbusqueda
-            }); 
-            return false;
-               
-	});
-        
-        
          $("#form2").submit(function(e) {
 	    e.preventDefault();
           
@@ -88,21 +66,6 @@ require_once('../../../Datos/conexion.php');
             
             
 
-           
-   
-
-
-            function busqueda()
-            {
-                var x = $("#contenedor2");
-                x.html('Cargando...');
-            }
-
-            function llegadaBusqueda()
-            {
-                $("#contenedor2").load('pages/recursos_humanos/cv/consultaRH.php',data);
-                
-            }
             
             function problemasbusqueda()
             {
@@ -153,8 +116,8 @@ require_once('../../../Datos/conexion.php');
 
 <div id="container">
     <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Personas</h1>
+        <div class="col-lg-12 ">
+            <h1 class="page-header">Menu Gestion de perfiles </h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -188,7 +151,7 @@ require_once('../../../Datos/conexion.php');
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-list-alt fa-5x"></i>
+                                <i class="fa fa-user fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div>Agregar</div>

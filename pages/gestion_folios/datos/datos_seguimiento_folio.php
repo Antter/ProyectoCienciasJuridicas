@@ -2,12 +2,26 @@
     
 	require($maindir."conexion/config.inc.php");
 
-    $query = $db->prepare("SELECT * FROM seguimiento WHERE NroFolio = :NroFolio");
+    $query = $db->prepare("SELECT usuario.Nombre ,seguimiento.*,persona.Primer_nombre,persona.Segundo_nombre,persona.Primer_apellido,persona.Segundo_apellido 
+	                       FROM seguimiento LEFT JOIN usuario ON seguimiento.UsuarioAsignado = usuario.id_usuario 
+						   LEFT JOIN empleado ON usuario.No_Empleado = empleado.No_Empleado LEFT JOIN persona ON empleado.N_identidad = persona.N_identidad
+                                  WHERE NroFolio = :NroFolio");
 	$query ->bindParam(":NroFolio",$NroFolio);
     $query->execute();
     $result11 = $query->fetch();
         if($result11){
             $seguimiento = 1;
+            if($result11['UsuarioAsignado']){
+               $UsuarioAsignado = $result11['UsuarioAsignado'];
+			   $userName = $result11['Nombre']; 
+               $primerN = $result11['Primer_nombre'];
+               $segundoN = $result11['Segundo_nombre'];
+               $primerA = $result11['Primer_apellido'];
+               $segundoA = $result11['Segundo_apellido'];
+            }else{
+               $UsuarioAsignado = 0;
+            }
+            $finSeguimiento = $result11['FechaFinal'];
         }else{
             $seguimiento = 0;
         }

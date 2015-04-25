@@ -74,11 +74,11 @@ if (isset($_POST['identi']) and isset($_POST['agregarFA'])) {
     
   
     
-    $tipoE = $_POST['tipoE'];
+    $tipoE = $_POST['tipoEFA'];
    
    
     
-    $nomTitulo = $_POST['titulo'];
+    $nomTitulo = $_POST['tituloFA'];
    
     $idUni = $_POST['universidadFA'];
    
@@ -111,15 +111,50 @@ if (isset($_POST['agregarEL'])) {
     $nomEmp = $_POST['nombreEmpresa'];
     $tiempo = $_POST['tiempoLab'];
     $identi = $_POST['identi'];
+    $cargo  = $_POST['cargoEL'];
 
    $queryELA=mysql_query("INSERT INTO experiencia_laboral (ID_Experiencia_laboral, Nombre_empresa, Tiempo, N_identidad)
                             VALUES (DEFAULT,'$nomEmp','$tiempo','$identi')");
     
     
             if($queryELA){
+                
+                
+                
+                $rs = mysql_query("SELECT MAX(ID_Experiencia_laboral) AS id FROM experiencia_laboral");
+               
+                if ($row = mysql_fetch_row($rs)) {
+                   
+                    
+                $idEperiencia = trim($row[0]);
+               
+                
+                        
+                
+                  
+                 $query2=mysql_query("INSERT INTO `experiencia_laboral_has_cargo`(`ID_Experiencia_laboral`, `ID_cargo`) VALUES ('$idEperiencia','$cargo')");
+                 
+                 if($query2){
+                     
+                  $mensaje = 'Experiencia laboral ha sido agregada con éxito!!';
+                  $codMensaje = 1;
+                     
+                 }else{
+                     
+                   $mensaje = 'error al ingresar el registro de experiencia laboral ';
+                   $codMensaje = 0;
+                     
+                     
+                 }
+                
+               
+                }else{
+                    $mensaje = 'error al ingresar el registro de experiencia laboral ';
+                   $codMensaje = 0;
+                    
+                }
         
-           $mensaje = 'Experiencia laboral ha sido agregada con éxito!!';
-            $codMensaje = 1;
+         
     
     
    }else{
@@ -136,18 +171,46 @@ if (isset($_POST['agregarEA'])) {
     $nomInst = $_POST['nombreInst'];
     $tiempo = $_POST['tiempoAcad'];
     $identi = $_POST['identi'];
+    $idClase = $_POST['clases'];
     
     $queryEAA=mysql_query("INSERT INTO experiencia_academica (ID_Experiencia_academica, Institucion, Tiempo, N_identidad)
                                     VALUES (DEFAULT,'$nomInst','$tiempo','$identi')");
     
    if($queryEAA){
-        
+       
+       
+       $rs = mysql_query("SELECT MAX(ID_Experiencia_academica) AS id FROM experiencia_academica");
+               
+          if ($row = mysql_fetch_row($rs)) {
+                   
+                    
+                $idExAca = trim($row[0]);
+                
+                echo "$idExAca";
+                echo "$idClase";
+                
+             $query3 =   mysql_query("INSERT INTO `clases_has_experiencia_academica`(`ID_Clases`, `ID_Experiencia_academica`) VALUES ('$idClase','$idExAca')"); 
+       if($query3){
+       
            $mensaje = 'Experiencia académica ha sido agregada con éxito!!';
             $codMensaje = 1;
-    
+            
+             }else{
+                
+            $mensaje = 'error al ingresar el registro de experiencia academica 3';
+           $codMensaje = 0;
+                
+           }
+            
+        }else{
+                 
+           $mensaje = 'error al ingresar el registro de experiencia academica 2';
+           $codMensaje = 0;
+                    
+                }
     
    }else{
-           $mensaje = 'error al ingresar el registro de experiencia academica ';
+           $mensaje = 'error al ingresar el registro de experiencia academica 1';
            $codMensaje = 0;
        
    }

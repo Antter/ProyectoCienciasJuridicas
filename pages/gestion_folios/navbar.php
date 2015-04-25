@@ -17,24 +17,28 @@
         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
             <h5><i class="fa fa-tags"></i> Manejo de folios <i class="glyphicon glyphicon-chevron-down"></i></h5>
             </a>
-			<?php
+		<?php
                 if($navbar_loc == "contenido"){
 				    echo '<ul class="list-unstyled collapse in" id="userMenu">';
 				}else{
 				    echo '<ul class="list-unstyled collapse" id="userMenu">';
 				}
-            ?>			
-                <li><a id="folios" href="#"><i class="glyphicon glyphicon-book"></i><span>Folios</span>
-                  <!-- <span class="badge badge-info">4</span>--></a></li>
-				  
-		    <?php
-			    if($cuenta_alertas > 0){
-				    echo '<li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i><span>Alertas</span><span class="label label-default pull-right">'.$cuenta_alertas.'</span></a></li>';
-				}else{
-				    echo '<li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i><span>Alertas</span></a></li>';
+
+		        if($rol >= 40){
+			        echo '<li><a id="folios" href="#"><i class="glyphicon glyphicon-book"></i><span> Folios </span></a></li>';
+			    
+	                if($cuenta_alertas > 0){
+				        echo '<li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i><span> Alertas </span><span class="label label-default pull-right">'.$cuenta_alertas.'</span></a></li>';
+				    }else{
+				        echo '<li><a id="alertas"href="#"><i class="glyphicon glyphicon-bell"></i><span> Alertas </span></a></li>';
+				    }
 				}
-			?> 
-                <li><a id="notificaciones" href="#"><i class="glyphicon glyphicon-flag"></i><span>Notificaciones<span></a></li>
+			        echo '<li><a id="notificaciones" href="#"><i class="glyphicon glyphicon-flag"></i><span> Notificaciones <span></a></li>';
+			    
+		        if($rol <= 50){
+			        echo '<li><a id="misFolios" href="#"><i class="fa fa-bookmark"></i><span> Mis Folios <span></a></li>';
+			    }   
+		?>
             </ul>
         </li>
 		<?php
@@ -58,9 +62,11 @@
                 </li>
                 <li><a id="mantenimiento_unidadacademica" href="#">Mantenimiento de unidad academica</a>
                 </li>
+                <li><a id="mantenimiento_categoria" href="#">Mantenimiento de categoria de folio</a>
+                </li>
                 <li><a id="mantenimiento_prioridad"href="#">Mantenimiento de prioridad</a>
                 </li>
-				<li><a id="mantenimiento_ubicacionfisica"href="#">Mantenimiento de ubicacion fisica</a>
+		        <li><a id="mantenimiento_ubicacionfisica"href="#">Mantenimiento de ubicacion fisica</a>
                 </li>
                 <li><a id="mantenimiento_estado_seguimiento"href="#">Mantenimiento de estado seguimiento</a>
                 </li>

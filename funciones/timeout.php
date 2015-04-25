@@ -14,7 +14,9 @@ if(!isset($_SESSION['timeout']))
   }
 else
   {
-    if ($_SESSION['timeout'] + 60*15 < time()) 
+    $tiempo = $_SESSION['timeout'];
+
+    if (time() >  $tiempo + 60*15) 
       {
        // session timed out
         $_SESSION['contenido'] = $contenido;

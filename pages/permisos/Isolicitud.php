@@ -15,7 +15,6 @@ $fecha =  $_POST['fecha'];
 $horai =  $_POST['horai'];
 $horaf =  $_POST['horaf'];
 $cantidad =  $_POST['cantidad'];
-$fecha_solic= $hoy = date("Y-m-d"); ;
 $tildes = $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes
 $cont=0;
 
@@ -23,13 +22,13 @@ $cont=0;
 $result = mysqli_query($link, "SELECT Edificio_ID FROM edificios  where descripcion='".$edificio."'");
 $result2 = mysqli_query($link, "SELECT Id_departamento_laboral FROM departamento_laboral  where nombre_departamento='".$depto."'");
 $result3 = mysqli_query($link, "SELECT Motivo_ID FROM motivos  where descripcion='".$motivo."'");
-$result5 = mysqli_query($link, "SELECT No_Empleado FROM usuario  where id_Usuario='".$idusuario."'");
+$result5 = mysqli_query($link, "SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') as fecha_slctd");
 
 $consult = mysqli_query($link, "SELECT No_Empleado FROM usuario  where id_Usuario='$idusuario'");
 $row2 = mysqli_fetch_array($consult);
 
 //se obtiene la fecha para validar que no hayan solicitudes con misma fecha para un usuario
-$fquery = mysqli_query($link, "select fecha_solicitud, DATE_FORMAT(fecha, '%Y-%m-%d') as fecha from permisos inner join usuario on permisos.No_Empleado=usuario.No_Empleado where usuario.No_Empleado='".$row2['No_Empleado']."'");
+$fquery = mysqli_query($link, "select fecha_solicitud, DATE_FORMAT(fecha, '%Y-%m-%d') as fecha from permisos inner join usuario on permisos.No_Empleado=usuario.No_Empleado where usuario.No_Empleado='".$row2['No_Empleado']."' and permisos.estado = 'En espera'");
 $frow = mysqli_fetch_array($fquery);
 
 
@@ -37,14 +36,12 @@ $frow = mysqli_fetch_array($fquery);
 mysqli_data_seek ($result,$cont);
 mysqli_data_seek ($result2,$cont);
 mysqli_data_seek ($result3,$cont);
-mysqli_data_seek ($result5,$cont);
-
 
 // arreglos de consultas
 $extraido= mysqli_fetch_array($result);
 $extraido2= mysqli_fetch_array($result2);
 $extraido3= mysqli_fetch_array($result3);
-$extraido5= mysqli_fetch_array($result5);
+$fecha_solic = mysqli_fetch_array($result5);
 
 //Consulta de inserción a la base de datos
 	$query = "INSERT INTO permisos (
@@ -57,22 +54,24 @@ $extraido5= mysqli_fetch_array($result5);
 	id_Edificio_Registro,
 	fecha,
 	estado,
-	fecha_solicitud)
+	fecha_solicitud,
+	id_usuario)
 	VALUES(
 	'".$extraido2['Id_departamento_laboral']."',
-	'".$extraido5['No_Empleado']."',
+	'".$row2['No_Empleado']."',
 	'".$extraido3['Motivo_ID']."',
 	'".$cantidad."',
 	'".$horai."',
 	'".$horaf."',
 	'".$extraido['Edificio_ID']."',
 	'".$fecha."',
-	'En espera',
-	'".$fecha_solic."'
+	'Espera',
+	Date_format(now(),'%Y-%m-%d'),
+	'".$idusuario."'
 	)";
 	//se ejecuta la consulta de insercion y se verifica si se ha realizado o si ha fallado
 	
-	if($fecha_solic==$frow['fecha_solicitud']){
+	if($fecha_solic['fecha_slctd']==$frow['fecha_solicitud']){
 		echo "Solamente puede realizar una solicitud por día";
 	}else{
 		if($fecha == $frow['fecha']){

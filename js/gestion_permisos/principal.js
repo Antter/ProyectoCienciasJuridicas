@@ -40,13 +40,38 @@
 		x6.click(ReporteTr);
 		
 		var x7;
-		x7=$("#nusuario");
-		x7.click(CrearUsuario);
+		x7=$("#solicitude");
+		x7.click(Solicitud_empleado);
 		
-
+		var x8;
+		x8=$("#estadistica");
+		x8.click(Esta);
 	}
 
-
+	function Esta()
+	{
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/estadistica.php",    
+			// url:"../estadistica.php",  
+			beforeSend:inicioEnvio,
+			success:llegadaEsta,
+			timeout:4000,
+			error:function(result){  
+            alert('ERROR ' + result.status + ' ' + result.statusText);  
+          }
+		}); 
+		return false;
+	}
+	
+	function llegadaEsta()
+	{
+		$("#contenedor").load('pages/permisos/estadistica.php');
+		 //$("#contenedor").load('../permisos/estadistica.php');
+	}
 	function Solicitud()
 	{
 		$.ajax({
@@ -62,6 +87,24 @@
 			error:function(result){  
             alert('ERROR ' + result.status + ' ' + result.statusText);  
           }  
+		}); 
+		return false;
+	}
+	
+	function Solicitud_empleado()
+	{
+		$.ajax({
+			async:true,
+			type: "POST",
+			dataType: "html",
+			contentType: "application/x-www-form-urlencoded",
+			url:"pages/permisos/Nuevo_usuario.php",      
+			beforeSend:inicioEnvio,
+			success:llegadaCreacion,
+			timeout:4000,
+			error:function(result){  
+            alert('ERROR ' + result.status + ' ' + result.statusText);  
+          }
 		}); 
 		return false;
 	}
@@ -167,7 +210,7 @@
 			type: "POST",
 			dataType: "html",
 			contentType: "application/x-www-form-urlencoded",
-			url:"pages/permisos/reporteTrimestral.php",    
+			url:"pages/permisos/reporteEmpleado.php",    
 			// url:"../reporteTrimestral.php",  
 			beforeSend:inicioEnvio,
 			success:llegadaReporteTrimestral,
@@ -260,7 +303,7 @@
 	}
 	function llegadaReporteTrimestral()
 	{
-		$("#contenedor").load('pages/permisos/reporteTrimestral.php');
+		$("#contenedor").load('pages/permisos/reporteEmpleado.php');
 		 //$("#contenedor").load('../permisos/reporteTrimestral.php');
 	}
 	function llegadaCreacion(){
@@ -269,4 +312,7 @@
 	function problemas()
 	{
 		$("#contenedor").text();
+	}
+		function llegadaCreacion(){
+		$("#contenedor").load('pages/permisos/Nuevo_usuario.php');
 	}

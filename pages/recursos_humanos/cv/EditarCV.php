@@ -21,6 +21,11 @@ include "../../../Datos/conexion.php";
      if($tipoProcedimiento == "insetarEA"){
     require_once("../../../pages/recursos_humanos/cv/nuevo/personaAgregar.php");
     }
+    
+    if($tipoProcedimiento == "Eliminar"){
+    require_once("../../../pages/recursos_humanos/cv/eliminar/personaEliminar.php");
+    }
+      
       
     
     
@@ -55,7 +60,7 @@ if (isset($_POST['identi'])) {
         //Formación académica
         $queryFA = mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$_POST['identi']."'");
         //Experiencia laboral
-        $queryEL = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE N_identidad='".$_POST['identi']."'");
+        $queryEL = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE experiencia_laboral.N_identidad='".$_POST['identi']."'");
     
         
         
@@ -73,13 +78,18 @@ if (isset($_POST['identi'])) {
     
     <script>
     $(document).ready(function(){
+        
+        fn_dar_eliminar();  
+        
+        fn_Agregar();
+        
         $("form").submit(function(e) {
             e.preventDefault();
             
             $("#actualTel").modal('hide');
-            $("#actualFA").modal('hide');
-            $("#actualexLab").modal('hide');
-            $("#actualexAc").modal('hide');
+           // $("#actualFA").modal('hide');
+           // $("#actualexLab").modal('hide');
+           // $("#actualexAc").modal('hide');
            // $("#agregarTelVM").modal('hide');
       
        $(".actualTB").click(function() {
@@ -98,6 +108,13 @@ if (isset($_POST['identi'])) {
             return false;
         });
         
+        });
+        
+        $("form").submit(function(e) {
+            e.preventDefault();
+            
+             $("#actualFA").modal('hide');
+        
            $(".actualFAB").click(function() {
             id = $(this).parents("tr").find("td").eq(0).html();
             titulo = $(this).parents("tr").find("td").eq(1).html();
@@ -115,6 +132,13 @@ if (isset($_POST['identi'])) {
             return false;
         });
         
+        });
+        
+        
+         $("form").submit(function(e) {
+            e.preventDefault();
+             $("#actualexLab").modal('hide');
+        
             $(".actualELB").click(function() {
             id = $(this).parents("tr").find("td").eq(0).html();
             empresa = $(this).parents("tr").find("td").eq(1).html();
@@ -131,6 +155,12 @@ if (isset($_POST['identi'])) {
             return false;
         });
         
+        });
+        
+              $("form").submit(function(e) {
+            e.preventDefault();
+             $("#actualexAc").modal('hide');
+            
            $(".actualEAB").click(function() {
             id = $(this).parents("tr").find("td").eq(0).html();
             institucion = $(this).parents("tr").find("td").eq(1).html();
@@ -147,10 +177,29 @@ if (isset($_POST['identi'])) {
             return false;
         });
         
+         });
         
         
-        
-      $(".TelB").click(function() {
+      
+       
+       
+    
+     
+     
+     
+
+      
+      
+      
+    
+     
+     
+     
+     function fn_Agregar(){
+         
+       $("#formTEL").submit(function(e) {
+            e.preventDefault();
+
           var id = "<?php echo $id; ?>" ;
         data={
             identi:id,
@@ -171,19 +220,19 @@ if (isset($_POST['identi'])) {
             error: problemas
         });
         return false;
+    
      });
- 
-       
-       
-       $(".agregarFAB").click(function() {
+     
+     
+      $("#formFA").submit(function(e) {
+            e.preventDefault();
           
             var id = "<?php echo $id; ?>" ;
     
         data={
             identi:id,
-            
-            tipoE:$('#tipoE').val(),
-            titulo:$('#tituloFA').val(),
+            tipoEFA:$('#tipoE').val(),
+            tituloFA:$('#tituloFA').val(),
             universidadFA:$('#universidadFA').val(),
             agregarFA:"si",
             tipoProcedimiento:"insetarFA"
@@ -204,13 +253,15 @@ if (isset($_POST['identi'])) {
      
      
      
-     $(".agregarELB").click(function() {
+         $("#formEL").submit(function(e) {
+            e.preventDefault();
          
           var id = "<?php echo $id; ?>" ;
         data={
             identi:id,
             nombreEmpresa:$('#nombreEmpresa').val(),
             tiempoLab:$('#tiempoLab').val(),
+            cargoEL:$('#cargo').val(),
             agregarEL:"si",
             tipoProcedimiento:"insetarEL"
         };
@@ -227,16 +278,20 @@ if (isset($_POST['identi'])) {
         });
         return false;
      });
-      
-      
-      
-      $(".agregarEAB").click(function() {
+     
+     
+       
+        $("#formEA").submit(function(e) {
+            e.preventDefault();
+       
           var id = "<?php echo $id; ?>" ;
+          var idc = $('#clases').val();
+                  alert(idc);
         data={
             identi:id,
             nombreInst:$('#nombreInst').val(),
             tiempoAcad:$('#tiempoAcad').val(),
-            clases:$('#clases').val(),
+            clases:$('#clasesEA').val(),
             agregarEA:"si",
             tipoProcedimiento:"insetarEA"
         };
@@ -253,11 +308,138 @@ if (isset($_POST['identi'])) {
         });
         return false;
      });
+     
+ 
+         
+         
+     }
+     
       
       
       
       
-        });
+        
+
+      function fn_dar_eliminar() {
+
+                $(".eliminaTelB").click(function() {
+                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta) {
+                     var id = "<?php echo $id; ?>" ;
+                    id1=$(this).parents("tr").find("td").eq(0).html();
+                    data = {
+                        identi:id,                
+                       IdTel: id1,
+                    tipoProcedimiento:"Eliminar",  
+                    
+            };
+
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "Datos/eliminarUniversidad.php",
+                        beforeSend: inicioEnvio,
+                        success: Eliminar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
+            });
+            
+            
+                  $(".eliminaFAB").click(function() {
+                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta) {
+                     var id = "<?php echo $id; ?>" ;
+                    id1=$(this).parents("tr").find("td").eq(0).html();
+                    data = {
+                        identi:id,                
+                       IdForAc: id1,
+                    tipoProcedimiento:"Eliminar",  
+                    
+            };
+
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "Datos/eliminarUniversidad.php",
+                        beforeSend: inicioEnvio,
+                        success: Eliminar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
+            });
+            
+            
+              $(".eliminaELB").click(function() {
+                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta) {
+                     var id = "<?php echo $id; ?>" ;
+                    id1=$(this).parents("tr").find("td").eq(0).html();
+                    data = {
+                        identi:id,                
+                       IdExLA: id1,
+                    tipoProcedimiento:"Eliminar",  
+                    
+            };
+
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "Datos/eliminarUniversidad.php",
+                        beforeSend: inicioEnvio,
+                        success: Eliminar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
+            });
+            
+            $(".eliminaEAB").click(function() {
+                var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                if (respuesta) {
+                     var id = "<?php echo $id; ?>" ;
+                    id1=$(this).parents("tr").find("td").eq(0).html();
+                    data = {
+                        identi:id,                
+                       IdExAc: id1,
+                    tipoProcedimiento:"Eliminar",  
+                    
+            };
+
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        url: "Datos/eliminarUniversidad.php",
+                        beforeSend: inicioEnvio,
+                        success: Eliminar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                }
+            });
+            
+            
+            
+            };
+
+
+
+
+
 
        
        
@@ -333,6 +515,12 @@ if (isset($_POST['identi'])) {
     }
     
     
+         function Eliminar()
+    {
+     
+        $("#contenedor").load('pages/recursos_humanos/cv/EditarCV.php',data);
+    }
+    
     
 
 
@@ -366,7 +554,7 @@ if (isset($_POST['identi'])) {
         
          <?php
  
-  if(isset($codMensaje) and isset($mensaje)){
+   if(isset($codMensaje) and isset($mensaje)){
     if($codMensaje == 1){
       echo '<div class="alert alert-success">';
       echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
@@ -421,7 +609,7 @@ if (isset($_POST['identi'])) {
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-5 control-label">Nacionalidad: </label>
-                                <div class="col-sm-7 control-label"><?php echo "$nacionalidad"; ?></div>
+                                <div class="col-sm-7 control-label"> <?php echo utf8_encode($nacionalidad); ?></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-5 control-label"><strong>Fecha de Nacimiento</strong></label>
@@ -491,6 +679,7 @@ if (isset($_POST['identi'])) {
                                             <th>ID</th>
                                             <th>Tipo</th>
                                             <th>Número</th>
+                                            <th>Eliminar</th>
                                             <th>Editar</th>
                                              </tr>
                                         </thead>
@@ -515,6 +704,12 @@ HTML;
             <td>$numero</td>
 HTML;
             echo <<<HTML
+            <td>
+            <center>
+            <button id="eliminaTel" name="telefonoEliminar"  class="eliminaTelB btn btn-danger glyphicon glyphicon-trash"> </button>
+                </center></td>
+            
+            
                 <td>
                 <center>
                     <button type="submit" class="actualTB btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="#actualTel" title="Editar">
@@ -576,6 +771,7 @@ HTML;
                                             <th>Nombre del Título</th>
                                             <th>Tipo de estudio</th>
                                             <th>Universidad</th>
+                                             <th>Eliminar</th>
                                             <th>Editar</th>
                                         </tr>
                                         </thead>
@@ -609,6 +805,11 @@ HTML;
             <td>$univ</td>
 HTML;
             echo <<<HTML
+                    <td>
+            <center>
+            <button name="FAEliminar"  class="eliminaFAB btn btn-danger glyphicon glyphicon-trash"> </button>
+                </center></td>
+            
                 <td>
                 <center>
                     <button type="submit" class="actualFAB btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="actualFA" title="Editar">
@@ -661,6 +862,7 @@ HTML;
                                             <th>Nombre de la Empresa</th>
                                             <th>Tiempo (meses)</th>
                                             <th>Cargo</th>
+                                            <th>Eliminar</th>
                                             <th>Editar</th>
                                         </tr>
                                         </thead>
@@ -688,6 +890,11 @@ HTML;
             <td>$cargo</td>      
 HTML;
             echo <<<HTML
+            
+                   <td>
+            <center>
+            <button name="ELEliminar"  class="eliminaELB btn btn-danger glyphicon glyphicon-trash"> </button>
+                </center></td>
             
                  <td>
             
@@ -747,6 +954,7 @@ HTML;
                                             <th>Institución</th>
                                             <th>Tiempo (meses)</th>
                                             <th>clase</th>
+                                             <th>Eliminar</th>
                                             <th>Editar</th>
                                         </tr>
                                         </thead>
@@ -775,6 +983,12 @@ HTML;
                     
 HTML;
             echo <<<HTML
+                   <td>
+            <center>
+            <button name="EAliminar"  class="eliminaEAB btn btn-danger glyphicon glyphicon-trash"> </button>
+                </center></td>
+            
+            
                 <td>
                 <center>
                     <button type="submit" class="actualEAB btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="actualexAc"  title="Editar">
@@ -887,7 +1101,7 @@ HTML;
     <div class="col-lg-12">
             <!-- .panel-heading -->
             <div class="panel-body">
-                <form role="form" id="form" method="post">
+                <form role="form" id="formTEL" method="post">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -945,7 +1159,7 @@ HTML;
     <div class="col-lg-12">
             <!-- .panel-heading -->
             <div class="panel-body">
-                <form role="form" method="post">
+                <form role="form" id="formFA" method="post">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -1040,7 +1254,7 @@ HTML;
     <div class="col-lg-12">
             <!-- .panel-heading -->
             <div class="panel-body">
-                <form role="form" method="post">
+                <form role="form" id="formEL" method="post">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -1068,9 +1282,9 @@ HTML;
                                                 <label>Cargo</label>
                                                 <select id="cargo" name="cargo" class="form-control">
                                                     <?php
-                                                    $pa=mysql_query("SELECT Cargo FROM cargo");
+                                                    $pa=mysql_query("SELECT * FROM cargo");
                                                     while($row=mysql_fetch_array($pa)){
-                                                        echo '<option value="'.$row['Cargo'].'">'.$row['Cargo'].'</option>';
+                                                        echo '<option value="'.$row['ID_cargo'].'">'.$row['Cargo'].'</option>';
                                                     }
                                                     ?>
                                                 </select>
@@ -1124,7 +1338,7 @@ HTML;
     <div class="col-lg-12">
             <!-- .panel-heading -->
             <div class="panel-body">
-                <form role="form" method="post">
+                <form role="form" id="formEA" method="post">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -1151,11 +1365,12 @@ HTML;
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Clases</label>
-                                                            <select name="clases" class="form-control" id="clases">
+                                                            <select id="clasesEA"  name="clases" class="form-control" >
                                                                 <?php
-                                                                $p=mysql_query("SELECT Clase FROM clases");
+                                                                $p=mysql_query("SELECT * FROM clases");
                                                                 while($row=mysql_fetch_array($p)){
-                                                                    echo '<option value="'.$row['Clase'].'">'.$row['Clase'].'</option>';
+                                                                   
+                                                                     echo '<option value="'.$row['ID_Clases'].'">'.$row['Clase'].'</option>';
                                                                 }
                                                                 ?>
                                                             </select>

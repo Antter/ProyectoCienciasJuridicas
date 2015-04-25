@@ -45,9 +45,27 @@ HTML;
               }
 
              // pagina del POA
+	    if($rol == 100 || $rol == 50 || $rol == 30 || $rol == 20)
+		{
             if($contenido == 'poa') 
               {
-                $url = 'pages/principal.php?contenido=poa';
+			  
+			switch($rol)
+			{   
+			    case 100: 
+				    $url = 'pages/principal.php?contenido=poa';// 100    
+				    break;
+				case 50:
+				    $url = 'pages/principalDecana.php?contenido=poa'; // 50
+				    break;
+				case 30:
+				    $url = 'pages/principalJefe.php?contenido=poa'; // 30
+					break;
+				case 20:
+				    $url = 'pages/principalDocente.php?contenido=poa'; // 20
+			     	break;
+			}
+				
                 echo <<<HTML
                 <li class="active"><a href="javascript:ajax_('$url');">POA</a></li>
 
@@ -61,6 +79,7 @@ HTML;
 
 HTML;
               }
+		}
              
              // pagina de permisos
             if($contenido == 'permisos') 
@@ -80,7 +99,7 @@ HTML;
 HTML;
                 
               }
-              if($rol >= 40){
+              if($rol >= 10){
              // pagina del recursos humanos
             if($contenido == 'recursos_humanos') 
               {

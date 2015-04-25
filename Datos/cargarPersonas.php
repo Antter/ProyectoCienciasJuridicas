@@ -25,6 +25,13 @@ $queryCE = mysql_query("SELECT * FROM persona");
                 var x;
                 x = $(".editarb");
                 x.click(editarE);
+                
+                 var x;
+                x = $(".editaripb");
+                x.click(editarinfoPE);
+                
+                
+                
 
                 var x;
                 x = $(".verb");
@@ -93,6 +100,28 @@ $queryCE = mysql_query("SELECT * FROM persona");
                 });
                 return false;
             };
+            
+                function editarinfoPE()
+            {
+                var pid = $(this).parents("tr").find("td").eq(0).html();
+               
+
+                data = {identi: pid};
+
+
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    dataType: "html",
+                    contentType: "application/x-www-form-urlencoded",
+                    //  url:"pages/recursos_humanos/modi_universidad.php",  
+                    beforeSend: inicioeditarinfo,
+                    success: Editarinfo,
+                    timeout: 4000,
+                    error: problemas
+                });
+                return false;
+            };
 
 
                 function VerPerfil()
@@ -135,6 +164,20 @@ $queryCE = mysql_query("SELECT * FROM persona");
                 $("#contenedor").text('Problemas en el servidor.');
             }
             
+            
+            
+            function inicioeditarinfo()
+            {
+                var x = $("#contenedor");
+                x.html('Cargando...');
+            }
+            
+
+             function Editarinfo()
+            {
+                $("#contenedor").load('pages/recursos_humanos/cv/actualizar/personaActualizar.php', data);
+                //$("#contenedor").load('../cargarPOAs.php');
+            }
 
 
 
@@ -199,7 +242,7 @@ $queryCE = mysql_query("SELECT * FROM persona");
                                             <th>No identidad</th>
                                             <th>nombre</th>
                                             <th>Apellido</th>
-                                        
+                                        <th>Editar info.peronal</th> 
                                       <th>Editar Curriculum</th>
                                          <th>Ver perfil</th>
                                         </tr>
@@ -228,13 +271,24 @@ HTML;
                 <td>$apellido</td>
 HTML;
                 echo <<<HTML
-                                     
+                                 
+   
+                      <td>
+
+                <center>
+                    <button type="submit" class="editaripb btn btn-primary glyphicon  glyphicon-edit"  title="Editar info">
+                      </button>
+                </center>
+
+
+
+                </td> 
 
                
                   <td>
 
                 <center>
-                    <button type="submit" class="editarb btn btn-primary glyphicon glyphicon-edit"  title="Editar CV">
+                    <button type="submit" class="editarb btn btn-primary glyphicon glyphicon-list-alt "  title="Editar CV">
                       </button>
                 </center>
 
@@ -270,7 +324,7 @@ HTML;
                                             <th>nombre</th>
                                             <th>Apellido</th>
                                           
-                                      
+                                            <th>Editar info.Personal</th>
                                             <th>Editar curriculum</th>
                                             <th>Ver perfil</th>
                                         </tr>

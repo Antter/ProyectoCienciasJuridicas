@@ -4,7 +4,10 @@ session_start();
 
 if(isset($_SESSION['contenido']))
 {
-$contenido = $_SESSION['contenido'];
+   $contenido = $_SESSION['contenido'];
+}elseif($_GET['contenido'])
+{
+   $contenido = $_GET['contenido'];
 }
 
 if(isset($_GET['code']))
@@ -30,10 +33,10 @@ if(isset($_GET['code']))
 		  session_start();
           if($contenido == 'index')
           {
-            echo '<script>window.top.location.href="login.php?error_code=5"</script>';
+            echo '<script>window.top.location.href="login.php"</script>';
             exit();
           }
-		  echo '<script>window.top.location.href="login.php"</script>';
+		  echo '<script>window.top.location.href="login/login.php"</script>';
           exit();
 	  break;
 	  case 0:

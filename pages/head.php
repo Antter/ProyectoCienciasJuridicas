@@ -17,16 +17,17 @@ else
   {
     $contenido = 'index';
   }
-
+  
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['user_id']) || (trim($_SESSION['user_id']) == '')) 
   {
-    header('Location: '.$maindir.'login/logout.php?code=100');
+    header('Location: '.$maindir.'login/logout.php?code=100&contenido='.$contenido);
     exit();
   }
 else
   {
   $user = $_SESSION['nombreUsuario'];
+  $rol = $_SESSION['user_rol'];
   }
 
 //Check time
@@ -65,6 +66,9 @@ require_once($maindir."funciones/timeout.php");
         <!-- MetisMenu CSS -->
         <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     
+	    <!-- switch CSS -->
+	    <link href="bower_components/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+	
         <!-- Timeline CSS -->
         <link href="dist/css/timeline.css" rel="stylesheet">
 
@@ -96,11 +100,23 @@ require_once($maindir."funciones/timeout.php");
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        
+	    <?php
+		    if($rol == 100){
+			                  echo <<<HTML
+            <li class="dropdown">
+            <a role="button" href="javascript:ajax_('pages/administracion/admin.php');"><i class="fa fa-cogs"></i> Administracion</a>
+            </li>
+HTML;
+		    }
+		?>
         <li class="dropdown">
-          <a role="button" href="#"><i class="glyphicon glyphicon-user"></i><?php echo " ".$user; ?></a>
+          <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+		     <i class="glyphicon glyphicon-user"></i><?php echo " ".$user; ?><span class="caret"></span></a>
+		  <ul id="g-account-menu" class="dropdown-menu" role="menu">
+		    <li href="#"><a href="#">Perfil</a></li>
+		  </ul>
         </li>
-        <li><a href="login/logout.php"><i class="glyphicon glyphicon-lock"></i>Salir</a></li>
+        <li><a href="login/logout.php"><i class="glyphicon glyphicon-lock"></i> Salir</a></li>
       </ul>
     </div>
   </div> 

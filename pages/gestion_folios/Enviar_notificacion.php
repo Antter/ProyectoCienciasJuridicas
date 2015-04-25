@@ -9,8 +9,6 @@
         $addMensaje= $_POST['Cuerpo'];
         $addFechaCreacion= $_POST['FechaCreacion'];
         $addUsuariosNotificado=$_POST['UsuariosNotificados'];
-        
-
        
        if($addUsuariosNotificado== "" or $addUsuariosNotificado== NULL){
             $mensaje = "Por favor introduzca usuarios";

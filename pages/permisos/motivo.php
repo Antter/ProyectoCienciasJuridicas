@@ -58,7 +58,7 @@ $rec = mysqli_query($conexion, "SELECT * from motivos");
                                             <tr>
                                             <th><strong>ID Motivo</strong></th>
                                              <th><strong>Descripcion Motivo</strong></th>
-                                             <th><strong>Eliminar</strong></th>
+                                             <th><strong>Editar</strong></th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -81,7 +81,7 @@ HTML;
                 <td>$dmotivo</td>
 				
 				  <td><center>
-                    <button name="Motivo_ID"  class="elimina btn btn-danger glyphicon glyphicon-edit"> </button>
+                    <button name="Motivo_ID" class="edita btn btn-danger glyphicon glyphicon-edit"> </button>
                 </center></td>
 
 
@@ -108,9 +108,6 @@ HTML;
 	</div>
 
 <script>
-$(document).ready(function(){
-                fn_dar_eliminar();               
-            });
 			
  var id;
  var data;
@@ -123,9 +120,9 @@ $(document).ready(function(){
         x=$("#guardar");
         x.click(consulta);
         
-       /* var x;
-        x=$(".eliminar");
-        x.click(ver);*/
+       var x;
+        x=$(".edita");
+        x.click(editarMotivo);
 	}
 	
 	function consulta() {
@@ -151,6 +148,27 @@ $(document).ready(function(){
 			}else{alert('El campo esta vacio ó contiene numeros');}
             return false;
     }
+	
+	function editarMotivo(){
+		var id = $(this).parents("tr").find("td").eq(0).html();
+		var respuesta=confirm("¿Esta seguro de que desea cambiar el registro seleccionado?");
+        if (respuesta){  
+			data = {Motivo_ID:id, dmotivo:$('#motivo').val()};
+			$.ajax({
+				async:true,
+				type: "POST",
+				dataType: "html",
+				data:data,
+				contentType: "application/x-www-form-urlencoded",
+				url:"pages/permisos/editarMotivos.php",     
+				beforeSend:inicioEnvio,
+				success:llegadaEditarMotivo,
+				timeout:4000,
+				error:problemas
+			});
+			return false;
+		}
+	}
 
 	
 	function inicioEnvio(){
@@ -167,44 +185,13 @@ $(document).ready(function(){
 	{
     $("#contenedor").text('Problemas en el servidor.');
 	}
-	
-	function eliminarMotivo(){
-        var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
-        if (respuesta){  
-             data1 ={ Motivo_ID:id1};
-			
-		$.ajax({
-			async:true,
-			type: "POST",
-			dataType: "html",
-			contentType: "application/x-www-form-urlencoded",
-			url:"pages/permisos/eliminarMotivos.php",     
-			beforeSend:inicioEnvio,
-			//data:data,
-			success:llegadaEliminarMotivo,
-			timeout:4000,
-			error:problemas
-		}); 
-		return false;
-		}
-	}
 
-	function llegadaEliminarMotivo()
-            {
-                $("#contenedor").load('pages/permisos/eliminarMotivos.php',data1);
-				alert("Transacción completada correctamente");
-				$("#contenedor").load('pages/permisos/motivo.php');
-            }
-			
-	function fn_dar_eliminar(){
-          
-		$(".elimina").click(function(){
-			id1 = $(this).parents("tr").find("td").eq(0).html();
-			//alert(id1);
-			eliminarMotivo();
-		  
-		});
-	};
+	function llegadaEditarMotivo()
+    {
+		$("#contenedor").load('pages/permisos/editarMotivos.php',data);
+		alert("Transacción completada correctamente");
+		$("#contenedor").load('pages/permisos/motivo.php');
+    }
 	
 </script>
 	

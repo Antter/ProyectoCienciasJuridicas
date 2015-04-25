@@ -67,6 +67,11 @@ require_once('../Datos/conexion.php');
 
    
     
+    }else if($licenciatura=='-1' and $maestria=='-1' and $doctorado=='-1'){
+        
+        $query = "SELECT * FROM `persona`";
+        $RB=mysql_query($query);
+        
     }else{
         
            $query = "Select * from persona where ((N_identidad in (Select N_identidad from estudios_academico "

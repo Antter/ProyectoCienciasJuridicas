@@ -72,7 +72,7 @@
 
 <div id="contenedor3" class="panel-body">
         <?php
-			include "../../Datos/cargarEmpleadosP.php";
+			include "cargarEmpleadosP.php";
         ?>
  </div>
 

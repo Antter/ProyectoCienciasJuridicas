@@ -4,7 +4,7 @@
  $queryCE = mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1'");
 
  
-   $maindir = "../../";
+   //$maindir = "../../";
 
   if(isset($_GET['contenido']))
     {

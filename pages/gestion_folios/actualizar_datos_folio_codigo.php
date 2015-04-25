@@ -10,20 +10,21 @@
     $personaReferente = $_POST["personaReferente"];
     $unidadAcademica = $_POST["unidadAcademica"];
     $organizacion = $_POST["organizacion"];
+	$categoria = $_POST["categoria"];
     $descripcion = $_POST["descripcion"];
     $tipoFolio=$_POST["tipoFolio"];
     $ubicacionFisica = $_POST["ubicacionFisica"];
 	$prioridadAnt = $_POST["prioridadAnt"];
     $prioridad = $_POST["prioridad"];
 
-    if($num_folio == "" or $fechaCreacion == "" or $fechaEntrada == "" or $personaReferente == "" or $descripcion == ""){
+    if($num_folio == "" or $fechaCreacion == "" or $fechaEntrada == "" or $personaReferente == "" or $descripcion == "" or $categoria == ""){
 
         $mensaje="Por favor introduzca todos los campos";
         $codMensaje =0;
 
-    }elseif($tipoFolio == -1 or $ubicacionFisica == -1 or $prioridad == -1){
+    }elseif($tipoFolio == -1 or $ubicacionFisica == -1 or $prioridad == -1 or $categoria == -1){
 
-        $mensaje="Por favor introduzca todos los campos";
+        $mensaje="Por favor seleccione opciones validas";
         $codMensaje =0;
 
     }elseif($organizacion == -1 and $unidadAcademica == -1){
@@ -45,7 +46,7 @@
 		}
 		
 		try{
-		$stmt = $db->prepare("CALL sp_actualizar_folio(?,?,?,?,?,?,?,?,?,?,?,?,@mensaje,@codMensaje)");
+		$stmt = $db->prepare("CALL sp_actualizar_folio(?,?,?,?,?,?,?,?,?,?,?,?,?,@mensaje,@codMensaje)");
         $stmt->bindParam(1, $num_folioAnt, PDO::PARAM_STR);
 		$stmt->bindParam(2, $num_folio, PDO::PARAM_STR);
 		$stmt->bindParam(3, $fechaCreacion, PDO::PARAM_STR); 
@@ -58,6 +59,7 @@
 		$stmt->bindParam(10, $ubicacionFisica, PDO::PARAM_STR); 
 		$stmt->bindParam(11, $prioridadAnt, PDO::PARAM_STR);
 		$stmt->bindParam(12, $prioridad, PDO::PARAM_STR);
+		$stmt->bindParam(13, $categoria, PDO::PARAM_STR);
 		
         // call the stored procedure
         $stmt->execute();	

@@ -9,6 +9,7 @@ $( document ).ready(function() {
                 personaReferente:$("#personaReferente").val(),
                 unidadAcademica:$("#unidadAcademica option:selected").val(),
                 organizacion:$("#Organizacion option:selected").val(),
+				categoria:$("#Categoria option:selected").val(),
                 descripcion:$("#Descripcion").val(),
                 tipoFolio:$("#TipoFolio option:selected").val(),
                 ubicacionFisica:$("#ubicacionFisica option:selected").val(),

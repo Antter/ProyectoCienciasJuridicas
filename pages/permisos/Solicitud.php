@@ -21,6 +21,20 @@ require_once($maindir . "funciones/timeout.php");
 	$conexion = mysqli_connect($host, $username, $password, $dbname);
 	$rec = mysqli_query($conexion, "select departamento_laboral.nombre_departamento from departamento_laboral where Id_departamento_laboral in( SELECT Id_departamento FROM empleado where No_Empleado in (Select No_Empleado from usuario where id_Usuario='$idusuario'))");
 	$row = mysqli_fetch_array($rec);
+	//consulta datos del empleado
+	
+	$rec7 = mysqli_query($conexion, "Select Primer_nombre, Segundo_nombre, Primer_apellido, Segundo_Apellido,empleado.No_Empleado from persona 
+			inner join empleado on persona.N_identidad=empleado.N_identidad
+			where empleado.No_Empleado in (select usuario.No_Empleado from usuario where usuario.id_Usuario='".$idusuario."')");
+													
+													
+	$row7= mysqli_fetch_array($rec7);
+	//consulta de cantidad de Dias en el mes 
+	$Solicitudes_mes= mysqli_query($conexion, "Select COUNT(permisos.id_Permisos)
+	as Solicitudes from permisos where No_Empleado= '".$row7['No_Empleado']."' and MONTH(fecha )= MONTH(NOW()) and YEAR(fecha)=YEAR(NOW())
+	 and estado='Aprobado'" );
+	$row_solicitud = mysqli_fetch_array($Solicitudes_mes);
+
 	
 	//$result = mysqli_query($conexion, "SELECT No_Empleado FROM usuario  where id_Usuario='$idusuario'");
 	//$row2 = mysqli_fetch_array($result);
@@ -109,7 +123,7 @@ require_once($maindir . "funciones/timeout.php");
 
     <body>
 
-        <div id="wrapper">
+       
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Solicitud</h1>
@@ -128,22 +142,47 @@ require_once($maindir . "funciones/timeout.php");
                                     <form id="formulario">
                                        
 										<div class="form-group">
-                                            <label>Nombre : </label>
+                                       
 
-												<?php echo strtoupper($_SESSION['nombreUsuario']) ?>
+												   <?php
+													
+													echo " <h5><label>Nombre :  </label>";
+													echo " ";
+													echo strtoupper ($row7['Primer_nombre']);
+													echo " ";
+													echo strtoupper ($row7['Segundo_nombre']);
+													echo " ";
+													echo strtoupper ($row7['Primer_apellido']);
+													echo " ";
+													echo strtoupper ($row7['Segundo_Apellido']);
+																									
+													//mysqli_close($conexion);
+                                                ?>
 
                                         </div>
 
                                         <div color: 'black' class="form-group" >
 										<?php
-										
-											echo "Departamento:";
-											echo '<label Id="area" name="area">  ';
-												echo $row['nombre_departamento'];
-											echo '</label>'
+											echo "<h5>";
+											echo "<label>Departamento:</label>";
+											echo " ";
+												echo strtoupper ($row['nombre_departamento']);
+												echo "</h5>";
 
 										?>											
                                         </div>
+											  <div>										 
+											
+													<?php
+											echo "<h5>";
+											echo "<label>Dias aprobados este mes:</label>";
+											echo " ";
+												echo strtoupper ($row_solicitud['Solicitudes']);
+												echo "</h5>";
+
+													?>	
+                                            
+											</div>
                                         <div class="form-group">
                                             <label>Solicito permiso por motivo de :</label>
                                             <select class="form-control" Id="motivo" name="motivo">
@@ -182,23 +221,23 @@ require_once($maindir . "funciones/timeout.php");
 
                                             <p> <input type="number" id="cantidad" name="cantidad" min="0" max="5" value="0" required ></p>
                                         </div>
+									
                                         <div>
                                             <label>Fecha:</label>
 
                                             <p> <input type="date" id="fecha" name="datepicker" required ></p>												
-                                        </div>
-                                        <div>
-                                            <label>Hora Inicio:</label>											
+                                        <table>
+                                            <tr><label>Hora Inicio:</label>											
                                             <p>	<input type="time" name="horai" min=9:00 max=17:00 step=900 id="horai" value="1:00 pm" required></p>
-                                        </div>
-                                        <div>
+                                      
                                             <label>Hora Finalización:</label>
                                             <p><input type="time" name="horaf" min=9:00 max=17:00 step=900 id="horaf" value="2:00 pm" required></p>									
 
                                             <div>
                                                 <input id="bt" class="btn btn-primary" type="submit"  value="Enviar Solicitud" /></td>
                                                 <div id="respuesta"></div>
-                                            </div>
+                                            </div> </tr>
+											</table>
                                     </form>
 
                                 </div>
@@ -209,5 +248,6 @@ require_once($maindir . "funciones/timeout.php");
                 </div>
             </div>
         </div>
+		
     </body>
 </html>

@@ -114,135 +114,139 @@
                                             <!-- compose message btn -->
                                             <!-- <a class="btn btn-block btn-primary" id="nuevo_folio" href="javascript:ajax_('pages/gestion_folios/nuevo_folio.php');"><i class="fa fa-pencil"></i> Nuevo Folio</a> -->
                                             <!-- Navigation - folders-->
-                                            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i> Nueva Notificacion</a>
+                                            <?php
+                                            if ($rol>20) {
+                                            echo '<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i> Nueva Notificacion</a>';
+                                            }
+
+                                            ?>
                                             <div style="margin-top: 15px;">
                                                 <ul class="nav nav-pills nav-stacked">
                                                     <li class="header">Bandeja Notificaciones</li>
                                          
-                                                   <?php
-                           if(isset($_POST['tipoNotificacion'])){
+                                                  <?php
+
+
+                            if(isset($_POST['tipoNotificacion'])){
                               $tipoNotificacion = $_POST['tipoNotificacion'];
-							  if($tipoNotificacion == "")
-							  {
-							    $tipoNotificacion = "NotificacionRecibida";
-							  }
-							// notificaciones recibidas
-							  
-                              if($tipoNotificacion == 'NotificacionRecibida' or $FocoNotificacion=='NotificacionRecibida'){
+
+              // notificaciones recibidas
+                
+                              if($tipoNotificacion == 'NotificacionRecibida'){
                                 echo '<li class="active"><a id="recibidas" href="#"><i class="fa fa-envelope"></i><span>Recibidas ';
                             }else{
                                 echo '<li><a id="recibidas" href="#"><i class="fa fa-envelope"></i><span>Recibidas ';
                             }
-							if($cuenta_notificaciones_recibidas > 0){
-							    if($cuenta_notificaciones_recibidas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_recibidas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
-							
-							// notificaciones enviadas
-							
-                              if($tipoNotificacion == 'NotificacionEnviada' or $FocoNotificacion=='NotificacionEnviada'){
+              if($cuenta_notificaciones_recibidas > 0){
+                  if($cuenta_notificaciones_recibidas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_recibidas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
+              // notificaciones enviadas
+              
+                              if($tipoNotificacion == 'NotificacionEnviada' and $rol>20){
                                 echo '<li class="active"><a id="enviadas" href="#"><i class="fa fa-paper-plane"></i><span>Enviadas</span>';    
-                            }else{
+                            }else if($rol>20){
                                 echo '<li><a id="enviadas" href="#"><i class="fa fa-paper-plane"></i><span>Enviadas</span>';
                             }
-							if($cuenta_notificaciones_enviadas > 0){
-							    if($cuenta_notificaciones_enviadas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_enviadas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
+              if($cuenta_notificaciones_enviadas > 0 and $rol>20){
+                  if($cuenta_notificaciones_enviadas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_enviadas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
                         
-						    // basurero recibidas
+                // basurero recibidas
                             
-                            if($tipoNotificacion == 'BasureroRecibida' or $FocoNotificacion=='BasureroRecibida'){
+                            if($tipoNotificacion == 'BasureroRecibida'){
                                 echo '<li class="active"><a id="basurero_recibida" href="#"><i class="fa fa-trash"></i><span>Basurero Recibidas</span>';
                             }else{
                                 echo '<li><a id="basurero_recibida" href="#"><i class="fa fa-trash"></i><span>Basurero Recibidas</span>';
                             }
-							if($cuenta_basurero_recibidas > 0){
-							    if($cuenta_basurero_recibidas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_basurero_recibidas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
-							
-							// basurero enviadas
-							
-                            if($tipoNotificacion == 'BasureroEnviada' or $FocoNotificacion=='BasureroEnviada'){
+              if($cuenta_basurero_recibidas > 0){
+                  if($cuenta_basurero_recibidas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_basurero_recibidas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
+              // basurero enviadas
+              
+                            if($tipoNotificacion == 'BasureroEnviada' and $rol>20){
                                 echo '<li class="active"><a id="basurero_enviada" href="#"><i class="fa fa-trash"></i><span>Basurero Enviadas</span>';
-                            }else{
+                            }else if($rol>20){
                                 echo '<li><a id="basurero_enviada" href="#"><i class="fa fa-trash"></i><span>Basurero Enviadas</span>';
                             }
-							if($cuenta_basurero_enviadas > 0){
-							    if($cuenta_basurero_enviadas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_basurero_enviadas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
-							
-							// no entra en ninguno de los casos
-                          }else{         
-                               
+              if($cuenta_basurero_enviadas > 0 and $rol>20){
+                  if($cuenta_basurero_enviadas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_basurero_enviadas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
+              //no entra en ninguno de los casos              
+                          }else{
+              
                             echo '<li class="active"><a id="recibidas" href="#"><i class="fa fa-envelope"></i><span>Recibidas</span>';    
-							if($cuenta_notificaciones_recibidas > 0){
-							    if($cuenta_notificaciones_recibidas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_recibidas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
-							
-                            echo '<li><a id="enviadas" href="#"><i class="fa fa-paper-plane"></i><span>Enviadas</span>';
-							if($cuenta_notificaciones_enviadas > 0){
-							    if($cuenta_notificaciones_enviadas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_enviadas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
-							
+              if($cuenta_notificaciones_recibidas > 0){
+                  if($cuenta_notificaciones_recibidas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_recibidas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
+                          if($rol>20){echo '<li><a id="enviadas" href="#"><i class="fa fa-paper-plane"></i><span>Enviadas</span>';}  
+              if($cuenta_notificaciones_enviadas > 0 and $rol>20){
+                  if($cuenta_notificaciones_enviadas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_notificaciones_enviadas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
                             echo '<li><a id="basurero_recibida" href="#"><i class="fa fa-trash"></i><span>Basurero Recibidas</span>';
-							if($cuenta_basurero_recibidas > 0){
-							    if($cuenta_basurero_recibidas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_basurero_recibidas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
-							
-                            echo '<li><a id="basurero_enviada" href="#"><i class="fa fa-trash"></i><span>Basurero Enviadas</span>';
-							if($cuenta_basurero_enviadas > 0){
-							    if($cuenta_basurero_enviadas < 100){
-								    echo '<span class="label label-success pull-right">'.$cuenta_basurero_enviadas.'</span></a></li>';
-								}else{
-								    echo '<span class="label label-success pull-right">+99</span></a></li>';
-								}		    
-							}else{
-							    echo '</a></li>';
-							}
+              if($cuenta_basurero_recibidas > 0){
+                  if($cuenta_basurero_recibidas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_basurero_recibidas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
+                          if($rol>20){  echo '<li><a id="basurero_enviada" href="#"><i class="fa fa-trash"></i><span>Basurero Enviadas</span>';}
+              if($cuenta_basurero_enviadas > 0 and $rol>20){
+                  if($cuenta_basurero_enviadas < 100){
+                    echo '<span class="label label-success pull-right">'.$cuenta_basurero_enviadas.'</span></a></li>';
+                }else{
+                    echo '<span class="label label-success pull-right">+99</span></a></li>';
+                }       
+              }else{
+                  echo '</a></li>';
+              }
+              
                           }
-                        ?>         
-
+                        ?>
 
                                                 </ul>
 
@@ -343,19 +347,18 @@
 				            <div class="form-group">
 				                <div class="input-group">
                                     <span class="input-group-addon">Numero Folio :</span>
-                                         <input list="NroFolio" class="form-control" name="NroFolio" required>
-                                            <datalist id="NroFolio">
+                                     <select  id="NroFolio" class="form-control"name="NroFolio" >
+                                          
                                             <?php foreach( $filas as $row ) { ?>
                                             <option value="<?php echo $row['NroFolio'];?>"><?php echo $row["NroFolio"];?></option><?php } ?>
-                      </datalist>
-                      </input>
+									    </select>
 	                            </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon">Para :</span>
                                         <select required= "required" multiple id="Destinatarios" class="form-control" name="Destinatarios[]" >                  
-                                            <?php foreach( $filas2 as $row ) {if($row["nombre"]!=$usuario and $row['Id_Rol']>=40){ ?>
+                                            <?php foreach( $filas2 as $row ) {if($row["nombre"]!=$usuario ){ ?>
                                             <option value="<?php echo $row["id_Usuario"];?>"><?php echo $row["nombre"];?></option><?php }} ?>
 							            </select>      
                                 </div>
