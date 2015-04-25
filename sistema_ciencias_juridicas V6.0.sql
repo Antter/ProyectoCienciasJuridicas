@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-04-2015 a las 13:38:30
+-- Tiempo de generación: 24-04-2015 a las 19:48:25
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -84,9 +84,9 @@ begin
 insert into actividades (id_indicador, descripcion, correlativo, supuesto, justificacion, medio_verificacion, poblacion_objetivo,fecha_inicio, fecha_fin) values( id_Indicador, descripcion, correlativo, supuestos, justificacion, medio_Verificacion, poblacion_Objetivo,fecha_Inicio, fecha_Fin) ;
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_insertar_actividades_terminadas`(IN `id_Actividad` INT, IN `fecha` DATE, IN `estado` VARCHAR(15), IN `id_Usuario` INT, IN `observaciones` TEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_insertar_actividades_terminadas`(IN `id_Actividad` INT, IN `fecha` DATE, IN `estado` VARCHAR(15), IN `id_Usuario` VARCHAR(20), IN `observaciones` TEXT)
 begin 
-	insert into actividades_terminadas (id_Actividad, fecha, estado, id_Usuario, observaciones) values (id_Actividad, fecha, estado, id_Usuario, observaciones);
+	insert into actividades_terminadas (id_Actividad, fecha, estado, No_Empleado, observaciones) values (id_Actividad, fecha, estado, id_Usuario, observaciones);
 end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_insertar_area`(IN `nombre` VARCHAR(30), IN `id_tipo_Area` INT, IN `observacion` TEXT)
@@ -119,7 +119,7 @@ begin
 	insert into responsables_por_actividad (id_Actividad,id_Responsable,fecha_Asignacion,observacion) values (id_Actividad,id_Responsable,fecha_Asignacion,observacion);
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_insertar_sub_actividad`(IN `id_Actividad` INT, IN `nombre` VARCHAR(30), IN `descripcion` TEXT, IN `fecha_monitoreo` DATE, IN `id_Encargado` INT, IN `ponderacion` INT, IN `costo` INT, IN `observacion` TEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_insertar_sub_actividad`(IN `id_Actividad` INT, IN `nombre` VARCHAR(30), IN `descripcion` TEXT, IN `fecha_monitoreo` DATE, IN `id_Encargado` VARCHAR(20), IN `ponderacion` INT, IN `costo` INT, IN `observacion` TEXT)
 begin
 insert into sub_actividad (idActividad,nombre,descripcion,fecha_monitoreo,id_Encargado,ponderacion,costo,observacion) values(id_Actividad,nombre,descripcion,fecha_monitoreo,id_Encargado,ponderacion,costo,observacion);
 end$$
@@ -134,15 +134,15 @@ begin
 	insert into  tipo_area (nombre,observaciones) values(nombre,observaciones);
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_actividad`(IN id_Actividad int,IN id_Indicador INT, IN descripcion TEXT, IN correlativo VARCHAR(10), IN supuestos TEXT, IN justificacion TEXT, IN medio_Verificacion TEXT, IN poblacion_Objetivo VARCHAR(20), IN fecha_Inicio DATE, IN fecha_Fin DATE)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_actividad`(IN `id_Actividad` INT, IN `id_Indicador` INT, IN `descripcion` TEXT, IN `correlativo` VARCHAR(10), IN `supuestos` TEXT, IN `justificacion` TEXT, IN `medio_Verificacion` TEXT, IN `poblacion_Objetivo` VARCHAR(20), IN `fecha_Inicio` DATE, IN `fecha_Fin` DATE)
 begin
 update actividades set id_indicador=id_Indicador, descripcion=descripcion, correlativo=correlativo, supuesto=supuesto, justificacion=justificacion, medio_verificacion=medio_Verificacion, poblacion_objetivo=poblacion_Objetivo,fecha_inicio=fecha_Inicio, fecha_fin=fecha_Fin 
-where id_actividad= id_Actividad;
+where actividades.id_actividad= id_Actividad;
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_actividades_terminadas`(IN `id_Actividad_Terminada` INT, IN `id_Actividad` INT, IN `fecha` DATE, IN `estado` VARCHAR(15), IN `id_Usuario` INT, IN `observaciones` TEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_actividades_terminadas`(IN `id_Actividad_Terminada` INT, IN `id_Actividad` INT, IN `fecha` DATE, IN `estado` VARCHAR(15), IN `id_Usuario` VARCHAR(20), IN `observaciones` TEXT)
 begin 
-	update actividades_terminadas set id_Actividad=id_Actividad, fecha=fecha, estado=estado, id_Usuario=id_Usuario, observaciones=observaciones where actividades_terminadas.id_Actividades_Terminadas= id_Actividad_Terminada; 
+	update actividades_terminadas set id_Actividad=id_Actividad, fecha=fecha, estado=estado, No_Empleado=id_Usuario, observaciones=observaciones where actividades_terminadas.id_Actividades_Terminadas= id_Actividad_Terminada; 
 end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_area`(IN id_Area int ,IN nombre VARCHAR(30), IN id_tipo_Area INT, IN observacion TEXT)
@@ -176,7 +176,7 @@ begin
 update responsables_por_actividad set id_Actividad=id_Actividad,id_Responsable=id_Responsable,fecha_Asignacion=Fecha_Asignacion,observacion=observacion where responsables_por_actividad.id_Responsable_por_Actividad=id_Responsable_por_Act;
 end$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_sub_actividad`(IN `id_sub_Act` INT, IN `id_Actividad` INT, IN `nombre` VARCHAR(30), IN `descripcion` TEXT, IN `fecha_monitoreo` DATE, IN `id_Encargado` INT, IN `ponderacion` INT, IN `costo` INT, IN `observacion` TEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_sub_actividad`(IN `id_sub_Act` INT, IN `id_Actividad` INT, IN `nombre` VARCHAR(30), IN `descripcion` TEXT, IN `fecha_monitoreo` DATE, IN `id_Encargado` VARCHAR(20), IN `ponderacion` INT, IN `costo` INT, IN `observacion` TEXT)
 begin
 update sub_actividad set idActividad=id_Actividad,nombre=nombre,descripcion=descripcion,fecha_monitoreo=fecha_monitoreo,id_Encargado=id_Encargado,ponderacion=ponderacion,costo=costo,observacion=observacion
 where sub_actividad.id_sub_Actividad=id_sub_Act;
@@ -191,6 +191,52 @@ end$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificar_tipo_area`(IN id_Tipo_Area int,IN nombre VARCHAR(30), IN observaciones TEXT)
 begin
 	 update tipo_area set nombre=nombre,observaciones=observaciones where tipo_area.id_Tipo_Area=id_Tipo_Area;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_asignado_folio`(
+    IN numFolio_ VARCHAR(25), 
+    IN usuarioAsg INT, 
+    OUT `mensaje` VARCHAR(150), 
+    OUT `codMensaje` TINYINT)
+BEGIN 
+ 
+   DECLARE id INTEGER DEFAULT 0;
+
+   DECLARE EXIT HANDLER FOR SQLEXCEPTION
+   BEGIN
+     SET mensaje = "No se pudo realizar la operacion, por favor intende de nuevo dentro de un momento";
+     SET codMensaje = 0;
+     ROLLBACK;
+   END;
+
+   START TRANSACTION;
+   
+   UPDATE seguimiento SET UsuarioAsignado = usuarioAsg WHERE NroFolio = numFolio_;
+
+     SET mensaje = "El usuario ha sido asignado correctamente al seguimiento de este folio."; 
+     SET codMensaje = 1; 
+   
+   COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_categorias_folios`(IN `Id_categoria_` INT(11), IN `NombreCategoria_` TEXT, IN `DescripcionCategoria_` TEXT, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
+BEGIN 
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+ROLLBACK;
+SET mensaje = "No se pudo actualizar la categoria de los folios por favor revise los datos que desea modificar";
+		SET codMensaje = 0; 
+END;
+
+   START TRANSACTION;
+        UPDATE categorias_folios
+        SET  NombreCategoria=NombreCategoria_,DescripcionCategoria = DescripcionCategoria_ 
+        WHERE Id_categoria=Id_categoria_;
+		
+		SET mensaje = "la categoria de los folios se ha actualizado satisfactoriamente."; 
+		SET codMensaje = 1;               
+COMMIT;   
 end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_estado_seguimiento`(IN `Id_Estado_Seguimiento_` TINYINT(4), IN `DescripcionEstadoSeguimiento_` TEXT, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
@@ -224,7 +270,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_folio`(
 	IN tipoFolio_ TINYINT, 
 	IN ubicacionFisica_ INT(5), 
     IN prioridadAnt_ TINYINT,
-	IN prioridad_ TINYINT, 
+	IN prioridad_ TINYINT,
+    IN categoria_ INT,
     OUT mensaje VARCHAR(150), 
     OUT codMensaje TINYINT  
 )
@@ -233,7 +280,7 @@ BEGIN
    START TRANSACTION;
 
    IF (numFolioAnt_ = numFolio_) THEN
-       UPDATE folios SET  FechaCreacion = fechaCreacion_, personaReferente = PersonaReferente_, UnidadAcademica = unidadAcademica_, Organizacion = organizacion_, DescripcionAsunto = descripcion_, TipoFolio = tipoFolio_, UbicacionFisica = ubicacionFisica_, Prioridad = prioridad_ WHERE NroFolio = numFolio_;
+       UPDATE folios SET  FechaCreacion = fechaCreacion_, personaReferente = PersonaReferente_, UnidadAcademica = unidadAcademica_, Organizacion = organizacion_, DescripcionAsunto = descripcion_, TipoFolio = tipoFolio_, UbicacionFisica = ubicacionFisica_, Prioridad = prioridad_, categoria=categoria_ WHERE NroFolio = numFolio_;
        IF (prioridadAnt_ != prioridad_) THEN
           INSERT INTO prioridad_folio VALUES (NULL,numFolio_,prioridad_,CURDATE() );
        END IF;
@@ -245,7 +292,7 @@ BEGIN
           SET codMensaje = 0;
 	   ELSE
 	      UPDATE folios SET NroFolio = numFolio_, FechaCreacion = fechaCreacion_, PersonaReferente = personaReferente_, UnidadAcademica = unidadAcademica_, Organizacion = organizacion_, 
-		  DescripcionAsunto = descripcion_,TipoFolio = tipoFolio_, UbicacionFisica = ubicacionFisica_, Prioridad = prioridad_ WHERE NroFolio = numFolioAnt_;
+		  DescripcionAsunto = descripcion_,TipoFolio = tipoFolio_, UbicacionFisica = ubicacionFisica_, Prioridad = prioridad_, categoria=categoria_ WHERE NroFolio = numFolioAnt_;
 		
        IF (prioridadAnt_ != prioridad_) THEN
          INSERT INTO prioridad_folio VALUES (NULL,numFolio_,prioridad_,CURDATE() );
@@ -398,7 +445,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_actualizar_usuario`(IN `idUsuari
 BEGIN 
    START TRANSACTION;
    IF (nombreAnt_ = nombre_) THEN 
-     UPDATE usuario SET No_Empleado = numEmpleado_, nombre = nombre_, Password = password_, Id_Rol = rol_, Fecha_Alta = fecha_, Estado = estado_ 
+     UPDATE usuario SET No_Empleado = numEmpleado_, nombre = nombre_, Password = udf_Encrypt_derecho(Password_), Id_Rol = rol_, Fecha_Alta = fecha_, Estado = estado_ 
      WHERE id_Usuario = idUsuario;
      
      SET mensaje = "El usuario ha sido modificado satisfactoriamente."; 
@@ -407,7 +454,7 @@ BEGIN
    
      IF NOT EXISTS (SELECT 1 FROM usuario WHERE nombre = nombre_) THEN 
 
-       UPDATE usuario SET No_Empleado = numEmpleado_, nombre = nombre_, Password = password_, Id_Rol = rol_, Fecha_Alta = fecha_, Estado = estado_ 
+       UPDATE usuario SET No_Empleado = numEmpleado_, nombre = nombre_, Password = udf_Encrypt_derecho(Password_), Id_Rol = rol_, Fecha_Alta = fecha_, Estado = estado_ 
        WHERE id_Usuario = idUsuario;
 
        SET mensaje = "El usuario ha sido modificado satisfactoriamente."; 
@@ -478,6 +525,18 @@ BEGIN
 				CLOSE usuarios_cursor;		
 		END IF;
     COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_categorias_folios`(IN `sp_Id_categoria` INT, OUT `mensaje` VARCHAR(150), IN `codMensaje` TINYINT)
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM folios WHERE Categoria = sp_Id_categoria) THEN 
+     DELETE FROM categorias_folios WHERE Id_categoria = sp_Id_categoria; 
+     SET mensaje = "Exito al eliminar la categoria de los folios"; 
+     SET codMensaje = 1;  -- codigo del mensaje de salida
+   ELSE
+     SET mensaje = "Error al eliminar la categoria de los folios, esta esta enlazada a un folio"; -- mensaje de salida
+     SET codMensaje = 0; -- codigo del mensaje de salida
+   END IF; 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_estado_seguimiento`( 
@@ -576,6 +635,27 @@ BEGIN
    END IF; 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_categorias_folios`(
+	 IN `NombreCategoria_` text, IN `DescripcionCategoria_` text,
+    OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
+BEGIN 
+
+   START TRANSACTION;
+
+   IF NOT EXISTS (SELECT 1 FROM categorias_folios WHERE NombreCategoria = NombreCategoria_) THEN 
+     
+     INSERT INTO categorias_folios (Id_categoria, NombreCategoria, DescripcionCategoria) 
+     VALUES(null,NombreCategoria_,DescripcionCategoria_);				
+     SET mensaje = "la categoria de los folios se ha insertado satisfactoriamente."; 
+     SET codMensaje = 1;  
+   ELSE
+     SET mensaje = "esta categoria de los folios ya estÃ¡ en sistema, por favor revise el numero de la categoria que desea ingresar";
+     SET codMensaje = 0;
+   END IF; 
+   
+   COMMIT;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_estado_seguimiento`(
 IN `Id_Estado_Seguimiento_` tinyint(4), 
 IN `DescripcionEstadoSeguimiento_` text,
@@ -595,22 +675,50 @@ BEGIN
       COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_folio`(IN `numFolio_` VARCHAR(25), IN `fechaCreacion_` DATE, IN `fechaEntrada_` DATE, IN `personaReferente_` TEXT, IN `unidadAcademica_` INT, IN `organizacion_` INT, IN `descripcion_` TEXT, IN `tipoFolio_` TINYINT, IN `ubicacionFisica_` INT(5), IN `prioridad_` TINYINT, IN `seguimiento_` INT(11), IN `notas_` TEXT, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_folio`(IN `numFolio_` VARCHAR(25), IN `fechaCreacion_` DATE, IN `fechaEntrada_` DATE, IN `personaReferente_` TEXT, IN `unidadAcademica_` INT, IN `organizacion_` INT, IN categoria_ INT, IN `descripcion_` TEXT, IN `tipoFolio_` TINYINT, IN `ubicacionFisica_` INT(5), IN `prioridad_` TINYINT, IN `seguimiento_` INT(11), IN `notas_` TEXT, IN encargado INT, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
 BEGIN 
 
    START TRANSACTION;
 
    IF NOT EXISTS (SELECT 1 FROM folios WHERE NroFolio = numFolio_) THEN 
-     INSERT INTO folios (NroFolio, FechaCreacion, FechaEntrada, PersonaReferente, UnidadAcademica, Organizacion, DescripcionAsunto, 
-            TipoFolio,UbicacionFisica, Prioridad) VALUES(numFolio_,fechaCreacion_,fechaEntrada_,personaReferente_,unidadAcademica_,organizacion_, descripcion_,
+     INSERT INTO folios (NroFolio, FechaCreacion, FechaEntrada, PersonaReferente, UnidadAcademica, Organizacion, Categoria, DescripcionAsunto, 
+            TipoFolio,UbicacionFisica, Prioridad) VALUES(numFolio_,fechaCreacion_,fechaEntrada_,personaReferente_,unidadAcademica_,organizacion_, categoria_, descripcion_,
 			tipoFolio_,ubicacionFisica_,prioridad_);
 			
-     INSERT INTO seguimiento VALUES(NULL,numFolio_,notas_,prioridad_,fechaEntrada_,NULL,seguimiento_);
+     INSERT INTO seguimiento VALUES(NULL,numFolio_,encargado,notas_,prioridad_,fechaEntrada_,NULL,seguimiento_);
 	 
      INSERT INTO seguimiento_historico VALUES(NULL,LAST_INSERT_ID(),seguimiento_,notas_,prioridad_,NOW());
 	 
      INSERT INTO prioridad_folio VALUES(NULL,numFolio_,prioridad_,fechaEntrada_);
 
+     SET mensaje = "El folio ha sido insertado satisfactoriamente."; 
+     SET codMensaje = 1;  
+   ELSE
+     SET mensaje = "El folio ya existe en sistema, por favor revise el numero del folio que desea ingresar";
+     SET codMensaje = 0;
+   END IF; 
+   
+   COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_folio_2`(IN `numFolio_` VARCHAR(25), IN `fechaCreacion_` DATE, IN `fechaEntrada_` DATE, IN `personaReferente_` TEXT, IN `unidadAcademica_` INT, IN `organizacion_` INT, IN categoria_ INT, IN `descripcion_` TEXT, IN `tipoFolio_` TINYINT, IN `ubicacionFisica_` INT(5), IN `prioridad_` TINYINT, IN `seguimiento_` INT(11), IN `notas_` TEXT, IN encargado INT, IN folioRef VARCHAR(25), OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
+BEGIN 
+
+   START TRANSACTION;
+
+   IF NOT EXISTS (SELECT 1 FROM folios WHERE NroFolio = numFolio_) THEN 
+     INSERT INTO folios (NroFolio, FechaCreacion, FechaEntrada, PersonaReferente, UnidadAcademica, Organizacion, Categoria, DescripcionAsunto, 
+            TipoFolio,UbicacionFisica, Prioridad) VALUES(numFolio_,fechaCreacion_,fechaEntrada_,personaReferente_,unidadAcademica_,organizacion_, categoria_, descripcion_,
+			tipoFolio_,ubicacionFisica_,prioridad_);
+			
+     INSERT INTO seguimiento VALUES(NULL,numFolio_,encargado,notas_,prioridad_,fechaEntrada_,NULL,seguimiento_);
+	 
+     INSERT INTO seguimiento_historico VALUES(NULL,LAST_INSERT_ID(),seguimiento_,notas_,prioridad_,NOW());
+	 
+     INSERT INTO prioridad_folio VALUES(NULL,numFolio_,prioridad_,fechaEntrada_);
+     
+     UPDATE folios SET NroFolioRespuesta = numFolio_ WHERE NroFolio = folioRef;
+ 
      SET mensaje = "El folio ha sido insertado satisfactoriamente."; 
      SET codMensaje = 1;  
    ELSE
@@ -635,7 +743,7 @@ BEGIN
      SET mensaje = "la organizacion ha insertado satisfactoriamente."; 
      SET codMensaje = 1;  
    ELSE
-     SET mensaje = "la organizacion ya está en sistema, por favor revise el numero de organizacion que desea ingresar";
+     SET mensaje = "la organizacion ya estÃ¡ en sistema, por favor revise el numero de organizacion que desea ingresar";
      SET codMensaje = 0;
    END IF; 
    
@@ -711,14 +819,14 @@ BEGIN
       COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_usuario`(IN `numEmpleado_` VARCHAR(13), IN `nombre_` VARCHAR(30), IN `Password_` VARCHAR(20), IN `rol_` INT(4), IN `fechaCreacion_` DATE, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_usuario`(IN `numEmpleado_` VARCHAR(13), IN `nombre_` VARCHAR(30), IN `Password_` VARCHAR(25), IN `rol_` INT(4), IN `fechaCreacion_` DATE, OUT `mensaje` VARCHAR(150), OUT `codMensaje` TINYINT)
 BEGIN 
 
    START TRANSACTION;
 
    IF NOT EXISTS (SELECT 1 FROM usuario WHERE nombre = nombre_) THEN 
 
-     INSERT INTO usuario VALUES(NULL,numEmpleado_,nombre_,password_,rol_,fechaCreacion_,NULL,1);
+     INSERT INTO usuario VALUES(NULL,numEmpleado_,nombre_,udf_Encrypt_derecho(Password_),rol_,fechaCreacion_,NULL,1);
 
      SET mensaje = "El usuario ha sido insertado satisfactoriamente."; 
      SET codMensaje = 1;  
@@ -730,6 +838,40 @@ BEGIN
    COMMIT;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_lee_actividades_no_terminadas_poa`()
+begin
+
+select id_actividad,(select nombre from indicadores where indicadores.id_Indicadores=actividades.id_indicador) as indicador,descripcion,correlativo,supuesto,justificacion,medio_verificacion,poblacion_objetivo,fecha_inicio,fecha_fin from actividades where id_actividad not in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and (select fecha_Fin from poa where poa.id_Poa in (select id_Poa from objetivos_institucionales where objetivos_institucionales.id_Objetivo in (select id_ObjetivosInsitucionales from indicadores where indicadores.id_Indicadores in (select id_indicador from actividades ))) and year(fecha_Fin) = year(now())) and (select fecha_de_Inicio from poa where poa.id_Poa in (select id_Poa from objetivos_institucionales where objetivos_institucionales.id_Objetivo in (select id_ObjetivosInsitucionales from indicadores where indicadores.id_Indicadores in (select id_indicador from actividades ))) and year(fecha_de_Inicio) = year(now())) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)));
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_lee_actividades_terminadas_poa`()
+begin
+select id_Actividad,No_Empleado,fecha,
+(select nombre from indicadores where indicadores.id_Indicadores in (select id_indicador from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where id_Poa = ID_POA)))) as id_Indicador,
+(select descripcion from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Descripcion,
+(select correlativo from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Correlativo,
+(select supuesto from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Supuesto,
+(select justificacion from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Justificacion,
+(select medio_verificacion from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Medio_De_Verificacion,
+(select poblacion_objetivo from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Poblacion_Objetivo,
+(select fecha_inicio from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Fecha_Inicio,
+(select fecha_fin from actividades where id_actividad in (SELECT actividades_terminadas.id_Actividad FROM actividades_terminadas) and id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where objetivos_institucionales.id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa)))) as Fecha_Fin
+from actividades_terminadas where actividades_terminadas.id_Actividad in (select id_actividad from actividades where id_indicador in (select id_indicadores from indicadores where id_ObjetivosInsitucionales in (select id_Objetivo from objetivos_institucionales where id_Poa in(select id_Poa from poa where objetivos_institucionales.id_Poa =poa.id_Poa))))
+AND (select fecha_de_Inicio  from poa where poa.id_Poa in (select id_Poa from objetivos_institucionales where objetivos_institucionales.id_Objetivo in (select id_ObjetivosInsitucionales from indicadores where indicadores.id_Indicadores in (select id_indicador from actividades ))) and year(fecha_de_Inicio) = year(now()))
+AND(select fecha_Fin as ff from poa where poa.id_Poa in (select id_Poa from objetivos_institucionales where objetivos_institucionales.id_Objetivo in (select id_ObjetivosInsitucionales from indicadores where indicadores.id_Indicadores in (select id_indicador from actividades ))) and year(fecha_Fin) = year(now()))
+;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_login`(IN `user_` VARCHAR(30), IN `pass` VARCHAR(25))
+BEGIN
+   SELECT id_Usuario,Id_Rol FROM usuario WHERE nombre = user_ AND pass = udf_Decrypt_derecho(Password) AND Estado = 1;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_log_user`(IN `usuario_` INT(11), IN `ip` VARCHAR(45))
+begin
+    insert into usuario_log values (null,usuario_,now(),ip);
+end$$
+
 --
 -- Funciones
 --
@@ -738,6 +880,20 @@ BEGIN
    DECLARE pri INTEGER;
    SELECT Prioridad INTO pri FROM folios WHERE NroFolio = numFolio_;
    RETURN pri;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `udf_Decrypt_derecho`(`var` VARBINARY(150)) RETURNS varchar(25) CHARSET latin1
+BEGIN
+   DECLARE ret varchar(25);
+   SET ret = cast(AES_DECRYPT(unhex(var), 'Der3ch0') as char);
+   RETURN ret;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `udf_Encrypt_derecho`(`var` VARCHAR(25)) RETURNS varchar(150) CHARSET latin1
+BEGIN  
+   DECLARE ret BLOB;
+   SET ret = hex(AES_ENCRYPT(var, 'Der3ch0'));
+   RETURN ret;
 END$$
 
 DELIMITER ;
@@ -759,14 +915,17 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `poblacion_objetivo` varchar(30) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `actividades`
 --
 
 INSERT INTO `actividades` (`id_actividad`, `id_indicador`, `descripcion`, `correlativo`, `supuesto`, `justificacion`, `medio_verificacion`, `poblacion_objetivo`, `fecha_inicio`, `fecha_fin`) VALUES
-(1, 10, 'ertertert', 'ertertert', 'dfgdfg', 'qerqerqe', 'qerqerqer', 'qererewrewr', '2015-02-19', '2015-02-28');
+(1, 10, 'ertertert', 'ertertert', 'dfgdfg', 'qerqerqe', 'qerqerqer', 'qererewrewr', '2015-02-19', '2015-04-07'),
+(2, 9, 'hgjhgj', 'ghjghj', 'ghjghj', 'ghjghj', 'ghjghj', 'ghjghj', '2015-02-03', '2015-04-11'),
+(3, 9, 'ghjghjghj', 'ghjghj', 'ghjghj', 'ghjghj', 'ghjghjghj', 'ghjghj', '2015-04-21', '2015-04-30'),
+(4, 9, 'yutyuty', 'tyutyu', 'tyutyuty', 'tyutyutyu', 'tyutyutyu', 'tyutyu', '2015-04-06', '2015-04-11');
 
 -- --------------------------------------------------------
 
@@ -777,11 +936,18 @@ INSERT INTO `actividades` (`id_actividad`, `id_indicador`, `descripcion`, `corre
 CREATE TABLE IF NOT EXISTS `actividades_terminadas` (
 `id_Actividades_Terminadas` int(11) NOT NULL,
   `id_Actividad` int(11) NOT NULL,
+  `No_Empleado` varchar(20) NOT NULL,
   `fecha` date NOT NULL,
   `estado` varchar(15) NOT NULL,
-  `id_Usuario` int(11) NOT NULL,
   `observaciones` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `actividades_terminadas`
+--
+
+INSERT INTO `actividades_terminadas` (`id_Actividades_Terminadas`, `id_Actividad`, `No_Empleado`, `fecha`, `estado`, `observaciones`) VALUES
+(2, 2, 'prueba', '2015-04-03', 'REALIZADA', 'gfgfgfgfg');
 
 -- --------------------------------------------------------
 
@@ -794,7 +960,7 @@ CREATE TABLE IF NOT EXISTS `alerta` (
   `NroFolioGenera` varchar(25) NOT NULL,
   `FechaCreacion` datetime NOT NULL,
   `Atendido` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -807,7 +973,7 @@ CREATE TABLE IF NOT EXISTS `area` (
   `nombre` varchar(20) NOT NULL,
   `id_tipo_area` int(11) NOT NULL,
   `observacion` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `area`
@@ -816,7 +982,12 @@ CREATE TABLE IF NOT EXISTS `area` (
 INSERT INTO `area` (`id_Area`, `nombre`, `id_tipo_area`, `observacion`) VALUES
 (1, 'gato', 1, 'hjghjghj'),
 (3, 'gato', 1, 'rtrty'),
-(4, 'rtyrtyrty', 1, 'tryryty');
+(4, 'rtyrtyrty', 1, 'tryryty'),
+(5, 'asdfasd', 1, 'asd'),
+(6, 'lasjdanlsdj', 3, 'asdasd'),
+(7, 'prueba', 4, 'asdasd'),
+(8, 'prueba2', 3, 'asdasda'),
+(9, '<c<zx<zx', 4, '<zx<zx<zx');
 
 -- --------------------------------------------------------
 
@@ -836,6 +1007,18 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 INSERT INTO `cargo` (`ID_cargo`, `Cargo`) VALUES
 (1, 'administrador principal'),
 (2, 'jefe de departamento');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categorias_folios`
+--
+
+CREATE TABLE IF NOT EXISTS `categorias_folios` (
+`Id_categoria` int(11) NOT NULL,
+  `NombreCategoria` text NOT NULL,
+  `DescripcionCategoria` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -872,7 +1055,14 @@ CREATE TABLE IF NOT EXISTS `costo_porcentaje_actividad_por_trimestre` (
   `porcentaje` int(11) NOT NULL,
   `observacion` text,
   `trimestre` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `costo_porcentaje_actividad_por_trimestre`
+--
+
+INSERT INTO `costo_porcentaje_actividad_por_trimestre` (`id_Costo_Porcentaje_Actividad_Por_Trimesrte`, `id_Actividad`, `costo`, `porcentaje`, `observacion`, `trimestre`) VALUES
+(1, 2, 5600, 30, 'tyutyu', 1);
 
 -- --------------------------------------------------------
 
@@ -1035,11 +1225,13 @@ CREATE TABLE IF NOT EXISTS `experiencia_laboral_has_cargo` (
 
 CREATE TABLE IF NOT EXISTS `folios` (
   `NroFolio` varchar(25) NOT NULL,
+  `NroFolioRespuesta` varchar(25) DEFAULT NULL,
   `FechaCreacion` date NOT NULL,
   `FechaEntrada` date NOT NULL,
   `PersonaReferente` text NOT NULL,
   `UnidadAcademica` int(11) DEFAULT NULL,
   `Organizacion` int(11) DEFAULT NULL,
+  `Categoria` int(11) NOT NULL,
   `DescripcionAsunto` text,
   `TipoFolio` tinyint(1) NOT NULL,
   `UbicacionFisica` int(5) NOT NULL,
@@ -1055,7 +1247,14 @@ CREATE TABLE IF NOT EXISTS `folios` (
 CREATE TABLE IF NOT EXISTS `grupo_o_comite` (
 `ID_Grupo_o_comite` int(11) NOT NULL,
   `Nombre_Grupo_o_comite` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `grupo_o_comite`
+--
+
+INSERT INTO `grupo_o_comite` (`ID_Grupo_o_comite`, `Nombre_Grupo_o_comite`) VALUES
+(1, 'cagones');
 
 -- --------------------------------------------------------
 
@@ -1067,6 +1266,13 @@ CREATE TABLE IF NOT EXISTS `grupo_o_comite_has_empleado` (
   `ID_Grupo_o_comite` int(11) NOT NULL,
   `No_Empleado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `grupo_o_comite_has_empleado`
+--
+
+INSERT INTO `grupo_o_comite_has_empleado` (`ID_Grupo_o_comite`, `No_Empleado`) VALUES
+(1, '123');
 
 -- --------------------------------------------------------
 
@@ -1085,8 +1291,8 @@ CREATE TABLE IF NOT EXISTS `idioma` (
 
 INSERT INTO `idioma` (`ID_Idioma`, `Idioma`) VALUES
 (1, 'Frances'),
-(2, 'espaÃ±ol'),
-(3, 'espaÃ±ol');
+(2, 'espaÃƒÂ±ol'),
+(3, 'espaÃƒÂ±ol');
 
 -- --------------------------------------------------------
 
@@ -1130,7 +1336,14 @@ INSERT INTO `indicadores` (`id_Indicadores`, `id_ObjetivosInsitucionales`, `nomb
 CREATE TABLE IF NOT EXISTS `motivos` (
 `Motivo_ID` int(11) NOT NULL,
   `descripcion` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `motivos`
+--
+
+INSERT INTO `motivos` (`Motivo_ID`, `descripcion`) VALUES
+(1, 'Salud');
 
 -- --------------------------------------------------------
 
@@ -1147,7 +1360,7 @@ CREATE TABLE IF NOT EXISTS `notificaciones_folios` (
   `FechaCreacion` date NOT NULL,
   `IdUbicacionNotificacion` int(11) NOT NULL,
   `Estado` tinyint(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1182,7 +1395,7 @@ CREATE TABLE IF NOT EXISTS `organizacion` (
 `Id_Organizacion` int(11) NOT NULL,
   `NombreOrganizacion` text NOT NULL,
   `Ubicacion` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1213,7 +1426,7 @@ INSERT INTO `pais` (`Id_pais`, `Nombre_pais`) VALUES
 
 CREATE TABLE IF NOT EXISTS `permisos` (
 `id_Permisos` int(11) NOT NULL,
-  `id_unidadAcademica` int(11) NOT NULL,
+  `id_departamento` int(11) NOT NULL,
   `No_Empleado` varchar(20) NOT NULL,
   `id_motivo` int(11) NOT NULL,
   `dias_permiso` int(11) NOT NULL,
@@ -1222,9 +1435,11 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   `fecha` datetime NOT NULL,
   `fecha_solicitud` date NOT NULL,
   `estado` varchar(15) DEFAULT NULL,
+  `observacion` varchar(200) DEFAULT NULL,
   `revisado_por` varchar(15) DEFAULT NULL,
-  `id_Edificio_Registro` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_Edificio_Registro` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1251,11 +1466,11 @@ CREATE TABLE IF NOT EXISTS `persona` (
 --
 
 INSERT INTO `persona` (`N_identidad`, `Primer_nombre`, `Segundo_nombre`, `Primer_apellido`, `Segundo_apellido`, `Fecha_nacimiento`, `Sexo`, `Direccion`, `Correo_electronico`, `Estado_Civil`, `Nacionalidad`) VALUES
-('0801-1991-04000', 'Pedro', 'Juan', 'Perez', 'Picapiedra', '1900-10-10', 'M', 'Tu mama', 'perros@yahoo.es', 'soltero', 'hondureña'),
-('0801-1991-17475', 'Luis', 'Alberto', 'Martinez', 'Aguilar', '0000-00-00', 'M', 'la era', 'alberto_aguilar777@hotmail.com', 'soltero', 'hondureña'),
+('0801-1991-04000', 'Pedro', 'Juan', 'Perez', 'Picapiedra', '1900-10-10', 'M', 'Tu mama', 'perros@yahoo.es', 'soltero', 'hondureÃ±a'),
+('0801-1991-17475', 'Luis', 'Alberto', 'Martinez', 'Aguilar', '0000-00-00', 'M', 'la era', 'alberto_aguilar777@hotmail.com', 'soltero', 'hondureÃ±a'),
 ('0801-1992-06985', 'angel', 'eduardo', 'ayestas', 'sarmiento', '2015-03-11', 'M', 'b', 'alberto_aguilar777@hotmail.com', 'Soltero', 'colombiana'),
 ('0801-1993-01722', 'Monica', 'Alejandra', 'Ortinz', 'MOreno', '2015-02-05', 'F', 'Col.Hato', 'monica', 'soltera', 'peruana'),
-('0801-4955-1849', 'omar', 'umberto', 'sandoval', 'castillo', '0000-00-00', 'm', 'colonia bella horiente', 'omar@yahoo.es', 'soltero', 'salvadoreña');
+('0801-4955-1849', 'omar', 'umberto', 'sandoval', 'castillo', '0000-00-00', 'm', 'colonia bella horiente', 'omar@yahoo.es', 'soltero', 'salvadoreÃ±a');
 
 -- --------------------------------------------------------
 
@@ -1309,7 +1524,7 @@ CREATE TABLE IF NOT EXISTS `prioridad_folio` (
   `IdFolio` varchar(25) NOT NULL,
   `Id_Prioridad` tinyint(4) NOT NULL,
   `FechaEstablecida` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1323,7 +1538,14 @@ CREATE TABLE IF NOT EXISTS `responsables_por_actividad` (
   `id_Responsable` int(11) NOT NULL,
   `fecha_Asignacion` date NOT NULL,
   `observacion` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `responsables_por_actividad`
+--
+
+INSERT INTO `responsables_por_actividad` (`id_Responsable_por_Actividad`, `id_Actividad`, `id_Responsable`, `fecha_Asignacion`, `observacion`) VALUES
+(1, 2, 1, '2015-04-03', 'tytyty');
 
 -- --------------------------------------------------------
 
@@ -1332,19 +1554,23 @@ CREATE TABLE IF NOT EXISTS `responsables_por_actividad` (
 --
 
 CREATE TABLE IF NOT EXISTS `roles` (
-`Id_Rol` tinyint(4) NOT NULL,
-  `nombre_Rol` varchar(40) NOT NULL,
+  `Id_Rol` tinyint(4) NOT NULL,
   `Descripcion` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `roles`
 --
 
-INSERT INTO `roles` (`Id_Rol`, `nombre_Rol`, `Descripcion`) VALUES
-(40, 'secretaria', 'Secretaria de la decana'),
-(50, 'Decano', 'Decano'),
-(100, 'root', 'root');
+INSERT INTO `roles` (`Id_Rol`, `Descripcion`) VALUES
+(10, 'Usuario Basico'),
+(20, 'Docente'),
+(29, 'Asistente Jefatura'),
+(30, 'Jefe Departamento'),
+(40, 'Secretaria General'),
+(45, 'Secretaria Decana'),
+(50, 'Decano'),
+(100, 'root');
 
 -- --------------------------------------------------------
 
@@ -1355,12 +1581,13 @@ INSERT INTO `roles` (`Id_Rol`, `nombre_Rol`, `Descripcion`) VALUES
 CREATE TABLE IF NOT EXISTS `seguimiento` (
 `Id_Seguimiento` int(11) NOT NULL,
   `NroFolio` varchar(25) NOT NULL,
+  `UsuarioAsignado` int(11) DEFAULT NULL,
   `Notas` text NOT NULL,
   `Prioridad` tinyint(4) NOT NULL,
   `FechaInicio` date NOT NULL,
   `FechaFinal` date DEFAULT NULL,
   `EstadoSeguimiento` tinyint(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1375,7 +1602,7 @@ CREATE TABLE IF NOT EXISTS `seguimiento_historico` (
   `Notas` text NOT NULL,
   `Prioridad` tinyint(4) NOT NULL,
   `FechaCambio` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1393,7 +1620,18 @@ CREATE TABLE IF NOT EXISTS `sub_actividad` (
   `ponderacion` int(11) NOT NULL,
   `costo` int(11) NOT NULL,
   `observacion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `sub_actividad`
+--
+
+INSERT INTO `sub_actividad` (`id_sub_Actividad`, `idActividad`, `nombre`, `descripcion`, `fecha_monitoreo`, `id_Encargado`, `ponderacion`, `costo`, `observacion`) VALUES
+(1, 2, 'fgfdg', 'dfgdfg', '2015-04-08', 'flux', 24, 12, 'yutty'),
+(2, 2, 'gato', 'fgfgfg', '2015-04-10', 'flux', 10, 1200, 'gfgfghfgh'),
+(3, 1, 'pep', 'dfgdfgdfgdfgdfg', '2015-04-01', 'flux', 14, 200, 'ertertertertert'),
+(4, 1, 'fghfghfghfgh', 'fghfghfgh', '2015-04-07', 'flux', 10, 500, '60iiu'),
+(5, 1, 'wwwwwwwwwwwwwwwwwwww', 'tertrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', '2015-04-16', 'flux', 20, 16, 'rtrtrt');
 
 -- --------------------------------------------------------
 
@@ -1406,7 +1644,14 @@ CREATE TABLE IF NOT EXISTS `sub_actividades_realizadas` (
   `id_SubActividad` int(11) NOT NULL,
   `fecha_Realizacion` date NOT NULL,
   `observacion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `sub_actividades_realizadas`
+--
+
+INSERT INTO `sub_actividades_realizadas` (`id_subActividadRealizada`, `id_SubActividad`, `fecha_Realizacion`, `observacion`) VALUES
+(2, 3, '2015-04-01', 'tryrtyrtyrtyrtyrty');
 
 -- --------------------------------------------------------
 
@@ -1431,15 +1676,16 @@ CREATE TABLE IF NOT EXISTS `tipo_area` (
 `id_Tipo_Area` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `observaciones` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tipo_area`
 --
 
 INSERT INTO `tipo_area` (`id_Tipo_Area`, `nombre`, `observaciones`) VALUES
-(1, 'exterior', 'cara de mono'),
-(3, 'pollo', 'ffdd');
+(1, 'exterior1', 'cara de mono'),
+(3, 'pollo1', 'ffdd'),
+(4, 'alksndal', 'asda');
 
 -- --------------------------------------------------------
 
@@ -1514,26 +1760,6 @@ INSERT INTO `ubicacion_notificaciones` (`Id_UbicacionNotificaciones`, `Descripci
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `unidad_acad`
---
-
-CREATE TABLE IF NOT EXISTS `unidad_acad` (
-`Unidad_ID` int(11) NOT NULL,
-  `descripcion` text
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `unidad_acad`
---
-
-INSERT INTO `unidad_acad` (`Unidad_ID`, `descripcion`) VALUES
-(1, 'Docente'),
-(2, 'Decanatura'),
-(3, 'Jefatura de Departamentos');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `unidad_academica`
 --
 
@@ -1541,7 +1767,7 @@ CREATE TABLE IF NOT EXISTS `unidad_academica` (
 `Id_UnidadAcademica` int(11) NOT NULL,
   `NombreUnidadAcademica` text NOT NULL,
   `UbicacionUnidadAcademica` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1575,23 +1801,27 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 `id_Usuario` int(11) NOT NULL,
   `No_Empleado` varchar(13) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `Password` varchar(20) NOT NULL,
+  `Password` varbinary(250) NOT NULL,
   `Id_Rol` tinyint(4) NOT NULL,
   `Fecha_Creacion` date NOT NULL,
   `Fecha_Alta` date DEFAULT NULL,
   `Estado` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=45467 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`id_Usuario`, `No_Empleado`, `nombre`, `Password`, `Id_Rol`, `Fecha_Creacion`, `Fecha_Alta`, `Estado`) VALUES
-(1, 'lm91', 'prueba', 'prueba', 100, '2015-03-11', NULL, 1),
-(2, 'flux', 'admin', 'admin', 100, '2015-03-14', NULL, 1),
-(45456, 'lm91', 'prueba14', 'dom', 40, '2015-03-10', '2015-03-21', 0),
-(45457, 'flux', 'admin2', 'dom', 40, '2015-03-20', NULL, 1),
-(45466, 'mo93', 'mon11', 'dom', 40, '2015-03-21', NULL, 1);
+(1, 'lm91', 'prueba', 0x3831444637443233344633423846353438374146353038433243373942303041, 100, '2015-03-11', NULL, 1),
+(2, 'flux', 'admin', 0x61646d696e, 100, '2015-03-14', NULL, 1),
+(3, 'lm91', 'prueba14', 0x3730413437304246433641343645464146453732453938343434364531303837, 40, '2015-03-10', NULL, 1),
+(4, 'flux', 'admin2', 0x3831444637443233344633423846353438374146353038433243373942303041, 40, '2015-03-20', NULL, 1),
+(5, 'mo93', 'mon11', 0x646f6d, 40, '2015-03-21', NULL, 1),
+(6, 'lm91', 'prueba2', 0x4631363146353943393730433944304343343433303642334133394143343241, 10, '2015-04-21', NULL, 1),
+(7, 'flux', 'dom', 0x3730413437304246433641343645464146453732453938343434364531303837, 10, '2015-04-23', NULL, 1),
+(8, 'flux', 'secretaria', 0x3534463031304337413430433141413034463939383644323144333431354344, 40, '2015-04-24', NULL, 1),
+(9, 'flux', 'departamentosis', 0x4246373242423833464539323638313231333342314341353234453836334546, 30, '2015-04-24', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1603,7 +1833,20 @@ CREATE TABLE IF NOT EXISTS `usuario_alertado` (
 `Id_UsuarioAlertado` int(11) NOT NULL,
   `Id_Alerta` int(11) NOT NULL,
   `Id_Usuario` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_log`
+--
+
+CREATE TABLE IF NOT EXISTS `usuario_log` (
+`Id_log` int(11) NOT NULL,
+  `usuario` int(11) NOT NULL,
+  `fecha_log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ip_conn` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1618,7 +1861,7 @@ CREATE TABLE IF NOT EXISTS `usuario_notificado` (
   `IdUbicacionNotificacion` tinyint(4) NOT NULL,
   `Estado` tinyint(11) NOT NULL,
   `Fecha` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Índices para tablas volcadas
@@ -1634,7 +1877,7 @@ ALTER TABLE `actividades`
 -- Indices de la tabla `actividades_terminadas`
 --
 ALTER TABLE `actividades_terminadas`
- ADD PRIMARY KEY (`id_Actividades_Terminadas`), ADD UNIQUE KEY `id_Actividad_2` (`id_Actividad`), ADD KEY `id_Actividad` (`id_Actividad`,`id_Usuario`), ADD KEY `id_Usuario` (`id_Usuario`);
+ ADD PRIMARY KEY (`id_Actividades_Terminadas`), ADD KEY `id_Actividad` (`id_Actividad`), ADD KEY `No_Empleado` (`No_Empleado`);
 
 --
 -- Indices de la tabla `alerta`
@@ -1653,6 +1896,12 @@ ALTER TABLE `area`
 --
 ALTER TABLE `cargo`
  ADD PRIMARY KEY (`ID_cargo`);
+
+--
+-- Indices de la tabla `categorias_folios`
+--
+ALTER TABLE `categorias_folios`
+ ADD PRIMARY KEY (`Id_categoria`);
 
 --
 -- Indices de la tabla `clases`
@@ -1688,13 +1937,13 @@ ALTER TABLE `edificios`
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
- ADD PRIMARY KEY (`No_Empleado`,`N_identidad`), ADD KEY `fk_Empleado_Persona1_idx` (`N_identidad`), ADD KEY `fk_empleado_dep` (`Id_departamento`);
+ ADD PRIMARY KEY (`No_Empleado`,`N_identidad`), ADD KEY `fk_Empleado_Persona1_idx` (`N_identidad`), ADD KEY `fk_empleado_dep` (`Id_departamento`), ADD KEY `No_Empleado` (`No_Empleado`);
 
 --
 -- Indices de la tabla `empleado_has_cargo`
 --
 ALTER TABLE `empleado_has_cargo`
- ADD PRIMARY KEY (`No_Empleado`,`ID_cargo`), ADD KEY `fk_Empleado_has_Cargo_Cargo1_idx` (`ID_cargo`), ADD KEY `fk_Empleado_has_Cargo_Empleado1_idx` (`No_Empleado`);
+ ADD PRIMARY KEY (`No_Empleado`,`ID_cargo`), ADD KEY `fk_Empleado_has_Cargo_Cargo1_idx` (`ID_cargo`), ADD KEY `fk_Empleado_has_Cargo_Empleado1_idx` (`No_Empleado`), ADD KEY `No_Empleado` (`No_Empleado`);
 
 --
 -- Indices de la tabla `estado_seguimiento`
@@ -1730,7 +1979,7 @@ ALTER TABLE `experiencia_laboral_has_cargo`
 -- Indices de la tabla `folios`
 --
 ALTER TABLE `folios`
- ADD PRIMARY KEY (`NroFolio`), ADD KEY `fk_folios_unidad_academica_unidadAcademica` (`UnidadAcademica`), ADD KEY `fk_folios_organizacion_organizacion` (`Organizacion`), ADD KEY `fk_folios_tblTipoPrioridad` (`Prioridad`), ADD KEY `fk_folios_ubicacion_archivofisico_ubicacionFisica` (`UbicacionFisica`);
+ ADD PRIMARY KEY (`NroFolio`), ADD KEY `fk_folios_unidad_academica_unidadAcademica` (`UnidadAcademica`), ADD KEY `fk_folios_organizacion_organizacion` (`Organizacion`), ADD KEY `fk_folios_tblTipoPrioridad` (`Prioridad`), ADD KEY `fk_folios_ubicacion_archivofisico_ubicacionFisica` (`UbicacionFisica`), ADD KEY `fk_folio_folioRespuesta` (`NroFolioRespuesta`), ADD KEY `fk_folios_categoria` (`Categoria`);
 
 --
 -- Indices de la tabla `grupo_o_comite`
@@ -1796,7 +2045,7 @@ ALTER TABLE `pais`
 -- Indices de la tabla `permisos`
 --
 ALTER TABLE `permisos`
- ADD PRIMARY KEY (`id_Permisos`), ADD KEY `fk_unidadAcademica` (`id_unidadAcademica`), ADD KEY `fk_motivo` (`id_motivo`), ADD KEY `fk_empleado` (`No_Empleado`), ADD KEY `fk_edificio_registro` (`id_Edificio_Registro`), ADD KEY `fk_revisado` (`revisado_por`);
+ ADD PRIMARY KEY (`id_Permisos`), ADD KEY `fk_motivo` (`id_motivo`), ADD KEY `fk_empleado` (`No_Empleado`), ADD KEY `fk_edificio_registro` (`id_Edificio_Registro`), ADD KEY `fk_revisado` (`revisado_por`), ADD KEY `fk_departamento` (`id_departamento`), ADD KEY `fk_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `persona`
@@ -1838,7 +2087,7 @@ ALTER TABLE `roles`
 -- Indices de la tabla `seguimiento`
 --
 ALTER TABLE `seguimiento`
- ADD PRIMARY KEY (`Id_Seguimiento`), ADD KEY `fk_seguimiento_folios` (`NroFolio`);
+ ADD PRIMARY KEY (`Id_Seguimiento`), ADD KEY `fk_seguimiento_folios` (`NroFolio`), ADD KEY `fk_seguimiento_usuarioAsignado` (`UsuarioAsignado`);
 
 --
 -- Indices de la tabla `seguimiento_historico`
@@ -1895,12 +2144,6 @@ ALTER TABLE `ubicacion_notificaciones`
  ADD PRIMARY KEY (`Id_UbicacionNotificaciones`);
 
 --
--- Indices de la tabla `unidad_acad`
---
-ALTER TABLE `unidad_acad`
- ADD PRIMARY KEY (`Unidad_ID`);
-
---
 -- Indices de la tabla `unidad_academica`
 --
 ALTER TABLE `unidad_academica`
@@ -1925,6 +2168,12 @@ ALTER TABLE `usuario_alertado`
  ADD PRIMARY KEY (`Id_UsuarioAlertado`), ADD KEY `fk_usuario_alertado_usuario` (`Id_Usuario`), ADD KEY `fk_usuario_alertado_alerta` (`Id_Alerta`);
 
 --
+-- Indices de la tabla `usuario_log`
+--
+ALTER TABLE `usuario_log`
+ ADD PRIMARY KEY (`Id_log`);
+
+--
 -- Indices de la tabla `usuario_notificado`
 --
 ALTER TABLE `usuario_notificado`
@@ -1938,27 +2187,32 @@ ALTER TABLE `usuario_notificado`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `actividades_terminadas`
 --
 ALTER TABLE `actividades_terminadas`
-MODIFY `id_Actividades_Terminadas` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_Actividades_Terminadas` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `alerta`
 --
 ALTER TABLE `alerta`
-MODIFY `Id_Alerta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `Id_Alerta` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-MODIFY `id_Area` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_Area` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
 MODIFY `ID_cargo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `categorias_folios`
+--
+ALTER TABLE `categorias_folios`
+MODIFY `Id_categoria` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `clases`
 --
@@ -1968,7 +2222,7 @@ MODIFY `ID_Clases` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `costo_porcentaje_actividad_por_trimestre`
 --
 ALTER TABLE `costo_porcentaje_actividad_por_trimestre`
-MODIFY `id_Costo_Porcentaje_Actividad_Por_Trimesrte` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_Costo_Porcentaje_Actividad_Por_Trimesrte` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `departamento_laboral`
 --
@@ -2003,7 +2257,7 @@ MODIFY `ID_Experiencia_laboral` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `grupo_o_comite`
 --
 ALTER TABLE `grupo_o_comite`
-MODIFY `ID_Grupo_o_comite` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_Grupo_o_comite` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `idioma`
 --
@@ -2018,12 +2272,12 @@ MODIFY `id_Indicadores` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT de la tabla `motivos`
 --
 ALTER TABLE `motivos`
-MODIFY `Motivo_ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `Motivo_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `notificaciones_folios`
 --
 ALTER TABLE `notificaciones_folios`
-MODIFY `Id_Notificacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `Id_Notificacion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `objetivos_institucionales`
 --
@@ -2033,7 +2287,7 @@ MODIFY `id_Objetivo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `organizacion`
 --
 ALTER TABLE `organizacion`
-MODIFY `Id_Organizacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `Id_Organizacion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
@@ -2043,7 +2297,7 @@ MODIFY `Id_pais` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-MODIFY `id_Permisos` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_Permisos` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `poa`
 --
@@ -2053,37 +2307,32 @@ MODIFY `id_Poa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT de la tabla `prioridad_folio`
 --
 ALTER TABLE `prioridad_folio`
-MODIFY `Id_PrioridadFolio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `Id_PrioridadFolio` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `responsables_por_actividad`
 --
 ALTER TABLE `responsables_por_actividad`
-MODIFY `id_Responsable_por_Actividad` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `roles`
---
-ALTER TABLE `roles`
-MODIFY `Id_Rol` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=101;
+MODIFY `id_Responsable_por_Actividad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `seguimiento`
 --
 ALTER TABLE `seguimiento`
-MODIFY `Id_Seguimiento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `Id_Seguimiento` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `seguimiento_historico`
 --
 ALTER TABLE `seguimiento_historico`
-MODIFY `Id_SeguimientoHistorico` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `Id_SeguimientoHistorico` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `sub_actividad`
 --
 ALTER TABLE `sub_actividad`
-MODIFY `id_sub_Actividad` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_sub_Actividad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `sub_actividades_realizadas`
 --
 ALTER TABLE `sub_actividades_realizadas`
-MODIFY `id_subActividadRealizada` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_subActividadRealizada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `telefono`
 --
@@ -2093,7 +2342,7 @@ MODIFY `ID_Telefono` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `tipo_area`
 --
 ALTER TABLE `tipo_area`
-MODIFY `id_Tipo_Area` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id_Tipo_Area` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `tipo_estudio`
 --
@@ -2115,15 +2364,10 @@ MODIFY `Id_UbicacionArchivoFisico` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT
 ALTER TABLE `ubicacion_notificaciones`
 MODIFY `Id_UbicacionNotificaciones` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `unidad_acad`
---
-ALTER TABLE `unidad_acad`
-MODIFY `Unidad_ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
 -- AUTO_INCREMENT de la tabla `unidad_academica`
 --
 ALTER TABLE `unidad_academica`
-MODIFY `Id_UnidadAcademica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `Id_UnidadAcademica` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `universidad`
 --
@@ -2133,17 +2377,22 @@ MODIFY `Id_universidad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45467;
+MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `usuario_alertado`
 --
 ALTER TABLE `usuario_alertado`
-MODIFY `Id_UsuarioAlertado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `Id_UsuarioAlertado` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `usuario_log`
+--
+ALTER TABLE `usuario_log`
+MODIFY `Id_log` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `usuario_notificado`
 --
 ALTER TABLE `usuario_notificado`
-MODIFY `Id_UsuarioNotificado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `Id_UsuarioNotificado` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --
@@ -2152,7 +2401,6 @@ MODIFY `Id_UsuarioNotificado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- Filtros para la tabla `actividades_terminadas`
 --
 ALTER TABLE `actividades_terminadas`
-ADD CONSTRAINT `actividades_terminadas_ibfk_2` FOREIGN KEY (`id_Usuario`) REFERENCES `usuario` (`id_Usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `actividades_terminadas_ibfk_3` FOREIGN KEY (`id_Actividad`) REFERENCES `actividades` (`id_actividad`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -2225,6 +2473,8 @@ ADD CONSTRAINT `fk_Experiencia_laboral_has_Cargo_Experiencia_laboral1` FOREIGN K
 -- Filtros para la tabla `folios`
 --
 ALTER TABLE `folios`
+ADD CONSTRAINT `fk_folio_folioRespuesta` FOREIGN KEY (`NroFolioRespuesta`) REFERENCES `folios` (`NroFolio`) ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_folios_categoria` FOREIGN KEY (`Categoria`) REFERENCES `categorias_folios` (`Id_categoria`) ON UPDATE CASCADE,
 ADD CONSTRAINT `fk_folios_organizacion_organizacion` FOREIGN KEY (`Organizacion`) REFERENCES `organizacion` (`Id_Organizacion`) ON UPDATE CASCADE,
 ADD CONSTRAINT `fk_folios_tblTipoPrioridad` FOREIGN KEY (`Prioridad`) REFERENCES `prioridad` (`Id_Prioridad`) ON DELETE NO ACTION ON UPDATE CASCADE,
 ADD CONSTRAINT `fk_folios_ubicacion_archivofisico_ubicacionFisica` FOREIGN KEY (`UbicacionFisica`) REFERENCES `ubicacion_archivofisico` (`Id_UbicacionArchivoFisico`) ON UPDATE CASCADE,
@@ -2268,11 +2518,12 @@ ADD CONSTRAINT `objetivos_institucionales_ibfk_3` FOREIGN KEY (`id_Area`) REFERE
 -- Filtros para la tabla `permisos`
 --
 ALTER TABLE `permisos`
+ADD CONSTRAINT `fk_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamento_laboral` (`Id_departamento_laboral`),
 ADD CONSTRAINT `fk_edificio_registro` FOREIGN KEY (`id_Edificio_Registro`) REFERENCES `edificios` (`Edificio_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `fk_empleado` FOREIGN KEY (`No_Empleado`) REFERENCES `empleado` (`No_Empleado`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `fk_motivo` FOREIGN KEY (`id_motivo`) REFERENCES `motivos` (`Motivo_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `fk_revisado` FOREIGN KEY (`revisado_por`) REFERENCES `empleado` (`No_Empleado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_unidadAcademica` FOREIGN KEY (`id_unidadAcademica`) REFERENCES `unidad_acad` (`Unidad_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `fk_revisado` FOREIGN KEY (`revisado_por`) REFERENCES `usuario` (`No_Empleado`),
+ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_Usuario`);
 
 --
 -- Filtros para la tabla `prioridad_folio`
@@ -2292,7 +2543,8 @@ ADD CONSTRAINT `responsables_por_actividad_ibfk_4` FOREIGN KEY (`id_Responsable`
 -- Filtros para la tabla `seguimiento`
 --
 ALTER TABLE `seguimiento`
-ADD CONSTRAINT `fk_seguimiento_folios` FOREIGN KEY (`NroFolio`) REFERENCES `folios` (`NroFolio`) ON UPDATE CASCADE;
+ADD CONSTRAINT `fk_seguimiento_folios` FOREIGN KEY (`NroFolio`) REFERENCES `folios` (`NroFolio`) ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_seguimiento_usuarioAsignado` FOREIGN KEY (`UsuarioAsignado`) REFERENCES `usuario` (`id_Usuario`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `seguimiento_historico`
@@ -2312,7 +2564,7 @@ ADD CONSTRAINT `sub_actividad_ibfk_4` FOREIGN KEY (`id_Encargado`) REFERENCES `e
 -- Filtros para la tabla `sub_actividades_realizadas`
 --
 ALTER TABLE `sub_actividades_realizadas`
-ADD CONSTRAINT `sub_actividades_realizadas_ibfk_2` FOREIGN KEY (`id_SubActividad`) REFERENCES `sub_actividad` (`idActividad`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `sub_actividades_realizadas_ibfk_2` FOREIGN KEY (`id_SubActividad`) REFERENCES `sub_actividad` (`id_sub_Actividad`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `telefono`
