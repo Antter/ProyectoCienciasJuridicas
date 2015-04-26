@@ -16,6 +16,9 @@
   require_once($maindir."funciones/timeout.php");
 
   require_once($maindir."pages/navbar.php");
+  
+  
+  $rol = $_SESSION['user_rol']; 
 
 ?>
 
@@ -68,7 +71,7 @@
  
         
         
-        <li class="nav-header" <?php if($_SESSION['user_rol'] != 100) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu4">
+        <li class="nav-header" <?php if($rol <= 49) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu4">
           <h5><i class="fa fa-edit fa-fw"></i>Tablas de mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
           </a>
         

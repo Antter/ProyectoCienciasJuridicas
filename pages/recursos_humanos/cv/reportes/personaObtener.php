@@ -23,7 +23,7 @@ if (isset($_POST['identi'])) {
         $nacionalidad = $row['Nacionalidad'];
 
         //Experiencia Académica
-        $query = mysql_query("SELECT ID_Experiencia_academica, Institucion, Tiempo FROM experiencia_academica WHERE N_identidad= '" . $_POST['identi'] . "'");
+        $query = mysql_query("SELECT experiencia_academica.ID_Experiencia_academica, Institucion, Tiempo,Clase FROM experiencia_academica inner join clases_has_experiencia_academica on clases_has_experiencia_academica.ID_Experiencia_academica=experiencia_academica.ID_Experiencia_academica inner join clases on clases.ID_Clases=clases_has_experiencia_academica.ID_Clases WHERE N_identidad='".$_POST['identi']."'");
         //Formación académica
         $queryFA = mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$_POST['identi']."'");
         //Experiencia laboral
@@ -122,6 +122,7 @@ if (isset($_POST['identi'])) {
                                                                 <tr>
                                                                 <th>Institución</th>
                                                                 <th>Tiempo (meses)</th>
+                                                                <th>Clases</th>
                                                             </tr>
                                                             </thead>';
                 }
@@ -131,6 +132,7 @@ if (isset($_POST['identi'])) {
             $id = $row['ID_Experiencia_academica'];
             $inst = $row['Institucion'];
             $tiempo = $row['Tiempo'];
+            $clase = $row['Clase'];
 
             echo "<tr data-id='" . $id . "'>";
             echo <<<HTML
@@ -138,6 +140,9 @@ if (isset($_POST['identi'])) {
 HTML;
             echo <<<HTML
             <td>$tiempo</td>
+HTML;
+            echo <<<HTML
+            <td>$clase</td>
 HTML;
             echo "</tr>";
         }

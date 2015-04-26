@@ -11,7 +11,7 @@ $id = $_GET['iden'];
 $resultado=mysql_query("SELECT * FROM persona WHERE N_identidad = '".$id."'");
 
 //Experiencia Académica
-$resultado2=mysql_query("SELECT * FROM experiencia_academica WHERE N_identidad= '".$id."'");
+$resultado2=mysql_query("SELECT experiencia_academica.ID_Experiencia_academica, Institucion, Tiempo,Clase FROM experiencia_academica inner join clases_has_experiencia_academica on clases_has_experiencia_academica.ID_Experiencia_academica=experiencia_academica.ID_Experiencia_academica inner join clases on clases.ID_Clases=clases_has_experiencia_academica.ID_Clases WHERE N_identidad='".$id."'");
 
 //Formación académica
 $resultado3=mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$id."'");
@@ -82,11 +82,14 @@ while ($row5 = mysql_fetch_array($resultado2)) {
             $id1 = $row5['ID_Experiencia_academica'];
             $inst = $row5['Institucion'];
             $tiempo = $row5['Tiempo'];
+            $clase = $row5['Clase'];
 
 $pdf->Ln(10);
  $pdf->Cell(125, 8, 'Nombre de la Empresa: '.$inst, 0);
 $pdf->Ln(5);
  $pdf->Cell(125, 8, 'Tiempo (En meses): '.$tiempo, 0);
+ $pdf->Ln(5);
+ $pdf->Cell(125, 8, 'Clases: '.$clase, 0);
 $pdf->Ln(15);
 
 }

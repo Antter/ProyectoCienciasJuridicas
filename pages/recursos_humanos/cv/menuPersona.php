@@ -38,7 +38,7 @@ require_once('../../../Datos/conexion.php');
                 segundoNombre:$('#segundoNombre').val(),
                 primerApellido:$('#primerApellido').val(),
                 segundoApellido:$('#segundoApellido').val(),
-                sexo:$('#sexoMas').val(),
+                sexo:document.querySelector('input[name="sexo"]:checked').value,
                 fecha:$('#fecha').val(),
                 direccion:$('#direccion').val(),
                 email:$('#email').val(),
@@ -229,7 +229,7 @@ require_once('../../../Datos/conexion.php');
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
                                                             <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" required></div>
                                                         </div>
-                                                        <div class="form-group" id="sexoOpcion" name="sex">
+                                                       <div class="form-group" id="sexoOpcion" name="sex">
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>
                                                             <div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino
                                                             <input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>
@@ -253,7 +253,7 @@ require_once('../../../Datos/conexion.php');
                                                     
                                                         <div class="form-group">
                                                             <label class="col-sm-5 control-label"><strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Fecha de Nacimiento</strong></label>
-                                                            <div class="col-sm-7"><input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd"><br></div>
+                                                            <div class="col-sm-7"><input id="fecha" type="date" name="fecha" autocomplete="off" class="input-xlarge" format="yyyy-mm-dd" required><br></div>
                                                         </div>
                                                     <br>
                                                     <br>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../../../../Datos/conexion.php";
+include "../../../Datos/conexion.php";
 function limpiar($tags)
 {
     $tags = strip_tags($tags);
@@ -14,7 +14,21 @@ if (isset($_POST['modTel']) && isset($_POST['modTipo']) && isset($_SESSION['id']
     $tipo = $_POST['modTipo'];
 
 //Agregar ON UPDATE CASCADE, ON DELETE CASCADE A LA TABLA telefono.
-    mysql_query("UPDATE telefono SET Tipo = '$tipo', Numero = '$nTel' WHERE ID_Telefono = '$id'");
+    $queryAcTel= mysql_query("UPDATE telefono SET Tipo = '$tipo', Numero = '$nTel' WHERE ID_Telefono = '$id'");
+    
+    
+    
+         if($queryAcTel){
 
-    echo "Número telefónico se ha actualizado con éxito!";
+            $mensaje = 'Telefono actualizado correctamente!';
+            $codMensaje = 1;
+
+
+        }else{
+            $mensaje = 'error actualizar';
+            $codMensaje = 0;
+
+        }
+
+   
 }

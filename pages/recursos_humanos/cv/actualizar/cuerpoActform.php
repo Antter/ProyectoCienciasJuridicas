@@ -5,6 +5,7 @@ if (isset($_POST['id'])) {
     $titulo = $_POST['titulo'];
     $tipo = $_POST['tipo'];
     $universidad = $_POST['universidad'];
+    $identidad=$_POST['identi'];
     echo <<<HTML
 <label>Típo</label>
 <select id="modTipo" name="tipo" class="form-control">
@@ -63,10 +64,13 @@ HTML;
 
 
     function actFA() {
+        var identi = "<?php echo $identidad; ?>" ;
         data = {
             modTipo: $('#modTipo').val(),
             modTitulo: $('#modTitulo').val(),
-            modUniversidad: $('#modUniversidad').val()
+            modUniversidad: $('#modUniversidad').val(),
+            identi:identi,
+            tipoProcedimiento:"actualizarFA"
         };
 
         $.ajax({
@@ -88,7 +92,8 @@ HTML;
     }
 
     function llegadaSelecPersona() {
-        $("#cuerpoActFA").load('pages/recursos_humanos/cv/actualizar/formAct.php', data);
+         $('body').removeClass('modal-open');
+        $("#contenedor").load('pages/recursos_humanos/cv/EditarCV.php',data);
     }
 
     function problemas() {

@@ -95,7 +95,27 @@ session_start();
                 
            
         }
-        //Experiencia Académica
+        
+        //eliminar idioma selecionado
+           if(isset($_POST['idIdioma'])){
+            $id = $_POST['idIdioma'];
+            $queryEIDI= mysql_query("DELETE FROM idioma_has_persona WHERE Id = '$id'");
+
+            if($queryEIDI){
+
+                $mensaje = 'El idioma se ha eliminado correctamente!';
+                $codMensaje = 1;
+
+
+            }else{
+
+                $mensaje = 'Error eliminando el registro seleccionado';
+                $codMensaje = 0;
+
+            }
+
+        }
+        
        
 ?>
 

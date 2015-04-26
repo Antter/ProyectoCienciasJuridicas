@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../../../../Datos/conexion.php";
+include "../../../Datos/conexion.php";
 
 //Información Personal
 if (isset($_POST['modTipo']) && isset($_POST['modTitulo']) && isset($_POST['modUniversidad']) && isset($_SESSION['id'])) {
@@ -15,8 +15,20 @@ if (isset($_POST['modTipo']) && isset($_POST['modTitulo']) && isset($_POST['modU
     $idUniver = mysql_fetch_array($t)['Id_universidad'];
 
 //Agregar ON UPDATE CASCADE, ON DELETE CASCADE A LA TABLA telefono.
-    mysql_query("UPDATE estudios_academico SET Nombre_titulo = '$titulo', ID_Tipo_estudio = '$idTipo', Id_universidad = '$idUniver' WHERE ID_Estudios_academico = '$id'");
+   $queryAcFA=mysql_query("UPDATE estudios_academico SET Nombre_titulo = '$titulo', ID_Tipo_estudio = '$idTipo', Id_universidad = '$idUniver' WHERE ID_Estudios_academico = '$id'");
 
-    echo "Formación académica se ha actualizado con éxito!";
+          if($queryAcFA){
+
+            $mensaje = 'Formación académica actualizado correctamente!';
+            $codMensaje = 1;
+
+
+        }else{
+            $mensaje = 'error actualizar';
+            $codMensaje = 0;
+
+        }
+    
+  
 }
 ?>

@@ -69,6 +69,33 @@ if (!empty($_POST['identidad']) and !empty($_POST['primerNombre']) and !empty($_
 }
 }
 
+
+//Idioma
+if (isset($_POST['identi']) and isset($_POST['agregarIDI'])) {
+    $identidad = $_POST['identi'];
+    $idioma = $_POST['idioma'];
+    $nivel = $_POST['nivel'];
+
+    $r = mysql_query("SELECT ID_Idioma FROM idioma WHERE Idioma = '".$idioma."'");
+    if ($row = mysql_fetch_array($r)) {
+        $idIdioma = $row['ID_Idioma'];
+
+        $queryIDI = mysql_query("INSERT INTO idioma_has_persona (Id, ID_Idioma, N_identidad, Nivel) VALUES (DEFAULT,'".$idIdioma."','".$identidad."','".$nivel."')");
+
+        if($queryIDI){
+
+            $mensaje = 'Idioma ha sido agregada con éxito!';
+            $codMensaje = 1;
+
+
+        }else{
+            $mensaje = 'error al ingresar el registro de idioma';
+            $codMensaje = 0;
+
+        }
+    }
+}
+
 //Formación Académica
 if (isset($_POST['identi']) and isset($_POST['agregarFA'])) {
     

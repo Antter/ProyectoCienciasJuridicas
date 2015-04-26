@@ -20,11 +20,37 @@ include "../../../Datos/conexion.php";
     }
      if($tipoProcedimiento == "insetarEA"){
     require_once("../../../pages/recursos_humanos/cv/nuevo/personaAgregar.php");
+    }   
+    if($tipoProcedimiento == "insetarIDI"){
+    require_once("../../../pages/recursos_humanos/cv/nuevo/personaAgregar.php");
     }
+    
+    if($tipoProcedimiento == "ActualizarTel"){
+    require_once("../../../pages/recursos_humanos/cv/actualizar/tAct.php");
+    }
+     if($tipoProcedimiento == "actualizarIDI"){
+    require_once("../../../pages/recursos_humanos/cv/actualizar/formActIDI.php");
+    }
+      if($tipoProcedimiento == "actualizarFA"){
+    require_once("../../../pages/recursos_humanos/cv/actualizar/formAct.php");
+    }
+     if($tipoProcedimiento == "actualizarEL"){
+    require_once("../../../pages/recursos_humanos/cv/actualizar/eLabAct.php");
+    }
+    
+       if($tipoProcedimiento == "actualizarEA"){
+    require_once("../../../pages/recursos_humanos/cv/actualizar/eAcAct.php");
+    }
+    
+    
+    
+    
+    
     
     if($tipoProcedimiento == "Eliminar"){
     require_once("../../../pages/recursos_humanos/cv/eliminar/personaEliminar.php");
     }
+    
       
       
     
@@ -41,7 +67,7 @@ if (isset($_POST['identi'])) {
     $identi = $_POST['identi'];
     $_SESSION['Nidenti'] = $identi;
 
-    $s = mysql_query("SELECT * FROM persona WHERE N_identidad = '" . $identi . "'");
+    $s = mysql_query("SELECT * FROM persona WHERE N_identidad ='".$identi."'");
     if ($row = mysql_fetch_array($s)) {
         $id = $row['N_identidad'];
         $pNombre = $row['Primer_nombre'];
@@ -61,7 +87,8 @@ if (isset($_POST['identi'])) {
         $queryFA = mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$_POST['identi']."'");
         //Experiencia laboral
         $queryEL = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE experiencia_laboral.N_identidad='".$_POST['identi']."'");
-    
+        //Idioma
+        $queryIDI = mysql_query("SELECT Id, ID_Idioma, N_Identidad, Nivel FROM idioma_has_persona WHERE N_identidad= '".$_POST['identi']."'");
         
         
     }
@@ -87,16 +114,13 @@ if (isset($_POST['identi'])) {
             e.preventDefault();
             
             $("#actualTel").modal('hide');
-           // $("#actualFA").modal('hide');
-           // $("#actualexLab").modal('hide');
-           // $("#actualexAc").modal('hide');
-           // $("#agregarTelVM").modal('hide');
-      
+
        $(".actualTB").click(function() {
+                  var identi = "<?php echo $id; ?>" ;
             id = $(this).parents("tr").find("td").eq(0).html();
             tipo = $(this).parents("tr").find("td").eq(1).html();
             numero = $(this).parents("tr").find("td").eq(2).html();
-            data = {id:id, tipo:tipo, numero:numero};
+            data = {id:id, tipo:tipo, numero:numero, identi:identi};
             $.ajax({
                 async: true,
                 type: "POST",
@@ -116,11 +140,12 @@ if (isset($_POST['identi'])) {
              $("#actualFA").modal('hide');
         
            $(".actualFAB").click(function() {
+               var identi = "<?php echo $id; ?>" ;
             id = $(this).parents("tr").find("td").eq(0).html();
             titulo = $(this).parents("tr").find("td").eq(1).html();
             tipo = $(this).parents("tr").find("td").eq(2).html();
             universidad = $(this).parents("tr").find("td").eq(3).html();
-            data = {id:id, titulo:titulo, tipo:tipo, universidad:universidad};
+            data = {id:id, titulo:titulo, tipo:tipo, universidad:universidad, identi:identi};
             $.ajax({
                 async: true,
                 type: "POST",
@@ -134,16 +159,42 @@ if (isset($_POST['identi'])) {
         
         });
         
+            $("form").submit(function(e) {
+                e.preventDefault();
+
+                $("#actualIDI").modal('hide');
+
+                $(".actualIDI").click(function() {
+                    var identi = "<?php echo $id; ?>" ;
+                    id = $(this).parents("tr").find("td").eq(0).html();
+                    idioma = $(this).parents("tr").find("td").eq(1).html();
+                    nivel = $(this).parents("tr").find("td").eq(2).html();
+                    data = {id:id, idioma:idioma, nivel:nivel, identi:identi};
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        success: llegadaActIDI,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                });
+
+            });
+        
         
          $("form").submit(function(e) {
             e.preventDefault();
              $("#actualexLab").modal('hide');
         
             $(".actualELB").click(function() {
+                 var identi = "<?php echo $id; ?>" ;
             id = $(this).parents("tr").find("td").eq(0).html();
             empresa = $(this).parents("tr").find("td").eq(1).html();
             tiempo = $(this).parents("tr").find("td").eq(2).html();
-            data = {id:id, empresa:empresa, tiempo:tiempo};
+            cargo =  $(this).parents("tr").find("td").eq(3).html();
+            data = {id:id, empresa:empresa, tiempo:tiempo, cargo:cargo, identi:identi};
             $.ajax({
                 async: true,
                 type: "POST",
@@ -162,10 +213,12 @@ if (isset($_POST['identi'])) {
              $("#actualexAc").modal('hide');
             
            $(".actualEAB").click(function() {
+                var identi = "<?php echo $id; ?>" ;
             id = $(this).parents("tr").find("td").eq(0).html();
             institucion = $(this).parents("tr").find("td").eq(1).html();
             tiempo = $(this).parents("tr").find("td").eq(2).html();
-            data = {id:id, institucion:institucion, tiempo:tiempo};
+            clase =  $(this).parents("tr").find("td").eq(3).html();
+            data = {id:id, institucion:institucion, tiempo:tiempo, clase:clase, identi:identi};
             $.ajax({
                 async: true,
                 type: "POST",
@@ -309,6 +362,33 @@ if (isset($_POST['identi'])) {
         return false;
      });
      
+     
+     $("#formIDI").submit(function(e) {
+                    e.preventDefault();
+
+                    var id = "<?php echo $id; ?>" ;
+
+                    data={
+                        identi:id,
+                        idioma:$('#idioma').val(),
+                        nivel:$('#nivel').val(),
+                        agregarIDI:"si",
+                        tipoProcedimiento:"insetarIDI"
+                    };
+
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        dataType: "html",
+                        contentType: "application/x-www-form-urlencoded",
+                        beforeSend: inicioEnvio,
+                        success: IdiomaAgregar,
+                        timeout: 4000,
+                        error: problemas
+                    });
+                    return false;
+                });
+     
  
          
          
@@ -433,6 +513,33 @@ if (isset($_POST['identi'])) {
             });
             
             
+             $(".eliminaIDI").click(function() {
+                    var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
+                    if (respuesta) {
+                        var id = "<?php echo $id; ?>" ;
+                        id1=$(this).parents("tr").find("td").eq(0).html();
+                        data = {
+                            identi:id,
+                            idIdioma: id1,
+                            tipoProcedimiento:"Eliminar"
+
+                        };
+
+                        $.ajax({
+                            async: true,
+                            type: "POST",
+                            dataType: "html",
+                            contentType: "application/x-www-form-urlencoded",
+                            beforeSend: inicioEnvio,
+                            success: Eliminar,
+                            timeout: 4000,
+                            error: problemas
+                        });
+                        return false;
+                    }
+                });
+            
+            
             
             };
 
@@ -450,6 +557,12 @@ if (isset($_POST['identi'])) {
         var x = $("#contenedor");
         x.html('Cargando...');
     }
+    
+          function IdiomaAgregar()
+        {
+            $('body').removeClass('modal-open');
+            $("#contenedor").load('pages/recursos_humanos/cv/EditarCV.php',data);
+        }
 
      function Telagregar()
     {
@@ -476,15 +589,29 @@ if (isset($_POST['identi'])) {
     }
 
 
+          function llegadaActIDI()
+        {
+            $("#cuerpoActIDI").load('pages/recursos_humanos/cv/actualizar/cuerpoActIdi.php', data);
+            $('#actualIDI').modal('show');
+            $('#actualIDI').on('hidden.bs.modal', function () {
+                $("#container").load('pages/recursos_humanos/cv/actualizar/formAcademica.php');
+            })
+           
+        }
+
 
 
     function llegadaActTelefono()
     {
+       
         $("#cuerpoAct").load('pages/recursos_humanos/cv/actualizar/cuerpoAct.php', data);
         $('#actualTel').modal('show');
         $('#actualTel').on('hidden.bs.modal', function () {
             $("#container").load('pages/recursos_humanos/cv/actualizar/telefono.php');
+             
+           
         })
+  
     }
     
       function llegadaActFA()
@@ -742,6 +869,89 @@ HTML;
                 </div>
             </div>
        </div>
+            
+         <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <label><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Idiomas</label>
+                        <button id="AgregarIDI" type="submit" class="btn btn-primary right-side"  data-toggle="modal" data-target="#agregarIDI"  title="Nuevo idioma"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+
+                        <div class="box">
+                            <div class="box-header">
+
+                            </div><!-- /.box-header -->
+                            <div class="table-responsive">
+
+                                <table id="tabla_formaciones" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Idioma</th>
+                                        <th>Nivel de dominio</th>
+                                        <th>Eliminar</th>
+                                        <th>Editar</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+
+                                    echo <<<HTML
+HTML;
+
+                                    while ($row = mysql_fetch_array($queryIDI)){
+                                        $id = $row['Id'];
+                                        $s = mysql_query("SELECT Idioma FROM idioma WHERE ID_Idioma = '".$row['ID_Idioma']."'");
+                                        $row1 = mysql_fetch_array($s);
+                                        $idioma = $row1['Idioma'];
+                                        $nivel = $row['Nivel'];
+
+                                        echo "<tr data-id='".$id."'>";
+                                        echo <<<HTML
+                <td>$id</td>
+HTML;
+                                        echo <<<HTML
+                <td>$idioma</td>
+HTML;
+                                        echo <<<HTML
+            <td>$nivel</td>
+HTML;
+                                        echo <<<HTML
+                    <td>
+            <center>
+            <button name="IDIEliminar"  class="eliminaIDI btn btn-danger glyphicon glyphicon-trash"> </button>
+                </center></td>
+
+                <td>
+                <center>
+                    <button type="submit" class="actualIDI btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="actualIDI" title="Editar">
+                      </button>
+                </center>
+                </td>
+HTML;
+                                        echo "</tr>";
+
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+
+
+
+
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>           
             
 
             
@@ -1059,6 +1269,19 @@ HTML;
     </div>
 </div> 
     
+    
+      <div class="modal fade" id="actualIDI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Actualizar Idioma</h4>
+                </div>
+                <div class="modal-body" id="cuerpoActIDI"></div>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal fade" id="actualexLab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1143,6 +1366,65 @@ HTML;
       </div>
     </div>
   </div>
+    
+     <div class="modal fade" id="agregarIDI" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar idioma de persona</h4>
+                </div>
+                <div class="modal-body" id="cuerpoAgregarIDI">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- .panel-heading -->
+                            <div class="panel-body">
+                                <form role="form" id="formIDI" method="post">
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <label></label>
+                                                </h4>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="col-lg-8">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+
+                                                                </br><label>Idioma</label>
+                                                                <select id="idioma" name="idioma" class="form-control">
+                                                                    <?php
+                                                                    $pa=mysql_query("SELECT Idioma FROM idioma");
+                                                                    while($row=mysql_fetch_array($pa)){
+                                                                        echo '<option value="'.$row['Idioma'].'">'.$row['Idioma'].'</option>';
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Nivel de dominio (0-99)</label>
+                                                                <input id="nivel" class="form-control" name="nivel" maxlength="2" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="agregarIDI btn btn-primary" id="telefono">Guardar Información</button>
+                                </form>
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    
     
     
  <div class="modal fade" id="agregarFAVM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

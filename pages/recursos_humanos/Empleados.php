@@ -146,7 +146,7 @@ if(isset($_POST["tipoProcedimiento"])){
             </div>
     
      <div class="box-header">
-        <h3 class="box-title">Gestion de Empleados <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Agregar nuevo empleado</a></h3>
+        <h3 class="box-title">Gestion de Empleados <a class="btn btn-primary" <?php if($_SESSION['user_rol'] <= 49) echo 'style="display: none;"';?> data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Agregar nuevo empleado</a></h3>
       </div><!-- /.box-header -->
          
            

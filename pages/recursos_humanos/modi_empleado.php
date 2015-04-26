@@ -209,7 +209,7 @@ if(isset($_POST['codigo']) and $existe==FALSE ){
                 if(validator()){
             
                  var id = "<?php echo $noE; ?>" ;
-                alert(id);
+       
                  var codT = "<?php echo $codigoE; ?>" ;
          
                 data={
@@ -549,7 +549,7 @@ HTML;
                                 
                              <div class="form-group">
                                   
-                                        <textarea class="form-control" name="comentarios" rows="3"  id="obs" > <?php echo $obsE;  ?></textarea>
+                                        <textarea class="form-control" name="comentarios" rows="3"  id="obs" ><?php echo $obsE;  ?></textarea>
                              </div>
                                
                                

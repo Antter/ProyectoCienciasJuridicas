@@ -1,17 +1,35 @@
 <?php
-//include "../../../../Datos/conexion.php";
+include "../../../../Datos/conexion.php";
 session_start();
 if (isset($_POST['id'])) {
     $empresa = $_POST['empresa'];
     $tiempo = $_POST['tiempo'];
+    $cargo = $_POST['cargo'];
+    $identidad = $_POST['identi'];
     echo '<div class="form-group">
-                                                            <label>Nombre de la Empresa</label>
-                                                            <input id="modEmp" class="form-control" value="'.$empresa.'" required>
-                                                        </div>';
+                      <label>Nombre de la Empresa</label>
+                      <input id="modEmp" class="form-control" value="'.$empresa.'" required>
+                      </div>';
     echo '<div class="form-group">
-                                                            <label>Tiempo (meses)</label>
-                                                            <input id="modTiem" class="form-control" value="'.$tiempo.'" required>
-                                                        </div>';
+                      <label>Tiempo (meses)</label>
+                       <input id="modTiem" class="form-control" value="'.$tiempo.'" required>
+                       </div>';
+     echo <<<HTML
+    <label>Cargo</label>
+<select id="modcargo" name="cargo" class="form-control">
+HTML;
+    $pa = mysql_query("SELECT * FROM cargo");
+    while ($row = mysql_fetch_array($pa)) {
+        echo '<option value="' . $row['ID_cargo'] .'" ';
+        if($row['Cargo'] == $_POST['cargo']){echo 'selected';}
+        echo '>' . $row['Cargo'] . '</option>';
+    }
+   
+echo <<<HTML
+    </select>
+</div></br>
+HTML;
+    
     echo '<button class="btn btn-primary" id="btActualizar">Guardar Información</button>';
     $_SESSION['id'] = $_POST['id'];
 }
@@ -33,9 +51,13 @@ if (isset($_POST['id'])) {
 
     function actexLab()
     {
+         var identi = "<?php echo $identidad; ?>" ;
         data={
             modEmp:$('#modEmp').val(),
-            modTiem:$('#modTiem').val()
+            modTiem:$('#modTiem').val(),
+            modCarg:$('#modcargo').val(),
+            identi:identi,
+            tipoProcedimiento:"actualizarEL"
         };
 
         $.ajax({
@@ -59,7 +81,8 @@ if (isset($_POST['id'])) {
 
     function llegadaSelecPersona()
     {
-        $("#cuerpoActEL").load('pages/recursos_humanos/cv/actualizar/eLabAct.php',data);
+        $('body').removeClass('modal-open');
+        $("#contenedor").load('pages/recursos_humanos/cv/EditarCV.php',data);
     }
 
     function problemas()

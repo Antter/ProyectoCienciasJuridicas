@@ -4,6 +4,7 @@ session_start();
 if (isset($_POST['id'])) {
     $tipo = $_POST['tipo'];
     $numero = $_POST['numero'];
+    $identidad= $_POST['identi'];
    echo '<form role="form" id="form" action="#" method="POST">';
     echo '<div class="form-group">
     <label>Tipo</label>
@@ -38,10 +39,12 @@ if (isset($_POST['id'])) {
 
     $("form").submit(function(e) {
 	    e.preventDefault();
-            
+             var identi = "<?php echo $identidad; ?>" ;
                 data={
             modTipo:$('#modTipo').val(),
-            modTel:$('#modTel').val()
+            modTel:$('#modTel').val(),
+            identi:identi,
+            tipoProcedimiento:"ActualizarTel"
         };
 
         $.ajax({
@@ -70,7 +73,8 @@ if (isset($_POST['id'])) {
 
     function llegadaSelecPersona()
     {
-        $("#cuerpoAct").load('pages/recursos_humanos/cv/actualizar/tAct.php',data);
+        $('body').removeClass('modal-open');
+        $("#contenedor").load('pages/recursos_humanos/cv/EditarCV.php',data);
     }
 
     function problemas()
