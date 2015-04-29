@@ -1,5 +1,5 @@
 <?php
-        include '../Datos/conexion.php';
+    
 	require_once('funciones.php');
 	
 	
@@ -35,5 +35,5 @@
 	
 	}
         
-       include '../Datos/cargarUniversidad.php';
+     
 ?>

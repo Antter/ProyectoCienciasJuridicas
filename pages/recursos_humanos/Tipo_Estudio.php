@@ -1,6 +1,49 @@
 <?php
  include ('../../Datos/conexion.php');
 
+ 
+  $maindir = "../../";
+
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
+  
+  
+    if(isset($_POST["tipoProcedimiento"])){
+    $tipoProcedimiento = $_POST["tipoProcedimiento"];
+    
+    if($tipoProcedimiento == "insertar"){
+       
+    require_once("../../Datos/insertarTipo.php");
+    }
+     if($tipoProcedimiento == "actualizar"){
+       
+    require_once("../../Datos/actualizarTipoEstudio.php");
+    }
+     if($tipoProcedimiento == "eliminar"){
+    require_once("../../Datos/eliminarTipoEstudio.php");
+    }
+  
+  }
+  
+ 
+ 
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +132,8 @@ and open the template in the editor.
           
                 if(validator()){
                 data={
-                    nombre:$('#nombreTipo').val()
+                    nombre:$('#nombreTipo').val(),
+                    tipoProcedimiento:"insertar"
                 }
                 $.ajax({
                     async: true,
@@ -109,19 +153,19 @@ and open the template in the editor.
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
 
             function llegadaInsertarTipo()
             {
-                $("#contenedor2").load('Datos/insertarTipo.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Tipo_Estudio.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
             
              function soloLetrasYNumeros(text)

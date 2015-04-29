@@ -1,7 +1,7 @@
     <?php
     
-       include '../Datos/funciones.php';
-      include'../Datos/conexion.php';
+        require_once('funciones.php');
+     
     
         if (isset($_POST['ID_cargo'])) {
             $id = $_POST['ID_cargo'];
@@ -16,6 +16,6 @@
         }
         
         
-        include '../Datos/cargarCargos.php';
+      
         
     ?>

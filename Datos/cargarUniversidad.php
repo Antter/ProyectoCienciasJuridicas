@@ -3,6 +3,20 @@
 //include '../Datos/conexion.php';
 
  $pame = mysql_query("SELECT * FROM universidad inner join pais on pais.Id_pais=universidad.Id_pais");
+ 
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+
 
 ?>
 
@@ -57,7 +71,7 @@
    function eliminarUni(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ Id_universidad:id1};
+             data1 ={ Id_universidad:id1,tipoProcedimiento:"eliminar" };
     
     $.ajax({
         async:true,
@@ -71,7 +85,7 @@
         error:problemas
     }); 
     return false;
-        }
+        };
 } 
             
             
@@ -104,19 +118,19 @@
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarUni()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_universidades.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_universidades.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarUni()
             {
-                $("#contenedor2").load('Datos/eliminarUniversidad.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/universidades.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
@@ -204,24 +218,29 @@ HTML;
 HTML;
                 echo <<<HTML
                 <td>$nombreP</td>
-
-               
-            
-               <td><center>
+                        
+HTML;
+                
+            if($_SESSION['user_rol'] != 100){
+                
+             echo ' <td><center>
+                    <button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"> </button>
+                </center></td> ';
+             }else{
+                
+               echo ' <td><center>
                     <button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash"> </button>
-                </center></td>
-                        
-                        
-                <td>
+                </center></td> ';
+                 
 
-                <center>
+   }         
+             
+             echo<<< HTML
+   
+               <td> <center>
                     <button class="editarb btn btn-primary glyphicon glyphicon-edit"  title="Editar">
                       </button>
-                </center>
-
-
-
-                </td>         
+                </center> </td>         
                         
                         
 HTML;

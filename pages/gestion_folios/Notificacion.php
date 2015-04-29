@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
   $maindir = "../../";
 
@@ -486,10 +486,10 @@ HTML;
 						
 				            <div class="form-group">
 					            <input type ="hidden" name="Usuario" id="Insertar_Emisor" class="form-control"  readonly="readonly"  value="<?php echo $user;?>">
-					            <input type="hidden" name="FechaCreacion" id="FechaCreacion" class="form-control"  readonly="readonly" value="<?php echo date('Y-m-d');?>">
+					            <input type="hidden" name="FechaCreacion" id="FechaCreacion" class="form-control"  readonly="readonly" value="<?php echo date('Y-m-d H:i:s');?>">
 					            <?php echo $usuario;?>
 					            <div class="pull-right">
-                                    Fecha: <?php $date2 = date_create(date('Y-m-d')); 
+                                    Fecha: <?php $date2 = date_create(date('Y-m-d H:i:s')); 
 		                            echo $dias[date_format($date2,'w')]." ".date_format($date2,'d')." de ".$meses[date_format($date2,'n')-1]. " del ".date_format($date2,'Y');?>
                                 </div>				  
                             </div>   

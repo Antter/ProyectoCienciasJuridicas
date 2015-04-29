@@ -1,10 +1,7 @@
 <?php
-        include '../Datos/conexion.php';
+  
 	require_once('funciones.php');
 	
-
-	
-
 	If(isset($_POST['codigo'])){
 		
 		 $Titulo=$_POST['titulo'];
@@ -30,6 +27,6 @@
 	
 	}
         
-       include '../Datos/cargarTitulos.php';
+     
 ?>
 

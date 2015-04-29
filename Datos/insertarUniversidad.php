@@ -1,5 +1,5 @@
 <?php
-     include'../Datos/conexion.php';
+ 
      require_once('funciones.php');
 	
 	  if (!empty($_POST['nombre'])) 
@@ -11,7 +11,7 @@
         
         mysql_query($query); 
         
-        echo mensajes('Actualizado con Exito','verde');
+        echo mensajes('Universidad ingresada con Exito','verde');
 
 		 
     }else{
@@ -20,7 +20,7 @@
         
     }   
     
-    include 'cargarUniversidad.php';
+  
 	
 ?>
 

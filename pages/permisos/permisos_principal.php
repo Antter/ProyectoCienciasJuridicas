@@ -17,7 +17,12 @@
 
   require_once($maindir."pages/navbar.php");
 
-
+if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
 ?>
 
 <html lang ="en">
@@ -79,7 +84,7 @@
 								<th><strong>Días</strong></th>
 								<th><strong>Fecha Solicitud</strong></th>
 								<th><strong>Hora Inicio</strong></th>
-								<th><strong>Hora Finalización</strong></th>												
+								<th><strong>Hora Finalizaci&oacuten</strong></th>												
 								<th><strong>Motivo</strong></th>
 								<th><strong>Departamento</strong></th>
 								<th><strong>Estado</strong></th>

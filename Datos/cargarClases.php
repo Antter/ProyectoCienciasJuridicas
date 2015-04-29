@@ -1,5 +1,19 @@
 <?php
 $pame = mysql_query("SELECT * FROM clases");
+
+ if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+
 ?>
 <html lang="es">
 
@@ -38,7 +52,7 @@ $pame = mysql_query("SELECT * FROM clases");
             function eliminarClase() {
                 var respuesta = confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
                 if (respuesta) {
-                    data = {IdClase: id};
+                    data = {IdClase: id,tipoProcedimiento:"eliminar" };
 
                     $.ajax({
                         async: true,
@@ -78,25 +92,25 @@ $pame = mysql_query("SELECT * FROM clases");
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
 
             function llegadaEditarClase()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_clases.php', data);
+                $("#contenedor").load('pages/recursos_humanos/modi_clases.php', data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function llegadaEliminarClase()
             {
-                $("#contenedor2").load('Datos/eliminarClase.php', data);
+                $("#contenedor").load('pages/recursos_humanos/Clases.php', data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -144,13 +158,28 @@ $pame = mysql_query("SELECT * FROM clases");
                         <td><div class="text" id="nombre-<?php echo $id ?>"><?php echo $row['Clase'] ?>
                             </div></td>
 
+<?php
 
-                        <td>
+  if($_SESSION['user_rol'] != 100){
+           echo'      <td>
+                <center>
+                    <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
+
+                </center>
+                </td> ';
+  }else{
+      
+          echo'      <td>
                 <center>
                     <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
                 </center>
-                </td> 
+                </td> ';
+                     
+                     
+       }
+?>      
+                
 
                 <td>
 

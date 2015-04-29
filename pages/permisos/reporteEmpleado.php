@@ -1,5 +1,22 @@
 <?php
-	include '../../Datos/conexion.php';
+$maindir = "../../";
+
+if (isset($_GET['contenido'])) {
+    $contenido = $_GET['contenido'];
+} else {
+    $contenido = 'permisos';
+}
+
+require_once($maindir . "funciones/check_session.php");
+
+require_once($maindir . "funciones/timeout.php");
+
+if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
 ?>
 
 <!DOCTYPE html>

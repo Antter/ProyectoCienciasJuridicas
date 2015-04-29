@@ -4,7 +4,7 @@
 
     // Obtiene las ultimas 4 alertas ingresados al sistema.
 
-	  $query = $db->prepare("select alerta.NroFolioGenera, folios.FechaEntrada, 
+	  $query = $db->prepare("select alerta.NroFolioGenera, DATE(folios.FechaEntrada) as FechaEntrada, 
 	  estado_seguimiento.DescripcionEstadoSeguimiento, folios.Prioridad, prioridad.DescripcionPrioridad from alerta 
 	  inner join folios on alerta.NroFolioGenera=folios.NroFolio AND alerta.Atendido =0
 	  inner join prioridad on folios.Prioridad = prioridad.Id_Prioridad

@@ -2,9 +2,23 @@
 
 
  //include '../../Datos/conexion.php';
-
+ 
  $pame = mysql_query("SELECT * FROM pais");
+ 
+  
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
 
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
 
 ?>
 <html lang="es">
@@ -55,7 +69,7 @@
    function eliminarPais(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ Id_Pais:id1};
+             data1 ={ Id_Pais:id1, tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -103,25 +117,25 @@
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarPais()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_pais.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_pais.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarPais()
             {
-                $("#contenedor2").load('Datos/eliminarPais.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/Pais.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -182,13 +196,24 @@
                   <td id="id4"><?php echo $id ?></td>
                   <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Nombre_pais'] ?></div></td>
 
+<?php
 
-                  <td>
-          <center>
+  if($_SESSION['user_rol'] != 100){
+             echo'      <td> <center>
+             <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
+
+          </center></td> ';
+  }else{
+      
+    echo'   <td> <center>
               <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
-          </center>
-            </td> 
+       </center></td> ';
+         
+  }
+                          
+                          
+?>                          
 
             <td>
 

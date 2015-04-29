@@ -1,13 +1,25 @@
 
 <?php
-
-  $maindir = "../../";
-
-
+$maindir = "../../";
+ 
+if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'permisos';
+    }
 
   require_once($maindir."funciones/check_session.php");
 
   require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
  	require_once("../../conexion/conn.php");  
 	$conexion = mysqli_connect($host, $username, $password, $dbname);
 		$idempleado= $_POST['no_empleado'];
@@ -118,7 +130,7 @@
                                                
 			 <input  id="btgenerar" class="btn btn-primary" type="submit"  value="Generar Reporte" /></td>
 			 
-		      <button id="btpdf" class="btn btn-primary" data-mode="verPDF" data-id=$idDpto href="#">ExportarPDF</button>
+		      <button id="reportePDF" class="btn btn-primary" data-mode="verPDF" data-id=$idDpto href="#">ExportarPDF</button>
    			
 		    	  			
 			   
@@ -144,7 +156,7 @@
 <script>
 $( document ).ready(function() {
 //bTN PDF REPORTES 
-	$("#btpdf").on('click',function(){
+	$("#reportePDF").on('click',function(){
          
 		 area=$('select[name=area]').val();
 		 motivo= $('select[name=motivo]').val();
@@ -165,7 +177,7 @@ $( document ).ready(function() {
                 dataType: "html",
                 contentType: "application/x-www-form-urlencoded",
                 url:"pages/permisos/crearpdfsolicitudes.php", 
-                success:reportePDF,
+                success:reportePDF2,
                 timeout:4000,
                 error:problemas
             }); 
@@ -207,7 +219,7 @@ $( document ).ready(function() {
 
 );
 
-function reportePDF(data){
+function reportePDF2(data){
 		//window.open('pages/permisos/crearpdfreportedepto.php?id1='+id1);
 		window.open('pages/permisos/crearpdfsolicitudes.php?area='+area+'&motivo='+motivo+'&fecha_i='+fecha_i+'&fecha_f='+fecha_f+'&idempleado='+idempleado);  
 	}

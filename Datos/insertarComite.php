@@ -1,7 +1,6 @@
 <?php
 
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\sistemaCienciasJuridicas\Datos\Conexion.php";
+require_once('funciones.php');
 
 
 
@@ -12,6 +11,15 @@ if (isset($_POST['nombreComite'])) {
     $query = "INSERT INTO grupo_o_comite(Nombre_Grupo_o_comite) VALUES('$nombre1')";
 
     mysql_query($query);
+    
+       if($query){
+           
+           
+           echo mensajes('Agregado con Exito','verde');
+       }else{
+        
+           echo mensajes('no se puedo ingresar registro','rojo');
+       }
 }
-include "$root\sistemaCienciasJuridicas\Datos\cargarComite.php";
+
 ?>

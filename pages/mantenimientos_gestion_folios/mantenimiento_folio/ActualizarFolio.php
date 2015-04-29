@@ -26,10 +26,11 @@
 
   try{
     $sql = "SELECT folios.NroFolio, folios.PersonaReferente, folios.UnidadAcademica, unidad_academica.NombreUnidadAcademica, folios.Organizacion, 
-	    organizacion.NombreOrganizacion, folios.TipoFolio,folios.FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
+	    organizacion.NombreOrganizacion,folios.categoria, categorias_folios.NombreCategoria, folios.TipoFolio,folios.FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
 		ubicacion_archivofisico.DescripcionUbicacionFisica ,folios.Prioridad  ,prioridad.DescripcionPrioridad, folios.DescripcionAsunto 
     	FROM folios INNER JOIN ubicacion_archivofisico ON folios.UbicacionFisica = ubicacion_archivofisico.Id_UbicacionArchivoFisico 
     	INNER JOIN prioridad ON folios.Prioridad = prioridad.Id_Prioridad 
+		INNER JOIN categorias_folios ON folios.categoria = categorias_folios.Id_categoria
     	LEFT JOIN unidad_academica ON folios.UnidadAcademica = unidad_academica.Id_UnidadAcademica 
     	LEFT JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion WHERE NroFolio =:adNroFolio";
 
@@ -82,7 +83,8 @@
 			 </tr>
 			  <tr>
 			  <td>FechaEntrada</td>
-			  <td><input name='FechaEntrada' id="FechaEntrada" type ='text' maxlength="10" value="<?php echo htmlentities($result['FechaEntrada']); ?>" placeholder="<?php echo htmlentities($result['FechaEntrada']); ?>" required></td>
+			  <td>
+			  <input name='FechaEntrada' id="FechaEntrada" disabled="disabled" type ='text' maxlength="10" value="<?php echo htmlentities($result['FechaEntrada']); ?>" placeholder="<?php echo htmlentities($result['FechaEntrada']); ?>" required></td>
 			  </tr>
 				<tr>
 			  <td>PersonaReferente</td>
@@ -108,6 +110,16 @@
                                                                     <?php while($filas = mysqli_fetch_assoc($result2)) { ?>
                                                                     <option <?php if($result['NombreOrganizacion'] == $filas["NombreOrganizacion"]){ echo "selected"; } ?>
 																	value="<?php echo $filas["Id_Organizacion"];?>"><?php echo $filas["NombreOrganizacion"];?></option><?php } mysqli_free_result($result2); ?>
+														        </select>
+		      </td>
+			  </tr>
+			  <tr>
+			  <td>Categoria</td>
+			  <td> <select id="Categoria" class="form-control"name="Categoria" style="width: 420px">
+                                                                    <option value=-1> -- Categoria -- </option>
+                                                                    <?php while($filas = mysqli_fetch_assoc($result6)) { ?>
+                                                                    <option <?php if($result['categoria'] == $filas["Id_categoria"]){ echo "selected"; } ?>
+																	value="<?php echo $filas["Id_categoria"];?>"><?php echo $filas["NombreCategoria"];?></option><?php } mysqli_free_result($result6); ?>
 														        </select>
 		      </td>
 			  </tr>
@@ -179,7 +191,7 @@
                 var zIndexFecha = $('.datepicker').css('z-index');
                 $('.datepicker').css('z-index',zIndexModal+1);
             }).on('changeDate', function(ev){
-                $('#FechaEntrada').datepicker('hide');
+                $('#FechaEntrada').datetimepicker('hide');
             }); 
 			
             $('#FechaCreacion').datepicker({
@@ -199,7 +211,6 @@
 </script>
 
 <script type="text/javascript">
-
     $( "#UnidadAcademica" ).change(function() {
             var unidadAcademica = this.value;	
 	        if (unidadAcademica == -1) {
@@ -233,6 +244,7 @@
 			PersonaReferente:$("#PersonaReferente").val(),
 			UnidadAcademica:$("#UnidadAcademica").val(),
 			Organizacion:$("#Organizacion").val(),
+			Categoria:$("#Categoria").val(),
 			DescripcionAsunto:$("#DescripcionAsunto").val(),
 			TipoFolio:$("#TipoFolio").val(),
 			UbicacionFisica:$("#UbicacionFisica").val(),

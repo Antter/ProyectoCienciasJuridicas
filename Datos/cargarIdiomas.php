@@ -4,6 +4,20 @@
 //include '../../Datos/conexion.php';
 
  $pame = mysql_query("SELECT * FROM idioma");
+ 
+ 
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
 
 
 ?>
@@ -55,7 +69,7 @@
    function eliminarIdioma(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ ID_Idioma:id1};
+             data1 ={ ID_Idioma:id1, tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -103,25 +117,25 @@
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarIdioma()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_Idiomas.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_Idiomas.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarIdioma()
             {
-                $("#contenedor2").load('Datos/eliminarIdiomas.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/Idiomas.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -167,13 +181,21 @@
                   <td id="id4"><?php echo $id ?></td>
                   <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Idioma'] ?></div></td>
 
+                  <?php
 
-                  <td>
-          <center>
-              <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+                echo'  <td> <center>';
+                
+                  if($_SESSION['user_rol'] != 100){
+               echo ' <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
 
-          </center>
-            </td> 
+            </center>  </td> ';
+                  }else{
+                      
+              echo  ' <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
+                </center></td>';
+                  }      
+                          
+                  ?>
 
             <td>
 

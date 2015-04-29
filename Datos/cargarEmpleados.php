@@ -4,21 +4,7 @@
  $queryCE = mysql_query("SELECT * FROM empleado inner join persona on empleado.N_identidad=persona.N_identidad inner join departamento_laboral on departamento_laboral.Id_departamento_laboral=empleado.Id_departamento Where estado_empleado='1'");
 
  
-   //$maindir = "../../";
 
-  if(isset($_GET['contenido']))
-    {
-      $contenido = $_GET['contenido'];
-    }
-  else
-    {
-      $contenido = 'recursos_humanos';
-    }
-
-  require_once($maindir."funciones/check_session.php");
-
-  require_once($maindir."funciones/timeout.php");
- 
  
 ?>
 
@@ -260,7 +246,7 @@ HTML;
             
                <td><center>
 HTML;
-                if($_SESSION['user_rol'] != 100){
+                if($_SESSION['user_rol'] <= 49){
           echo '<button name="Id_universidad"  class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"> </button>
                 </center></td>';
                 }else{
@@ -274,7 +260,7 @@ HTML;
 
                 <center>';
                 
-                if($_SESSION['user_rol'] != 100){
+                if($_SESSION['user_rol'] <= 49){
             echo  ' <button type="submit" class="editarb btn btn-primary glyphicon glyphicon-edit" disabled="TRUE" title="Editar">
                       </button>';
                 }else{

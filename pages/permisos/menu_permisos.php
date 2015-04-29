@@ -24,7 +24,7 @@
 						</li>
 						
 						<?php
-							if($rol==30 or $rol==29){
+							if($rol==29){
 								echo "<li><a id ='solicitude' href='#'> Solicitud Empleados</a>	</li>";
 							}						
 						?>	
@@ -49,7 +49,7 @@
 						<?php
 							if($rol==50 or $rol==30){
 							echo "<li><a id='reportetotal' href='#'><i class='fa fa-table fa-fw'></i>Reporte: Completo</a></li>";
-							echo "<li><a id='reportetrimestral' href='#'><i class='fa fa-table fa-fw'></i>Reporte: Trimestral</a></li>";
+							echo "<li><a id='reportetrimestral' href='#'><i class='fa fa-table fa-fw'></i>Consultas Empleado</a></li>";
 							}
 						?>	
 						<li><a id='estadistica' href='#'><i class='fa fa-table fa-fw'></i>Estadistica</a></li>

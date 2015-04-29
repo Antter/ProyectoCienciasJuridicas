@@ -53,7 +53,6 @@
 		      <div class="btn-group" role="group" aria-label="usuarios/logs">
                   <button type="button" class="btn btn-default" id="cargar_usuarios">Usuarios</button>
                   <button type="button" class="btn btn-default" id="cargas_logs">Logs</button>
-				  <button type="button" class="btn btn-default" id="cargas_Roles">Roles</button>
               </div>
 		   </div>
 		   <div class="panel-body">

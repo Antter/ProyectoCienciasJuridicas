@@ -1,5 +1,5 @@
 <?php
-        include '../Datos/conexion.php';
+        
 	require_once('funciones.php');
 	
 
@@ -30,5 +30,5 @@
 	
 	}
         
-       include '../Datos/cargarComite.php';
+      
 ?>

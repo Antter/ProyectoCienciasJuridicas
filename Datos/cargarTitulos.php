@@ -53,7 +53,7 @@
    function eliminarTitulo(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ titulo:id1};
+             data1 ={ titulo:id1,tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -101,25 +101,25 @@
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarTitulo()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_Titulo.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_Titulo.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarTitulo()
             {
-                $("#contenedor2").load('Datos/eliminarTitulo.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/Titulo.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -164,15 +164,25 @@
           <tr>
                   <td id="id4"><?php echo $id ?></td>
                   <td><div class="text" id="ntitulo-<?php echo $id ?>"><?php echo $row['titulo'] ?></div></td>
+                  
+<?php
+   if($_SESSION['user_rol'] != 100){
+           echo'       <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
 
-
-                  <td>
+          </center>
+            </td> ';
+   }  else {
+         echo'       <td>
           <center>
               <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
           </center>
-            </td> 
-
+            </td> ';
+       
+   }
+?>
             <td>
 
             <center>

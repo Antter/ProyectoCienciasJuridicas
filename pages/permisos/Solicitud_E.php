@@ -1,9 +1,23 @@
 <?php
 //Este codigo hace una validación de la sesión del usuario y del tiempo que esta lleva inactiva, para proceder a cerrarla
 $maindir = "../../";
+
+if (isset($_GET['contenido'])) {
+    $contenido = $_GET['contenido'];
+} else {
+    $contenido = 'permisos';
+}
+
 require_once($maindir . "funciones/check_session.php");
 
 require_once($maindir . "funciones/timeout.php");
+
+if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
 ?>
 
 <?php

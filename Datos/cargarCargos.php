@@ -1,5 +1,19 @@
 <?php
 $pame = mysql_query("SELECT * FROM cargo");
+
+ if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+
 ?>
 <html lang="es">
 
@@ -41,13 +55,26 @@ $pame = mysql_query("SELECT * FROM cargo");
                             <td id="idcargo"><?php echo $idCargo ?></td>
                             <td><div class="text" id="nombre-<?php echo $idCargo ?>"><?php echo $row['Cargo'] ?></div></td>
 
+<?php
+             if($_SESSION['user_rol'] != 100){
+              echo'              <td>
+                    <center>
+                        <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
 
-                            <td>
+                    </center>
+                    </td> ';
+             }else{
+               echo     '  <td>
                     <center>
                         <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
                     </center>
-                    </td> 
+                    </td> ';
+                 
+                 
+             }
+                                    
+  ?>
 
                     <td>
 
@@ -112,7 +139,7 @@ $pame = mysql_query("SELECT * FROM cargo");
    function eliminarCargo(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ ID_cargo:idCargo};
+             data1 ={ ID_cargo:idCargo,tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -153,25 +180,25 @@ $pame = mysql_query("SELECT * FROM cargo");
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarCargo()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_cargos.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_cargos.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarCargo()
             {
-                $("#contenedor2").load('Datos/eliminarCargo.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/Cargos.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 

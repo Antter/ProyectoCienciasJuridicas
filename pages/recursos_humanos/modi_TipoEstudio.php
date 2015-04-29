@@ -49,7 +49,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
 
                 function editarTipoEstudio()
             {
-                var respuesta=confirm("¿Esta seguro de que desea Realizar cambios en registro seleccionado?");
+                var respuesta=confirm("ï¿½Esta seguro de que desea Realizar cambios en registro seleccionado?");
                  if (respuesta){  
                      
                      
@@ -57,7 +57,8 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
               
                  data ={
                         TipoEstudio:$("#TipoEstudio2").val(),
-                        codigo:$("#codigo2").val()
+                        codigo:$("#codigo2").val(),
+                        tipoProcedimiento:"actualizar"
                     }; 
                 
                 
@@ -81,20 +82,20 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarTipoEstudio()
             {
-                $("#contenedor2").load('Datos/actualizarTipoEstudio.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Tipo_Estudio.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -121,7 +122,7 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Llene los campos a continuación solicitados
+                    Llene los campos a continuaciï¿½n solicitados
                 </div>
                 <div class="panel-body">
                     <div class="row">

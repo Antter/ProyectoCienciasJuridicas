@@ -25,9 +25,9 @@
 	
 	}else{
         
-		if($finalizar == true){
+		if($finalizar == "true"){
 		    $fecha = date("Y-m-d");
-		}elseif($finalizar == false){
+		}elseif($finalizar == "false"){
 		    $fecha = NULL;
 		}
 		

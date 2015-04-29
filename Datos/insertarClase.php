@@ -1,8 +1,7 @@
 <?php
 
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\sistemaCienciasJuridicas\Datos\Conexion.php";
 
+ require_once('funciones.php');
 
 
 
@@ -12,6 +11,17 @@ if (isset($_POST['nombre'])) {
     $query = "INSERT INTO clases(Clase) VALUES('$nombre1')";
 
     mysql_query($query);
+    
+    
+      if($query){
+           
+           
+           echo mensajes('Agregado con Exito','verde');
+       }else{
+        
+           echo mensajes('no se puedo ingresar registro','rojo');
+       }
+    
 }
-include "$root\sistemaCienciasJuridicas\Datos\cargarClases.php";
+
 ?>

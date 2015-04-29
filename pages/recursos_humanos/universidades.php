@@ -2,6 +2,48 @@
 
 include ('../../Datos/conexion.php');
 
+$maindir = "../../";
+
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
+  
+  
+  if(isset($_POST["tipoProcedimiento"])){
+    $tipoProcedimiento = $_POST["tipoProcedimiento"];
+    
+    if($tipoProcedimiento == "insertar"){
+       
+    require_once("../../Datos/insertarUniversidad.php");
+    }
+     if($tipoProcedimiento == "actualizar"){
+       
+    require_once("../../Datos/actualizarUniversidad.php");
+    }
+     if($tipoProcedimiento == "eliminar"){
+    require_once("../../Datos/eliminarUniversidad.php");
+    }
+      
+    
+}
+
+
 ?>
 
 
@@ -59,20 +101,20 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
 
             function llegadaInsertarUni()
             {
-                $("#contenedor2").load('Datos/insertarUniversidad.php',data);
+                $("#contenedor").load('pages/recursos_humanos/universidades.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -210,7 +252,25 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
         <!-- /#page-wrapper -->
 
 
+ <?php
+ 
+  if(isset($codMensaje) and isset($mensaje)){
+    if($codMensaje == 1){
+      echo '<div class="alert alert-success">';
+      echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+      echo '<strong>Exito! </strong>';
+      echo $mensaje;
+      echo '</div>';
+    }else{
+      echo '<div class="alert alert-danger">';
+      echo '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+      echo '<strong>Error! </strong>';
+      echo $mensaje;
+      echo '</div>';
+    }
+  } 
 
+?>
 
 
    

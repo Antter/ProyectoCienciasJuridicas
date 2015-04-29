@@ -21,6 +21,11 @@
 
   require_once($maindir."funciones/timeout.php");
 
+  if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
  // require_once($maindir."pages/navbar.php");
 
 
@@ -146,7 +151,7 @@ if(isset($_POST["tipoProcedimiento"])){
             </div>
     
      <div class="box-header">
-        <h3 class="box-title">Gestion de Empleados <a class="btn btn-primary" <?php if($_SESSION['user_rol'] <= 49) echo 'style="display: none;"';?> data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Agregar nuevo empleado</a></h3>
+        <h3 class="box-title">Gestion de Empleados <a class="btn btn-primary" <?php if($_SESSION['user_rol'] <=49 ) echo 'style="display: none;"';?> data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Agregar nuevo empleado</a></h3>
       </div><!-- /.box-header -->
          
            

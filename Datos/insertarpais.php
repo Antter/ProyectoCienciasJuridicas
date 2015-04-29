@@ -1,7 +1,7 @@
 <?php
 
  
-include '../Datos/conexion.php';
+
 require_once 'funciones.php';
   	
 
@@ -9,8 +9,7 @@ require_once 'funciones.php';
     {
         $Pais = $_POST['Pais']; 
         
-        
-        
+  
        $query =mysql_query("INSERT INTO pais(Nombre_pais) VALUES('$Pais')"); 
        
        
@@ -27,6 +26,6 @@ require_once 'funciones.php';
     }   
    
    
-    include '../Datos/cargaPais.php';
+    
     
 ?>

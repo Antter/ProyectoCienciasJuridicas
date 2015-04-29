@@ -1,4 +1,26 @@
 <?php
+ 
+ $maindir = "../../";
+ 
+if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'permisos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+
 //include 'conexion.php';
 require_once("../../conexion/conn.php");  
 
@@ -80,8 +102,8 @@ HTML;
 				
                 <td>$dmotivo</td>
 				
-				  <td><center>
-                    <button name="Motivo_ID" class="edita btn btn-danger glyphicon glyphicon-edit"> </button>
+				<td><center>
+                    <a class="open-Modal btn btn-primary" data-toggle="modal" data-id=$idM data-target="#compose-modal"><i class="fa fa-edit"></i></a>
                 </center></td>
 
 
@@ -106,8 +128,51 @@ HTML;
 				</div>						
 			</div>							
 	</div>
+	
+ <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	  <form role="form" id="form" name="form" action="#">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Editando Motivo</h4>
+      </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <div class="input-group">
+                              <div class="input-group">
+								  <input id="codmotivo" type="hidden" class="form-control" value = ""  required>
+                                  <input id="descripcionm" type="text" class="form-control" placeholder="Descripcion de motivo"    required>
+                                  <span class="input-group-btn">
+									<button id="editaM" class="edita btn btn-danger glyphicon glyphicon-edit"> </button>
+                                      <!--<button id="guardarJ" class="guardarJ btn btn-primary" type="button">Finalizar</button>-->
+                                  </span>
+                              </div>
+                           
+                        
+                      </div>   
+                       
+                  </div>
+                  
+              </div>
+           <!--  <div class="modal-footer clearfix">
+            <button name="submit" id="submit" class="insertarbg btn btn-primary pull-left"><i class="glyphicon glyphicon-pencil"></i> Insertar</button>
+          </div>
+           -->
+                
+                    
+          </form>
+    
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div> 
 
 <script>
+$(document).on("click", ".open-Modal", function () {
+	id = $(this).parents("tr").find("td").eq(0).html();
+	var myDNI = $(this).data('id');
+	$(".modal-body #codmotivo").val(myDNI);
+});
 			
  var id;
  var data;
@@ -121,7 +186,7 @@ HTML;
         x.click(consulta);
         
        var x;
-        x=$(".edita");
+        x=$("#editaM");
         x.click(editarMotivo);
 	}
 	
@@ -150,13 +215,13 @@ HTML;
     }
 	
 	function editarMotivo(){
-		var id = $(this).parents("tr").find("td").eq(0).html();
+		//var id = $(this).parents("tr").find("td").eq(0).html();
 		var respuesta=confirm("¿Esta seguro de que desea cambiar el registro seleccionado?");
         if (respuesta){  
-			data = {Motivo_ID:id, dmotivo:$('#motivo').val()};
+			data = {Motivo_ID:$('#codmotivo').val(), dmotivo:$('#descripcionm').val()};
 			$.ajax({
 				async:true,
-				type: "POST",
+				type: "GET",
 				dataType: "html",
 				data:data,
 				contentType: "application/x-www-form-urlencoded",

@@ -8,7 +8,7 @@ require($maindir."conexion/config.inc.php");
 $idFolio = $_GET['id1'];
 
 $query = $db->prepare("SELECT folios.NroFolio, folios.PersonaReferente, folios.UnidadAcademica, unidad_academica.NombreUnidadAcademica, folios.Organizacion, 
-	    organizacion.NombreOrganizacion, folios.TipoFolio,folios.FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
+	    organizacion.NombreOrganizacion, folios.TipoFolio,DATE(folios.FechaEntrada) as FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
 		ubicacion_archivofisico.DescripcionUbicacionFisica ,folios.Prioridad  ,prioridad.DescripcionPrioridad, folios.DescripcionAsunto 
     	FROM folios INNER JOIN ubicacion_archivofisico ON folios.UbicacionFisica = ubicacion_archivofisico.Id_UbicacionArchivoFisico 
     	INNER JOIN prioridad ON folios.Prioridad = prioridad.Id_Prioridad 
@@ -28,7 +28,7 @@ $pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 170,8, 35 , 35,'P
 $pdf->Cell(18, 10, '', 0);
 $pdf->Cell(120, 10, '			Reporte de Seguimientos del Folio', 0);
 $pdf->SetFont('Arial', '', 9);
-$pdf->Cell(50, 10, 'Hoy: '.date('d-m-Y').'', 0);
+$pdf->Cell(50, 10, 'Hoy: '.date('Y-m-d').'', 0);
 $pdf->Ln(10);
 $pdf->Cell(115, 8, '                            Folio: '.$idFolio, 0);
 $pdf->Ln(5);

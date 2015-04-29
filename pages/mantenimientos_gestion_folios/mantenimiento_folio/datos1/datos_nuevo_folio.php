@@ -18,4 +18,7 @@ $result4 = mysqli_query($conexion, $query4);
 $query5 = "SELECT * FROM estado_seguimiento";
 $result5 = mysqli_query($conexion, $query5);
 
+$query6 = "SELECT * FROM categorias_folios";
+$result6 = mysqli_query($conexion, $query6);
+
 ?>

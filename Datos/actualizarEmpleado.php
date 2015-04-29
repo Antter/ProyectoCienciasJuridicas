@@ -15,9 +15,13 @@
                  
                
 		
-        $rec2=mysql_query("SELECT * FROM empleado WHERE No_Empleado='".$codigo."'");        
-                 
-   if($codigo==$rec2['codigo']){
+        $rec2=mysql_query("SELECT No_Empleado FROM empleado WHERE No_Empleado='".$codigo."'");
+        $temp=mysql_fetch_row($rec2);
+        
+        
+        $t=$temp[0];
+              
+   if($codigo===$t){
      
      
        $mensaje = 'Numero de empleado invalido o ya existente';
@@ -28,13 +32,13 @@
  }else{      
               
      $enlace = mysql_connect('localhost', 'root', '');
-mysql_select_db("sistema_ciencias_juridicas", $enlace);
+     mysql_select_db("sistema_ciencias_juridicas", $enlace);
 		 
-	$queryAE= mysql_query("UPDATE `empleado` SET `No_Empleado`='$codigo',`Id_departamento`='$id_departamento',`Fecha_ingreso`='$fechaIngreso',`Observacion`='$obs'  WHERE N_identidad ='".$n_identidad."'");
+	$queryAE = mysql_query("UPDATE `empleado` SET `No_Empleado`='$codigo',`Id_departamento`='$id_departamento',`Fecha_ingreso`='$fechaIngreso',`Observacion`='$obs'  WHERE N_identidad ='".$n_identidad."'");
         
        // $query2=mysql_query("UPDATE empleado_has_cargo SET ID_cargo='$id_cargo' WHERE No_empleado ='".$codigo."'");
 	
-       var_dump($queryAE);
+     
 	
 	if($queryAE){
 	

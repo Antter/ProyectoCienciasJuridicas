@@ -2,6 +2,32 @@
 
 require_once('../../../Datos/conexion.php');
 
+
+   $maindir = "../../../";
+
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+      $navbar_loc = 'contenido';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+
+
+
+
  $consulta1 = "select Tipo_estudio from tipo_estudio";
  $resultado1 = mysql_query($consulta1);
  $tipo_estudio = mysql_fetch_array($resultado1);
@@ -229,7 +255,7 @@ require_once('../../../Datos/conexion.php');
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Segundo Apellido</label>
                                                             <div class="col-sm-7"><input id="segundoApellido" class="form-control" name="segundoApellido" required></div>
                                                         </div>
-                                                       <div class="form-group" id="sexoOpcion" name="sex">
+                                                        <div class="form-group" id="sexoOpcion" name="sex">
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sexo</label>
                                                             <div class="col-sm-7"><input type="radio" name="sexo" id="sexoFem" value="F" checked>&nbsp;Femenino
                                                             <input type="radio" name="sexo" id="sexoMas" value="M">&nbsp;Masculino</div>

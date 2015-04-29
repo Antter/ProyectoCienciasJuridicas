@@ -28,12 +28,14 @@
   }
 
   $query = $db->prepare("SELECT folios.NroFolio, folios.PersonaReferente, folios.UnidadAcademica, unidad_academica.NombreUnidadAcademica, folios.Organizacion, 
-	    organizacion.NombreOrganizacion, folios.TipoFolio,folios.FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
+	    organizacion.NombreOrganizacion, categorias_folios.NombreCategoria, folios.TipoFolio,folios.FechaEntrada, folios.FechaCreacion, folios.UbicacionFisica, 
 		ubicacion_archivofisico.DescripcionUbicacionFisica ,folios.Prioridad  ,prioridad.DescripcionPrioridad, folios.DescripcionAsunto 
     	FROM folios INNER JOIN ubicacion_archivofisico ON folios.UbicacionFisica = ubicacion_archivofisico.Id_UbicacionArchivoFisico 
     	INNER JOIN prioridad ON folios.Prioridad = prioridad.Id_Prioridad 
+		INNER JOIN categorias_folios ON folios.categoria = categorias_folios.Id_categoria
     	LEFT JOIN unidad_academica ON folios.UnidadAcademica = unidad_academica.Id_UnidadAcademica 
-    	LEFT JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion");
+    	LEFT JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion
+		ORDER BY FechaEntrada");
   $query->execute();
     $rows = $query->fetchAll();
         if($rows){
@@ -88,6 +90,7 @@
               <th>PersonaReferente</th>
 			  <th>UnidadAcademica</th>
 			  <th>Organizacion</th>
+			  <th>Categoria</th>
 			  <th>DescripcionAsunto</th>
 			  <th>TipoFolio</th>
 			  <th>UbicacionFisica</th>
@@ -99,6 +102,11 @@
         <?php
             foreach ($rows as $row) {   
             $foliosNroFolio = $row['NroFolio'];
+			if($row['TipoFolio'] == 0){
+			    $tipoFolio = "Folio de entrada";
+			}else{
+			    $tipoFolio = "Folio de salida";
+			}
         ?>
         
             <tr>
@@ -108,8 +116,9 @@
 				<td><?php echo $row['PersonaReferente']; ?></td>
 				<td><?php echo $row['NombreUnidadAcademica']; ?></td>
 				<td><?php echo $row['NombreOrganizacion']; ?></td>
+				<td><?php echo $row['NombreCategoria']; ?></td>
 				<td><?php echo $row['DescripcionAsunto']; ?></td>
-				<td><?php echo $row['TipoFolio']; ?></td>
+				<td><?php echo $tipoFolio; ?></td>
 				<td><?php echo $row['DescripcionUbicacionFisica']; ?></td>
 				<td><?php echo $row['DescripcionPrioridad']; ?></td>
 <?php

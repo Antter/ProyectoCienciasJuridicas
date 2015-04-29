@@ -7,6 +7,7 @@
 		$addPersonaReferente = $_POST['PersonaReferente'];
 		$addUnidadAcademica = $_POST['UnidadAcademica'];
 		$addOrganizacion = $_POST['Organizacion'];
+		$addCategoria = $_POST['Categoria'];
 		$addDescripcionAsunto = $_POST['DescripcionAsunto'];
 		$addTipoFolio = $_POST['TipoFolio'];
 		$addUbicacionFisica = $_POST['UbicacionFisica'];
@@ -30,6 +31,10 @@
         }
 		elseif($addOrganizacion == "" or $addOrganizacion == null){
         	$mensaje = "Debe de ingresar una organizacion para el folio";
+            $codMensaje = 0;
+        }
+		elseif($addCategoria == "" or $addCategoria == null){
+        	$mensaje = "Debe de ingresar una categoria para el folio";
             $codMensaje = 0;
         }
 		elseif($addDescripcionAsunto == "" or $addDescripcionAsunto == null){
@@ -57,7 +62,7 @@
 		}
 
 	try{
-		$stmt = $db->prepare("CALL sp_actualizar_folio(?,?,?,?,?,?,?,?,?,?,?,?,@mensaje,@codMensaje)");
+		$stmt = $db->prepare("CALL sp_actualizar_folio(?,?,?,?,?,?,?,?,?,?,?,?,?,@mensaje,@codMensaje)");
         $stmt->bindParam(1, $num_folioAnt, PDO::PARAM_STR);
 		$stmt->bindParam(2, $addNroFolio, PDO::PARAM_STR);
 		$stmt->bindParam(3, $addFechaCreacion, PDO::PARAM_STR); 
@@ -70,6 +75,7 @@
 		$stmt->bindParam(10, $addUbicacionFisica, PDO::PARAM_STR); 
 		$stmt->bindParam(11, $prioridadAnt, PDO::PARAM_STR);
 		$stmt->bindParam(12, $addPrioridad, PDO::PARAM_STR);
+		$stmt->bindParam(13, $addCategoria, PDO::PARAM_STR);
 		
         // call the stored procedure
         $stmt->execute();	

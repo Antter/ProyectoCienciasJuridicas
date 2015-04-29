@@ -104,13 +104,13 @@
 														    echo '<li><a id="todosFolios" href="#"><i class="fa fa-inbox"></i> Folios </a></li>';
 														}
 												
-														if($tipoFolio == 'foliosEntrada'){
+														if($tipoFolio == 'foliosEntrada' || $tipoFolio == "0"){
 														    echo '<li	 class="active"><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
 														}else{
 														    echo '<li><a id="foliosEntrada" href="#"><i class="glyphicon glyphicon-download-alt"></i> Folios de Entrada </a></li>';
 														}
 														
-														if($tipoFolio == 'foliosSalida'){
+														if($tipoFolio == 'foliosSalida' || $tipoFolio == "1"){
 														    echo '<li class="active"><a id="foliosSalida" href="#"><i class="glyphicon glyphicon-send"></i> Folios de Salida</a></li>';
 														}else{
 														    echo '<li><a id="foliosSalida" href="#"><i class="glyphicon glyphicon-send"></i> Folios de Salida</a></li>';

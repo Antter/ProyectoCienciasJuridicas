@@ -55,7 +55,7 @@
    function eliminarGrupoComite(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ grupoComite:id1};
+             data1 ={ grupoComite:id1,tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -103,25 +103,25 @@
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarGrupoComite()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_GrupoComite.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_GrupoComite.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarGrupoComite()
             {
-                $("#contenedor2").load('Datos/eliminarGrupoComite.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/Comite_Grupo.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -167,14 +167,25 @@
                   <td id="id4"><?php echo $id ?></td>
                   <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Nombre_Grupo_o_comite'] ?></div></td>
 
+<?php
+  if($_SESSION['user_rol'] != 100){
+         echo'         <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
 
-                  <td>
+          </center>
+            </td> ';
+  }  else {
+      
+   echo'       <td>
           <center>
               <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
           </center>
-            </td> 
-
+            </td> ';
+      
+  }
+?>
             <td>
 
             <center>

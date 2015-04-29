@@ -48,7 +48,8 @@ if (isset($_POST['idDepartamento'])) {
  
                  data ={
                         departamento:$("#depto").val(),
-                        id:$("#id").val()
+                        id:$("#id").val(),
+                        tipoProcedimiento:"actualizar"
                     }; 
                 
                 
@@ -72,20 +73,20 @@ if (isset($_POST['idDepartamento'])) {
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarDepartamento()
             {
-                $("#contenedor2").load('Datos/actualizarDepartamento.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Departamentos.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 

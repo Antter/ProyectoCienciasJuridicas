@@ -1,7 +1,6 @@
 <?php
 
-include '../Datos/funciones.php';
-include'../Datos/conexion.php';
+require_once('funciones.php');
 
 if (isset($_POST['IdDepartamento'])) {
     $id = $_POST['IdDepartamento'];
@@ -13,5 +12,5 @@ if (isset($_POST['IdDepartamento'])) {
         echo mensajes('Departamento"' . $id . '" No se puede eliminar', 'rojo');
     }
 }
- include '../Datos/cargarDepartamentos.php';
+
 ?>

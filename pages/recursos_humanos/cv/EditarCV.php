@@ -667,6 +667,12 @@ if (isset($_POST['identi'])) {
     });  
 </script>
 
+<script type="text/javascript" src="pages/recursos_humanos/cv/webcam.min.js"></script>
+<script src="pages/recursos_humanos/cv/app.js"></script>
+
+
+
+
 
 </head>
 
@@ -699,8 +705,9 @@ if (isset($_POST['identi'])) {
 
 ?>
 
-            <h1>Curriculum vitae</h1> <button id="exportar" type="submit" class="btn btn-warning" style="float: right;"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Exportar como PDF</button></br></br></br>
-             <div class="row">
+            <h1>Curriculum vitae</h1> 
+         <div class="row">
+           <div class="col-lg-12">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -709,7 +716,7 @@ if (isset($_POST['identi'])) {
                         </h4>
                     </div>
                     <div class="panel-body">
-                        <div class="col-lg-10">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="col-sm-5 control-label">Número de Identidad: </label>
                                 <div class="col-sm-7 control-label" id="identidadP" value="<?php echo"$id"; ?>" > <?php echo"$id"; ?> </div>
@@ -759,9 +766,24 @@ if (isset($_POST['identi'])) {
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <div class=" col-sm-6 col-md-5  pull-right">
+                            	
+                           
+                                <div class="panel-image thumbnail" id="foto">
+                                    <img src="pages/recursos_humanos/cv/icono-perfil-azul.png"   alt="Responsive image"  class=img-rounded" />
+                                </div>
+                               
+                                 <button id="tomarFoto" type="submit" class="btn btn-warning btn-block" data-toggle="modal" data-target="#fotografia" style="float: right;"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Tomar foto</button>
+                                 <button id="guardar" class="btn btn-success btn-block">Guardar foto</button>
+                        </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
+             </div>
          </div>
 
 
@@ -875,7 +897,7 @@ HTML;
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <label><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Idiomas</label>
-                        <button id="AgregarIDI" type="submit" class="btn btn-primary right-side"  data-toggle="modal" data-target="#agregarIDI"  title="Nuevo idioma"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button id="AgregarIDI" type="submit" class="btn btn-warning right-side"  data-toggle="modal" data-target="#agregarIDI"  title="Nuevo idioma"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -962,7 +984,7 @@ HTML;
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <label><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Formacion academica</label>
-                        <button id="AgregarFA" type="submit" class="btn btn-primary right-side"  data-toggle="modal" data-target="#agregarFAVM"  title="Nueva formacion academica"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button id="AgregarFA" type="submit" class="btn btn-warning right-side"  data-toggle="modal" data-target="#agregarFAVM"  title="Nueva formacion academica"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -1054,7 +1076,7 @@ HTML;
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <label><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Experiencia laboral</label>
-                        <button id="AgregarEL" type="submit" class="btn btn-primary right-side" data-toggle="modal" data-target="#agregarELVM" title="Nueva experiencia laboral"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button id="AgregarEL" type="submit" class="btn btn-warning right-side" data-toggle="modal" data-target="#agregarELVM" title="Nueva experiencia laboral"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -1144,7 +1166,7 @@ HTML;
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <label><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Experiencia Academica</label>
-                        <button id="AgregarEA" type="submit" class="btn btn-primary right-side" data-toggle="modal" data-target="#agregarEAVM"  title="Nueva Experiencia Academica"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button id="AgregarEA" type="submit" class="btn btn-warning right-side" data-toggle="modal" data-target="#agregarEAVM"  title="Nueva Experiencia Academica"  ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                     </h4>
                 </div>
                 <div class="panel-body">
@@ -1241,6 +1263,34 @@ HTML;
       
 </form>
     
+    
+   <div class="modal fade" id="fotografia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Fotografia</h4>
+            </div>
+            <div class="modal-body" id="cuerpofotografia">
+                
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">WebCam</h3>
+                </div>
+                <div class="panel-image hide-panel-body" id="camara">
+                   
+                </div>
+                
+                <div class="panel-footer text-center">
+                   <button onclick="tomarFoto();" class="btn btn-success btn-block">Tomar Fotografia</button>
+               
+                   
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
     
  
     

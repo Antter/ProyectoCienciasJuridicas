@@ -1,6 +1,46 @@
 <!DOCTYPE html>
 <?php
 include ('../../Datos/conexion.php');
+
+$maindir = "../../";
+
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
+  
+    if(isset($_POST["tipoProcedimiento"])){
+    $tipoProcedimiento = $_POST["tipoProcedimiento"];
+    
+    if($tipoProcedimiento == "insertar"){
+       
+    require_once("../../Datos/insertarClase.php");
+    }
+     if($tipoProcedimiento == "actualizar"){
+       
+    require_once("../../Datos/actualizarClase.php");
+    }
+     if($tipoProcedimiento == "eliminar"){
+    require_once("../../Datos/eliminarClase.php");
+    }
+  
+  }
+  
 ?>
 <html>
     <head>
@@ -114,19 +154,19 @@ include ('../../Datos/conexion.php');
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
 
             function llegadaInsertarClases()
             {
-                $("#contenedor2").load('Datos/insertarClase.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Clases.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
             
             function soloLetrasYNumeros(text)

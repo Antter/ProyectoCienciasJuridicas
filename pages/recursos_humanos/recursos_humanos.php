@@ -9,6 +9,7 @@
   else
     {
       $contenido = 'recursos_humanos';
+      $navbar_loc = 'contenido';
     }
 
   require_once($maindir."funciones/check_session.php");
@@ -36,18 +37,18 @@
              <div class="col-sm-3">
 
        <ul class="list-unstyled">
-       <li class="nav-header active"> <a href="#"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
+       <li class="nav-header active"> <a id="recursos_humanos" href="#"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
        <hr>
         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-          <h5><i class="fa fa-user fa-fw"></i>Gestion de perfiles <i class="glyphicon glyphicon-chevron-down"></i></h5>
+          <h5><i class="fa fa-male fa-fw"></i> Gestion de perfiles <i class="glyphicon glyphicon-chevron-down"></i></h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
                 
                      <li>
-                                <a id="personas" href="#">Personas</a>
+                                <a id="personas" href="#"><i class="fa fa-user"></i> Perfiles</a>
                             </li>
                             <li>
-                                <a id="Busqueda" href="#">Busqueda</a>
+                                <a id="Busqueda"  href="#"><i class="glyphicon glyphicon-search"></i> Busquedas</a>
                             </li>
                     
                    
@@ -57,13 +58,13 @@
         
         
         
-             <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu2">
-          <h5><i class="fa fa-user fa-fw"></i>Gestion de Empleados <i class="glyphicon glyphicon-chevron-down"></i></h5>
+             <li class="nav-header"  <?php if($rol <= 44) echo 'style="display: none;"';?>  > <a href="#" data-toggle="collapse" data-target="#userMenu2">
+          <h5><i class="fa fa-user fa-fw"></i> Gestion de Empleados <i class="glyphicon glyphicon-chevron-down"></i></h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu2">
                 
-                <li><a id="empleado" href="#"><i class="glyphicon "></i>Empleados </a></li>
-                <li><a id="gestionGC" href="#"><i class="glyphicon "></i>Gestion de Grupos</a></li>
+                <li><a id="empleado" href="#"><i class="fa fa-suitcase"></i> Empleados </a></li>
+                <li><a id="gestionGC" href="#"><i class="fa fa-users "></i> Gestion de Grupos</a></li>
                 
             </ul>
         </li>
@@ -71,8 +72,8 @@
  
         
         
-        <li class="nav-header" <?php if($rol <= 49) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu4">
-          <h5><i class="fa fa-edit fa-fw"></i>Tablas de mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
+        <li class="nav-header" <?php if($rol <= 44) echo 'style="display: none;"';?> > <a href="#" data-toggle="collapse" data-target="#menu4">
+          <h5><i class="fa fa-cogs fa-fw"></i> Mantenimiento <i class="glyphicon glyphicon-chevron-right"></i></h5>
           </a>
         
             <ul class="list-unstyled collapse" id="menu4">

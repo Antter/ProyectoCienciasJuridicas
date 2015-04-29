@@ -1,7 +1,6 @@
 <?php
 
-include '../Datos/funciones.php';
-include'../Datos/conexion.php';
+  require_once('funciones.php');
 
 if (isset($_POST['IdClase'])) {
     $id = $_POST['IdClase'];
@@ -13,5 +12,5 @@ if (isset($_POST['IdClase'])) {
         echo mensajes('Clase "' . $id . '" No se puede eliminar', 'rojo');
     }
 }
- include '../Datos/cargarClases.php';
+ 
 ?>

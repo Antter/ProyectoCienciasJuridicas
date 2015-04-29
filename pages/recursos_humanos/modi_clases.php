@@ -50,7 +50,8 @@ if (isset($_POST['idClase'])) {
  
                  data ={
                         clase:$("#clase").val(),
-                        id:$("#id").val()
+                        id:$("#id").val(),
+                        tipoProcedimiento:"actualizar"
                     }; 
                 
                 
@@ -74,20 +75,20 @@ if (isset($_POST['idClase'])) {
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarClase()
             {
-                $("#contenedor2").load('Datos/actualizarClase.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Clases.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 

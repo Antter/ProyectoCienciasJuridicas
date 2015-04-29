@@ -11,8 +11,4 @@ $(document).ready(function() {
 	$('#cargas_logs').on("click",function(){
 	    $('#usuariosLog').load("pages/administracion/cargarLogs.php");
 	});
-	
-	$('#cargas_Roles').on("click",function(){
-	    $('#usuariosLog').load("pages/administracion/Roles.php");
-	});
 });

@@ -55,7 +55,7 @@
    function eliminarTipoEstudio(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data1 ={ TipoEstudio:id1};
+             data1 ={ TipoEstudio:id1, tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -109,19 +109,19 @@
             
              function llegadaEditarTipoEstudio()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_TipoEstudio.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_TipoEstudio.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarTipoEstudio()
             {
-                $("#contenedor2").load('Datos/eliminarTipoEstudio.php',data1);
+                $("#contenedor").load('pages/recursos_humanos/Tipo_Estudio.php',data1);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -167,14 +167,30 @@
                   <td id="id4"><?php echo $id ?></td>
                   <td><div class="text" id="npais-<?php echo $id ?>"><?php echo $row['Tipo_estudio'] ?></div></td>
 
+<?php
 
-                  <td>
+if($_SESSION['user_rol'] != 100){
+      echo'            <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
+
+          </center>
+            </td> ';
+}else{
+    
+   echo '      <td>
           <center>
               <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
           </center>
-            </td> 
+            </td> ';
+    
+    
+}
+    
+                          
 
+ ?>                         
             <td>
 
             <center>

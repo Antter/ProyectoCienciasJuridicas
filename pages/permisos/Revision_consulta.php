@@ -144,7 +144,8 @@ if( $fechai!="" and $fechaf!=""){
 
 
 <head>
-	<meta charset="utf-8">
+	<!--<meta charset="utf-8">-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -172,7 +173,7 @@ if( $fechai!="" and $fechaf!=""){
 								<!--<th><strong>Segundo Nombre</strong></th>
 								<th><strong>Primer Apellido</strong></th>
 								<th><strong>Segundo Apellido</strong></th>-->
-								<th><strong>Días</strong></th>
+								<th><strong>Dias</strong></th>
 								<th><strong>Fecha Solicitud</strong></th>
 								<th><strong>Hora Inicio Nombre</strong></th>
 								<th><strong>Hora Finalización</strong></th>												
@@ -238,7 +239,7 @@ HTML;
                 if($estado=="Aprobado"){
 				echo<<<HTML
 				<td><center>
-					<button class="btn btn-default pull-right" data-mode="verPDF" data-id=$idP href="#">ExportarPDF</button>
+					<button class="btn btn-default pull-right" data-mode="verPDFE" data-id=$idP href="#">ExportarPDF</button>
                 </center></td>
 HTML;
 				}else{echo <<<HTML
@@ -272,7 +273,7 @@ $( document ).ready(function() {
 	$(".btn-default").on('click',function(){
           mode = $(this).data('mode');
           id1 = $(this).data('id');
-          if(mode == "verPDF"){
+          if(mode == "verPDFE"){
            
 			data={
             id1:id1

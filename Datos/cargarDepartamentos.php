@@ -38,7 +38,7 @@
    function eliminarDepartamento(){
         var respuesta=confirm("¿Esta seguro de que desea eliminar el registro seleccionado?");
         if (respuesta){  
-             data ={ IdDepartamento:id};
+             data ={ IdDepartamento:id, tipoProcedimiento:"eliminar"};
     
     $.ajax({
         async:true,
@@ -78,25 +78,25 @@
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarDepartamento()
             {
-                $("#contenedor2").load('pages/recursos_humanos/modi_departamento.php',data);
+                $("#contenedor").load('pages/recursos_humanos/modi_departamento.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function llegadaEliminarDepartamento()
             {
-                $("#contenedor2").load('Datos/eliminarDepartamento.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Departamentos.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
@@ -145,14 +145,24 @@ $('#tablaDepartamento').dataTable(); // example es el id de la tabla
                   <td><div class="text" id="nombre-<?php echo $id ?>"><?php echo $row['nombre_departamento'] ?>
                       </div></td>
 
+<?php
+     if($_SESSION['user_rol'] != 100){
+        echo'          <td>
+          <center>
+              <button class="elimina btn btn-danger glyphicon glyphicon-trash" disabled="TRUE"></button>
 
-                  <td>
+          </center>
+            </td> ';
+     }  else {
+       echo '    <td>
           <center>
               <button class="elimina btn btn-danger glyphicon glyphicon-trash"></button>
 
           </center>
-            </td> 
-
+            </td> ';
+         
+     }
+?>
             <td>
 
             <center>

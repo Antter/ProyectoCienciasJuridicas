@@ -1,4 +1,27 @@
 <?php
+include ('../../Datos/conexion.php');
+ 
+ $maindir = "../../";
+ 
+if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'permisos';
+    }
+
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+
 require_once("../../conexion/conn.php");  
 
 $conexion = mysqli_connect($host, $username, $password, $dbname);
@@ -77,8 +100,8 @@ HTML;
 				
                 <td>$dedificio</td>
 				
-				  <td><center>
-                    <button name="Edificio_ID"  class="elimina btn btn-danger glyphicon glyphicon-edit"> </button>
+				<td><center>
+                    <a class="open-Modal btn btn-primary" data-toggle="modal" data-id=$idE data-target="#compose-modal"><i class="fa fa-edit"></i></a>
                 </center></td>
   
 HTML;
@@ -101,10 +124,52 @@ HTML;
 			</div>								
 	</div>									
 	
-</body>
-
+ <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	  <form role="form" id="form" name="form" action="#">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Editando Motivo</h4>
+      </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <div class="input-group">
+                              <div class="input-group">
+								  <input id="idedificio" type="hidden" class="form-control" value = ""  required>
+                                  <input id="descripcione" type="text" class="form-control" placeholder="Nombre del Edificio"    required>
+                                  <span class="input-group-btn">
+									<button id="editaE" class="editaE btn btn-danger glyphicon glyphicon-edit"> </button>
+                                      <!--<button id="guardarJ" class="guardarJ btn btn-primary" type="button">Finalizar</button>-->
+                                  </span>
+                              </div>
+                           
+                        
+                      </div>   
+                       
+                  </div>
+                  
+              </div>
+           <!--  <div class="modal-footer clearfix">
+            <button name="submit" id="submit" class="insertarbg btn btn-primary pull-left"><i class="glyphicon glyphicon-pencil"></i> Insertar</button>
+          </div>
+           -->
+                
+                    
+          </form>
+    
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div> 
+	
 
 <script>
+$(document).on("click", ".open-Modal", function () {
+	id = $(this).parents("tr").find("td").eq(0).html();
+	var myDNI = $(this).data('id');
+	$(".modal-body #idedificio").val(myDNI);
+});
+
  var id;
  var data;
  var x;
@@ -117,7 +182,7 @@ HTML;
         x.click(consultaEdificio);
         
         var x;
-        x=$(".elimina");
+        x=$("#editaE");
         x.click(editarEdificio);
 	}
 	
@@ -145,13 +210,13 @@ HTML;
     }
 	
 	function editarEdificio(){
-		var id = $(this).parents("tr").find("td").eq(0).html();
+		//var id = $(this).parents("tr").find("td").eq(0).html();
 		var respuesta=confirm("¿Esta seguro de que desea cambiar el registro seleccionado?");
         if (respuesta){  
-			data = {Edificio_ID:id, dedificio:$('#nmedificio').val()};
+			data = {Edificio_ID:$('#idedificio').val(), dedificio:$('#descripcione').val()};
 			$.ajax({
 				async:true,
-				type: "POST",
+				type: "GET",
 				dataType: "html",
 				data:data,
 				contentType: "application/x-www-form-urlencoded",
@@ -190,6 +255,8 @@ HTML;
 
 	
 </script>
+
+</body>
 
 </html>	
 											

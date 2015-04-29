@@ -1,5 +1,5 @@
 <?php
-        include '../Datos/conexion.php';
+        
 	require_once('funciones.php');
 
 	If(isset($_POST['id'])){
@@ -17,5 +17,5 @@
 
 	}
         
-       include '../Datos/cargarClases.php';
+       
 ?>

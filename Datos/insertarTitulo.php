@@ -1,7 +1,6 @@
 <?php
 
-$root = \realpath($_SERVER["DOCUMENT_ROOT"]);
-include "$root\sistemaCienciasJuridicas\Datos\Conexion.php";
+require_once('funciones.php');
 
 
 
@@ -12,6 +11,21 @@ if (isset($_POST['titulo'])) {
     $query = "INSERT INTO titulo(titulo) VALUES('$nombre1')";
 
     mysql_query($query);
-}
-include "$root\sistemaCienciasJuridicas\Datos\cargarTitulos.php";
+    
+    	
+	if($query){
+	
+		//echo '<META HTTP-EQUIV="REFRESH" CONTENT="2">' ;
+		echo mensajes('Actualizado con Exito','verde');
+	
+	
+	
+	}else{}
+	
+	
+
+	
+	}
+    
+
 ?>

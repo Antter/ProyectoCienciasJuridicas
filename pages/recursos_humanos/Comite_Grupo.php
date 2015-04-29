@@ -1,5 +1,49 @@
 <?php
  include ('../../Datos/conexion.php');
+ 
+ $maindir = "../../";
+
+  if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'recursos_humanos';
+    }
+    
+   
+  require_once($maindir."funciones/check_session.php");
+
+  require_once($maindir."funciones/timeout.php");
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
+  
+  
+  
+  
+  
+    if(isset($_POST["tipoProcedimiento"])){
+    $tipoProcedimiento = $_POST["tipoProcedimiento"];
+    
+    if($tipoProcedimiento == "insertar"){
+       
+    require_once("../../Datos/insertarComite.php");
+    }
+     if($tipoProcedimiento == "actualizar"){
+       
+    require_once("../../Datos/actualizarGrupoComite.php");
+    }
+     if($tipoProcedimiento == "eliminar"){
+    require_once("../../Datos/eliminarGrupoComite.php");
+    }
+  
+  }
+  
 
 ?>
 
@@ -113,19 +157,19 @@ and open the template in the editor.
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
 
             function llegadaInsertarComite()
             {
-                $("#contenedor2").load('Datos/insertarComite.php', data);
+                $("#contenedor").load('pages/recursos_humanos/Comite_Grupo.php', data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
             
             

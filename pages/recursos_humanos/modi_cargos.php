@@ -51,7 +51,8 @@ if (isset($_POST['idCargo'])) {
     
                  data ={
                         cargo:$("#cargo").val(),
-                        idCargo:$("#id").val()
+                        idCargo:$("#id").val(),
+                        tipoProcedimiento:"actualizar"
                     }; 
                 
                 
@@ -75,20 +76,20 @@ if (isset($_POST['idCargo'])) {
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarCargo()
             {
-                $("#contenedor2").load('Datos/actualizarCargos.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Cargos.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 

@@ -55,7 +55,8 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
               
                  data ={
                         pais:$("#pais2").val(),
-                        codigo:$("#codigo2").val()
+                        codigo:$("#codigo2").val(),
+                        tipoProcedimiento:"actualizar"
                     }; 
                 
                 
@@ -107,19 +108,19 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarPais()
             {
-                $("#contenedor2").load('Datos/actualizarPais.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Pais.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
             
               function cancelareditarP()
             {
-                $("#contenedor").load('pages/recursos_humanos/Pais.php',data);
+                $("#contenedor").load('pages/recursos_humanos/Pais.php');
                 //$("#contenedor").load('../cargarPOAs.php');
             }
          

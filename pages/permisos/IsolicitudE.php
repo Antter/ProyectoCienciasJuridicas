@@ -24,8 +24,8 @@ $result2 = mysqli_query($link, "SELECT Id_departamento_laboral FROM departamento
 $result3 = mysqli_query($link, "SELECT Motivo_ID FROM motivos  where descripcion='".$motivo."'");
 $result5 = mysqli_query($link, "SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') as fecha_slctd");
 
-$consult = mysqli_query($link, "SELECT No_Empleado FROM usuario  where id_Usuario='$idusuario'");
-$row2 = mysqli_fetch_array($consult);
+//$consult = mysqli_query($link, "SELECT No_Empleado FROM usuario  where id_Usuario='$idusuario'");
+//$row2 = mysqli_fetch_array($consult);
 
 //se obtiene la fecha para validar que no hayan solicitudes con misma fecha para un usuario
 $fquery = mysqli_query($link, "select fecha_solicitud, DATE_FORMAT(fecha, '%Y-%m-%d') as fecha from permisos where permisos.No_Empleado='".$idEmpleado."' and permisos.estado = 'En espera'");
@@ -70,18 +70,27 @@ $fecha_solic = mysqli_fetch_array($result5);
 	)";
 	//se ejecuta la consulta de insercion y se verifica si se ha realizado o si ha fallado
 	
-	if($fecha_solic['fecha_slctd']==$frow['fecha_solicitud']){
-		echo "Solamente puede realizar una solicitud por día";
-	}else{
-		if($fecha == $frow['fecha']){
-			echo "Ya tiene una solicitud de permiso con la fecha ingresada";
-		}else{ 
-			$result4 = mysqli_query($link, $query) or die("Error " . mysqli_error($link));
-			
-			if ($result4 = 1) {
-				echo "Solicitud ingresada Exitosamente";
+	$result6 = mysqli_query($link, "SELECT DATE_FORMAT(fecha, '%Y-%m-%d') as fecha from permisos where fecha between DATE_SUB(DATE_FORMAT('".$fecha."', '%Y-%m-%d'), INTERVAL '".$cantidad."' DAY) 
+							and DATE_ADD(DATE_FORMAT('".$fecha."', '%Y-%m-%d'), INTERVAL '".$cantidad."' DAY) and No_Empleado = '".$idEmpleado."'");
+	
+	$field_cnt = $result6->field_count;
+	
+	if($field_cnt >= 0){
+		if($fecha_solic['fecha_slctd']==$frow['fecha_solicitud']){
+			echo "Solamente puede realizar una solicitud por día";
+		}else{
+			if($fecha == $frow['fecha']){
+				echo "Ya tiene una solicitud de permiso con la fecha ingresada";
+			}else{ 
+				$result4 = mysqli_query($link, $query) or die("Error " . mysqli_error($link));
+				
+				if ($result4 = 1) {
+					echo "Solicitud ingresada Exitosamente";
+				}
 			}
 		}
+	}else{
+		echo "Hay traslape de fechas con una solicitud previa";
 	}
 	
     mysqli_close($link); //Cierra la conexión con la base de datos

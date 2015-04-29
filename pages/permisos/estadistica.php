@@ -1,14 +1,27 @@
 
 <?php
-
-  $maindir = "../../";
-
-
+require_once("../../conexion/conn.php");
+ 
+ $maindir = "../../";
+ 
+if(isset($_GET['contenido']))
+    {
+      $contenido = $_GET['contenido'];
+    }
+  else
+    {
+      $contenido = 'permisos';
+    }
 
   require_once($maindir."funciones/check_session.php");
 
   require_once($maindir."funciones/timeout.php");
- 	require_once("../../conexion/conn.php");  
+  
+   if(!isset( $_SESSION['user_id'] ))
+  {
+    header('Location: '.$maindir.'login/logout.php?code=100');
+    exit();
+  }
 	$conexion = mysqli_connect($host, $username, $password, $dbname);
 ?>
 <!DOCTYPE html>

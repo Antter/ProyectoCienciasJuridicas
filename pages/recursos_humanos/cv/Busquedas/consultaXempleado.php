@@ -116,6 +116,13 @@ require_once('../../../../Datos/conexion.php');
     $RB=mysql_query($query);
     }
     
+       if(isset($_POST['clase'])){
+        $clase=$_POST['clase'];
+        $query = "Select No_Empleado,persona.N_identidad,Primer_nombre,Primer_apellido from persona inner join empleado on empleado.N_identidad = persona.N_identidad where persona.N_identidad in (Select N_identidad from experiencia_academica where ID_Experiencia_academica in (select ID_Experiencia_academica from clases_has_experiencia_academica inner join clases on clases.ID_Clases=clases_has_experiencia_academica.ID_Clases where Clase ='$clase')) and persona.N_identidad in (SELECT N_identidad from empleado where estado_empleado='1')";
+
+        $RB=mysql_query($query);
+    }
+    
     
 
     

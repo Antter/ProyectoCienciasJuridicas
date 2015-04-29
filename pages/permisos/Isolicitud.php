@@ -71,19 +71,30 @@ $fecha_solic = mysqli_fetch_array($result5);
 	)";
 	//se ejecuta la consulta de insercion y se verifica si se ha realizado o si ha fallado
 	
-	if($fecha_solic['fecha_slctd']==$frow['fecha_solicitud']){
-		echo "Solamente puede realizar una solicitud por día";
-	}else{
-		if($fecha == $frow['fecha']){
-			echo "Ya tiene una solicitud de permiso con la fecha ingresada";
-		}else{ 
-			$result4 = mysqli_query($link, $query) or die("Error " . mysqli_error($link));
-			
-			if ($result4 = 1) {
-				echo "Solicitud ingresada Exitosamente";
+	$result6 = mysqli_query($link, "SELECT DATE_FORMAT(fecha, '%Y-%m-%d') as fecha from permisos where fecha between DATE_SUB(DATE_FORMAT('".$fecha."', '%Y-%m-%d'), INTERVAL '".$cantidad."' DAY) 
+							and DATE_ADD(DATE_FORMAT('".$fecha."', '%Y-%m-%d'), INTERVAL '".$cantidad."' DAY) and No_Empleado = '".$row2['No_Empleado']."'");
+	
+	$field_cnt = $result6->field_count;
+	 
+	if($field_cnt >= 0){
+		if($fecha_solic['fecha_slctd']==$frow['fecha_solicitud']){
+			echo "Solamente puede realizar una solicitud por día";
+		}else{
+			if($fecha == $frow['fecha']){
+				echo "Ya tiene una solicitud de permiso con la fecha ingresada";
+			}else{ 
+				$result4 = mysqli_query($link, $query) or die("Error " . mysqli_error($link));
+				
+				if ($result4 = 1) {
+					echo "Solicitud ingresada Exitosamente";
+				}
 			}
 		}
+	}else{
+		echo "Hay traslape de fechas con una solicitud previa";
 	}
+	
+	
 	
     mysqli_close($link); //Cierra la conexión con la base de datos
 

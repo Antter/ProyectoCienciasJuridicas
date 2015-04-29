@@ -99,7 +99,7 @@ HTML;
 HTML;
                 
               }
-              if($rol >= 10){
+              if($rol >= 40){
              // pagina del recursos humanos
             if($contenido == 'recursos_humanos') 
               {
@@ -118,7 +118,7 @@ HTML;
 HTML;
               }
               }	  
-        if($rol >= 40){
+        if($rol >= 0){
              // pagina del modulo de gestion de folios
             if($contenido == 'gestion_de_folios') 
               {

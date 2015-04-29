@@ -72,7 +72,8 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
               
                  data ={nombre2:$("#nombre2").val(),
                         pais2:$("#pais2").val(),
-                        codigo:$("#codigo").val()
+                        codigo:$("#codigo").val(),
+                        tipoProcedimiento:"actualizar"
                     }; 
                 
                 
@@ -123,26 +124,21 @@ mysql_select_db("sistema_ciencias_juridicas"); -->
 
             function inicioEnvio()
             {
-                var x = $("#contenedor2");
+                var x = $("#contenedor");
                 x.html('Cargando...');
             }
             
              function llegadaEditarUni()
             {
-                $("#contenedor2").load('Datos/actualizarUniversidad.php',data);
-                //$("#contenedor").load('../cargarPOAs.php');
-            }
-            
-              function llegadaEditarUni()
-            {
                 $("#contenedor").load('pages/recursos_humanos/universidades.php',data);
                 //$("#contenedor").load('../cargarPOAs.php');
             }
-         
+            
+          
 
             function problemas()
             {
-                $("#contenedor2").text('Problemas en el servidor.');
+                $("#contenedor").text('Problemas en el servidor.');
             }
 
 
