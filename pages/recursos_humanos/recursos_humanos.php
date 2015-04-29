@@ -39,10 +39,10 @@
              <div class="col-sm-3">
 
        <ul class="list-unstyled">
-       <li class="nav-header active"> <a id="recursos_humanos" href="#"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
+       <li class="nav-header active"> <a id="Recursos_humanos" href="#"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
        <hr>
         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-          <h5><i class="fa fa-male fa-fw"></i> Gestion de perfiles <i class="glyphicon glyphicon-chevron-down"></i></h5>
+          <h5><i class="fa fa-male fa-fw"></i> Gestión de perfiles <i class="glyphicon glyphicon-chevron-down"></i></h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu">
                 
@@ -50,7 +50,7 @@
                                 <a id="personas" href="#"><i class="fa fa-user"></i> Perfiles</a>
                             </li>
                             <li>
-                                <a id="Busqueda"  href="#"><i class="glyphicon glyphicon-search"></i> Busquedas</a>
+                                <a id="Busqueda"  href="#"><i class="glyphicon glyphicon-search"></i> Búsqueda</a>
                             </li>
                     
                    
@@ -61,12 +61,12 @@
         
         
              <li class="nav-header"  <?php if($rol <= 44) echo 'style="display: none;"';?>  > <a href="#" data-toggle="collapse" data-target="#userMenu2">
-          <h5><i class="fa fa-user fa-fw"></i> Gestion de Empleados <i class="glyphicon glyphicon-chevron-down"></i></h5>
+          <h5><i class="fa fa-user fa-fw"></i> Gestión de Empleados <i class="glyphicon glyphicon-chevron-down"></i></h5>
           </a>
             <ul class="list-unstyled collapse in" id="userMenu2">
                 
                 <li><a id="empleado" href="#"><i class="fa fa-suitcase"></i> Empleados </a></li>
-                <li><a id="gestionGC" href="#"><i class="fa fa-users "></i> Gestion de Grupos</a></li>
+                <li><a id="gestionGC" href="#"><i class="fa fa-users "></i> Gestión de Grupos</a></li>
                 
             </ul>
         </li>
@@ -95,7 +95,7 @@
                 </li>
                   <li><a id="pais" href="#">Paises</a>
                 </li>
-                  <li><a id="titulo" href="#">Titulo</a>
+                  <li><a id="titulo" href="#">Título</a>
                 </li>
 		
                 
@@ -114,14 +114,12 @@
 
 
                         <div class="col-lg-12">
-                            <h1 class="page-header">Gestion Curricular</h1>
+                            <h1 class="page-header"><strong>Gestión Curricular</strong></h1>
                         </div>
                           
 
                           
-                        <div class="panel-heading">
-                            Por favor seleccione en la barra lateral que datos desea ingresar.
-                        </div>
+                        
                           
                <div id="wrapper">
                    
@@ -291,10 +289,17 @@
         x = $("#Busqueda");
         x.click(busqueda);
         
+        
+          
+        
   
                 
                 
             }
+            
+            
+        
+            
             function idiomas()
             {
                 $.ajax({
@@ -520,6 +525,10 @@
                 var x = $("#contenedor");
                 x.html('Cargando...');
             }
+            
+            
+           
+            
 
             function llegadaClases()
             {

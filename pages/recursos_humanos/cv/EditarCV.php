@@ -97,11 +97,11 @@ if (isset($_POST['identi'])) {
 }
 ?>
         
- <html lang="es">      
+ <html>      
 
 <head>
     
-    <meta charset="utf-8">
+    
     
     <script>
     $(document).ready(function(){
@@ -743,7 +743,7 @@ if (isset($_POST['identi'])) {
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-5 control-label">Nacionalidad: </label>
-                                <div class="col-sm-7 control-label"> <?php echo utf8_encode($nacionalidad); ?></div>
+                                <div class="col-sm-7 control-label"> <?php echo $nacionalidad; ?></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-5 control-label"><strong>Fecha de Nacimiento</strong></label>
@@ -768,7 +768,7 @@ if (isset($_POST['identi'])) {
                         </div>
                         
                         <div class="row">
-                            <div class=" col-sm-6 col-md-5  pull-right">
+                            <div class=" col-sm-6 col-md-4  pull-right">
                             	
                            
                                 <div class="panel-image thumbnail" id="foto">
