@@ -73,18 +73,18 @@
 ?>
 
       <div class="box-header">
-        <h3 class="box-title">Mantenimiento de la tabla organizacion <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
+        <h3 class="box-title">Mantenimiento de la tabla organización <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
       </div><!-- /.box-header -->
 
       <div class="box-body table-responsive">
       <table id="tabla_organizacion" class='table table-bordered table-striped'>
         <thead>
             <tr>
-              <th>IDOrganizacion</th>
-              <th>NombreOrganizacion</th>
-              <th>Ubicacion</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>IDOrganización</th>
+              <th>NombreOrganización</th>
+              <th>Ubicación</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -120,18 +120,18 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
 	  <form role="form" id="form" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva organizacion</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva organización</h4>
       </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Nombre de la organizacion</span>
+                <span class="input-group-addon">Nombre de la organización</span>
                 <input name="NombreOrganizacion" id="Insertar_NombreOrganizacion" type="text" class="form-control" placeholder="NombreOrganizacion" maxlength="50" required>
               </div>
             </div>
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Ubicacion</span>
+                <span class="input-group-addon">Ubicación</span>
                 <input name="Ubicacion" id="Insertar_Ubicacion" type="text" class="form-control" placeholder="Ubicacion" maxlength="250" required>
               </div>
             </div>       

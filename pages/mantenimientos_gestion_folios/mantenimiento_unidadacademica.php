@@ -73,18 +73,18 @@
 ?>
 
       <div class="box-header">
-        <h3 class="box-title">Mantenimiento de la tabla Unidad Academica <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
+        <h3 class="box-title">Mantenimiento de la tabla Unidad Académica <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
       </div><!-- /.box-header -->
 
       <div class="box-body table-responsive">
       <table id="tabla_unidadacademica" class='table table-bordered table-striped'>
         <thead>
             <tr>
-              <th>Id_UnidadAcademica</th>
-              <th>NombreUnidadAcademica</th>
-              <th>UbicacionUnidadAcademica</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>Id_UnidadAcadémica</th>
+              <th>NombreUnidadAcadémica</th>
+              <th>UbicacionUnidadAcadémica</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -120,18 +120,18 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
 	  <form role="form" id="form" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Unidad Academica</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Unidad Académica</h4>
       </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Nombre de la Unidad Academica</span>
+                <span class="input-group-addon">Nombre de la Unidad Académica</span>
                 <input name="NombreUnidadAcademica" id="Insertar_NombreUnidadAcademica" type="text" class="form-control" placeholder="NombreUnidadAcademica" maxlength="50" required>
               </div>
             </div>
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Ubicacion de la Unidad Academica</span>
+                <span class="input-group-addon">Ubicacion de la Unidad Académica</span>
                 <input name="UbicacionUnidadAcademica" id="Insertar_UbicacionUnidadAcademica" type="text" class="form-control" placeholder="UbicacionUnidadAcademica" maxlength="250" required>
               </div>
             </div>       

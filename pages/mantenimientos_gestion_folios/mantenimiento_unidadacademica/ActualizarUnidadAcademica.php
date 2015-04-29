@@ -57,10 +57,10 @@
 	<table border="1" class='table table-bordered table-hover'>
         <thead>
             <tr>
-                <th>ID_UnidadAcademica</th>
-                <th>NombreUnidadAcademica</th>
-                <th>UbicacionUnidadAcademica</th>
-				<th>Actualizacion</th>
+                <th>ID_UnidadAcadémica</th>
+                <th>NombreUnidadAcadémica</th>
+                <th>UbicaciónUnidadAcadémica</th>
+				<th>Actualización</th>
                 <th>Cancelar</th>				
             </tr>
         </thead>

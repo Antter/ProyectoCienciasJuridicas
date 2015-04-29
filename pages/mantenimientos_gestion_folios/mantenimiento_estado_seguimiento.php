@@ -81,9 +81,9 @@
         <thead>
             <tr>
               <th>Id_Estado_Seguimiento</th>
-              <th>DescripcionEstadoSeguimiento</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>DescripciónEstadoSeguimiento</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -123,7 +123,7 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
           <div class="modal-body">
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Descripcion del Estado de Seguimiento</span>
+                <span class="input-group-addon">Descripción del Estado de Seguimiento</span>
                 <input name="DescripcionEstadoSeguimiento" id="Insertar_DescripcionEstadoSeguimiento" type="text" class="form-control" placeholder="DescripcionEstadoSeguimiento" maxlength="50" required>
               </div>
             </div>            

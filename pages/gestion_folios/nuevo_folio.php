@@ -91,15 +91,15 @@ require_once("datos/datos_nuevo_folio.php");
                                 <div class="stepwizard-row setup-panel">
                                     <div class="stepwizard-step">
                                         <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-                                        <p>Datos generales</p>
+                                        <p>Datos Generales</p>
                                     </div>
                                     <div class="stepwizard-step">
                                         <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-                                        <p>Datos de almacenamiento</p>
+                                        <p>Datos de Almacenamiento</p>
                                     </div>
                                     <div class="stepwizard-step">
                                         <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                        <p>Datos del seguimiento</p>
+                                        <p>Datos del Seguimiento</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,10 +108,10 @@ require_once("datos/datos_nuevo_folio.php");
                                 <div class="row setup-content" id="step-1">
                                     <div class="col-xs-12">
                                         <div class="col-md-12">
-                                            <h3> Datos generales</h3>
+                                            <h3> Datos Generales</h3>
 											<div class="form-group">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"style="width: 200px"><strong>Numero del folio</strong></span>
+                                                    <span class="input-group-addon"style="width: 200px"><strong>Número del folio</strong></span>
                                                     <input type="text" name="NroFolio" class="form-control" style="width: 550px" required="required" id="NroFolio" placeholder="Folio" maxlength="25">
                                                 </div>	
                                             </div>
@@ -141,10 +141,10 @@ require_once("datos/datos_nuevo_folio.php");
                                                 </div>
                                             </div>
 											<div class="form-group">
-								                <label>Categoria del folio</label>
+								                <label>Categoría del folio</label>
                                                 <div class="input-group">
                                                     <select id="Categoria" class="form-control" width="420" style="width: 420px" name="Categoria">
-                                                        <option value=-1> -- Seleccione la categoria del folio -- </option>
+                                                        <option value=-1> -- Seleccione la categoría del folio -- </option>
                                                         <?php while($filas = mysqli_fetch_assoc($result6)) { ?>
                                                         <option value="<?php echo $filas["Id_categoria"];?>"><?php echo $filas["NombreCategoria"];?></option><?php } mysqli_free_result($result6); mysqli_close($conexion); ?>
 											        </select>
@@ -163,13 +163,13 @@ require_once("datos/datos_nuevo_folio.php");
                                     <div class="col-xs-12">
                                         <div class="col-md-12">
                                             <h3> Datos de almacenamiento</h3>
-											<h3 >Selecciones una organizacion o una unidad academica</h3>
+											<h3 >Selecciones una organización o una unidad académica</h3>
 										        <div class="col-sm-12">
 											        <div class="col-sm-6">
 										                <div class="form-group">
                                                             <div class="input-group">
                                                                 <select id="Organizacion" class="form-control"name="Organizacion" >
-                                                                    <option value=-1> -- Organizacion -- </option>
+                                                                    <option value=-1> -- Organización -- </option>
                                                                     <?php while($filas = mysqli_fetch_assoc($result2)) { ?>
                                                                     <option value="<?php echo $filas["Id_Organizacion"];?>"><?php echo $filas["NombreOrganizacion"];?></option><?php } mysqli_free_result($result2); ?>
 														        </select>
@@ -180,7 +180,7 @@ require_once("datos/datos_nuevo_folio.php");
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 <select id="unidadAcademica" class="form-control" name="unidadAcademica">
-                                                                    <option value=-1> -- Unidad Academica -- </option>>
+                                                                    <option value=-1> -- Unidad Académica -- </option>>
                                                                     <?php while($filas = mysqli_fetch_assoc($result1)) { ?>
                                                                     <option value="<?php echo $filas["Id_UnidadAcademica"];?>"><?php echo $filas["NombreUnidadAcademica"];?></option><?php } mysqli_free_result($result); ?>
 														        </select>
@@ -191,15 +191,15 @@ require_once("datos/datos_nuevo_folio.php");
 										        </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <span class="input-group-addon"><strong>Descripcion</strong></span>
+                                                        <span class="input-group-addon"><strong>Descripción</strong></span>
                                                         <textarea id="Descripcion" class="form-control" name="Descripcion" required="required" rows="3" maxlength="300" placeholder="Ingrese una descripcion..."></textarea>
                                                     </div>
                                                 </div>
 												<div class="form-group">
-											        <label>Ubicacion fisica del folio</label>
+											        <label>Ubicación física del folio</label>
                                                         <div class="input-group">          
                                                             <select id="ubicacionFisica"class="form-control" width="420" style="width: 420px" name="ubicacionFisica">
-                                                                <option value=-1> -- Seleccione la ubicacion fisica -- </option>
+                                                                <option value=-1> -- Seleccione la ubicación física -- </option>
                                                                 <?php while($filas = mysqli_fetch_assoc($result3)) { ?>
                                                                 <option value="<?php echo $filas["Id_UbicacionArchivoFisico"];?>"><?php echo $filas["DescripcionUbicacionFisica"];?></option><?php } mysqli_free_result($result3); ?>
 												            </select>

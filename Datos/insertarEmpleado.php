@@ -35,7 +35,7 @@
              
              
                 
-         if($identi==$rec3['N_identidad']){        
+         if($identi===$rec3['N_identidad']){        
  
              
              
@@ -46,7 +46,7 @@
              
              
              
-	$query= mysql_query("INSERT INTO empleado(`No_Empleado`,`N_identidad`,`Id_departamento`,`Fecha_ingreso`,`Observacion`,`estado_empleado`,`foto_perfil`) VALUES ('$no_empleado','$identi','$id_dep','$fecha','$obs','1','null')");
+	$query= mysql_query("INSERT INTO empleado(`No_Empleado`,`N_identidad`,`Id_departamento`,`Fecha_ingreso`,`Observacion`,`estado_empleado`) VALUES ('$no_empleado','$identi','$id_dep','$fecha','$obs','1')");
 	
 	
 	if($query){

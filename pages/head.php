@@ -40,7 +40,7 @@ require_once($maindir."funciones/timeout.php");
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
-        <title>Sistema ciencias juridicas</title>
+        <title>Sistema Ciencias Jurídicas</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
@@ -96,7 +96,7 @@ require_once($maindir."funciones/timeout.php");
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Facultad de ciencias juridicas</a>
+      <a class="navbar-brand" href="#">Facultad de Ciencias Jurídicas</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
@@ -104,7 +104,7 @@ require_once($maindir."funciones/timeout.php");
 		    if($rol == 100){
 			                  echo <<<HTML
             <li class="dropdown">
-            <a role="button" href="javascript:ajax_('pages/administracion/admin.php');"><i class="fa fa-cogs"></i> Administracion</a>
+            <a role="button" href="javascript:ajax_('pages/administracion/admin.php');"><i class="fa fa-cogs"></i> Administración</a>
             </li>
 HTML;
 		    }

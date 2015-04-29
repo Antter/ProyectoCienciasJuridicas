@@ -1,7 +1,6 @@
 <?php
 
-include'../Datos/conexion.php';
-include '../Datos/funciones.php';
+require_once('funciones.php');
 
 
 $enlace = mysql_connect('localhost', 'root', '');
@@ -27,6 +26,5 @@ if (isset($_POST['codigoE'])) {
     }
 }
 
-include '../Datos/cargarEmpleados.php';
 
 ?>

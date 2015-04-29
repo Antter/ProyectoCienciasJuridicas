@@ -48,7 +48,7 @@
                     <div class="mailbox row">
                         <div class="col-xs-12">
 						    <a class="btn btn-primary" data-mode="cancelar"><i class="fa fa-check-square"></i> Seguimientos Finalizados</a>
-					        <a class="btn btn-primary" data-mode="cancelar1"><i class="fa fa-binoculars"></i> Seguimientos Sin Finalizados</a>
+					        <a class="btn btn-primary" data-mode="cancelar1"><i class="fa fa-binoculars"></i> Seguimientos Sin Finalizar</a>
                             <div class="box box-solid">
                                 <div class="box-body">
                                     <div class="row">

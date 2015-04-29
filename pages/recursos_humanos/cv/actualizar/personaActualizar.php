@@ -166,7 +166,7 @@ session_start();
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-5 control-label">Segundo nombre</label>
-                                                            <div class="col-sm-7"><input id="segundoNombre" class="form-control" name="segundoNombre" value=" <?php echo "$sNombre";?>" ></div>
+                                                            <div class="col-sm-7"><input id="segundoNombre" class="form-control" name="segundoNombre" value="<?php echo "$sNombre";?>" ></div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-5 control-label"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Primer Apellido</label>

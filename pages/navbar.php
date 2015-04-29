@@ -21,9 +21,9 @@
             <!--
             <li class="active"><a href="javascript:ajax_('home.php');">Inicio</a></li>
             <li><a role="button" href="javascript:void(0)" >Modulo 1</a></li>
-            <li><a role="button" href="javascript:void(0)" >Gestion de proyectos</a></li>
+            <li><a role="button" href="javascript:void(0)" >Gestión de proyectos</a></li>
             <li><a role="button" href="javascript:void(0)" >Recursos humanos</a></li>
-            <li><a role="button" href="javascript:ajax_('gestion_folios/gestion_de_folios.php?contenido=gestion_de_folios');">Gestion de folios</a></li>
+            <li><a role="button" href="javascript:ajax_('gestion_folios/gestion_de_folios.php?contenido=gestion_de_folios');">Gestión de folios</a></li>
             -->
 <?php
 

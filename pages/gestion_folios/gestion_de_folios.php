@@ -40,7 +40,7 @@
     ?>
     <div class="col-sm-10">
       <section class="content">
-        <h2>Gestion de folios</h2>
+        <h2>Gestión de folios</h2>
         <div class="row">
           <div class="col-md-6">
             <div class="box box-warning">

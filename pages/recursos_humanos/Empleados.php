@@ -36,6 +36,12 @@ if(isset($_POST["tipoProcedimiento"])){
        
     require_once("../../Datos/insertarEmpleado.php");
     }
+    
+    if($tipoProcedimiento == "EliminarEmple"){
+       
+    require_once("../../Datos/eliminarEmpleado.php");
+    }
+    
      if($tipoProcedimiento == "Eliminar"){
     require_once("../../Datos/eliminarEmpleadoXGrupo.php");
     }

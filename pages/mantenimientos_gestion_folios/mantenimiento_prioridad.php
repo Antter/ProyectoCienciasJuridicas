@@ -81,9 +81,9 @@
         <thead>
             <tr>
               <th>Id_Prioridad</th>
-              <th>DescripcionPrioridad</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>DescripciónPrioridad</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -137,7 +137,7 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
             </div> 
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Descripcion de la prioridad</span>
+                <span class="input-group-addon">Descripción de la prioridad</span>
                 <input name="DescripcionPrioridad" id="Insertar_DescripcionPrioridad" type="text" class="form-control" placeholder="DescripcionPrioridad" maxlength="120" required>
               </div>
             </div>      

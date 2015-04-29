@@ -57,10 +57,10 @@
 	<table border="1" class='table table-bordered table-hover'>
         <thead>
             <tr>
-                <th>IDOrganizacion</th>
-                <th>NombreOrganizacion</th>
-                <th>Ubicacion</th>
-				<th>Actualizacion</th>
+                <th>IDOrganización</th>
+                <th>NombreOrganización</th>
+                <th>Ubicación</th>
+				<th>Actualización</th>
                 <th>Cancelar</th>				
             </tr>
         </thead>

@@ -185,10 +185,10 @@
 										
 										if($finalizado){
 					                        echo '<strong><p> * El seguimiento de este folio ha finalizado. </p></strong>';
-											echo '<button class="btn btn-default pull-right" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
+											echo '<button class="btn btn-default pull-right" id="exp" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
 										}else{
                                             echo '<button class="btn btn-warning" data-toggle="modal" data-target="#compose-modal-actualizar"><i class="glyphicon glyphicon-wrench"></i> Actualizar Seguimiento </button>';
-							                echo '<button class="btn btn-default pull-right" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
+							                echo '<button class="btn btn-default pull-right" id="exp" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
                                                                   if(!$result['NroFolioRespuesta']) {
                                                                       echo '<button class="btn btn-primary pull-right" style="margin-right: 5px;" id="folio_respuesta" ><i class="fa fa-retweet"></i> Crear folio de respuesta </button>';
                                                                   }
@@ -196,7 +196,7 @@
 									    }
 									}else{
                                         //echo '<button class="btn btn-warning" data-toggle="modal" data-target="#compose-modal-actualizar"><i class="glyphicon glyphicon-wrench"></i> Actualizar Seguimiento </button>';
-										echo '<button class="btn btn-default pull-right" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
+										echo '<button class="btn btn-default pull-right" id="exp" data-mode="verPDF" data-id="'.$NroFolio.'" href="#">Exportar a PDF</button>';
 							            echo '<button class="btn btn-primary pull-right" style="margin-right: 5px;" id="modificar_datos"><i class="glyphicon glyphicon-save-file"></i> Modificar datos del folio </button>';
 									}
                                 }
@@ -299,7 +299,7 @@
                                 <option value="<?php echo $filas["id_Usuario"];?>"><?php echo $filas["Nombre"];?></option><?php } mysqli_free_result($result_1); mysqli_close($conexion); ?>
 				            </select>
                         </div>
-						<p> Nota: Solo podrá elegir el encargado del seguimiento una vez, después este no puede ser modificado</p>
+						<p> Nota: Sólo podrá elegir el encargado del seguimiento una vez, después este no puede ser modificado</p>
 			        </div>			
                 </div> 
                 <div class="modal-footer clearfix">
@@ -336,32 +336,15 @@ $( document ).ready(function() {
 			}
 		});
         
+		
 	$(".btn-default").on('click',function(){
           mode = $(this).data('mode');
           id1 = $(this).data('id');
           if(mode == "verPDF"){
-           
-			data={
-            NroFolio:id
-            };
-            $.ajax({
-                async:true,
-                type: "POST",
-                dataType: "html",
-                contentType: "application/x-www-form-urlencoded",
-                url:"pages/gestion_folios/crear_pdf.php", 
-                success:reportePDF,
-                timeout:4000,
-                error:problemas
-            }); 
-            return false;
+            window.open('pages/gestion_folios/crear_pdf.php?id1='+id1);
           }
         });
 });
-
-function reportePDF(){
-		window.open('pages/gestion_folios/crear_pdf.php?id1='+id1);
-	}
 </script>
 
 <script type="text/javascript" src="js/gestion_folios/modificacion_folio.js" ></script>

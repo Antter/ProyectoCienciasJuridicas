@@ -116,7 +116,7 @@
                                             <!-- Navigation - folders-->
                                             <?php
                                             if ($rol>20) {
-                                            echo '<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i> Nueva Notificacion</a>';
+                                            echo '<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i> Nueva Notificación</a>';
                                             }
 
                                             ?>
@@ -269,7 +269,7 @@
                     class="row">
                         <div class="col-xs-12">
                             <h2 class="page-header">
-                                <i class="fa fa-envelope-o"></i> Notificacion al folio: <?php echo $result['NroFolio']; ?>
+                                <i class="fa fa-envelope-o"></i> Notificación al folio: <?php echo $result['NroFolio']; ?>
                                
                               
                         </div><!-- /.col -->
@@ -323,14 +323,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Enviar Notificacion</h4>
+                <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Enviar Notificación</h4>
             </div>
             <div class="modal-body">  
 		    <!-- form start -->
 			    <form role="form" id="form" name="form" action="#">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Componer nueva notificacion</h3>
+                            <h3 class="box-title">Nueva notificación</h3>
                         </div><!-- /.box-header -->
 						
                         <div class="box-body">
@@ -346,7 +346,7 @@
                             </div>   
 				            <div class="form-group">
 				                <div class="input-group">
-                                    <span class="input-group-addon">Numero Folio :</span>
+                                    <span class="input-group-addon">Número Folio :</span>
                                      <select  id="NroFolio" class="form-control"name="NroFolio" >
                                           
                                             <?php foreach( $filas as $row ) { ?>
@@ -364,7 +364,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="Titulo" id="Insertar_Titulo" placeholder="Titulo:"/ required>
+                                <input class="form-control" name="Titulo" id="Insertar_Titulo" placeholder="Título:"/ required>
                             </div>
                             <div class="form-group">
                                 <textarea name="Mensaje" id="Insertar_Mensaje" class="form-control" style="height: 150px" placeholder="Mensaje..." required></textarea>

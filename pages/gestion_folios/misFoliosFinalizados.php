@@ -49,7 +49,7 @@
                         <div class="col-xs-12">
                             <div class="box box-solid">
 								<a class="btn btn-primary" data-mode="cancelar1"><i class="fa fa-check-square"></i> Seguimientos Finalizado</a>
-					            <a class="btn btn-primary" data-mode="cancelar"><i class="fa fa-binoculars"></i> Seguimientos Sin Finalizados</a>
+					            <a class="btn btn-primary" data-mode="cancelar"><i class="fa fa-binoculars"></i> Seguimientos Sin Finalizadar</a>
 								<div class="box-body">
 								    
                                     <div class="row">

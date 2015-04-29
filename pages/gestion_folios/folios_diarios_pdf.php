@@ -8,7 +8,7 @@ require($maindir."conexion/config.inc.php");
 $sql = "SELECT * FROM ( SELECT folios.NroFolio, folios.PersonaReferente, unidad_academica.NombreUnidadAcademica AS ENTIDAD, 
                          DATE(folios.FechaEntrada) as FechaEntrada, folios.FechaEntrada as Fecha, folios.TipoFolio FROM folios INNER JOIN unidad_academica ON folios.UnidadAcademica = unidad_academica.Id_UnidadAcademica 
                          UNION SELECT folios.NroFolio, folios.PersonaReferente, organizacion.NombreOrganizacion AS ENTIDAD, 
-                         DATE(folios.FechaEntrada) as FechaEntrada, folios.FechaEntrada as Fecha ,folios.TipoFolio FROM folios INNER JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion where folios.FechaEntrada=CURDATE()) T1 
+                         DATE(folios.FechaEntrada) as FechaEntrada, folios.FechaEntrada as Fecha ,folios.TipoFolio FROM folios INNER JOIN organizacion ON folios.Organizacion = organizacion.Id_Organizacion where DATE(folios.FechaEntrada)=CURDATE()) T1 
                         ORDER BY `T1`.`Fecha` DESC";
 
     $query = $db->prepare($sql);
@@ -26,7 +26,7 @@ $pdf->Image($maindir.'assets/img/logo-cienciasjuridicas.png' , 170,8, 35 , 35,'P
 $pdf->Cell(18, 10, '', 0);
 $pdf->SetFont('Arial', '', 18);
 $pdf->Cell(5, 10, '', 0);
-$pdf->Cell(70, 10, 'Universidad Nacional Autonoma de Honduras', 0);
+$pdf->Cell(70, 10, 'Universidad Nacional Autónoma de Honduras', 0);
 $pdf->Ln(25);
 $pdf->SetFont('Arial', 'U', 14);
 $pdf->Cell(30, 8, ' ', 0,0,"C");
@@ -40,7 +40,7 @@ $pdf->Ln(5);
 $pdf->SetFont('Arial', 'B', 8);
 $pdf->Cell(30, 8, 'No. de Folio', 0);
 $pdf->Cell(40, 8, 'Persona Referente', 0);
-$pdf->Cell(50, 8, 'Unidad academica u Organizacion', 0);
+$pdf->Cell(50, 8, 'Unidad académica u Organización', 0);
 $pdf->Cell(40, 8, 'Fecha de Entrada', 0);
 $pdf->Cell(40, 8, 'Tipo de Folio', 0);
 $pdf->Ln(8);

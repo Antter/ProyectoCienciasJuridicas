@@ -5,7 +5,7 @@
         $addDescripcionUbicacionNotificaciones = $_POST['DescripcionUbicacionNotificaciones'];        
 
         if($addDescripcionUbicacionNotificaciones == "" or $addDescripcionUbicacionNotificaciones == null){
-        	$mensaje = "Debe de ingresar una descripcion para la ubicacion de la notificacion";
+        	$mensaje = "Debe de ingresar una descripción para la ubicación de la notificación";
             $codMensaje = 0;
         }else{
 

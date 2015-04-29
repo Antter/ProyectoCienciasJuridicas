@@ -5,7 +5,7 @@
         $addDescripcionEstadoSeguimiento = $_POST['DescripcionEstadoSeguimiento'];        
 
         if($addDescripcionEstadoSeguimiento == "" or $addDescripcionEstadoSeguimiento == null){
-        	$mensaje = "Debe de ingresar una descripcion para el estado del seguimiento";
+        	$mensaje = "Debe de ingresar una descripción para el estado del seguimiento";
             $codMensaje = 0;
         }else{
 

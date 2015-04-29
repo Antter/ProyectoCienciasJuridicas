@@ -57,12 +57,12 @@
 	<table border="1" class='table table-bordered table-hover'>
         <thead>
             <tr>
-                <th>Id_UbicacionArchivoFisico</th>
-                <th>DescripcionUbicacionFisica</th>
+                <th>Id_UbicaciónArchivoFísico</th>
+                <th>DescripciónUbicaciónFisica</th>
                 <th>Capacidad</th>
 				<th>TotalIngresados</th>
 				<th>HabilitadoParaAlmacenar</th>
-				<th>Actualizacion</th>
+				<th>Actualización</th>
                 <th>Cancelar</th> 				
             </tr>
         </thead>

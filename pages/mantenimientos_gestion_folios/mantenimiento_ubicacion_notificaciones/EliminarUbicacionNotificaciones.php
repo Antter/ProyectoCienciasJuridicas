@@ -16,7 +16,7 @@
 
 
     }catch(PDOExecption $e){
-    	$mensaje = "Al tratar de eliminar la ubicacion de la notificacion, por favor intente de nuevo";
+    	$mensaje = "Al tratar de eliminar la ubicacion de la notificación, por favor intente de nuevo";
         $codMensaje = 0;
     }
 	

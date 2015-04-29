@@ -58,8 +58,8 @@
         <thead>
             <tr>
                 <th>Id_Prioridad</th>
-                <th>DescripcionPrioridad</th>   
-                <th>Actualizacion</th> 	
+                <th>DescripciónPrioridad</th>   
+                <th>Actualización</th> 	
                  <th>Cancelar</th> 					
             </tr>
         </thead>

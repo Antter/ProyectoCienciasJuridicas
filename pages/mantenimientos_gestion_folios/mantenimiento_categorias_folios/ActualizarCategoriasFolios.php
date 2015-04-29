@@ -58,9 +58,9 @@
         <thead>
             <tr>
                 <th>Id_categoria</th>
-                <th>NombreCategoria</th>
-                <th>DescripcionCategoria</th>
-				<th>Actualizacion</th>
+                <th>NombreCategoría</th>
+                <th>DescripciónCategoría</th>
+				<th>Actualización</th>
                 <th>Cancelar</th>				
             </tr>
         </thead>

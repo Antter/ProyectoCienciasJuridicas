@@ -15,10 +15,10 @@
 		$addPrioridad = $_POST['Prioridad'];
 
         if($addFechaCreacion == "" or $addFechaCreacion == null){
-        	$mensaje = "Debe de ingresar una fecha de creacion para el folio";
+        	$mensaje = "Debe de ingresar una fecha de creación para el folio";
             $codMensaje = 0;
         }elseif($addFechaEntrada == "" or $addFechaEntrada == null){
-        	$mensaje = "Debe de ingresar una ubicacion para la organizacion";
+        	$mensaje = "Debe de ingresar una ubicación para la organización";
             $codMensaje = 0;
         }
 		elseif($addPersonaReferente == "" or $addPersonaReferente == null){
@@ -26,19 +26,19 @@
             $codMensaje = 0;
         }
 		elseif($addUnidadAcademica == "" or $addUnidadAcademica == null){
-        	$mensaje = "Debe de ingresar una unidad academica para el folio";
+        	$mensaje = "Debe de ingresar una unidad académica para el folio";
             $codMensaje = 0;
         }
 		elseif($addOrganizacion == "" or $addOrganizacion == null){
-        	$mensaje = "Debe de ingresar una organizacion para el folio";
+        	$mensaje = "Debe de ingresar una organización para el folio";
             $codMensaje = 0;
         }
 		elseif($addCategoria == "" or $addCategoria == null){
-        	$mensaje = "Debe de ingresar una categoria para el folio";
+        	$mensaje = "Debe de ingresar una categoría para el folio";
             $codMensaje = 0;
         }
 		elseif($addDescripcionAsunto == "" or $addDescripcionAsunto == null){
-        	$mensaje = "Debe de ingresar una descripcion asunto para";
+        	$mensaje = "Debe de ingresar una descripción asunto para";
             $codMensaje = 0;
         }
 		elseif($addTipoFolio == "" or $addTipoFolio == null){
@@ -46,7 +46,7 @@
             $codMensaje = 0;
         }
 		elseif($addUbicacionFisica == "" or $addUbicacionFisica == null){
-        	$mensaje = "Debe de ingresar una ubicacion fisica del folio";
+        	$mensaje = "Debe de ingresar una ubicación física del folio";
             $codMensaje = 0;
         }
 		elseif($addPrioridad == "" or $addPrioridad == null){
@@ -86,7 +86,7 @@
 		$codMensaje = $output['@codMensaje'];
 		
 		}catch(PDOExecption $e){
-			$mensaje="No se ha procesado su peticion, comuniquese con el administrador del sistema";
+			$mensaje="No se ha procesado su petición, comuníquese con el administrador del sistema";
 		    $codMensaje =0;
 		}
 	

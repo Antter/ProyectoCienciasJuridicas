@@ -6,10 +6,10 @@
         $addUbicacion = $_POST['Ubicacion'];
 
         if($addNombreOrganizacion == "" or $addNombreOrganizacion == NULL){
-            $mensaje = "Por favor introduzca un nombre para la organizacion";
+            $mensaje = "Por favor introduzca un nombre para la organización";
             $codMensaje = 0;
         }elseif($addUbicacion == "" or $addUbicacion == NULL){
-            $mensaje = "Por favor introduzca una ubicacion para la organizacion";
+            $mensaje = "Por favor introduzca una ubicación para la organización";
             $codMensaje = 0;
         }else{
 

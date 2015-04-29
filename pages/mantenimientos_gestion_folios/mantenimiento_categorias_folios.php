@@ -73,7 +73,7 @@
 ?>
 
       <div class="box-header">
-        <h3 class="box-title">Mantenimiento de la tabla Categoria Folios <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
+        <h3 class="box-title">Mantenimiento de la tabla Categoría Folios <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
       </div><!-- /.box-header -->
 
       <div class="box-body table-responsive">
@@ -81,10 +81,10 @@
         <thead>
             <tr>
               <th>Id_categoria</th>
-              <th>NombreCategoria</th>
-              <th>DescripcionCategoria</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>NombreCategoría</th>
+              <th>DescripciónCategoría</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -120,18 +120,18 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
 	  <form role="form" id="form" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Categorias Folios</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Categorías Folios</h4>
       </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Nombre de la Categoria del Folio</span>
+                <span class="input-group-addon">Nombre de la Categoría del Folio</span>
                 <input name="NombreCategoria" id="Insertar_NombreCategoria" type="text" class="form-control" placeholder="NombreCategoria" maxlength="50" required>
               </div>
             </div>
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Descripcion de la categoria del folio</span>
+                <span class="input-group-addon">Descripción de la categoría del folio</span>
                 <input name="DescripcionCategoria" id="Insertar_DescripcionCategoria" type="text" class="form-control" placeholder="DescripcionCategoria" maxlength="250" required>
               </div>
             </div>       

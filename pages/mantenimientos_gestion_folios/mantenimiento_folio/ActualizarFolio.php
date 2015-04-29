@@ -78,7 +78,7 @@
 				<input name="NroFolio" id="NroFolio" type="text" maxlength="25" value="<?php echo $result['NroFolio']; ?>" required></td>
 		     </tr>
 			 <tr>
-			     <td>FechaCreacion</td>
+			     <td>FechaCreación</td>
 			     <td><input name='FechaCreacion' id="FechaCreacion" type ='text' maxlength="10" value="<?php echo htmlentities($result['FechaCreacion']); ?>" placeholder="<?php echo htmlentities($result['FechaCreacion']); ?>" required></td>
 			 </tr>
 			  <tr>
@@ -94,7 +94,7 @@
 			  <td>UnidadAcademica</td>
 			  <td>
 			    <select id="UnidadAcademica" class="form-control" name="UnidadAcademica" style="width: 420px" <?php if($result['NombreUnidadAcademica'] == null or $result['NombreUnidadAcademica'] == ""){ echo "disabled";}?>>
-                                                                    <option value=-1> -- Unidad Academica -- </option>
+                                                                    <option value=-1> -- Unidad Académica -- </option>
                                                                     <?php while($filas = mysqli_fetch_assoc($result1)) { ?>
                                                                     <option <?php if($result['NombreUnidadAcademica'] == $filas["NombreUnidadAcademica"]){ echo "selected"; } ?> 
 																	value="<?php echo $filas["Id_UnidadAcademica"];?>"><?php echo $filas["NombreUnidadAcademica"];?></option><?php } mysqli_free_result($result1); ?>
@@ -104,9 +104,9 @@
 		      </td>
 			  </tr>
 			  <tr>
-			  <td>Organizacion</td>
+			  <td>Organización</td>
 			  <td> <select id="Organizacion" class="form-control"name="Organizacion" style="width: 420px" <?php if($result['NombreOrganizacion'] == null or $result['NombreOrganizacion'] == ""){ echo "disabled";}?>>
-                                                                    <option value=-1> -- Organizacion -- </option>
+                                                                    <option value=-1> -- Organización -- </option>
                                                                     <?php while($filas = mysqli_fetch_assoc($result2)) { ?>
                                                                     <option <?php if($result['NombreOrganizacion'] == $filas["NombreOrganizacion"]){ echo "selected"; } ?>
 																	value="<?php echo $filas["Id_Organizacion"];?>"><?php echo $filas["NombreOrganizacion"];?></option><?php } mysqli_free_result($result2); ?>
@@ -114,9 +114,9 @@
 		      </td>
 			  </tr>
 			  <tr>
-			  <td>Categoria</td>
+			  <td>Categoría</td>
 			  <td> <select id="Categoria" class="form-control"name="Categoria" style="width: 420px">
-                                                                    <option value=-1> -- Categoria -- </option>
+                                                                    <option value=-1> -- Categoría -- </option>
                                                                     <?php while($filas = mysqli_fetch_assoc($result6)) { ?>
                                                                     <option <?php if($result['categoria'] == $filas["Id_categoria"]){ echo "selected"; } ?>
 																	value="<?php echo $filas["Id_categoria"];?>"><?php echo $filas["NombreCategoria"];?></option><?php } mysqli_free_result($result6); ?>
@@ -137,9 +137,9 @@
 			  </td>
 			  </tr>
 			  <tr>
-			  <td>UbicacionFisica</td>
+			  <td>UbicaciónFísica</td>
 			  <td> <select id="UbicacionFisica"class="form-control" width="420" style="width: 420px" name="ubicacionFisica" required>
-                                                            <option value=-1> Seleccione la ubicacion fisica </option>
+                                                            <option value=-1> Seleccione la ubicación física </option>
                                                             <?php while($filas = mysqli_fetch_assoc($result3)) { ?>
                                                             <option  <?php if($result['UbicacionFisica'] == $filas["Id_UbicacionArchivoFisico"]){ echo "selected";} ?> value="<?php echo $filas["Id_UbicacionArchivoFisico"];?>"><?php echo $filas["DescripcionUbicacionFisica"];?></option><?php } mysqli_free_result($result3); ?>
 												        </select>

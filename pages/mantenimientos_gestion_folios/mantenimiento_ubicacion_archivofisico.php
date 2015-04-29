@@ -73,20 +73,20 @@
 ?>
 
       <div class="box-header">
-        <h3 class="box-title">Mantenimiento de la tabla ubicacion_archivofisico <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
+        <h3 class="box-title">Mantenimiento de la tabla ubicación_archivofísico <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
       </div><!-- /.box-header -->
 
       <div class="box-body table-responsive">
       <table id="tabla_ubicacion_archivofisico" class='table table-bordered table-striped'>
         <thead>
             <tr>
-               <th>Id_UbicacionArchivoFisico</th>
-                <th>DescripcionUbicacionFisica</th>
+               <th>Id_UbicaciónArchivoFísico</th>
+                <th>DescripciónUbicaciónFísica</th>
                 <th>Capacidad</th>
 				<th>TotalIngresados</th>
 				<th>HabilitadoParaAlmacenar</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -124,12 +124,12 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
 	  <form role="form" id="form" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Ubicacion de Archivo Fisico</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva Ubicación de Archivo Físico</h4>
       </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Nombre de la Ubicacion Del Archivo Fisico</span>
+                <span class="input-group-addon">Nombre de la Ubicación Del Archivo Físico</span>
                 <input name="DescripcionUbicacionFisica" id="Insertar_DescripcionUbicacionFisica" type="text" class="form-control" placeholder="DescripcionUbicacionFisica" maxlength="50" required>
               </div>
             </div>

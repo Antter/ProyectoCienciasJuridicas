@@ -8,7 +8,7 @@
 		$addHabilitadoParaAlmacenar = $_POST['HabilitadoParaAlmacenar'];
 
         if($addDescripcionUbicacionFisica == "" or $addDescripcionUbicacionFisica == NULL){
-            $mensaje = "Por favor introduzca una descripcion para la Ubicacion  Fisica del archivo";
+            $mensaje = "Por favor introduzca una descripción para la Ubicacion  Fisica del archivo";
             $codMensaje = 0;
         }elseif($addCapacidad == "" or $addCapacidad == NULL){
             $mensaje = "Por favor introduzca una Capacidad";

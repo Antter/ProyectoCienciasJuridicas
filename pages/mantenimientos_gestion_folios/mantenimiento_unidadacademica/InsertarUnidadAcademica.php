@@ -6,10 +6,10 @@
         $addUbicacionUnidadAcademica = $_POST['Ubicacion'];
 
         if($addNombreUnidadAcademica == "" or $addNombreUnidadAcademica == NULL){
-            $mensaje = "Por favor introduzca un nombre para la Unidad Academica";
+            $mensaje = "Por favor introduzca un nombre para la Unidad Académica";
             $codMensaje = 0;
         }elseif($addUbicacionUnidadAcademica == "" or $addUbicacionUnidadAcademica == NULL){
-            $mensaje = "Por favor introduzca una ubicacion para la Unidad Academica";
+            $mensaje = "Por favor introduzca una ubicacion para la Unidad Académica";
             $codMensaje = 0;
         }else{
 

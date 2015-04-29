@@ -58,8 +58,8 @@
         <thead>
             <tr>
                 <th>Id_Estado_Seguimiento</th>
-                <th>DescripcionEstadoSeguimiento</th>
-				<th>Actualizacion</th> 
+                <th>DescripciónEstadoSeguimiento</th>
+				<th>Actualización</th> 
                   <th>Cancelar</th> 				
             </tr>
         </thead>

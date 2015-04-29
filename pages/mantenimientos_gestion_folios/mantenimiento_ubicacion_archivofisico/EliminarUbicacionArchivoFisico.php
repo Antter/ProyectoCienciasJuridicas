@@ -16,7 +16,7 @@
 
 
     }catch(PDOExecption $e){
-    	$mensaje = "Al tratar de eliminar la Ubicacion Archivo Fisica, por favor intente de nuevo";
+    	$mensaje = "Al tratar de eliminar la Ubicación Archivo Física, por favor intente de nuevo";
         $codMensaje = 0;
     }
 	

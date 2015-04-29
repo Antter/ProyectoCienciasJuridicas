@@ -12,7 +12,7 @@
     <!-- Left column -->
       
     <ul class="list-unstyled">
-        <li class="nav-header"> <a id="gestion_folios" href="#"><i class="glyphicon glyphicon-home"></i> Inicio Gestion de Folios</a></li>
+        <li class="nav-header"> <a id="gestion_folios" href="#"><i class="glyphicon glyphicon-home"></i> Inicio Gestión de Folios</a></li>
         <hr>
         <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
             <h5><i class="fa fa-tags"></i> Manejo de folios <i class="glyphicon glyphicon-chevron-down"></i></h5>
@@ -58,19 +58,19 @@
 				    echo '<ul class="list-unstyled collapse" id="menu2">';
 				}
 			?>
-                <li><a id="mantenimiento_organizacion" href="#">Mantenimiento de Organizacion</a>
+                <li><a id="mantenimiento_organizacion" href="#">Mantenimiento de Organización</a>
                 </li>
-                <li><a id="mantenimiento_unidadacademica" href="#">Mantenimiento de unidad academica</a>
+                <li><a id="mantenimiento_unidadacademica" href="#">Mantenimiento de unidad académica</a>
                 </li>
-                <li><a id="mantenimiento_categoria" href="#">Mantenimiento de categoria de folio</a>
+                <li><a id="mantenimiento_categoria" href="#">Mantenimiento de categoría de folio</a>
                 </li>
                 <li><a id="mantenimiento_prioridad"href="#">Mantenimiento de prioridad</a>
                 </li>
-		        <li><a id="mantenimiento_ubicacionfisica"href="#">Mantenimiento de ubicacion fisica</a>
+		        <li><a id="mantenimiento_ubicacionfisica"href="#">Mantenimiento de ubicación física</a>
                 </li>
                 <li><a id="mantenimiento_estado_seguimiento"href="#">Mantenimiento de estado seguimiento</a>
                 </li>
-                <li><a id="mantenimiento_ubicacion_notificaciones"href="#">Mantenimiento de ubicacion notificaciones</a>
+                <li><a id="mantenimiento_ubicacion_notificaciones"href="#">Mantenimiento de ubicación notificaciones</a>
                 </li>
                 <li><a id="mantenimiento_folios"href="#">Mantenimiento de folios</a>
                 </li>				

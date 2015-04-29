@@ -126,7 +126,7 @@ $maindir = "../../";
 
 		if(soloLetrasYNumeros(nombre) == false){
 		    $("#nombreDepto").addClass("has-warning");
-			$("#nombreDepto").find("label").text("Nombre del Departamento: Solo son permitidos numeros y letras");
+			$("#nombreDepto").find("label").text("Nombre del Departamento: Solo son permitidos números y letras");
 			$("#nombreDepartamento").focus();
 			return false;
 		}else{

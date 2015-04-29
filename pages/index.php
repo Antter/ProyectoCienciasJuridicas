@@ -48,7 +48,7 @@
                                     <a href="Motivos.php">Motivos</a>
                                 </li>
                                 <li>
-                                    <a href="Unidad_Academica.php">Unidad Academica</a>
+                                    <a href="Unidad_Academica.php">Unidad Académica</a>
                                 </li>
 								<li>
                                     <a href="Edificios.php">Edificios</a>

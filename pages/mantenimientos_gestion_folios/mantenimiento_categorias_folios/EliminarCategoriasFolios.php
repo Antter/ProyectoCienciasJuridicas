@@ -17,7 +17,7 @@
 
 
     }catch(PDOExecption $e){
-    	$mensaje = "Al tratar de eliminar la organizacion, por favor intente de nuevo";
+    	$mensaje = "Al tratar de eliminar la organización, por favor intente de nuevo";
         $codMensaje = 0;
     }
 	

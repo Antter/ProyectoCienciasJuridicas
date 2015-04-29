@@ -85,17 +85,17 @@
         <thead>
             <tr>
               <th>NroFolio</th>
-              <th>FechaCreacion</th>
+              <th>FechaCreación</th>
               <th>FechaEntrada</th>              
               <th>PersonaReferente</th>
-			  <th>UnidadAcademica</th>
-			  <th>Organizacion</th>
-			  <th>Categoria</th>
-			  <th>DescripcionAsunto</th>
+			  <th>UnidadAcadémica</th>
+			  <th>Organización</th>
+			  <th>Categoría</th>
+			  <th>DescripciónAsunto</th>
 			  <th>TipoFolio</th>
-			  <th>UbicacionFisica</th>
+			  <th>UbicaciónFísica</th>
 			  <th>Prioridad</th>
-			  <th>Actualizacion</th>
+			  <th>Actualización</th>
             </tr>
         </thead>
         <tbody>

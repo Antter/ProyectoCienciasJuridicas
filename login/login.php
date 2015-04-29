@@ -48,7 +48,7 @@ if(isset( $_SESSION['user_id'] ))
 <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>Sistema ciencias juridicas</title>
+        <title>Sistema Ciencias Jurídicas</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
       <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -62,7 +62,7 @@ if(isset( $_SESSION['user_id'] ))
       <div id="login-page">
         <div class="container">
           <form class="form-login">
-            <h2 class="form-login-heading">Inicio de sesion sistema de ciencias juridicas</h2>
+            <h2 class="form-login-heading">Inicio de sesión sistema de Ciencias Jurídicas</h2>
               <div class="login-wrap">
 
 <?php
@@ -105,16 +105,16 @@ if(isset( $_SESSION['user_id'] ))
                 $mensaje = "Usuario o contraseña incorrecto";
                 break;
             case 2:
-                $mensaje = "Credenciales invalidas, por favor trate de ingresardentro de unos segundos";
+                $mensaje = "Credenciales inválidas, por favor trate de ingresar dentro de unos segundos";
                 break;
             case 3:
-                $mensaje = "Por el momento no es posible procesar su peticion, por favor trate de ingresar dentro de unos momentos";
+                $mensaje = "Por el momento no es posible procesar su petición, por favor trate de ingresar dentro de unos momentos";
                 break;
             case 4:
-                $mensaje = "La conexion con el sevidor no fue exitosa, por favor trate de ingresar dentro de unos segundos";
+                $mensaje = "La conexión con el sevidor no fue exitosa, por favor trate de ingresar dentro de unos segundos";
                 break;
             case 5:
-                $mensaje = "Lo sentimos pero su sesion ya ha expirado, por favor ingrese otra ves";
+                $mensaje = "Lo sentimos pero su sesión ya ha expirado, por favor ingrese otra vez";
                 break;
             default:
                 break;

@@ -1,5 +1,5 @@
 <?php
-
+   include '../../Datos/conexion.php';
     $maindir = "../../";
 
   if(isset($_GET['contenido']))
@@ -25,6 +25,8 @@
 
 <html lang="es">
     <head>
+        
+        
         
     <meta charset="utf-8">
     
@@ -121,104 +123,81 @@
                             Por favor seleccione en la barra lateral que datos desea ingresar.
                         </div>
                           
-                             <div class="row ex2">
-                <a>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-list-alt fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
-                                        <div>Nuevos perfiles</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Ver detalles</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
+               <div id="wrapper">
+                   
+                   <?php
+                   
+                   
+                   $query = mysql_query("select count(N_identidad) as perfiles from persona");
+                   $row = mysql_fetch_array($query);
+                   $Total = $row["perfiles"];
+                   
+                   $query = mysql_query("select count(*)as activos from empleado where estado_empleado=1");
+                   $row = mysql_fetch_array($query);
+                   $TotalEmpleadoActivo = $row["activos"];
+                   
+                   $query = mysql_query("select count(*) as desactivos from empleado where estado_empleado!=1");
+                   $row = mysql_fetch_array($query);
+                   $TotalEmpleadoDes = $row["desactivos"];
+                   
+                    $query = mysql_query("select count(*) as Aspirante from persona where N_identidad not in (Select N_identidad from empleado)");
+                   $row = mysql_fetch_array($query);
+                   $Asparitante = $row["Aspirante"];
+                    
+                   
+                //   select count(*) from empleado where estado_empleado=1
+                  // select count(*) from empleado where estado_empleado!=1
+                  // select count(*) from persona where N_identidad not in (Select N_identidad from empleado)
+                  // select estado_empleado, count(*) from empleado group by estado_empleado;
+                   
+                   
+                   ?>
+                   
+        
+        <input id="Total" type="hidden" value="<?php echo $Total; ?>" >
+        <input id="TotalEmpleadoActivo" type="hidden" value="<?php echo $TotalEmpleadoActivo; ?>" >
+        <input id="TotalEmpleadoDes" type="hidden" value="<?php echo $TotalEmpleadoDes; ?>" >
+        <input id="Asparitante" type="hidden" value="<?php echo $Asparitante; ?>" >
+  
+
+            
+            <!-- /.row -->
+            <div class="row">
+            
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Total de perfiles
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
                         </div>
                     </div>
-                </a>
-                <a>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-file-text-o fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">12</div>
-                                        <div>Nuevos reportes</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Ver detalles</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
+                </div>
+                
+                     <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Empleados
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart2"></div>
                         </div>
                     </div>
-                </a>
-                <a>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-tasks fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
-                                        <div>Notificaciones</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Ver detalles</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Aspirantes
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart3"></div>
                         </div>
                     </div>
-                </a>
-                <a>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-plus-square fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>Solicitudes</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">Ver detalles</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </a>
+                </div>
+                
             </div>
+        </div>
           
             
                                                 
@@ -631,8 +610,63 @@
         </script>
         
         
-          <script src="bower_components/raphael/raphael-min.js"></script>
-          <script src="bower_components/morrisjs/morris.min.js"></script>
+         <script>
+        vari= $("#realizadasDelMes").val();
+        Total=$("#Total").val();
+        TotalEmpleadoActivo=$("#TotalEmpleadoActivo").val();
+        TotalEmpleadoDes=$("#TotalEmpleadoDes").val();
+        Asparitante=$("#Asparitante").val();
+        
+        
+        $(function() {
+
+     Morris.Donut({
+        element: 'morris-donut-chart',
+       // data:'estadisticasActDelMes.php',
+        data:[{
+            label: "Perfiles",
+            value: Total,
+            color:"green"
+        }],
+        resize: true
+    });
+    
+       Morris.Donut({
+        element: 'morris-donut-chart2',
+       // data:'estadisticasActDelMes.php',
+        data:[{
+            label: "Empleados",
+            value: TotalEmpleadoActivo,
+            color:"green"
+        }, {
+            label: "Ex-Empleados",
+            value: TotalEmpleadoDes
+        }],
+        resize: true
+    });
+    
+     Morris.Donut({
+        element: 'morris-donut-chart3',
+       // data:'estadisticasActDelMes.php',
+        data:[{
+            label: "Aspirantes",
+            value: Asparitante,
+            color:"green"
+        }],
+        resize: true
+    });
+    
+    
+   
+    
+
+});
+        
+        </script>
+        
+        
+        
+  
         
      
         

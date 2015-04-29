@@ -73,17 +73,17 @@
 ?>
 
       <div class="box-header">
-        <h3 class="box-title">Mantenimiento de la tabla ubicacion notificaciones <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
+        <h3 class="box-title">Mantenimiento de la tabla ubicación notificaciones <a class="btn btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Insertar</a></h3>
       </div><!-- /.box-header -->
 
       <div class="box-body table-responsive">
       <table id="tabla_ubicacion_notificaciones" class='table table-bordered table-striped'>
         <thead>
             <tr>
-              <th>Id_UbicacionNotificaciones</th>
-              <th>DescripcionUbicacionNotificaciones</th>
-              <th>Actualizacion</th>
-              <th>Eliminacion</th>
+              <th>Id_UbicaciónNotificaciones</th>
+              <th>DescripcionUbicaciónNotificaciones</th>
+              <th>Actualización</th>
+              <th>Eliminación</th>
             </tr>
         </thead>
         <tbody>
@@ -118,12 +118,12 @@ echo '<td><a class="btn btn-block btn-primary" data-mode="eliminar" data-id="'.$
 	  <form role="form" id="form" name="form" action="#">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva ubicacion de la notificacion</h4>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-floppy-disk"></i> Insertar una nueva ubicación de la notificacion</h4>
       </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="input-group">
-                <span class="input-group-addon">Descripcion de la ubicacion dela notificacion</span>
+                <span class="input-group-addon">Descripción de la ubicación dela notificación</span>
                 <input name="DescripcionUbicacionNotificaciones" id="Insertar_DescripcionUbicacionNotificaciones" type="text" class="form-control" placeholder="DescripcionUbicacionNotificaciones" maxlength="50" required>
               </div>
             </div>            

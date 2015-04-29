@@ -6,10 +6,10 @@
         $addDescripcionCategoria = $_POST['DescripcionCategoria'];
 
         if($addNombreCategoria == "" or $addNombreCategoria == NULL){
-            $mensaje = "Por favor introduzca un nombre para la categoria";
+            $mensaje = "Por favor introduzca un nombre para la categoría";
             $codMensaje = 0;
         }elseif($addDescripcionCategoria == "" or $addDescripcionCategoria == NULL){
-            $mensaje = "Por favor introduzca una descripcion para la categoria";
+            $mensaje = "Por favor introduzca una descripción para la categoría";
             $codMensaje = 0;
         }else{
 

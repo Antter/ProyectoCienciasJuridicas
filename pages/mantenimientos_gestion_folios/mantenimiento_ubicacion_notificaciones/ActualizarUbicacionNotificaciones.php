@@ -57,9 +57,9 @@
 	<table border="1" class='table table-bordered table-hover'>
         <thead>
             <tr>
-                <th>Id_UbicacionNotificaciones</th>
-                <th>DescripcionUbicacionNotificaciones</th>
-				<th>Actualizacion</th>
+                <th>Id_UbicaciónNotificaciones</th>
+                <th>DescripciónUbicaciónNotificaciones</th>
+				<th>Actualización</th>
                  <th>Cancelar</th>				
             </tr>
         </thead>

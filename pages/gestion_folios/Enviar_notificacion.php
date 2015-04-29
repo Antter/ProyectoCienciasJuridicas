@@ -78,7 +78,7 @@
 
 
 
-        $mensaje = "Notificacion enviada correctamente";
+        $mensaje = "Notificación enviada correctamente";
         $codMensaje = 1;
         
 

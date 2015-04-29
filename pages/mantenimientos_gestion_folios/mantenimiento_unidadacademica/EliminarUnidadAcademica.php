@@ -16,7 +16,7 @@
 		$codMensaje = $output['@codMensaje'];
 
     }catch(PDOExecption $e){
-    	$mensaje = "Al tratar de eliminar la Unidad Academica, por favor intente de nuevo";
+    	$mensaje = "Al tratar de eliminar la Unidad Académica, por favor intente de nuevo";
         $codMensaje = 0;
     }
 	
