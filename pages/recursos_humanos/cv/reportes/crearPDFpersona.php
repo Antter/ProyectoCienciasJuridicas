@@ -19,7 +19,7 @@ $resultado3=mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_es
 //Experiencia laboral
 $resultado4 = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE experiencia_laboral.N_identidad='".$id."'");
 //telefono
-$resultado5 = mysql_query("SELECT ID_Telefono, Tipo, Numero FROM telefono WHERE N_identidad= '".$id."'");
+$resultado5 = mysql_query("SELECT Tipo, Numero FROM telefono WHERE N_identidad= '".$id."'");
 
 
 $pdf = new FPDF();
@@ -76,6 +76,21 @@ $pdf->Ln(10);
 $pdf->Cell(125, 8, 'Direccion: '.$direc, 0);
 $pdf->Ln(5);
 $pdf->Cell(125, 8, 'Correo Electronico: '.$email, 0);
+$pdf->Ln(5);
+$pdf->Cell(125, 8, 'Numeros telefonicos: ', 0);
+$pdf->Ln(5);
+$pdf->Cell(30, 8, 'Tipo', 0);
+$pdf->Cell(40, 8, 'Numero', 0);
+$pdf->Ln(8);
+
+while ($row8 = mysql_fetch_array($resultado5)){
+    
+    $pdf->Cell(30, 8, $row8["Tipo"], 0);
+    $pdf->Cell(40, 8, $row8["Numero"], 0);
+    $pdf->Ln(5);
+    
+}
+
 $pdf->Ln(15);
 //--------
 
@@ -135,7 +150,7 @@ $pdf->Ln(10);
 $pdf->Ln(5);
  $pdf->Cell(125, 8, 'Tiempo (En meses): '.$tiempo, 0);
  $pdf->Ln(5);
- $pdf->Cell(125, 8, 'Clases: '.$clase, 0);
+ $pdf->Cell(125, 8, 'Clases impartida: '.$clase, 0);
 $pdf->Ln(15);
 
 }
