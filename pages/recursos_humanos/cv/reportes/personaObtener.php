@@ -27,7 +27,9 @@ if (isset($_POST['identi'])) {
         //Formación académica
         $queryFA = mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$_POST['identi']."'");
         //Experiencia laboral
-        $queryEL = mysql_query("SELECT ID_Experiencia_laboral, Nombre_empresa, Tiempo FROM experiencia_laboral WHERE N_identidad= '".$_POST['identi']."'");
+        $queryEL = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE experiencia_laboral.N_identidad='".$_POST['identi']."'");
+        //numeros de telefono
+        $queryTEL = mysql_query("SELECT ID_Telefono, Tipo, Numero FROM telefono WHERE N_identidad= '".$_POST['identi']."'");
 
         echo '<form role="form" method="post" class="form-horizontal">
                         <!-- .panel-heading -->
@@ -106,8 +108,58 @@ if (isset($_POST['identi'])) {
                                                     <div class="col-sm-7 control-label">' . $email . '</div>
                                                 </div>
                                             </div>
+<div class="col-lg-12 center">
+            <table id="tabla_telefonos" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>                                            
+                                      
+                                            <th>Tipo</th>
+                                            <th>Número</th>
+                                          
+                                             </tr>
+                                        </thead>
+                                        <tbody> ';
+            
+
+        while ($row = mysql_fetch_array($queryTEL)){
+            $id = $row['ID_Telefono'];
+            $tipo = $row['Tipo'];
+            $numero = $row['Numero'];
+         
+            echo "<tr data-id='".$id."'>";
+            echo <<<HTML
+               
+HTML;
+            echo <<<HTML
+                <td>$tipo</td>
+HTML;
+            echo <<<HTML
+            <td>$numero</td>
+HTML;
+            echo <<<HTML
+   
+HTML;
+            echo "</tr>";
+
+        }
+     
+
+
+    echo '  </tbody>
+    </table>
+</div>
+
+
+
                                         </div>
                                     </div>
+                                    
+                 
+                                    
+
+                                    
+
+
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -115,7 +167,7 @@ if (isset($_POST['identi'])) {
                                             </h4>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-10">
                                                          <table id="tabla_telefonos" class="table table-bordered table-striped">';
                 if(mysql_num_rows($query) != 0) {
                     echo '<thead>
@@ -161,7 +213,7 @@ HTML;
                                             </h4>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-10">
                                                  <table id="tabla_formaciones" class="table table-bordered table-striped">';
         if(mysql_num_rows($queryFA) != 0) {
             echo '
@@ -212,7 +264,7 @@ HTML;
                                             </h4>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-10">
                                                  <table id="tabla_formaciones" class="table table-bordered table-striped">';
         if(mysql_num_rows($queryEL) != 0) {
             echo '
@@ -220,6 +272,8 @@ HTML;
                                                     <tr>
                                                     <th>Nombre de la Empresa</th>
                                                     <th>Tiempo (meses)</th>
+                                                    <th>Cargo</th>
+                                                    
                                                 </tr>
                                                 </thead>';
 
@@ -231,6 +285,7 @@ HTML;
             $id = $row['ID_Experiencia_laboral'];
             $nomEmp = $row['Nombre_empresa'];
             $tiempo = $row['Tiempo'];
+            $Cargo =  $row['cargo'];
 
             echo "<tr data-id='".$id."'>";
             echo <<<HTML
@@ -238,6 +293,7 @@ HTML;
 HTML;
             echo <<<HTML
             <td>$tiempo</td>
+            <td>$Cargo</td>
 HTML;
             echo "</tr>";
 

@@ -17,7 +17,9 @@ $resultado2=mysql_query("SELECT experiencia_academica.ID_Experiencia_academica, 
 $resultado3=mysql_query("SELECT ID_Estudios_academico, Nombre_titulo, ID_Tipo_estudio, Id_universidad FROM estudios_academico WHERE N_identidad= '".$id."'");
 
 //Experiencia laboral
-$resultado4=mysql_query("SELECT ID_Experiencia_laboral, Nombre_empresa, Tiempo FROM experiencia_laboral WHERE N_identidad= '".$id."'");
+$resultado4 = mysql_query("SELECT experiencia_laboral.ID_Experiencia_laboral, Nombre_empresa, Tiempo, cargo FROM experiencia_laboral inner join experiencia_laboral_has_cargo on experiencia_laboral_has_cargo.ID_Experiencia_laboral=experiencia_laboral.ID_Experiencia_laboral inner join cargo on cargo.ID_cargo=experiencia_laboral_has_cargo.ID_cargo WHERE experiencia_laboral.N_identidad='".$id."'");
+//telefono
+$resultado5 = mysql_query("SELECT ID_Telefono, Tipo, Numero FROM telefono WHERE N_identidad= '".$id."'");
 
 
 $pdf = new FPDF();
@@ -52,11 +54,11 @@ if($row = mysql_fetch_array($resultado) or die("Error en: " . mysql_error())){
         $estCivil = $row['Estado_Civil'];
         $nacionalidad = $row['Nacionalidad'];
         $nombreC =$pNombre." ".$sNombre." ".$pApellido." ".$sApellido;
-$pdf->Cell(120, 9, '                                                                       DATOS GENERALES', 0);
+$pdf->Cell(120, 9, '                                                            DATOS GENERALES', 0);
 $pdf->Ln(10);
 
 
-$pdf->Cell(125, 8, 'N�mero de Identidad: '.$row['N_identidad'], 0);
+$pdf->Cell(125, 8, 'Numero de Identidad: '.$row['N_identidad'], 0);
 $pdf->Ln(5);
 $pdf->Cell(120, 10, 'Nombre Completo: '.$nombreC, 0);
 $pdf->Ln(5);
@@ -68,7 +70,7 @@ $pdf->Cell(120, 10, 'Fecha de nacimiento: '.$fNac, 0);
 $pdf->Ln(5);
 $pdf->Cell(130, 8, 'Estado Civil: '.$estCivil, 0);
 $pdf->Ln(15);
-$pdf->Cell(120, 9, '                                                                       INFORMACION DE CONTACTO', 0);
+$pdf->Cell(120, 9, '                                                             INFORMACION DE CONTACTO', 0);
 $pdf->Ln(10);
 
 $pdf->Cell(125, 8, 'Direccion: '.$direc, 0);
@@ -77,24 +79,8 @@ $pdf->Cell(125, 8, 'Correo Electronico: '.$email, 0);
 $pdf->Ln(15);
 //--------
 
-$pdf->Cell(120, 9, '                                                                          EXPERIENCIA ACADEMICA', 0);
-while ($row5 = mysql_fetch_array($resultado2)) {
-            $id1 = $row5['ID_Experiencia_academica'];
-            $inst = $row5['Institucion'];
-            $tiempo = $row5['Tiempo'];
-            $clase = $row5['Clase'];
 
-$pdf->Ln(10);
- $pdf->Cell(125, 8, 'Nombre de la Empresa: '.$inst, 0);
-$pdf->Ln(5);
- $pdf->Cell(125, 8, 'Tiempo (En meses): '.$tiempo, 0);
- $pdf->Ln(5);
- $pdf->Cell(125, 8, 'Clases: '.$clase, 0);
-$pdf->Ln(15);
-
-}
-
-$pdf->Cell(120, 9, '                                                                          FORMACION ACADEMICA', 0);
+$pdf->Cell(120, 9, '                                                             FORMACION ACADEMICA', 0);
  while ($row2 = mysql_fetch_array($resultado3)){
             $id7 = $row2['ID_Estudios_academico'];
             $titulo = $row2['Nombre_titulo'];
@@ -115,19 +101,45 @@ $pdf->Cell(125, 8, 'Universidad: '.$univ, 0);
 $pdf->Ln(15);
  }
 
- $pdf->Cell(120, 9, '                                                                          EXPERIENCIA LABORAL', 0);
+ $pdf->Cell(120, 9, '                                                            EXPERIENCIA LABORAL', 0);
 while ($row11 = mysql_fetch_array($resultado4)){
             $id9 = $row11['ID_Experiencia_laboral'];
             $nomEmp = $row11['Nombre_empresa'];
             $tiempo = $row11['Tiempo'];
+            $cargo  = $row11['cargo'];
 
 
 $pdf->Ln(10);
  $pdf->Cell(125, 8, 'Nombre de la Empresa: '.$nomEmp, 0);
 $pdf->Ln(5);
 $pdf->Cell(125, 8, 'Tiempo (En meses): '.$tiempo, 0);
+$pdf->Ln(5);
+$pdf->Cell(125, 8, 'Cargo ejercido: '.$cargo, 0);
+
 $pdf->Ln(15);
 }  
+
+
+
+
+
+$pdf->Cell(120, 9, '                                                             EXPERIENCIA ACADEMICA', 0);
+while ($row5 = mysql_fetch_array($resultado2)) {
+            $id1 = $row5['ID_Experiencia_academica'];
+            $inst = $row5['Institucion'];
+            $tiempo = $row5['Tiempo'];
+            $clase = $row5['Clase'];
+
+$pdf->Ln(10);
+ $pdf->Cell(125, 8, 'Nombre de la Empresa: '.$inst, 0);
+$pdf->Ln(5);
+ $pdf->Cell(125, 8, 'Tiempo (En meses): '.$tiempo, 0);
+ $pdf->Ln(5);
+ $pdf->Cell(125, 8, 'Clases: '.$clase, 0);
+$pdf->Ln(15);
+
+}
+
   
  
 /*$pdf->Cell(135, 8, 'Asunto: '.$result['DescripcionAsunto'], 0);
