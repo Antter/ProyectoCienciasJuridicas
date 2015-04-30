@@ -1,7 +1,4 @@
 <?php
-session_start();
-
-//include "../../../../Datos/conexion.php";
 
 function limpiar($tags)
 {
