@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-04-2015 a las 19:41:13
+-- Tiempo de generación: 30-04-2015 a las 14:32:29
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -917,16 +917,6 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `fecha_fin` date NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `actividades`
---
-
-INSERT INTO `actividades` (`id_actividad`, `id_indicador`, `descripcion`, `correlativo`, `supuesto`, `justificacion`, `medio_verificacion`, `poblacion_objetivo`, `fecha_inicio`, `fecha_fin`) VALUES
-(1, 10, 'ertertert', 'ertertert', 'dfgdfg', 'qerqerqe', 'qerqerqer', 'qererewrewr', '2015-02-19', '2015-04-07'),
-(2, 9, 'hgjhgj', 'ghjghj', 'ghjghj', 'ghjghj', 'ghjghj', 'ghjghj', '2015-02-03', '2015-04-11'),
-(3, 9, 'ghjghjghj', 'ghjghj', 'ghjghj', 'ghjghj', 'ghjghjghj', 'ghjghj', '2015-04-21', '2015-04-30'),
-(4, 9, 'yutyuty', 'tyutyu', 'tyutyuty', 'tyutyutyu', 'tyutyutyu', 'tyutyu', '2015-04-06', '2015-04-11');
-
 -- --------------------------------------------------------
 
 --
@@ -941,14 +931,6 @@ CREATE TABLE IF NOT EXISTS `actividades_terminadas` (
   `estado` varchar(15) NOT NULL,
   `observaciones` text
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `actividades_terminadas`
---
-
-INSERT INTO `actividades_terminadas` (`id_Actividades_Terminadas`, `id_Actividad`, `No_Empleado`, `fecha`, `estado`, `observaciones`) VALUES
-(2, 2, 'prueba', '2015-04-03', 'REALIZADA', 'gfgfgfgfg'),
-(3, 1, 'prueba', '2015-04-29', 'REALIZADA', 'dfgdfg');
 
 -- --------------------------------------------------------
 
@@ -976,20 +958,6 @@ CREATE TABLE IF NOT EXISTS `area` (
   `observacion` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `area`
---
-
-INSERT INTO `area` (`id_Area`, `nombre`, `id_tipo_area`, `observacion`) VALUES
-(1, 'gato', 1, 'hjghjghj'),
-(3, 'gato', 1, 'rtrty'),
-(4, 'rtyrtyrty', 1, 'tryryty'),
-(5, 'asdfasd', 1, 'asd'),
-(6, 'lasjdanlsdj', 3, 'asdasd'),
-(7, 'prueba', 4, 'asdasd'),
-(8, 'prueba2', 3, 'asdasda'),
-(9, '<c<zx<zx', 4, '<zx<zx<zx');
-
 -- --------------------------------------------------------
 
 --
@@ -1000,17 +968,6 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 `ID_cargo` int(11) NOT NULL,
   `Cargo` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `cargo`
---
-
-INSERT INTO `cargo` (`ID_cargo`, `Cargo`) VALUES
-(1, 'administrador'),
-(2, 'Jefe de departamento'),
-(3, 'Gerente'),
-(4, 'contador'),
-(5, 'Docente');
 
 -- --------------------------------------------------------
 
@@ -1024,13 +981,6 @@ CREATE TABLE IF NOT EXISTS `categorias_folios` (
   `DescripcionCategoria` text
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `categorias_folios`
---
-
-INSERT INTO `categorias_folios` (`Id_categoria`, `NombreCategoria`, `DescripcionCategoria`) VALUES
-(2, 'cat1', 'cat1');
-
 -- --------------------------------------------------------
 
 --
@@ -1042,15 +992,6 @@ CREATE TABLE IF NOT EXISTS `clases` (
   `Clase` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `clases`
---
-
-INSERT INTO `clases` (`ID_Clases`, `Clase`) VALUES
-(1, 'auditoria'),
-(2, 'Gerencia'),
-(3, 'Derecho penal');
-
 -- --------------------------------------------------------
 
 --
@@ -1061,13 +1002,6 @@ CREATE TABLE IF NOT EXISTS `clases_has_experiencia_academica` (
   `ID_Clases` int(11) NOT NULL,
   `ID_Experiencia_academica` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `clases_has_experiencia_academica`
---
-
-INSERT INTO `clases_has_experiencia_academica` (`ID_Clases`, `ID_Experiencia_academica`) VALUES
-(2, 1);
 
 -- --------------------------------------------------------
 
@@ -1083,13 +1017,6 @@ CREATE TABLE IF NOT EXISTS `costo_porcentaje_actividad_por_trimestre` (
   `observacion` text,
   `trimestre` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `costo_porcentaje_actividad_por_trimestre`
---
-
-INSERT INTO `costo_porcentaje_actividad_por_trimestre` (`id_Costo_Porcentaje_Actividad_Por_Trimesrte`, `id_Actividad`, `costo`, `porcentaje`, `observacion`, `trimestre`) VALUES
-(1, 2, 5600, 30, 'tyutyu', 1);
 
 -- --------------------------------------------------------
 
@@ -1107,8 +1034,7 @@ CREATE TABLE IF NOT EXISTS `departamento_laboral` (
 --
 
 INSERT INTO `departamento_laboral` (`Id_departamento_laboral`, `nombre_departamento`) VALUES
-(1, 'Administrativo'),
-(2, 'Contable');
+(1, 'Administrativo');
 
 -- --------------------------------------------------------
 
@@ -1120,16 +1046,6 @@ CREATE TABLE IF NOT EXISTS `edificios` (
 `Edificio_ID` int(11) NOT NULL,
   `descripcion` text
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `edificios`
---
-
-INSERT INTO `edificios` (`Edificio_ID`, `descripcion`) VALUES
-(1, 'A1'),
-(2, 'A2'),
-(3, 'B1'),
-(4, 'B2');
 
 -- --------------------------------------------------------
 
@@ -1152,10 +1068,7 @@ CREATE TABLE IF NOT EXISTS `empleado` (
 --
 
 INSERT INTO `empleado` (`No_Empleado`, `N_identidad`, `Id_departamento`, `Fecha_ingreso`, `fecha_salida`, `Observacion`, `estado_empleado`) VALUES
-('1234', '0801-1991-17475', 1, '2015-03-06', '0000-00-00', 'problemas siguiendo ordenes', 1),
-('456', '0801-1991-04000', 1, '2015-03-06', '0000-00-00', 'ninguna', 1),
-('9291', '0801-1992-06985', 1, '2015-03-11', '0000-00-00', 'ninguno', 1),
-('9345', '0801-1993-01722', 1, '2015-03-06', '2015-04-29', 'trabajador', 0);
+('1234', '0000-0000-00000', 1, '2015-03-06', '0000-00-00', 'prueba', 1);
 
 -- --------------------------------------------------------
 
@@ -1169,16 +1082,6 @@ CREATE TABLE IF NOT EXISTS `empleado_has_cargo` (
   `Fecha_ingreso_cargo` date NOT NULL,
   `Fecha_salida_cargo` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `empleado_has_cargo`
---
-
-INSERT INTO `empleado_has_cargo` (`No_Empleado`, `ID_cargo`, `Fecha_ingreso_cargo`, `Fecha_salida_cargo`) VALUES
-('1234', 1, '2015-04-25', NULL),
-('1234', 2, '2015-04-25', '2015-04-28'),
-('456', 3, '2015-04-28', NULL),
-('9291', 1, '2015-04-25', NULL);
 
 -- --------------------------------------------------------
 
@@ -1216,15 +1119,6 @@ CREATE TABLE IF NOT EXISTS `estudios_academico` (
   `Id_universidad` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `estudios_academico`
---
-
-INSERT INTO `estudios_academico` (`ID_Estudios_academico`, `Nombre_titulo`, `ID_Tipo_estudio`, `N_identidad`, `Id_universidad`) VALUES
-(1, 'Ingenieria en sistemas', 1, '0801-1991-04000', 1),
-(2, 'Psicologia', 1, '0801-1991-17475', 11),
-(3, 'Gestion de proyectos', 2, '0801-1992-06985', 11);
-
 -- --------------------------------------------------------
 
 --
@@ -1237,13 +1131,6 @@ CREATE TABLE IF NOT EXISTS `experiencia_academica` (
   `Tiempo` int(3) NOT NULL,
   `N_identidad` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `experiencia_academica`
---
-
-INSERT INTO `experiencia_academica` (`ID_Experiencia_academica`, `Institucion`, `Tiempo`, `N_identidad`) VALUES
-(1, 'ceutec', 23, '0801-1991-17475');
 
 -- --------------------------------------------------------
 
@@ -1258,14 +1145,6 @@ CREATE TABLE IF NOT EXISTS `experiencia_laboral` (
   `N_identidad` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `experiencia_laboral`
---
-
-INSERT INTO `experiencia_laboral` (`ID_Experiencia_laboral`, `Nombre_empresa`, `Tiempo`, `N_identidad`) VALUES
-(1, 'tigo', 12, '0801-1991-04000'),
-(2, 'claro', 22, '0801-1991-17475');
-
 -- --------------------------------------------------------
 
 --
@@ -1276,14 +1155,6 @@ CREATE TABLE IF NOT EXISTS `experiencia_laboral_has_cargo` (
   `ID_Experiencia_laboral` int(11) NOT NULL,
   `ID_cargo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `experiencia_laboral_has_cargo`
---
-
-INSERT INTO `experiencia_laboral_has_cargo` (`ID_Experiencia_laboral`, `ID_cargo`) VALUES
-(2, 2),
-(1, 4);
 
 -- --------------------------------------------------------
 
@@ -1317,14 +1188,6 @@ CREATE TABLE IF NOT EXISTS `grupo_o_comite` (
   `Nombre_Grupo_o_comite` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `grupo_o_comite`
---
-
-INSERT INTO `grupo_o_comite` (`ID_Grupo_o_comite`, `Nombre_Grupo_o_comite`) VALUES
-(1, 'Inovacion'),
-(2, 'Vinculacion');
-
 -- --------------------------------------------------------
 
 --
@@ -1347,15 +1210,6 @@ CREATE TABLE IF NOT EXISTS `idioma` (
   `Idioma` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `idioma`
---
-
-INSERT INTO `idioma` (`ID_Idioma`, `Idioma`) VALUES
-(1, 'Frances'),
-(2, 'espaÃ±ol'),
-(3, 'Italiano');
-
 -- --------------------------------------------------------
 
 --
@@ -1368,14 +1222,6 @@ CREATE TABLE IF NOT EXISTS `idioma_has_persona` (
   `Nivel` varchar(45) DEFAULT NULL,
 `Id` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `idioma_has_persona`
---
-
-INSERT INTO `idioma_has_persona` (`ID_Idioma`, `N_identidad`, `Nivel`, `Id`) VALUES
-(1, '0801-1991-04000', '80', 1),
-(2, '0801-1991-17475', '99', 2);
 
 -- --------------------------------------------------------
 
@@ -1390,14 +1236,6 @@ CREATE TABLE IF NOT EXISTS `indicadores` (
   `descripcion` text
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `indicadores`
---
-
-INSERT INTO `indicadores` (`id_Indicadores`, `id_ObjetivosInsitucionales`, `nombre`, `descripcion`) VALUES
-(9, 1, 'pollo', 'gfhfgh'),
-(10, 1, 'cheche', 'dsdsdsd');
-
 -- --------------------------------------------------------
 
 --
@@ -1408,13 +1246,6 @@ CREATE TABLE IF NOT EXISTS `motivos` (
 `Motivo_ID` int(11) NOT NULL,
   `descripcion` text
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `motivos`
---
-
-INSERT INTO `motivos` (`Motivo_ID`, `descripcion`) VALUES
-(1, 'Salud');
 
 -- --------------------------------------------------------
 
@@ -1448,14 +1279,6 @@ CREATE TABLE IF NOT EXISTS `objetivos_institucionales` (
   `id_Poa` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `objetivos_institucionales`
---
-
-INSERT INTO `objetivos_institucionales` (`id_Objetivo`, `definicion`, `area_Estrategica`, `resultados_Esperados`, `id_Area`, `id_Poa`) VALUES
-(1, 'yo que se', 'toodo', 'vcbcvbcvb', 1, 1),
-(3, 'ytututy', 'ytutyuty', 'tyutyu', 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1468,13 +1291,6 @@ CREATE TABLE IF NOT EXISTS `organizacion` (
   `Ubicacion` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `organizacion`
---
-
-INSERT INTO `organizacion` (`Id_Organizacion`, `NombreOrganizacion`, `Ubicacion`) VALUES
-(2, 'org1', 'org1');
-
 -- --------------------------------------------------------
 
 --
@@ -1485,16 +1301,6 @@ CREATE TABLE IF NOT EXISTS `pais` (
 `Id_pais` int(11) NOT NULL,
   `Nombre_pais` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `pais`
---
-
-INSERT INTO `pais` (`Id_pais`, `Nombre_pais`) VALUES
-(1, 'Honduras'),
-(2, 'Guatemala'),
-(3, 'Mexico'),
-(4, 'panama');
 
 -- --------------------------------------------------------
 
@@ -1518,13 +1324,6 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   `id_Edificio_Registro` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `permisos`
---
-
-INSERT INTO `permisos` (`id_Permisos`, `id_departamento`, `No_Empleado`, `id_motivo`, `dias_permiso`, `hora_inicio`, `hora_finalizacion`, `fecha`, `fecha_solicitud`, `estado`, `observacion`, `revisado_por`, `id_Edificio_Registro`, `id_usuario`) VALUES
-(1, 1, '9345', 1, 2, '08:00:00', '08:00:00', '2015-04-30 00:00:00', '2015-04-29', 'Visto', NULL, '456', 1, 11);
 
 -- --------------------------------------------------------
 
@@ -1552,12 +1351,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
 --
 
 INSERT INTO `persona` (`N_identidad`, `Primer_nombre`, `Segundo_nombre`, `Primer_apellido`, `Segundo_apellido`, `Fecha_nacimiento`, `Sexo`, `Direccion`, `Correo_electronico`, `Estado_Civil`, `Nacionalidad`, `foto_perfil`) VALUES
-('0801-1991-04000', 'Pedro', 'Juana', 'Perez', 'Picapiedra', '1900-10-10', 'M', 'olanchito', 'jc@yahoo.es', 'soltero', 'hondureÃ±a', ''),
-('0801-1991-17475', 'Luis', 'Alberto', 'Martinez', 'Aguilar', '0000-00-00', 'M', 'la era', 'alberto_aguilar777@hotmail.com', 'soltero', 'hondureÃ±a', ''),
-('0801-1992-06985', 'angel', 'eduardo', 'ayestas', 'sarmiento', '2015-03-11', 'M', 'b', 'alberto_aguilar777@hotmail.com', 'Soltero', 'colombiana', ''),
-('0801-1993-01722', 'Monica', '  Alejandra', 'Ortinz', 'MOreno', '2015-02-05', 'M', 'Col.Hato', 'monica', 'soltero', 'peruana', ''),
-('0801-4955-1849', 'omar', 'umberto', 'sandoval', 'castillo', '0000-00-00', 'm', 'colonia bella horiente', 'omar@yahoo.es', 'soltero', 'salvadoreÃ±a', ''),
-('1211-1980-00001', 'Walter', 'Levi', 'Melendez', 'Perdomo', '1980-11-01', 'M', 'Lomas de Miraflores Sur', 'walter.melendez@unah.edu.hn', 'Casado', 'HondureÃ±a', '');
+('0000-0000-00000', 'Prueba', 'Prueba', 'Prueba', 'Prueba', '2015-03-29', 'M', 'prueba', 'prueba@prueba.com', 'soltero', 'prueba', '');
 
 -- --------------------------------------------------------
 
@@ -1572,13 +1366,6 @@ CREATE TABLE IF NOT EXISTS `poa` (
   `fecha_Fin` date NOT NULL,
   `descripcion` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `poa`
---
-
-INSERT INTO `poa` (`id_Poa`, `nombre`, `fecha_de_Inicio`, `fecha_Fin`, `descripcion`) VALUES
-(1, 'gato', '2015-02-01', '2015-02-28', 'lol');
 
 -- --------------------------------------------------------
 
@@ -1596,7 +1383,7 @@ CREATE TABLE IF NOT EXISTS `prioridad` (
 --
 
 INSERT INTO `prioridad` (`Id_Prioridad`, `DescripcionPrioridad`) VALUES
-(1, 'informativo'),
+(1, 'Informativo'),
 (2, 'Normal'),
 (3, 'Urgente');
 
@@ -1626,15 +1413,6 @@ CREATE TABLE IF NOT EXISTS `responsables_por_actividad` (
   `fecha_Asignacion` date NOT NULL,
   `observacion` text
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `responsables_por_actividad`
---
-
-INSERT INTO `responsables_por_actividad` (`id_Responsable_por_Actividad`, `id_Actividad`, `id_Responsable`, `fecha_Asignacion`, `observacion`) VALUES
-(1, 2, 1, '2015-04-03', 'tytyty'),
-(2, 3, 1, '2015-04-29', 'sxdfs'),
-(3, 3, 2, '2015-04-29', 'sxdfs');
 
 -- --------------------------------------------------------
 
@@ -1711,17 +1489,6 @@ CREATE TABLE IF NOT EXISTS `sub_actividad` (
   `observacion` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `sub_actividad`
---
-
-INSERT INTO `sub_actividad` (`id_sub_Actividad`, `idActividad`, `nombre`, `descripcion`, `fecha_monitoreo`, `id_Encargado`, `ponderacion`, `costo`, `observacion`) VALUES
-(1, 2, 'fgfdg', 'dfgdfg', '2015-04-08', '456', 24, 12, 'yutty'),
-(2, 2, 'gato', 'fgfgfg', '2015-04-10', '456', 10, 1200, 'gfgfghfgh'),
-(3, 1, 'pep', 'dfgdfgdfgdfgdfg', '2015-04-01', '456', 14, 200, 'ertertertertert'),
-(4, 1, 'fghfghfghfgh', 'fghfghfgh', '2015-04-07', '456', 10, 500, '60iiu'),
-(5, 1, 'wwwwwwwwwwwwwwwwwwww', 'tertrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', '2015-04-16', '456', 20, 16, 'rtrtrt');
-
 -- --------------------------------------------------------
 
 --
@@ -1734,14 +1501,6 @@ CREATE TABLE IF NOT EXISTS `sub_actividades_realizadas` (
   `fecha_Realizacion` date NOT NULL,
   `observacion` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `sub_actividades_realizadas`
---
-
-INSERT INTO `sub_actividades_realizadas` (`id_subActividadRealizada`, `id_SubActividad`, `fecha_Realizacion`, `observacion`) VALUES
-(2, 3, '2015-04-01', 'tryrtyrtyrtyrtyrty'),
-(3, 5, '2015-04-29', 'sdfsfsdf');
 
 -- --------------------------------------------------------
 
@@ -1756,15 +1515,6 @@ CREATE TABLE IF NOT EXISTS `telefono` (
   `N_identidad` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `telefono`
---
-
-INSERT INTO `telefono` (`ID_Telefono`, `Tipo`, `Numero`, `N_identidad`) VALUES
-(1, 'celular', '123', '0801-1991-04000'),
-(2, 'celular', '456', '0801-1991-17475'),
-(3, 'celular', '33944311', '1211-1980-00001');
-
 -- --------------------------------------------------------
 
 --
@@ -1776,15 +1526,6 @@ CREATE TABLE IF NOT EXISTS `tipo_area` (
   `nombre` varchar(30) NOT NULL,
   `observaciones` text NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tipo_area`
---
-
-INSERT INTO `tipo_area` (`id_Tipo_Area`, `nombre`, `observaciones`) VALUES
-(1, 'exterior1', 'cara de mono'),
-(3, 'pollo1', 'ffdd'),
-(4, 'alksndal', 'asda');
 
 -- --------------------------------------------------------
 
@@ -1816,15 +1557,6 @@ CREATE TABLE IF NOT EXISTS `titulo` (
 `id_titulo` int(11) NOT NULL,
   `titulo` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `titulo`
---
-
-INSERT INTO `titulo` (`id_titulo`, `titulo`) VALUES
-(1, 'Ingenieria en sistemas'),
-(2, 'Psicologia'),
-(3, 'Gestion de proyectos');
 
 -- --------------------------------------------------------
 
@@ -1891,15 +1623,6 @@ CREATE TABLE IF NOT EXISTS `universidad` (
   `Id_pais` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `universidad`
---
-
-INSERT INTO `universidad` (`Id_universidad`, `nombre_universidad`, `Id_pais`) VALUES
-(1, 'Unah ', 1),
-(11, 'catolica', 2),
-(13, 'ceutec', 3);
-
 -- --------------------------------------------------------
 
 --
@@ -1922,17 +1645,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id_Usuario`, `No_Empleado`, `nombre`, `Password`, `Id_Rol`, `Fecha_Creacion`, `Fecha_Alta`, `Estado`) VALUES
-(1, '1234', 'prueba', 0x3831444637443233344633423846353438374146353038433243373942303041, 100, '2015-03-11', NULL, 1),
-(2, '456', 'admin', 0x61646d696e, 100, '2015-03-14', NULL, 1),
-(3, '1234', 'prueba14', 0x3730413437304246433641343645464146453732453938343434364531303837, 40, '2015-03-10', NULL, 1),
-(4, '456', 'admin2', 0x3831444637443233344633423846353438374146353038433243373942303041, 40, '2015-03-20', NULL, 1),
-(5, '9345', 'mon11', 0x646f6d, 40, '2015-03-21', NULL, 1),
-(6, '1234', 'prueba2', 0x4631363146353943393730433944304343343433303642334133394143343241, 10, '2015-04-21', NULL, 1),
-(7, '456', 'dom', 0x3730413437304246433641343645464146453732453938343434364531303837, 10, '2015-04-23', NULL, 1),
-(8, '456', 'secretaria', 0x3534463031304337413430433141413034463939383644323144333431354344, 40, '2015-04-24', NULL, 1),
-(9, '456', 'departamentosis', 0x4246373242423833464539323638313231333342314341353234453836334546, 30, '2015-04-24', NULL, 1),
-(10, '1234', 'decana', 0x3345453144353534463836383746453744423131304542314232313341444135, 50, '2015-04-29', NULL, 1),
-(11, '9345', 'docente', 0x4334343432303341463343313144324633424638343431374636334344333342, 20, '2015-04-29', NULL, 1);
+(1, '1234', 'prueba', 0x3831444637443233344633423846353438374146353038433243373942303041, 100, '2015-03-11', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -1957,78 +1670,14 @@ CREATE TABLE IF NOT EXISTS `usuario_log` (
   `usuario` int(11) NOT NULL,
   `fecha_log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ip_conn` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario_log`
 --
 
 INSERT INTO `usuario_log` (`Id_log`, `usuario`, `fecha_log`, `ip_conn`) VALUES
-(1, 1, '2015-04-25 16:58:00', '::1'),
-(2, 9, '2015-04-25 17:13:07', '::1'),
-(3, 1, '2015-04-25 17:13:31', '::1'),
-(4, 1, '2015-04-27 15:39:08', '::1'),
-(5, 8, '2015-04-27 15:41:22', '::1'),
-(6, 1, '2015-04-27 15:44:09', '::1'),
-(7, 1, '2015-04-27 15:55:50', '::1'),
-(8, 1, '2015-04-28 14:41:42', '::1'),
-(9, 1, '2015-04-28 15:31:07', '::1'),
-(10, 8, '2015-04-28 15:31:33', '::1'),
-(11, 1, '2015-04-28 15:38:46', '::1'),
-(12, 1, '2015-04-28 15:41:45', '::1'),
-(13, 1, '2015-04-28 15:42:24', '10.8.44.50'),
-(14, 1, '2015-04-28 15:44:06', '10.8.44.50'),
-(15, 1, '2015-04-28 15:44:25', '10.8.44.50'),
-(16, 1, '2015-04-28 15:45:20', '::1'),
-(17, 1, '2015-04-28 15:46:56', '10.8.44.50'),
-(18, 1, '2015-04-28 15:49:03', '10.8.44.239'),
-(19, 8, '2015-04-28 15:52:35', '10.8.44.239'),
-(20, 8, '2015-04-28 15:52:36', '10.8.44.239'),
-(21, 1, '2015-04-28 15:53:32', '10.8.44.239'),
-(22, 1, '2015-04-28 16:03:50', '::1'),
-(23, 1, '2015-04-28 16:05:53', '10.8.44.134'),
-(24, 1, '2015-04-28 16:07:53', '10.8.44.50'),
-(25, 1, '2015-04-29 14:51:53', '10.8.44.96'),
-(26, 1, '2015-04-29 14:52:58', '10.8.44.50'),
-(27, 1, '2015-04-29 15:00:54', '10.8.44.96'),
-(28, 1, '2015-04-29 15:03:02', '10.8.44.91'),
-(29, 1, '2015-04-29 15:15:55', '10.8.44.96'),
-(30, 1, '2015-04-29 15:18:20', '10.8.44.96'),
-(31, 8, '2015-04-29 15:21:59', '10.8.44.96'),
-(32, 7, '2015-04-29 15:25:30', '10.8.44.96'),
-(33, 1, '2015-04-29 15:26:16', '10.8.44.96'),
-(34, 1, '2015-04-29 15:26:57', '10.8.44.91'),
-(35, 10, '2015-04-29 15:29:40', '10.8.44.91'),
-(36, 1, '2015-04-29 15:30:49', '10.8.44.91'),
-(37, 7, '2015-04-29 15:31:20', '10.8.44.91'),
-(38, 1, '2015-04-29 15:31:50', '10.8.44.91'),
-(39, 8, '2015-04-29 15:32:24', '10.8.44.96'),
-(40, 11, '2015-04-29 15:32:55', '10.8.44.91'),
-(41, 1, '2015-04-29 15:33:03', '10.8.44.96'),
-(42, 1, '2015-04-29 15:37:13', '10.8.44.50'),
-(43, 1, '2015-04-29 15:39:29', '10.8.44.239'),
-(44, 1, '2015-04-29 15:47:53', '10.8.44.239'),
-(45, 1, '2015-04-29 15:51:08', '10.8.44.96'),
-(46, 1, '2015-04-29 15:51:19', '10.8.44.239'),
-(47, 1, '2015-04-29 15:52:37', '::1'),
-(48, 1, '2015-04-29 15:53:25', '10.8.44.96'),
-(49, 1, '2015-04-29 15:53:27', '10.8.44.239'),
-(50, 1, '2015-04-29 15:53:39', '10.8.44.239'),
-(51, 1, '2015-04-29 15:57:15', '10.8.44.50'),
-(52, 1, '2015-04-29 15:57:23', '10.8.44.96'),
-(53, 1, '2015-04-29 15:58:43', '10.8.44.169'),
-(54, 1, '2015-04-29 15:59:36', '10.8.44.239'),
-(55, 11, '2015-04-29 15:59:39', '10.8.44.169'),
-(56, 1, '2015-04-29 15:59:57', '::1'),
-(57, 1, '2015-04-29 16:00:18', '10.8.44.169'),
-(58, 9, '2015-04-29 16:01:40', '10.8.44.169'),
-(59, 1, '2015-04-29 16:04:33', '10.8.44.96'),
-(60, 1, '2015-04-29 16:13:01', '10.8.44.50'),
-(61, 1, '2015-04-29 16:15:47', '10.8.44.247'),
-(62, 9, '2015-04-29 16:30:54', '10.8.44.169'),
-(63, 1, '2015-04-29 16:41:14', '10.8.44.96'),
-(64, 1, '2015-04-29 17:10:36', '::1'),
-(65, 1, '2015-04-29 17:13:52', '10.8.44.96');
+(66, 1, '2015-04-30 12:24:09', '::1');
 
 -- --------------------------------------------------------
 
@@ -2119,7 +1768,7 @@ ALTER TABLE `edificios`
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
- ADD PRIMARY KEY (`No_Empleado`,`N_identidad`), ADD KEY `fk_Empleado_Persona1_idx` (`N_identidad`), ADD KEY `fk_empleado_dep` (`Id_departamento`), ADD KEY `No_Empleado` (`No_Empleado`);
+ ADD PRIMARY KEY (`No_Empleado`,`N_identidad`), ADD UNIQUE KEY `No_Empleado_2` (`No_Empleado`), ADD KEY `fk_Empleado_Persona1_idx` (`N_identidad`), ADD KEY `fk_empleado_dep` (`Id_departamento`), ADD KEY `No_Empleado` (`No_Empleado`);
 
 --
 -- Indices de la tabla `empleado_has_cargo`
@@ -2574,7 +2223,7 @@ MODIFY `Id_UsuarioAlertado` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `usuario_log`
 --
 ALTER TABLE `usuario_log`
-MODIFY `Id_log` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=66;
+MODIFY `Id_log` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT de la tabla `usuario_notificado`
 --
@@ -2634,20 +2283,20 @@ ADD CONSTRAINT `fk_Empleado_has_Cargo_Empleado1` FOREIGN KEY (`No_Empleado`) REF
 --
 ALTER TABLE `estudios_academico`
 ADD CONSTRAINT `fk_Estudios_academico_Persona1` FOREIGN KEY (`N_identidad`) REFERENCES `persona` (`N_identidad`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `fk_Estudios_academico_Tipo_estudio1` FOREIGN KEY (`ID_Tipo_estudio`) REFERENCES `tipo_estudio` (`ID_Tipo_estudio`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_Estudios_academico_Tipo_estudio1` FOREIGN KEY (`ID_Tipo_estudio`) REFERENCES `tipo_estudio` (`ID_Tipo_estudio`),
 ADD CONSTRAINT `fk_estudio_universidad` FOREIGN KEY (`Id_universidad`) REFERENCES `universidad` (`Id_universidad`);
 
 --
 -- Filtros para la tabla `experiencia_academica`
 --
 ALTER TABLE `experiencia_academica`
-ADD CONSTRAINT `fk_Experiencia_academica_Persona1` FOREIGN KEY (`N_identidad`) REFERENCES `persona` (`N_identidad`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_Experiencia_academica_Persona1` FOREIGN KEY (`N_identidad`) REFERENCES `persona` (`N_identidad`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `experiencia_laboral`
 --
 ALTER TABLE `experiencia_laboral`
-ADD CONSTRAINT `fk_Experiencia_laboral_Persona1` FOREIGN KEY (`N_identidad`) REFERENCES `persona` (`N_identidad`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `fk_Experiencia_laboral_Persona1` FOREIGN KEY (`N_identidad`) REFERENCES `persona` (`N_identidad`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `experiencia_laboral_has_cargo`
